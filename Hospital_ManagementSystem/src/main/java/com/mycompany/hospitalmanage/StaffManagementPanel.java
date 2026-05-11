@@ -4,6 +4,8 @@
  */
 package com.mycompany.hospitalmanage;
 
+import com.mycompany.hospitalmanage.ColorsTheme;
+import com.mycompany.hospitalmanage.FontsTheme;
 import java.awt.Color;
 import javax.swing.*;
 
