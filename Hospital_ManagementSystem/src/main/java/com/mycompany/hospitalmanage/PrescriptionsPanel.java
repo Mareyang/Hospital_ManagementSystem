@@ -17,6 +17,8 @@ public class PrescriptionsPanel extends JPanel {
     private JLabel lblDetails, lblPrescription, lblTitle, lblValue;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
+    private JTable table;
+    private JScrollPane scrollPane;
    // private ImagePanel imgPatient;
     
     
@@ -99,6 +101,27 @@ public class PrescriptionsPanel extends JPanel {
                 "4");
         pnlCancel.setBounds(1070, 130, 400, 110);
         add(pnlCancel);
+        
+        String[] columns = {"Patient", "Doctor", "Date", "Medications", "Status"};
+        
+        Object[][] data = {
+            {"John Smith", "Dr. Chen", "2024-01-15", "3 items", "Pending"},
+            {"Sarah Johnson", "Dr. Williams", "2024-01-14", "2 items", "Dispensed"}
+        };
+        
+        table = new JTable(data, columns);
+        table.getTableHeader().setFont(FontsTheme.Bold_Texts); // set ng font sa header ng table
+        table.setFont(FontsTheme.Plain_Texts);
+        table.setRowHeight(50);
+        table.setDefaultEditor(Object.class, null); // para di ma edit mga text sa mga cells
+        table.getTableHeader().setReorderingAllowed(false); //para di ma galaw yung header ng table
+        table.getTableHeader().setBackground(ColorsTheme.Top_Line); 
+        table.getTableHeader().setForeground(ColorsTheme.Text_White);
+
+        scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(0,0,1500,500);
+
+        pnlMiddle.add(scrollPane);
         
         
         

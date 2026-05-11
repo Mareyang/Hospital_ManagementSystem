@@ -16,6 +16,8 @@ public class MedicalRecordsPanel extends JPanel {
     private JLabel lblMedical, lblDetails;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
+    private JTable table;
+    private JScrollPane scrollPane;
     
     
     
@@ -80,6 +82,27 @@ public class MedicalRecordsPanel extends JPanel {
         btnRefresh.setBackground(ColorsTheme.Text_Gray);
         btnRefresh.setForeground(ColorsTheme.Text_White);
         pnlSearch.add(btnRefresh);
+        
+        String[] columns = {"Patient", "MRN", "Type", "Doctor", "Date"};
+        
+        Object[][] data = {
+            {"John Smith", "MRN000001", "Consultation", "Dr. Chen", "2024-01-15", "Cardiology"},
+            {"Sarah Johnson", "MRN000002", "Lab Result", "Dr. Williams", "2024-01-14", "Laboratory"}
+        };
+        
+        table = new JTable(data, columns);
+        table.getTableHeader().setFont(FontsTheme.Bold_Texts); // set ng font sa header ng table
+        table.setFont(FontsTheme.Plain_Texts);
+        table.setRowHeight(50);
+        table.setDefaultEditor(Object.class, null); // para di ma edit mga text sa mga cells
+        table.getTableHeader().setReorderingAllowed(false); //para di ma galaw yung header ng table
+        table.getTableHeader().setBackground(ColorsTheme.Top_Line); 
+        table.getTableHeader().setForeground(ColorsTheme.Text_White);
+
+        scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(0,0,1500,620);
+
+        pnlMiddle.add(scrollPane);
     
         }
 }
