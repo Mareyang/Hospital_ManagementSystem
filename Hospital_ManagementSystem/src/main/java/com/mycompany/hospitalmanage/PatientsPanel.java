@@ -14,14 +14,15 @@ import javax.swing.*;
  */
 public class PatientsPanel extends JPanel {
     
-    private JPanel pnlMiddle, pnlSearch;
+    private JPanel pnlMiddle, pnlSearch, pnlHeader;
+    private JTable tblPatient;
     private JLabel lblPatient, lblDetails, lblID, lblName, lblAge, lblBirth, lblNumber, lblGender, lblStatus, lblEmail, lblMarital, lblAddress, 
             lblHistory, lblBlood, lblRoom;
     private JTextField txtID, txtName, txtAge, txtBirth, txtNumber, txtEmail, txtAddress, txtBlood, txtRoom, txtSearch;
     private JButton btnAdd, btnSearch, btnRefresh;
     private JComboBox<String> cmbMarital, cmbStatus, cmbGender;
     private JTextArea txaHistory;
-    private JScrollPane scrollHistory;
+    private JScrollPane scrollPatient;
     //private ImagePanel imgPatient;
     
     
@@ -40,6 +41,8 @@ public class PatientsPanel extends JPanel {
         pnlSearch.setBounds(70, 130, 1500, 80);
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
+        
+     
         
         //        imgPatient = new ImagePanel("/patient.png"); 
 //        imgPatient.setBounds(80, 150, 380, 450);
@@ -85,6 +88,40 @@ public class PatientsPanel extends JPanel {
         btnRefresh.setBackground(ColorsTheme.Text_Gray);
         btnRefresh.setForeground(ColorsTheme.Text_White);
         pnlSearch.add(btnRefresh);
+        
+        
+        //Table
+        String[] columns = {"Patient Name", "Patient ID", "Age/Gender", "Contact", "Department", "Actions"};
+        Object[][] data = {
+                {"Maria Leonora", "000021", "24 yrs - Female", "+6395874569214", "Emergency", " "},
+                {"Jose Felipe", "000054", "35 yrs - Male", "+6354124785965", "Laboratory", " "},
+                {"Angela Cruz", "000078", "29 yrs - Female", "+639174563821", "Pharmacy", " "},
+                {"Mark Anthony", "000103", "41 yrs - Male", "+639285471236", "Billing", " "},
+                {"Sophia Reyes", "000115", "19 yrs - Female", "+639167845213", "Appointments", " "},
+                {"Daniel Garcia", "000126", "52 yrs - Male", "+639458721364", "Medical Records", " "},
+                {"Christine Mae", "000138", "31 yrs - Female", "+639876541239", "Emergency", " "},
+                {"Nathaniel Ong", "000142", "45 yrs - Male", "+639234875612", "Laboratory", " "},
+                {"Francis Mendoza", "000189", "60 yrs - Male", "+639523478165", "Emergency", " "},
+                {"Jasmine Aquino", "000193", "26 yrs - Female", "+639678123457", "Medical Records", " "},
+                {"Miguel Santos", "000205", "33 yrs - Male", "+639234561789", "Laboratory", " "},
+                {"Ella Villanueva", "000219", "28 yrs - Female", "+639854123676", "Pharmacy", " "},
+                {"Adrian Torres", "000224", "47 yrs - Male", "+639741258963", "Billing", " "},
+
+          };
+        
+        tblPatient = new JTable (data, columns);
+        tblPatient.getTableHeader().setFont(FontsTheme.Title_Texts);
+        tblPatient.setFont(FontsTheme.Info_Texts);
+        tblPatient.setRowHeight(50);
+        tblPatient.setDefaultEditor(Object.class, null);
+        tblPatient.getTableHeader().setReorderingAllowed(false);
+        tblPatient.getTableHeader().setBackground(ColorsTheme.Header); 
+        tblPatient.getTableHeader().setForeground(ColorsTheme.Text_White);
+        
+        scrollPatient = new JScrollPane(tblPatient);
+        scrollPatient.setBounds(0, 0, 1500, 620);
+        pnlMiddle.add(scrollPatient);
+        
         
 
 

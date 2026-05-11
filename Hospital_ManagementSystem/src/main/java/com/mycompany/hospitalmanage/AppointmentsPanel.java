@@ -18,6 +18,10 @@ public class AppointmentsPanel extends JPanel {
     private JLabel lblDetails, lblAppointment, lblTitle, lblValue;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
+    private JScrollPane scrollPatient;
+    private JTable tblPatient;
+
+
    // private ImagePanel imgPatient;
     
     
@@ -45,7 +49,7 @@ public class AppointmentsPanel extends JPanel {
         add(btnAdd);
         
         //Search Bar
-        txtSearch = new JTextField("Search by patient name or patient id...");
+        txtSearch = new JTextField("Search appointments...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
         txtSearch.setForeground(ColorsTheme.Text_Gray);
@@ -108,8 +112,45 @@ public class AppointmentsPanel extends JPanel {
         pnlUrgent.setBounds(1210, 130, 350, 110);
         add(pnlUrgent);
         
-    }
-
+        
+        //Table
+        String[] columns = {"Patient Name", "Doctor", "Time", "Type", "Department", "Status", "Actions"};
+        Object[][] data = {
+                {"Maria Leonora", "Dr. Santos", "8:00 AM", "Check-up", "Emergency", "Confirmed", " "},
+                {"Jose Felipe", "Dr. Ramirez", "8:30 AM", "Blood Test", "Laboratory", "Pending", " "},
+                {"Angela Cruz", "Dr. Garcia", "9:00 AM", "Consultation", "Cardiology", "Urgent", " "},
+                {"Mark Anthony", "Dr. Reyes", "9:30 AM", "Follow-up", "Orthopedics", "Confirmed", " "},
+                {"Sophia Reyes", "Dr. Mendoza", "10:00 AM", "Vaccination", "Pediatrics", "Pending", " "},
+                {"Daniel Garcia", "Dr. Flores", "10:30 AM", "MRI Scan", "Radiology", "Urgent", " "},
+                {"Christine Mae", "Dr. Navarro", "11:00 AM", "Physical Exam", "General Medicine", "Confirmed", " "},
+                {"Nathaniel Ong", "Dr. Aquino", "11:30 AM", "Urine Test", "Laboratory", "Pending", " "},
+                {"Patricia Gomez", "Dr. Bautista", "1:00 PM", "Dental Check", "Dental", "Confirmed", " "},
+                {"Kevin Dela Cruz", "Dr. Villanueva", "1:30 PM", "X-Ray", "Radiology", "Urgent", " "},
+                {"Isabella Flores", "Dr. Torres", "2:00 PM", "Consultation", "Neurology", "Confirmed", " "},
+                {"Francis Mendoza", "Dr. Herrera", "2:30 PM", "Heart Check", "Cardiology", "Urgent", " "},
+                {"Jasmine Aquino", "Dr. Santos", "3:00 PM", "Therapy", "Rehabilitation", "Pending", " "},
+                {"Miguel Santos", "Dr. Cruz", "3:30 PM", "Surgery Prep", "Surgery", "Urgent", " "},
+                {"Ella Villanueva", "Dr. Garcia", "4:00 PM", "Eye Check", "Ophthalmology", "Confirmed", " "},
+                {"Adrian Torres", "Dr. Ramirez", "4:30 PM", "CT Scan", "Radiology", "Pending", " "},
+          };
+        
+        tblPatient = new JTable (data, columns);
+        tblPatient.getTableHeader().setFont(FontsTheme.Title_Texts);
+        tblPatient.setFont(FontsTheme.Info_Texts);
+        tblPatient.setRowHeight(50);
+        tblPatient.setDefaultEditor(Object.class, null);
+        tblPatient.getTableHeader().setReorderingAllowed(false);
+        tblPatient.getTableHeader().setBackground(ColorsTheme.Header); 
+        tblPatient.getTableHeader().setForeground(ColorsTheme.Text_White);
+        
+        scrollPatient = new JScrollPane(tblPatient);
+        scrollPatient.setBounds(0, 0, 1500, 620);
+        pnlMiddle.add(scrollPatient);
+        
+        
+        }
+        
+    
     
     public JPanel createCard(String title, String value) {
 
