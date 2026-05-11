@@ -110,12 +110,12 @@ public class PrescriptionsPanel extends JPanel {
         };
         
         table = new JTable(data, columns);
-        table.getTableHeader().setFont(FontsTheme.Bold_Texts); // set ng font sa header ng table
-        table.setFont(FontsTheme.Plain_Texts);
         table.setRowHeight(50);
         table.setDefaultEditor(Object.class, null); // para di ma edit mga text sa mga cells
         table.getTableHeader().setReorderingAllowed(false); //para di ma galaw yung header ng table
-        table.getTableHeader().setBackground(ColorsTheme.Top_Line); 
+        table.getTableHeader().setFont(FontsTheme.Title_Texts);
+        table.setFont(FontsTheme.Info_Texts);
+        table.getTableHeader().setBackground(ColorsTheme.Header); 
         table.getTableHeader().setForeground(ColorsTheme.Text_White);
 
         scrollPane = new JScrollPane(table);
