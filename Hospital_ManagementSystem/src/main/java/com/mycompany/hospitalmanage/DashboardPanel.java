@@ -12,11 +12,14 @@ package com.mycompany.hospitalmanage;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
+import java.awt.*;
 
 public class DashboardPanel extends JPanel {
     
     private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, cardPanel, TopPanel, pnlMiddle;
-    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle;
+    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle, lblDistributionTitle;
+    private JPanel pnlDistribution;
+    private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
     
             
             
@@ -77,6 +80,41 @@ public class DashboardPanel extends JPanel {
         pnlRevenue.setBounds(1210, 130, 350, 140);
         add(pnlRevenue);
         
+        pnlDistribution = new JPanel();
+        pnlDistribution.setLayout(null);
+        pnlDistribution.setBackground(ColorsTheme.Middle_Panel);
+        pnlDistribution.setBounds(950,50,500,400);
+        pnlMiddle.add(pnlDistribution);
+        
+        lblDistributionTitle = new JLabel("Department Distribution");
+        lblDistributionTitle.setFont(FontsTheme.Title_Texts);
+        lblDistributionTitle.setBounds(10,20,300,30);
+        pnlDistribution.add(lblDistributionTitle);
+        
+        barCardiology = createCustomProgressBar(10,70,480,30,25,new Color(0,0,255));
+        barOrthopedics = createCustomProgressBar(10,120,480,30,22,new Color(0,255,0));
+        barEmergency = createCustomProgressBar(10,170,480,30,20, new Color(255,0,0));
+        barNeurology = createCustomProgressBar(10,220,480,30,18, new Color(255,0,255));
+        barPediatrics = createCustomProgressBar(10,270,480,30,15, new Color(255,200,200));
+        
+        pnlDistribution.add(barCardiology);
+        pnlDistribution.add(barOrthopedics);
+        pnlDistribution.add(barEmergency);
+        pnlDistribution.add(barNeurology);
+        pnlDistribution.add(barPediatrics);
+        
+        
+        JPanel leg1 = createLegendItem(20, 300, "Cardiology 25%", new Color(0,0,255));
+        JPanel leg2 = createLegendItem(20, 330, "Neurology 22%", new Color(0,255,0));
+        JPanel leg3 = createLegendItem(20, 360, "Orthopedics 20%", new Color(255,0,0));
+        JPanel leg4 = createLegendItem(200, 300, "Pediatrics 18%", new Color(255,0,255));
+        JPanel leg5 = createLegendItem(200, 330, "Emergency 15%", new Color(255,200,200));
+
+        pnlDistribution.add(leg1);
+        pnlDistribution.add(leg2);
+        pnlDistribution.add(leg3);
+        pnlDistribution.add(leg4);
+        pnlDistribution.add(leg5);
 
     }
 
@@ -121,4 +159,40 @@ public class DashboardPanel extends JPanel {
         
         
             }
+    
+    
+    private JProgressBar createCustomProgressBar(int x, int y, int width, int height, int value, Color filledColor) {
+        JProgressBar bar = new JProgressBar(0, 100);   
+        bar.setBounds(x, y, width, height);            
+        bar.setValue(value);                           
+        bar.setStringPainted(true);                   
+        bar.setForeground(filledColor);                
+        bar.setBackground(new Color(220, 220, 220));   
+        return bar;
     }
+    
+    
+    
+    private JPanel createLegendItem(int x, int y, String text, Color color) {
+        JPanel item = new JPanel();
+        item.setLayout(null);
+        item.setOpaque(false);
+        item.setBounds(x, y, 300, 28);
+
+        JPanel cube = new JPanel();
+        cube.setBackground(color);
+        cube.setBounds(0, 6, 16, 16);
+        item.add(cube);
+
+        JLabel label = new JLabel(text);
+        label.setFont(FontsTheme.Info_Texts);
+        label.setBounds(20, 2, 260, 24);
+        item.add(label);
+
+        return item;
+    }
+    }
+
+    
+
+    
