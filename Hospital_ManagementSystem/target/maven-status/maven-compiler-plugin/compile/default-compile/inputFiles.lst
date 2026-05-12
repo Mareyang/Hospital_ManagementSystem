@@ -1,20 +1,23 @@
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\AppointmentsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\BedManagementPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\BillingPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ButtonStyles.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ColorsTheme.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\DashboardPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\EmergencyPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\FontsTheme.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalDashboard.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManage.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\LaboratoryPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\MedicalRecordsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\MessagesPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PatientsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PharmacyPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PrescriptionsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ReportsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\SettingsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\StaffManagementPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\Main.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\AppointmentsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\BedManagementPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\BillingPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ButtonStyles.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ColorsTheme.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\DashboardPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\EmergencyPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\FontsTheme.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalDashboard.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManage.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\LaboratoryPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\MedicalRecordsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\MessagesPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewlabDialog.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewpharmacyDialog.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewreportDialog.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PatientsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PharmacyPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PrescriptionsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ReportsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\SettingsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\StaffManagementPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\Main.java
