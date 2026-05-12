@@ -49,5 +49,10 @@ public class MessagesPanel extends JPanel {
         btnAdd.setForeground(ColorsTheme.Text_White);
         add(btnAdd);
         
+        
+        
+        
+        
+        
     }   
 }
