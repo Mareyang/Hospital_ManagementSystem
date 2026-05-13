@@ -18,7 +18,7 @@ public class ColorsTheme {
     public static final Color Main_Card = Color.WHITE;
     public static final Color Top_Line = Color.decode("#3BC1A8");
     public static final Color Header = Color.decode("#547A95");
-
+    
 
     
     // Text Colors

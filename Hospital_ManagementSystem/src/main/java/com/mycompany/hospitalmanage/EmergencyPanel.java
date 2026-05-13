@@ -71,6 +71,7 @@ public class EmergencyPanel extends JPanel {
         pnlActive.setBounds(1210, 130, 350, 110);
         add(pnlActive);
         
+        
     }
 
     
