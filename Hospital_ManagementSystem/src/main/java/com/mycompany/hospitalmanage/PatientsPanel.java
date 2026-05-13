@@ -6,13 +6,15 @@ package com.mycompany.hospitalmanage;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
  *
  * @author Arabella
  */
-public class PatientsPanel extends JPanel {
+public class PatientsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch, pnlHeader;
     private JTable tblPatient;
@@ -125,28 +127,28 @@ public class PatientsPanel extends JPanel {
         
 
 
-        // RIGHT SIDE
+        //ActionListener
+        btnAdd.addActionListener(this);
         
         
 
         
-        // BUTTONS 
-//        btnUpdate = new JButton("Update Info");
-//        btnUpdate.setBounds(740, 650, 200, 50); 
-//        btnUpdate.setFont(FontsTheme.Plain_Texts);
-//        btnUpdate.setBackground(Color.decode("#F08D39"));
-//        btnUpdate.setForeground(Color.WHITE);
-//        pnlMiddle.add(btnUpdate);
-//
-//        btnSearch = new JButton("Clear Patient");
-//        btnSearch.setBounds(1000, 650, 200, 50); 
-//        btnSearch.setFont(FontsTheme.Plain_Texts);
-//        btnSearch.setBackground(Color.decode("#9E9E9E"));
-//        btnSearch.setForeground(Color.WHITE);
-//        pnlMiddle.add(btnSearch);
+        
         
         
     }
-             }   
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnAdd) {
+        AddPatientDialog patient = new AddPatientDialog();
+        patient.setVisible(true);
+        }
+
+        
+        
+        
+    }
+}   
     
 
