@@ -5,11 +5,14 @@
 package com.mycompany.hospitalmanage;
 
 import java.awt.Dialog;
+import java.awt.Image;
 import java.awt.Window;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -25,48 +28,58 @@ public class NewlabDialog extends JDialog {
         
         
         setLayout(null);
-        setSize(850, 570);
+        setSize(1050, 585);
         setLocationRelativeTo(null);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
         
+        JLabel lblDialogIcon = createIconLabel("/icons/lab.png");
+        lblDialogIcon.setBounds(40, 25, 56, 56);
+        add(lblDialogIcon);
+
         JLabel lblDialogTitle = new JLabel("New Lab Order");
-        lblDialogTitle.setBounds(40, 25, 300, 35);
+        lblDialogTitle.setBounds(110, 25, 300, 35);
         lblDialogTitle.setFont(FontsTheme.Bold_Texts);
         lblDialogTitle.setForeground(ColorsTheme.Text_Black);
         add(lblDialogTitle);
         
         JLabel lblDialogDetails = new JLabel("Create a laboratory request for a patient");
-        lblDialogDetails.setBounds(40, 60, 450, 30);
+        lblDialogDetails.setBounds(110, 60, 450, 30);
         lblDialogDetails.setFont(FontsTheme.Info_Texts);
         lblDialogDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDialogDetails);
+
+        JPanel pnlForm = new JPanel();
+        pnlForm.setLayout(null);
+        pnlForm.setBounds(50, 115, 950, 365);
+        pnlForm.setBackground(ColorsTheme.Main_Card);
+        add(pnlForm);
         
         JLabel lblPatientID = createFormLabel("Patient ID:");
-        lblPatientID.setBounds(70, 120, 160, 30);
-        add(lblPatientID);
+        lblPatientID.setBounds(70, 35, 160, 30);
+        pnlForm.add(lblPatientID);
         
         JTextField txtPatientID = createFormTextField();
-        txtPatientID.setBounds(230, 120, 250, 30);
-        add(txtPatientID);
+        txtPatientID.setBounds(230, 35, 300, 30);
+        pnlForm.add(txtPatientID);
         
         JButton btnFindPatient = new JButton("Find Patient");
-        btnFindPatient.setBounds(500, 120, 160, 30);
+        btnFindPatient.setBounds(550, 35, 170, 30);
         btnFindPatient.setFont(FontsTheme.Info_Texts);
         btnFindPatient.setBackground(ColorsTheme.Search_Button);
         btnFindPatient.setForeground(ColorsTheme.Text_White);
-        add(btnFindPatient);
+        pnlForm.add(btnFindPatient);
         
         JLabel lblPatientName = createFormLabel("Patient Name:");
-        lblPatientName.setBounds(70, 165, 160, 30);
-        add(lblPatientName);
+        lblPatientName.setBounds(70, 80, 160, 30);
+        pnlForm.add(lblPatientName);
         
         JTextField txtPatientName = createFormTextField();
-        txtPatientName.setBounds(230, 165, 430, 30);
-        add(txtPatientName);
+        txtPatientName.setBounds(230, 80, 600, 30);
+        pnlForm.add(txtPatientName);
         
         JLabel lblTestType = createFormLabel("Test Type:");
-        lblTestType.setBounds(70, 210, 160, 30);
-        add(lblTestType);
+        lblTestType.setBounds(70, 125, 160, 30);
+        pnlForm.add(lblTestType);
         
         JComboBox<String> cmbTestType = new JComboBox<>(new String[]{
                 "Complete Blood Count",
@@ -77,39 +90,39 @@ public class NewlabDialog extends JDialog {
                 "Chest X-Ray",
                 "ECG"
         });
-        cmbTestType.setBounds(230, 210, 430, 30);
+        cmbTestType.setBounds(230, 125, 600, 30);
         cmbTestType.setFont(FontsTheme.Info_Texts);
-        add(cmbTestType);
+        pnlForm.add(cmbTestType);
         
         JLabel lblPriority = createFormLabel("Priority:");
-        lblPriority.setBounds(70, 255, 160, 30);
-        add(lblPriority);
+        lblPriority.setBounds(70, 170, 160, 30);
+        pnlForm.add(lblPriority);
         
         JComboBox<String> cmbPriority = new JComboBox<>(new String[]{"Routine", "STAT"});
-        cmbPriority.setBounds(230, 255, 180, 30);
+        cmbPriority.setBounds(230, 170, 220, 30);
         cmbPriority.setFont(FontsTheme.Info_Texts);
-        add(cmbPriority);
+        pnlForm.add(cmbPriority);
         
         JLabel lblRequestedDate = createFormLabel("Requested Date:");
-        lblRequestedDate.setBounds(440, 255, 160, 30);
-        add(lblRequestedDate);
+        lblRequestedDate.setBounds(510, 170, 170, 30);
+        pnlForm.add(lblRequestedDate);
         
         JTextField txtRequestedDate = createFormTextField();
         txtRequestedDate.setText("MM/DD/YYYY");
-        txtRequestedDate.setBounds(590, 255, 180, 30);
-        add(txtRequestedDate);
+        txtRequestedDate.setBounds(680, 170, 150, 30);
+        pnlForm.add(txtRequestedDate);
         
         JLabel lblRequestedBy = createFormLabel("Requested By:");
-        lblRequestedBy.setBounds(70, 300, 160, 30);
-        add(lblRequestedBy);
+        lblRequestedBy.setBounds(70, 215, 160, 30);
+        pnlForm.add(lblRequestedBy);
         
         JTextField txtRequestedBy = createFormTextField();
-        txtRequestedBy.setBounds(230, 300, 430, 30);
-        add(txtRequestedBy);
+        txtRequestedBy.setBounds(230, 215, 600, 30);
+        pnlForm.add(txtRequestedBy);
         
         JLabel lblNotes = createFormLabel("Clinical Notes:");
-        lblNotes.setBounds(70, 355, 200, 30);
-        add(lblNotes);
+        lblNotes.setBounds(70, 265, 200, 30);
+        pnlForm.add(lblNotes);
         
         JTextArea txaNotes = new JTextArea("Write notes here...");
         txaNotes.setFont(FontsTheme.Info_Texts);
@@ -118,19 +131,19 @@ public class NewlabDialog extends JDialog {
         txaNotes.setWrapStyleWord(true);
         
         JScrollPane scrollNotes = new JScrollPane(txaNotes);
-        scrollNotes.setBounds(70, 390, 700, 80);
-        add(scrollNotes);
+        scrollNotes.setBounds(230, 265, 600, 70);
+        pnlForm.add(scrollNotes);
         
         JButton btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(450, 480, 120, 40);
+        btnCancel.setBounds(635, 495, 150, 40);
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setBackground(ColorsTheme.Text_Gray);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.addActionListener(e -> dispose());
         add(btnCancel);
-        
+
         JButton btnSave = new JButton("Save Lab Order");
-        btnSave.setBounds(590, 480, 200, 40);
+        btnSave.setBounds(800, 495, 200, 40);
         btnSave.setFont(FontsTheme.Buttons);
         btnSave.setBackground(ColorsTheme.Add_Confirm);
         btnSave.setForeground(ColorsTheme.Text_White);
@@ -149,5 +162,14 @@ public class NewlabDialog extends JDialog {
         JTextField textField = new JTextField();
         textField.setFont(FontsTheme.Info_Texts);
         return textField;
+    }
+
+    private JLabel createIconLabel(String path) {
+        java.net.URL resource = getClass().getResource(path);
+        ImageIcon icon = resource == null
+                ? new ImageIcon("src/main/resources" + path)
+                : new ImageIcon(resource);
+        Image scaledImage = icon.getImage().getScaledInstance(56, 56, Image.SCALE_SMOOTH);
+        return new JLabel(new ImageIcon(scaledImage));
     }
 }

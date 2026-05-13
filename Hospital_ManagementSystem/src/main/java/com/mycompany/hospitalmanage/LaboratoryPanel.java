@@ -6,6 +6,7 @@ package com.mycompany.hospitalmanage;
 
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -76,14 +77,18 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         
         
         
+        JLabel lblLabIcon = createIconLabel("/icons/lab.png");
+        lblLabIcon.setBounds(30, 25, 72, 72);
+        add(lblLabIcon);
+
         lblAppointment = new JLabel("Laboratory");
-        lblAppointment.setBounds(30, 30, 500, 40);
+        lblAppointment.setBounds(120, 30, 500, 40);
         lblAppointment.setFont(FontsTheme.Bold_Texts);
         lblAppointment.setForeground(ColorsTheme.Text_Black);
         add(lblAppointment);
 
         lblDetails = new JLabel("Manage lab tests and results");
-        lblDetails.setBounds(30, 70, 500, 40);
+        lblDetails.setBounds(120, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
         lblDetails.setForeground(ColorsTheme.Text_Black);
         add(lblDetails);
@@ -257,6 +262,15 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         JTextField textField = new JTextField();
         textField.setFont(FontsTheme.Info_Texts);
         return textField;
+    }
+
+    private JLabel createIconLabel(String path) {
+        java.net.URL resource = getClass().getResource(path);
+        ImageIcon icon = resource == null
+                ? new ImageIcon("src/main/resources" + path)
+                : new ImageIcon(resource);
+        Image scaledImage = icon.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        return new JLabel(new ImageIcon(scaledImage));
     }
     
     
