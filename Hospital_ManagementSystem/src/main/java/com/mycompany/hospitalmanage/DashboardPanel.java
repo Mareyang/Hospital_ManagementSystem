@@ -104,11 +104,11 @@ public class DashboardPanel extends JPanel {
         pnlDistribution.add(barPediatrics);
         
         
-        JPanel leg1 = createLegendItem(20, 300, "Cardiology 25%", new Color(0,0,255));
-        JPanel leg2 = createLegendItem(20, 330, "Neurology 22%", new Color(0,255,0));
-        JPanel leg3 = createLegendItem(20, 360, "Orthopedics 20%", new Color(255,0,0));
-        JPanel leg4 = createLegendItem(200, 300, "Pediatrics 18%", new Color(255,0,255));
-        JPanel leg5 = createLegendItem(200, 330, "Emergency 15%", new Color(255,200,200));
+        JPanel leg1 = createLegendItem(20, 300, "Cardiology", new Color(0,0,255));
+        JPanel leg2 = createLegendItem(20, 330, "Neurology", new Color(0,255,0));
+        JPanel leg3 = createLegendItem(20, 360, "Orthopedics", new Color(255,0,0));
+        JPanel leg4 = createLegendItem(200, 300, "Pediatrics", new Color(255,0,255));
+        JPanel leg5 = createLegendItem(200, 330, "Emergency", new Color(255,200,200));
 
         pnlDistribution.add(leg1);
         pnlDistribution.add(leg2);
