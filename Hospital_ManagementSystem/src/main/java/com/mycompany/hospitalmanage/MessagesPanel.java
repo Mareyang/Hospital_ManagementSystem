@@ -4,6 +4,8 @@
  */
 package com.mycompany.hospitalmanage;
 
+import com.mycompany.hospitalmanage.ColorsTheme;
+import com.mycompany.hospitalmanage.FontsTheme;
 import javax.swing.*;
 
 /**
@@ -46,6 +48,11 @@ public class MessagesPanel extends JPanel {
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         add(btnAdd);
+        
+        
+        
+        
+        
         
     }   
 }
