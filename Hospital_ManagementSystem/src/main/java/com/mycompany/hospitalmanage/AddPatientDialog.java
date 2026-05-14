@@ -16,8 +16,8 @@ public class AddPatientDialog extends JDialog implements ActionListener {
     
     private JPanel pnlContent;
     private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblName, lblAge, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, 
-            lblHistory, lblBlood, lblRoom, lblMarital, lblMed;
-    private JTextField txtID, txtName, txtAge, txtNumber, txtEmail, txtAddress, txtBlood, txtRoom, txtBirth;
+            lblHistory, lblBlood, lblRoom, lblMarital, lblChronic, lblChronic1, lblChronic2, lblChronic3;
+    private JTextField txtID, txtName, txtAge, txtNumber, txtEmail, txtAddress, txtBlood, txtRoom, txtBirth, txtChronic1, txtChronic2, txtChronic3;
     private JButton btnPersonal, btnHistory, btnAddInfo,btnCancel;
     private JComboBox<String> cmbStatus, cmbGender, cmbMarital;
     private JTextArea txaHistory;
@@ -49,14 +49,14 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         btnPersonal.setBounds(40, 100, 250, 40);
         btnPersonal.setFont(FontsTheme.Buttons);
         btnPersonal.setForeground(ColorsTheme.Text_White);
-        btnPersonal.setBackground(ColorsTheme.Search_Button);
+        btnPersonal.setBackground(ColorsTheme.Blue);
         add(btnPersonal);
         
         btnHistory = new JButton("Medical History");
         btnHistory.setBounds(290, 100, 250, 40);
         btnHistory.setFont(FontsTheme.Buttons);
         btnHistory.setForeground(ColorsTheme.Text_White);
-        btnHistory.setBackground(ColorsTheme.Search_Button);
+        btnHistory.setBackground(ColorsTheme.Blue);
         add(btnHistory);
         
         
@@ -250,7 +250,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         btnAddInfo.setBounds(790, 450, 200, 30);
         btnAddInfo.setFont(FontsTheme.Buttons);
         btnAddInfo.setForeground(ColorsTheme.Text_White);
-        btnAddInfo.setBackground(ColorsTheme.Add_Confirm);
+        btnAddInfo.setBackground(ColorsTheme.Green);
         add(btnAddInfo);
         
 
@@ -262,12 +262,53 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         pnlContent.repaint();
         pnlContent.revalidate();
         
-        lblMed = new JLabel("Medical Conditions");
-        lblMed.setBounds(10, 10, 200, 30);
-        lblMed.setFont(FontsTheme.Plain_Texts);
-        lblMed.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblMed);
+        lblChronic = new JLabel("Chronic Illnesses");
+        lblChronic.setBounds(10, 10, 200, 30);
+        lblChronic.setFont(FontsTheme.Title_Texts);
+        lblChronic.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblChronic);
         
+//        lblAllergy = new JLabel("Allergies");
+//        lblAllergy.setBounds(10, 0, 200, 30);
+//        lblAllergy.setFont(FontsTheme.Info_Texts);
+//        lblAllergy.setForeground(ColorsTheme.Text_Black);
+//        pnlContent.add(lblAllergy);
+        
+        lblChronic1 = new JLabel("Patient ID : ");
+        lblChronic1.setBounds(40, 30, 200, 30);
+        lblChronic1.setFont(FontsTheme.Plain_Texts);
+        lblChronic1.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblChronic1);
+        
+        txtChronic1 = new JTextField("");
+        txtChronic1.setBounds(220, 30, 230, 30);
+        txtChronic1.setFont(FontsTheme.Plain_Texts);
+        txtChronic1.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtChronic1);
+        
+        lblChronic2 = new JLabel("Name : ");
+        lblChronic2.setBounds(40, 70, 200, 30);
+        lblChronic2.setFont(FontsTheme.Plain_Texts);
+        lblChronic2.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblChronic2);
+        
+        txtChronic2 = new JTextField("");
+        txtChronic2.setBounds(220, 70, 230, 30);
+        txtChronic2.setFont(FontsTheme.Plain_Texts);
+        txtChronic2.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtChronic2);
+        
+        lblChronic2 = new JLabel("Age : ");
+        lblChronic2.setBounds(40, 110, 200, 30);
+        lblChronic2.setFont(FontsTheme.Plain_Texts);
+        lblChronic2.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblChronic2);
+        
+        txtChronic3 = new JTextField("");
+        txtChronic3.setBounds(220, 110, 230, 30);
+        txtChronic3.setFont(FontsTheme.Plain_Texts);
+        txtChronic3.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtChronic3);
         
     
     

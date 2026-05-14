@@ -58,7 +58,7 @@ public class AppointmentsPanel extends JPanel {
         btnSearch = new JButton("Search");
         btnSearch.setBounds(1200, 20, 130, 40); 
         btnSearch.setFont(FontsTheme.Buttons);
-        btnSearch.setBackground(ColorsTheme.Search_Button);
+        btnSearch.setBackground(ColorsTheme.Search);
         btnSearch.setForeground(ColorsTheme.Text_White);
         pnlSearch.add(btnSearch);
         
@@ -87,28 +87,32 @@ public class AppointmentsPanel extends JPanel {
         
         pnlTotal = createCard(
                 "Today's Total",
-                "25");
+                "25",
+                ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
         
         pnlConfirm = createCard(
                 "Confirmed",
-                "12");
+                "12",
+                ColorsTheme.Green);
         pnlConfirm.setBounds(450, 130, 350, 110);
         add(pnlConfirm);
         
        
         pnlPending = createCard(
                 "Pending",
-                "8");
+                "8",
+                ColorsTheme.Yellow);
         pnlPending.setBounds(830, 130, 350, 110);
         add(pnlPending);
         
         
         pnlUrgent = createCard(
                 "Urgent",
-                "5");
+                "5",
+                ColorsTheme.Red);
         pnlUrgent.setBounds(1210, 130, 350, 110);
         add(pnlUrgent);
         
@@ -152,7 +156,7 @@ public class AppointmentsPanel extends JPanel {
         
     
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value, Color topColor) {
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -160,7 +164,7 @@ public class AppointmentsPanel extends JPanel {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
+        TopPanel.setBackground(topColor);
         cardPanel.add(TopPanel);
 
 

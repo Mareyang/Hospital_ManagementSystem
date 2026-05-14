@@ -80,7 +80,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
         btnSearch = new JButton("Search");
         btnSearch.setBounds(1200, 20, 130, 40); 
         btnSearch.setFont(FontsTheme.Buttons);
-        btnSearch.setBackground(ColorsTheme.Search_Button);
+        btnSearch.setBackground(ColorsTheme.Search);
         btnSearch.setForeground(ColorsTheme.Text_White);
         pnlSearch.add(btnSearch);
         
@@ -121,7 +121,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
         tblPatient.getTableHeader().setForeground(ColorsTheme.Text_White);
         
         scrollPatient = new JScrollPane(tblPatient);
-        scrollPatient.setBounds(0, 0, 1500, 620);
+        scrollPatient.setBounds(0, 60, 1500, 420);
         pnlMiddle.add(scrollPatient);
         
         

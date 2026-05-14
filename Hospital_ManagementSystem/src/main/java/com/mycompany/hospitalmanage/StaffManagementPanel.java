@@ -53,7 +53,7 @@ public class StaffManagementPanel extends JPanel {
         btnSearch = new JButton("Search");
         btnSearch.setBounds(1200, 20, 130, 40); 
         btnSearch.setFont(FontsTheme.Buttons);
-        btnSearch.setBackground(ColorsTheme.Search_Button);
+        btnSearch.setBackground(ColorsTheme.Search);
         btnSearch.setForeground(ColorsTheme.Text_White);
         pnlSearch.add(btnSearch);
         
