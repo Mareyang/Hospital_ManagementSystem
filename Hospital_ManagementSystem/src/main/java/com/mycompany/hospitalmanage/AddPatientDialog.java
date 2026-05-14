@@ -4,19 +4,21 @@
  */
 package com.mycompany.hospitalmanage;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
  *
  * @author Arabella
  */
-public class AddPatientDialog extends JDialog {
+public class AddPatientDialog extends JDialog implements ActionListener {
     
     private JPanel pnlContent;
     private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblName, lblAge, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, 
-            lblHistory, lblBlood, lblRoom, lblMarital;
+            lblHistory, lblBlood, lblRoom, lblMarital, lblMed;
     private JTextField txtID, txtName, txtAge, txtNumber, txtEmail, txtAddress, txtBlood, txtRoom, txtBirth;
-    private JButton btnInfo, btnHistory, btnAddInfo,btnCancel;
+    private JButton btnPersonal, btnHistory, btnAddInfo,btnCancel;
     private JComboBox<String> cmbStatus, cmbGender, cmbMarital;
     private JTextArea txaHistory;
     private JScrollPane scrollHistory;
@@ -43,12 +45,12 @@ public class AddPatientDialog extends JDialog {
         add(lblSubtitle);
         
         
-        btnInfo = new JButton("Personal Information");
-        btnInfo.setBounds(40, 100, 250, 40);
-        btnInfo.setFont(FontsTheme.Buttons);
-        btnInfo.setForeground(ColorsTheme.Text_White);
-        btnInfo.setBackground(ColorsTheme.Search_Button);
-        add(btnInfo);
+        btnPersonal = new JButton("Personal Information");
+        btnPersonal.setBounds(40, 100, 250, 40);
+        btnPersonal.setFont(FontsTheme.Buttons);
+        btnPersonal.setForeground(ColorsTheme.Text_White);
+        btnPersonal.setBackground(ColorsTheme.Search_Button);
+        add(btnPersonal);
         
         btnHistory = new JButton("Medical History");
         btnHistory.setBounds(290, 100, 250, 40);
@@ -64,6 +66,21 @@ public class AddPatientDialog extends JDialog {
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
         
+        
+        //ActionListener
+        btnPersonal.addActionListener(this);
+        btnHistory.addActionListener(this);
+
+        showPersonalInfo();
+    
+    }
+    
+    
+    public void showPersonalInfo() {
+        pnlContent.removeAll();
+        pnlContent.repaint();
+        pnlContent.revalidate();
+       
         lblID = new JLabel("Patient ID : ");
         lblID.setBounds(40, 40, 200, 30);
         lblID.setFont(FontsTheme.Plain_Texts);
@@ -222,21 +239,54 @@ public class AddPatientDialog extends JDialog {
         pnlContent.add(txtRoom);
         
 
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(580, 450, 200, 30);
+        btnCancel.setFont(FontsTheme.Buttons);
+        btnCancel.setForeground(ColorsTheme.Text_White);
+        btnCancel.setBackground(ColorsTheme.Cancel);
+        add(btnCancel);
+        
         btnAddInfo = new JButton("Save Information");
-        btnAddInfo.setBounds(580, 450, 200, 30);
+        btnAddInfo.setBounds(790, 450, 200, 30);
         btnAddInfo.setFont(FontsTheme.Buttons);
         btnAddInfo.setForeground(ColorsTheme.Text_White);
         btnAddInfo.setBackground(ColorsTheme.Add_Confirm);
         add(btnAddInfo);
         
-        btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(790, 450, 200, 30);
-        btnCancel.setFont(FontsTheme.Buttons);
-        btnCancel.setForeground(ColorsTheme.Text_White);
-        btnCancel.setBackground(ColorsTheme.Cancel);
-        add(btnCancel);
 
+    }
 
     
+    public void showMedicalHistory() {
+        pnlContent.removeAll();
+        pnlContent.repaint();
+        pnlContent.revalidate();
+        
+        lblMed = new JLabel("Medical Conditions");
+        lblMed.setBounds(10, 10, 200, 30);
+        lblMed.setFont(FontsTheme.Plain_Texts);
+        lblMed.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblMed);
+        
+        
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btnPersonal) {
+            showPersonalInfo();
+        }
+        else if(e.getSource() == btnHistory) {
+            showMedicalHistory();
+        }
+        
     }
 }
