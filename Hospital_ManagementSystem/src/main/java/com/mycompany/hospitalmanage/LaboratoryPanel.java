@@ -9,8 +9,8 @@ import java.awt.Dialog;
 import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.event.ActionListener;
 import com.mycompany.hospitalmanage.NewlabDialog;
@@ -32,6 +32,10 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
     LaboratoryPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
+        
+        JLabel lbllabIcon = createIconLabel("/icons/lab.png");
+        lbllabIcon.setBounds(30, 25, 72, 72);
+        add(lbllabIcon);
         
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
@@ -77,9 +81,7 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         
         
         
-        JLabel lblLabIcon = createIconLabel("/icons/lab.png");
-        lblLabIcon.setBounds(30, 25, 72, 72);
-        add(lblLabIcon);
+        
 
         lblAppointment = new JLabel("Laboratory");
         lblAppointment.setBounds(120, 30, 500, 40);
@@ -206,8 +208,8 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         tableHeader.setForeground(ColorsTheme.Text_White);
         tableHeader.setReorderingAllowed(false);
         
-        tblLabOrders.getColumnModel().getColumn(3).setCellRenderer(new StatusColor());
-        tblLabOrders.getColumnModel().getColumn(4).setCellRenderer(new StatusColor());
+        tblLabOrders.getColumnModel().getColumn(3).setCellRenderer(createStatusRenderer());
+        tblLabOrders.getColumnModel().getColumn(4).setCellRenderer(createStatusRenderer());
 
         scrollLabOrders = new JScrollPane(tblLabOrders);
         scrollLabOrders.setBounds(25, 65, 1450, 405);
@@ -224,32 +226,38 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         }
     }
     
-    private static class StatusColor extends DefaultTableCellRenderer {
-        
-        @Override
-        public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
+    private DefaultTableCellRenderer createStatusRenderer() {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             
-            java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            String status = value.toString();
-            
-            cell.setForeground(ColorsTheme.Text_Black);
-            
-            if (status.equals("STAT")) {
-                cell.setForeground(ColorsTheme.Delete_Urgent);
-            } else if (status.equals("Pending")) {
-                cell.setForeground(new Color(180, 120, 0));
-            } else if (status.equals("Processing")) {
-                cell.setForeground(ColorsTheme.Search_Button);
-            } else if (status.equals("Completed")) {
-                cell.setForeground(ColorsTheme.Add_Confirm);
+            @Override
+            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                
+                java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                String status = value.toString();
+                
+                changeStatusColor(cell, status);
+                
+                return cell;
             }
-            
-            return cell;
-        }
+        };
+        
+        return renderer;
     }
     
-    
+    private void changeStatusColor(java.awt.Component cell, String status) {
+        cell.setForeground(ColorsTheme.Text_Black);
+        
+        if (status.equals("STAT")) {
+            cell.setForeground(ColorsTheme.Delete_Urgent);
+        } else if (status.equals("Pending")) {
+            cell.setForeground(new Color(180, 120, 0));
+        } else if (status.equals("Processing")) {
+            cell.setForeground(ColorsTheme.Search_Button);
+        } else if (status.equals("Completed")) {
+            cell.setForeground(ColorsTheme.Add_Confirm);
+        }
+    }
     
     private JLabel createFormLabel(String text) {
         JLabel label = new JLabel(text);
@@ -266,11 +274,20 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
 
     private JLabel createIconLabel(String path) {
         java.net.URL resource = getClass().getResource(path);
-        ImageIcon icon = resource == null
-                ? new ImageIcon("src/main/resources" + path)
-                : new ImageIcon(resource);
-        Image scaledImage = icon.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        return new JLabel(new ImageIcon(scaledImage));
+        ImageIcon icon;
+        
+        if (resource != null) {
+            icon = new ImageIcon(resource);
+        } else {
+            icon = new ImageIcon("src/main/resources" + path);
+        }
+        
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel label = new JLabel(scaledIcon);
+        
+        return label;
     }
     
     
