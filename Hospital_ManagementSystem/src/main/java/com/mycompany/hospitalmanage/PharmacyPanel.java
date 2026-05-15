@@ -5,18 +5,27 @@
 package com.mycompany.hospitalmanage;
 
 import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.Image;
+import java.awt.Window;
 import javax.swing.*;
-
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import java.awt.event.ActionListener;
+import com.mycompany.hospitalmanage.NewpharmacyDialog;
+import java.awt.event.ActionEvent;
 /**
  *
  * @author Arabella
  */
-public class PharmacyPanel extends JPanel {
+public class PharmacyPanel extends JPanel implements ActionListener{
     
     private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlIn, pnlLow, pnlCrit, cardPanel, TopPanel;
-    private JLabel lblDetails, lblPharmacy, lblTitle, lblValue;
+    private JLabel lblDetails, lblPharmacy, lblTitle, lblValue, lblSubtitle, lblTableTitle;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
+    private JTable tblInventory;
+    private JScrollPane scrollInventory;
    // private ImagePanel imgPatient;
     
     
@@ -41,10 +50,11 @@ public class PharmacyPanel extends JPanel {
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.addActionListener(this);
         add(btnAdd);
         
         //Search Bar
-        txtSearch = new JTextField("Search by patient name or patient id...");
+        txtSearch = new JTextField("Search medication name, item code, or category...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
         txtSearch.setForeground(ColorsTheme.Text_Gray);
@@ -67,14 +77,18 @@ public class PharmacyPanel extends JPanel {
         
         
         
+        JLabel lblPharmacyIcon = createIconLabel("/icons/pharmacy.png");
+        lblPharmacyIcon.setBounds(30, 25, 72, 72);
+        add(lblPharmacyIcon);
+
         lblPharmacy = new JLabel("Pharmacy");
-        lblPharmacy.setBounds(30, 30, 500, 40);
+        lblPharmacy.setBounds(120, 30, 500, 40);
         lblPharmacy.setFont(FontsTheme.Bold_Texts);
         lblPharmacy.setForeground(ColorsTheme.Text_Black);
         add(lblPharmacy);
 
         lblDetails = new JLabel("Manage medications and inventory");
-        lblDetails.setBounds(30, 70, 500, 40);
+        lblDetails.setBounds(120, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
         lblDetails.setForeground(ColorsTheme.Text_Black);
         add(lblDetails);
@@ -82,35 +96,45 @@ public class PharmacyPanel extends JPanel {
         
         pnlTotal = createCard(
                 "Total Items",
-                "1,245");
+                "1,245",
+                "All medicines",
+                ColorsTheme.Top_Line);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
         
         pnlIn = createCard(
                 "In Stock",
-                "1,180");
+                "1,180",
+                "Available items",
+                ColorsTheme.Add_Confirm);
         pnlIn.setBounds(450, 130, 350, 110);
         add(pnlIn);
         
        
         pnlLow = createCard(
                 "Low Stock",
-                "48");
+                "48",
+                "Needs reorder",
+                ColorsTheme.Update_Pending);
         pnlLow.setBounds(830, 130, 350, 110);
         add(pnlLow);
         
         
         pnlCrit = createCard(
                 "Critical",
-                "17");
+                "17",
+                "Urgent restock",
+                ColorsTheme.Delete_Urgent);
         pnlCrit.setBounds(1210, 130, 350, 110);
         add(pnlCrit);
+        
+        createInventoryTable();
         
     }
 
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value, String subtitle, Color accentColor) {
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -118,7 +142,7 @@ public class PharmacyPanel extends JPanel {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
+        TopPanel.setBackground(accentColor);
         cardPanel.add(TopPanel);
 
 
@@ -136,12 +160,115 @@ public class PharmacyPanel extends JPanel {
         lblValue.setForeground(Color.BLACK);
         lblValue.setFont(FontsTheme.Bold_Texts);
         cardPanel.add(lblValue);
+        
+        //Subtitle
+        lblSubtitle = new JLabel(subtitle);
+        lblSubtitle.setBounds(20, 88, 250, 20);
+        lblSubtitle.setForeground(ColorsTheme.Text_Gray);
+        lblSubtitle.setFont(FontsTheme.Info_Texts);
+        cardPanel.add(lblSubtitle);
 
 
         return cardPanel;
         
         
             }
+    
+    private void createInventoryTable() {
+        lblTableTitle = new JLabel("Medication Inventory");
+        lblTableTitle.setBounds(25, 20, 400, 30);
+        lblTableTitle.setFont(FontsTheme.Title_Texts);
+        lblTableTitle.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblTableTitle);
+        
+        String[] columns = {"Medication", "Item Code", "Category", "Stock", "Reorder Level", "Expiry Date", "Status"};
+        Object[][] data = {
+                {"Paracetamol 500mg", "MED-001", "Pain Reliever", "320", "100", "Dec 20, 2026", "In Stock"},
+                {"Amoxicillin 500mg", "MED-014", "Antibiotic", "42", "50", "Aug 15, 2026", "Low Stock"},
+                {"Salbutamol Inhaler", "MED-022", "Respiratory", "12", "30", "Oct 03, 2026", "Critical"},
+                {"Cetirizine 10mg", "MED-031", "Antihistamine", "180", "60", "Jan 10, 2027", "In Stock"},
+                {"Metformin 500mg", "MED-047", "Diabetes", "65", "80", "Nov 29, 2026", "Low Stock"},
+                {"Losartan 50mg", "MED-053", "Hypertension", "210", "70", "Mar 18, 2027", "In Stock"},
+                {"Omeprazole 20mg", "MED-066", "Gastrointestinal", "25", "40", "Jul 02, 2026", "Critical"},
+                {"Ibuprofen 200mg", "MED-078", "Pain Reliever", "140", "50", "Sep 25, 2026", "In Stock"}
+        };
+        
+        tblInventory = new JTable(data, columns);
+        tblInventory.setFont(FontsTheme.Info_Texts);
+        tblInventory.setRowHeight(48);
+        tblInventory.setDefaultEditor(Object.class, null);
+        tblInventory.setShowGrid(false);
+        tblInventory.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        
+        JTableHeader tableHeader = tblInventory.getTableHeader();
+        tableHeader.setFont(FontsTheme.Title_Texts);
+        tableHeader.setBackground(ColorsTheme.Header);
+        tableHeader.setForeground(ColorsTheme.Text_White);
+        tableHeader.setReorderingAllowed(false);
+        
+        tblInventory.getColumnModel().getColumn(6).setCellRenderer(new StockStatusColor());
+        
+        scrollInventory = new JScrollPane(tblInventory);
+        scrollInventory.setBounds(25, 65, 1450, 405);
+        pnlMiddle.add(scrollInventory);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        if (btnAdd == e.getSource()) {
+            NewpharmacyDialog phar = new NewpharmacyDialog();
+            phar.setVisible(true);
+        }
+    }
+    
+    private static class StockStatusColor extends DefaultTableCellRenderer {
+        
+        @Override
+        public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+            
+            java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            String status = value.toString();
+            
+            cell.setForeground(ColorsTheme.Text_Black);
+            
+            if (status.equals("In Stock")) {
+                cell.setForeground(ColorsTheme.Add_Confirm);
+            } else if (status.equals("Low Stock")) {
+                cell.setForeground(new Color(180, 120, 0));
+            } else if (status.equals("Critical")) {
+                cell.setForeground(ColorsTheme.Delete_Urgent);
+            }
+            
+            return cell;
+        }
+    }
+    
+    
+    
+    private JLabel createFormLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setFont(FontsTheme.Plain_Texts);
+        label.setForeground(ColorsTheme.Text_Black);
+        return label;
+    }
+    
+    private JTextField createFormTextField() {
+        JTextField textField = new JTextField();
+        textField.setFont(FontsTheme.Info_Texts);
+        return textField;
+    }
+
+    private JLabel createIconLabel(String path) {
+        java.net.URL resource = getClass().getResource(path);
+        ImageIcon icon = resource == null
+                ? new ImageIcon("src/main/resources" + path)
+                : new ImageIcon(resource);
+        Image scaledImage = icon.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        return new JLabel(new ImageIcon(scaledImage));
+    }
+    
     }
         
     

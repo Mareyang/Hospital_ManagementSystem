@@ -5,6 +5,8 @@
 package com.mycompany.hospitalmanage;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,6 +66,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.addActionListener(this);
         add(btnAdd);
 
 
@@ -157,5 +160,14 @@ public class PatientsPanel extends JPanel implements ActionListener {
         
     }
 }   
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (btnAdd == e.getSource()) {
+            NewpatientDialog dialog = new NewpatientDialog();
+            dialog.setVisible(true);
+        }
+    }
+             }   
     
 

@@ -4,6 +4,8 @@
  */
 package com.mycompany.hospitalmanage;
 
+import com.mycompany.hospitalmanage.ColorsTheme;
+import com.mycompany.hospitalmanage.FontsTheme;
 import java.awt.Color;
 import javax.swing.*;
 
@@ -14,9 +16,11 @@ import javax.swing.*;
 public class StaffManagementPanel extends JPanel {
     
     private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlOn, pnlOff, pnlLeave, cardPanel, TopPanel;
+    private JTable tblEmployee;
     private JLabel lblDetails, lblStaff, lblTitle, lblValue;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
+    private JScrollPane scrollEmployee;
    // private ImagePanel imgPatient;
     
     
@@ -106,6 +110,81 @@ public class StaffManagementPanel extends JPanel {
                 "13");
         pnlLeave.setBounds(1210, 130, 350, 110);
         add(pnlLeave);
+        
+        
+        
+         //Table
+        String[] columns = {"Name", "Role", "Department", "Status", "Patient", "Actions"};
+        Object[][] data = {
+            {"Adrian Marquez", "Head Nurse", "ICU", "On Duty", "12", ""},
+            {"Sophia Reyes", "Admin Officer", "Human Resources", "Available", "0", ""},
+            {"Daniel Cruz", "Staff Nurse", "Emergency Room", "On Duty", "8", ""},
+            {"Angela Santos", "Cardiologist", "Cardiology", "Off Duty", "0", ""},
+            {"Kevin Mendoza", "Finance Admin", "Finance", "Available", "0", ""},
+            {"Nicole Garcia", "Staff Nurse", "Pediatrics", "On Duty", "10", ""},
+            {"Joshua Lim", "Orthopedic Doctor", "Orthopedics", "Busy", "15", ""},
+            {"Patricia Flores", "Records Admin", "Records", "Available", "0", ""},
+            {"Ryan Torres", "Head Nurse", "Surgery", "On Duty", "11", ""},
+            {"Claire Bautista", "Radiologist", "Radiology", "On Duty", "9", ""},
+
+            {"Ethan Ramos", "Dermatologist", "Dermatology", "On Duty", "6", ""},
+            {"Maria Lopez", "Staff Nurse", "ICU", "On Duty", "14", ""},
+            {"John Fernandez", "IT Admin", "IT", "Available", "0", ""},
+            {"Ella Navarro", "Oncologist", "Oncology", "Busy", "13", ""},
+            {"Vincent Tan", "Staff Nurse", "Maternity", "Off Duty", "0", ""},
+            {"Alyssa Rivera", "Operations Admin", "Operations", "Available", "0", ""},
+            {"Mark Velasco", "ENT Doctor", "ENT", "On Duty", "7", ""},
+            {"Sophia Cruz", "Staff Nurse", "Emergency Room", "Busy", "9", ""},
+            {"James Castillo", "Procurement Admin", "Procurement", "Available", "0", ""},
+            {"Camille Garcia", "Pulmonologist", "Pulmonology", "On Duty", "8", ""},
+
+            {"Michael Torres", "Cardiologist", "Cardiology", "Off Duty", "0", ""},
+            {"Patricia Ong", "Head Nurse", "ICU", "On Duty", "16", ""},
+            {"Daniel Santos", "Finance Admin", "Finance", "Busy", "0", ""},
+            {"Nicole Reyes", "Psychiatrist", "Psychiatry", "Available", "4", ""},
+            {"Joshua Mendoza", "Staff Nurse", "Radiology", "On Duty", "7", ""},
+            {"Angela Garcia", "Legal Admin", "Legal", "Available", "0", ""},
+            {"Claire Ramos", "Pediatrician", "Pediatrics", "On Duty", "12", ""},
+            {"Ethan Tan", "Staff Nurse", "Orthopedics", "Busy", "10", ""},
+            {"James Bautista", "Records Admin", "Records", "Available", "0", ""},
+            {"Patricia Navarro", "Neurologist", "Neurology", "Off Duty", "0", ""},
+
+            {"Nathan Flores", "Staff Nurse", "Emergency Room", "On Duty", "9", ""},
+            {"Harper Garcia", "Customer Service Admin", "Customer Service", "Busy", "0", ""},
+            {"Benjamin Torres", "Dermatologist", "Dermatology", "On Duty", "5", ""},
+            {"Evelyn Mendoza", "Staff Nurse", "ICU", "Available", "6", ""},
+            {"Jacob Ramos", "IT Admin", "IT", "Available", "0", ""},
+            {"Abigail Navarro", "Cardiologist", "Cardiology", "Busy", "14", ""},
+            {"Michael Diaz", "Head Nurse", "Surgery", "On Duty", "13", ""},
+            {"Emily Perez", "Finance Admin", "Finance", "Available", "0", ""},
+            {"Daniel Rivera", "Radiologist", "Radiology", "On Duty", "8", ""},
+            {"Sofia Castillo", "Staff Nurse", "Pediatrics", "Off Duty", "0", ""},
+
+            {"Matthew Gomez", "Billing Admin", "Billing", "Busy", "0", ""},
+            {"Avery Tan", "Oncologist", "Oncology", "On Duty", "11", ""},
+            {"Joseph Bautista", "Staff Nurse", "Maternity", "Available", "5", ""},
+            {"Ella Ong", "Operations Admin", "Operations", "Available", "0", ""},
+            {"David Lim", "ENT Doctor", "ENT", "On Duty", "7", ""},
+            {"Scarlett Reyes", "Staff Nurse", "Emergency Room", "Busy", "10", ""},
+            {"Samuel Cruz", "HR Admin", "Human Resources", "Available", "0", ""},
+            {"Grace Flores", "Orthopedic Doctor", "Orthopedics", "Off Duty", "0", ""},
+            {"Carter Garcia", "Head Nurse", "ICU", "On Duty", "15", ""},
+            {"Chloe Torres", "Accounting Admin", "Accounting", "Busy", "0", ""}
+
+          };
+        
+        tblEmployee = new JTable (data, columns);
+        tblEmployee.getTableHeader().setFont(FontsTheme.Title_Texts);
+        tblEmployee.setFont(FontsTheme.Info_Texts);
+        tblEmployee.setRowHeight(50);
+        tblEmployee.setDefaultEditor(Object.class, null);
+        tblEmployee.getTableHeader().setReorderingAllowed(false);
+       // tblEmployee.getTableHeader().setBackground(ColorsTheme.Header); 
+        tblEmployee.getTableHeader().setForeground(ColorsTheme.Text_White);
+        
+        scrollEmployee = new JScrollPane(tblEmployee);
+        scrollEmployee.setBounds(0, 0, 1500, 620);
+        pnlMiddle.add(scrollEmployee);
         
     }
 
