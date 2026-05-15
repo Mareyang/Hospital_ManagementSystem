@@ -4,10 +4,7 @@
  */
 package com.mycompany.hospitalmanage;
 
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.Image;
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -21,7 +18,7 @@ import com.mycompany.hospitalmanage.NewlabDialog;
 public class LaboratoryPanel extends JPanel implements ActionListener{
     
     private JPanel pnlMiddle, pnlSearch, pnlPending, pnlProcessing, pnlCompleted, pnlStats, cardPanel, TopPanel;
-    private JLabel lblDetails, lblAppointment, lblTitle, lblValue, lblSubtitle, lblTableTitle;
+    private JLabel lblSystemName, lblDetails, lblAppointment, lblTitle, lblValue, lblSubtitle, lblTableTitle;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
     private JTable tblLabOrders;
@@ -77,8 +74,6 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         btnRefresh.setBackground(ColorsTheme.Text_Gray);
         btnRefresh.setForeground(ColorsTheme.Text_White);
         pnlSearch.add(btnRefresh);
-        
-        
         
         
         
@@ -144,9 +139,10 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
+        TopPanel.setLayout(null);
         TopPanel.setBackground(accentColor);
         cardPanel.add(TopPanel);
-
+        
 
         //Title
         lblTitle = new JLabel(title);
