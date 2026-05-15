@@ -1,3 +1,7 @@
+com\mycompany\hospitalmanage\StatusColor.class
+com\mycompany\hospitalmanage\AddPatientDialog.class
+com\mycompany\hospitalmanage\IconClass.class
+com\mycompany\hospitalmanage\NewAppointmentDialog.class
 com\mycompany\hospitalmanage\DashboardPanel.class
 com\mycompany\hospitalmanage\StaffManagementPanel.class
 com\mycompany\hospitalmanage\NewlabDialog.class
