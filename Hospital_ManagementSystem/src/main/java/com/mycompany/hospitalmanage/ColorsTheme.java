@@ -20,6 +20,8 @@ public class ColorsTheme {
     public static final Color Header = Color.decode("#406AAF");
 
     public static final Color Header = Color.decode("#547A95");
+    public static final Color Header = Color.decode("#547A95");
+    
 
     
     // Text Colors
