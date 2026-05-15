@@ -246,6 +246,8 @@ public class BedManagementPanel extends JPanel {
         lblValue.setFont(FontsTheme.Plain_Texts);
         cardPanel.add(lblValue);
         
+        
+        
         return cardPanel;
     
     }
