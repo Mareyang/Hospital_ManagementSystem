@@ -24,6 +24,8 @@ public class FontsTheme {
     //Texts
     public static final Font Info_Texts = new Font("Arial", Font.PLAIN, 17);
     public static final Font Title_Texts = new Font("Arial", Font.BOLD, 20);
+    public static final Font Dialog_Texts = new Font("Arial", Font.PLAIN, 15);
+    
    
    
     

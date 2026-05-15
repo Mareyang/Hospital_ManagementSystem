@@ -5,23 +5,24 @@
 package com.mycompany.hospitalmanage;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
  *
  * @author Arabella
  */
-public class PatientsPanel extends JPanel {
+public class PatientsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch, pnlHeader;
     private JTable tblPatient;
-    private JLabel lblPatient, lblDetails, lblID, lblName, lblAge, lblBirth, lblNumber, lblGender, lblStatus, lblEmail, lblMarital, lblAddress, 
-            lblHistory, lblBlood, lblRoom;
-    private JTextField txtID, txtName, txtAge, txtBirth, txtNumber, txtEmail, txtAddress, txtBlood, txtRoom, txtSearch;
+    private JLabel lblPatient, lblDetails, lblTitle;
+    private JTextField txtSearch;
     private JButton btnAdd, btnSearch, btnRefresh;
-    private JComboBox<String> cmbMarital, cmbStatus, cmbGender;
-    private JTextArea txaHistory;
     private JScrollPane scrollPatient;
     //private ImagePanel imgPatient;
     
@@ -54,10 +55,10 @@ public class PatientsPanel extends JPanel {
         lblPatient.setForeground(ColorsTheme.Text_Black);
         add(lblPatient);
 
-        lblDetails = new JLabel("Manage patient records and information");
+        lblDetails = new JLabel("Manage patient records and information.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
         btnAdd = new JButton("+  Add Patient");
@@ -65,10 +66,15 @@ public class PatientsPanel extends JPanel {
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.addActionListener(this);
         add(btnAdd);
 
 
         //Search Bar
+//        lblSearchIcon = new JLabel(IconClass.search);
+//        lblSearchIcon.setBounds(40, 25, 25, 25);
+//        pnlSearch.add(lblSearchIcon);
+        
         txtSearch = new JTextField("Search by patient name or patient id...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -78,7 +84,7 @@ public class PatientsPanel extends JPanel {
         btnSearch = new JButton("Search");
         btnSearch.setBounds(1200, 20, 130, 40); 
         btnSearch.setFont(FontsTheme.Buttons);
-        btnSearch.setBackground(ColorsTheme.Search_Button);
+        btnSearch.setBackground(ColorsTheme.Search);
         btnSearch.setForeground(ColorsTheme.Text_White);
         pnlSearch.add(btnSearch);
         
@@ -119,33 +125,48 @@ public class PatientsPanel extends JPanel {
         tblPatient.getTableHeader().setForeground(ColorsTheme.Text_White);
         
         scrollPatient = new JScrollPane(tblPatient);
-        scrollPatient.setBounds(0, 0, 1500, 620);
+        scrollPatient.setBounds(0, 60, 1500, 560);
         pnlMiddle.add(scrollPatient);
         
+        lblTitle = new JLabel("Recent Admissions");
+        lblTitle.setBounds(30, 20, 300, 30);
+        lblTitle.setFont(FontsTheme.Title_Texts);
+        lblTitle.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblTitle);
+        
         
 
 
-        // RIGHT SIDE
+        //ActionListener
+        btnAdd.addActionListener(this);
         
         
 
         
-        // BUTTONS 
-//        btnUpdate = new JButton("Update Info");
-//        btnUpdate.setBounds(740, 650, 200, 50); 
-//        btnUpdate.setFont(FontsTheme.Plain_Texts);
-//        btnUpdate.setBackground(Color.decode("#F08D39"));
-//        btnUpdate.setForeground(Color.WHITE);
-//        pnlMiddle.add(btnUpdate);
-//
-//        btnSearch = new JButton("Clear Patient");
-//        btnSearch.setBounds(1000, 650, 200, 50); 
-//        btnSearch.setFont(FontsTheme.Plain_Texts);
-//        btnSearch.setBackground(Color.decode("#9E9E9E"));
-//        btnSearch.setForeground(Color.WHITE);
-//        pnlMiddle.add(btnSearch);
         
         
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnAdd) {
+        AddPatientDialog patient = new AddPatientDialog();
+        patient.setVisible(true);
+        }
+
+        
+        
+        
+    }
+}   
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (btnAdd == e.getSource()) {
+            NewpatientDialog dialog = new NewpatientDialog();
+            dialog.setVisible(true);
+        }
     }
              }   
     
