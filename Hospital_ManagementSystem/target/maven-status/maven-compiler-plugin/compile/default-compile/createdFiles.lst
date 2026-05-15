@@ -5,7 +5,8 @@ com\mycompany\hospitalmanage\NewAppointmentDialog.class
 com\mycompany\hospitalmanage\DashboardPanel.class
 com\mycompany\hospitalmanage\StaffManagementPanel.class
 com\mycompany\hospitalmanage\NewlabDialog.class
-com\mycompany\hospitalmanage\PharmacyPanel$1.class
+com\mycompany\hospitalmanage\ReportsPanel$ReportStatusColor.class
+com\mycompany\hospitalmanage\NewstaffDialog.class
 com\mycompany\hospitalmanage\AppointmentsPanel.class
 com\mycompany\hospitalmanage\FontsTheme.class
 com\mycompany\hospitalmanage\NewreportDialog.class
