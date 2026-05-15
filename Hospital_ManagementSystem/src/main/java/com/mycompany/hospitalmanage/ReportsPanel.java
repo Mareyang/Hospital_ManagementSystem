@@ -4,12 +4,8 @@
  */
 package com.mycompany.hospitalmanage;
 
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.Image;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -161,7 +157,7 @@ public class ReportsPanel extends JPanel implements ActionListener{
         tableHeader.setForeground(ColorsTheme.Text_White);
         tableHeader.setReorderingAllowed(false);
         
-        tblReports.getColumnModel().getColumn(4).setCellRenderer(new ReportStatusColor());
+        tblReports.getColumnModel().getColumn(4).setCellRenderer(createReportStatusRenderer());
         
         scrollReports = new JScrollPane(tblReports);
         scrollReports.setBounds(25, 215, 1450, 500);
@@ -178,30 +174,36 @@ public class ReportsPanel extends JPanel implements ActionListener{
         
     }
     
-    private static class ReportStatusColor extends DefaultTableCellRenderer {
-        
-        @Override
-        public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
+    private DefaultTableCellRenderer createReportStatusRenderer() {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             
-            java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            String status = value.toString();
-            
-            cell.setForeground(ColorsTheme.Text_Black);
-            
-            if (status.equals("Ready")) {
-                cell.setForeground(ColorsTheme.Add_Confirm);
-            } else if (status.equals("Processing")) {
-                cell.setForeground(ColorsTheme.Search_Button);
-            } else if (status.equals("Failed")) {
-                cell.setForeground(ColorsTheme.Delete_Urgent);
+            @Override
+            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                
+                java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                String status = value.toString();
+                
+                changeReportStatusColor(cell, status);
+                
+                return cell;
             }
-            
-            return cell;
-        }
+        };
+        
+        return renderer;
     }
     
-    
+    private void changeReportStatusColor(java.awt.Component cell, String status) {
+        cell.setForeground(ColorsTheme.Text_Black);
+        
+        if (status.equals("Ready")) {
+            cell.setForeground(ColorsTheme.Add_Confirm);
+        } else if (status.equals("Processing")) {
+            cell.setForeground(ColorsTheme.Search_Button);
+        } else if (status.equals("Failed")) {
+            cell.setForeground(ColorsTheme.Delete_Urgent);
+        }
+    }
     
     private JLabel createFormLabel(String text) {
         JLabel label = new JLabel(text);
@@ -218,11 +220,20 @@ public class ReportsPanel extends JPanel implements ActionListener{
 
     private JLabel createIconLabel(String path) {
         java.net.URL resource = getClass().getResource(path);
-        ImageIcon icon = resource == null
-                ? new ImageIcon("src/main/resources" + path)
-                : new ImageIcon(resource);
-        Image scaledImage = icon.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        return new JLabel(new ImageIcon(scaledImage));
+        ImageIcon icon;
+        
+        if (resource != null) {
+            icon = new ImageIcon(resource);
+        } else {
+            icon = new ImageIcon("src/main/resources" + path);
+        }
+        
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel label = new JLabel(scaledIcon);
+        
+        return label;
     }
 }
     

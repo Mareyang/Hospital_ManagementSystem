@@ -6,14 +6,17 @@ package com.mycompany.hospitalmanage;
 
 import com.mycompany.hospitalmanage.ColorsTheme;
 import com.mycompany.hospitalmanage.FontsTheme;
+//import com.mycompany.hospitalmanage.NewstaffDialog;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
  *
  * @author Arabella
  */
-public class StaffManagementPanel extends JPanel {
+public class StaffManagementPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlOn, pnlOff, pnlLeave, cardPanel, TopPanel;
     private JTable tblEmployee;
@@ -186,8 +189,10 @@ public class StaffManagementPanel extends JPanel {
         scrollEmployee.setBounds(0, 0, 1500, 620);
         pnlMiddle.add(scrollEmployee);
         
+        btnAdd.addActionListener(this);
+        
     }
-
+    
     
     public JPanel createCard(String title, String value) {
 
@@ -217,10 +222,20 @@ public class StaffManagementPanel extends JPanel {
         cardPanel.add(lblValue);
 
 
-        return cardPanel;
-        
-        
-            }
+      return cardPanel;
+             
+      
     }
     
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (btnAdd == e.getSource()) {
+            NewstaffDialog dialog = new NewstaffDialog();
+            dialog.setVisible(true);
+        }
+    }
+}
+    
+    
+
 

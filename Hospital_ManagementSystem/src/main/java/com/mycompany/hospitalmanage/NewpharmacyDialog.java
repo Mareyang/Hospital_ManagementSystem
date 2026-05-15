@@ -4,25 +4,18 @@
  */
 package com.mycompany.hospitalmanage;
 
-import java.awt.Dialog;
-import java.awt.Image;
-import java.awt.Window;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 /**
  *
  * @author eiros
  */
-public class NewpharmacyDialog extends JDialog {
+public class NewpharmacyDialog extends JDialog implements ActionListener {
+    
+    private JButton btnMedicationInfo, btnStockDetails;
+    private JPanel pnlMedicationInfo, pnlStockDetails;
     
     NewpharmacyDialog() {
         
@@ -48,31 +41,42 @@ public class NewpharmacyDialog extends JDialog {
         lblDialogDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDialogDetails);
 
-        JPanel pnlForm = new JPanel();
-        pnlForm.setLayout(null);
-        pnlForm.setBounds(50, 115, 950, 365);
-        pnlForm.setBackground(ColorsTheme.Main_Card);
-        add(pnlForm);
+        btnMedicationInfo = createTabButton("Medication Info");
+        btnMedicationInfo.setBounds(50, 115, 250, 40);
+        btnMedicationInfo.addActionListener(this);
+        add(btnMedicationInfo);
+
+        btnStockDetails = createTabButton("Stock Details");
+        btnStockDetails.setBounds(300, 115, 250, 40);
+        btnStockDetails.addActionListener(this);
+        add(btnStockDetails);
+
+        pnlMedicationInfo = createFormPanel();
+        add(pnlMedicationInfo);
+
+        pnlStockDetails = createFormPanel();
+        pnlStockDetails.setVisible(false);
+        add(pnlStockDetails);
 
         JLabel lblMedication = createFormLabel("Medication:");
         lblMedication.setBounds(70, 35, 170, 30);
-        pnlForm.add(lblMedication);
+        pnlMedicationInfo.add(lblMedication);
 
         JTextField txtMedication = createFormTextField();
         txtMedication.setBounds(250, 35, 580, 30);
-        pnlForm.add(txtMedication);
+        pnlMedicationInfo.add(txtMedication);
 
         JLabel lblItemCode = createFormLabel("Item Code:");
         lblItemCode.setBounds(70, 80, 170, 30);
-        pnlForm.add(lblItemCode);
+        pnlMedicationInfo.add(lblItemCode);
 
         JTextField txtItemCode = createFormTextField();
         txtItemCode.setBounds(250, 80, 220, 30);
-        pnlForm.add(txtItemCode);
+        pnlMedicationInfo.add(txtItemCode);
 
         JLabel lblCategory = createFormLabel("Category:");
         lblCategory.setBounds(510, 80, 120, 30);
-        pnlForm.add(lblCategory);
+        pnlMedicationInfo.add(lblCategory);
 
         JComboBox<String> cmbCategory = new JComboBox<>(new String[]{
             "Pain Reliever",
@@ -85,52 +89,52 @@ public class NewpharmacyDialog extends JDialog {
         });
         cmbCategory.setBounds(630, 80, 200, 30);
         cmbCategory.setFont(FontsTheme.Info_Texts);
-        pnlForm.add(cmbCategory);
+        pnlMedicationInfo.add(cmbCategory);
 
         JLabel lblStock = createFormLabel("Stock:");
-        lblStock.setBounds(70, 125, 170, 30);
-        pnlForm.add(lblStock);
+        lblStock.setBounds(70, 35, 170, 30);
+        pnlStockDetails.add(lblStock);
 
         JTextField txtStock = createFormTextField();
-        txtStock.setBounds(250, 125, 220, 30);
-        pnlForm.add(txtStock);
+        txtStock.setBounds(250, 35, 220, 30);
+        pnlStockDetails.add(txtStock);
 
         JLabel lblReorder = createFormLabel("Reorder Level:");
-        lblReorder.setBounds(510, 125, 150, 30);
-        pnlForm.add(lblReorder);
+        lblReorder.setBounds(510, 35, 150, 30);
+        pnlStockDetails.add(lblReorder);
 
         JTextField txtReorder = createFormTextField();
-        txtReorder.setBounds(670, 125, 160, 30);
-        pnlForm.add(txtReorder);
+        txtReorder.setBounds(670, 35, 160, 30);
+        pnlStockDetails.add(txtReorder);
 
         JLabel lblExpiry = createFormLabel("Expiry Date:");
-        lblExpiry.setBounds(70, 170, 170, 30);
-        pnlForm.add(lblExpiry);
+        lblExpiry.setBounds(70, 80, 170, 30);
+        pnlStockDetails.add(lblExpiry);
 
         JTextField txtExpiry = createFormTextField();
-        txtExpiry.setBounds(250, 170, 220, 30);
-        pnlForm.add(txtExpiry);
+        txtExpiry.setBounds(250, 80, 220, 30);
+        pnlStockDetails.add(txtExpiry);
 
         JLabel lblStatus = createFormLabel("Status:");
-        lblStatus.setBounds(510, 170, 120, 30);
-        pnlForm.add(lblStatus);
+        lblStatus.setBounds(510, 80, 120, 30);
+        pnlStockDetails.add(lblStatus);
 
         JComboBox<String> cmbStatus = new JComboBox<>(new String[]{"In Stock", "Low Stock", "Critical"});
-        cmbStatus.setBounds(630, 170, 200, 30);
+        cmbStatus.setBounds(630, 80, 200, 30);
         cmbStatus.setFont(FontsTheme.Info_Texts);
-        pnlForm.add(cmbStatus);
+        pnlStockDetails.add(cmbStatus);
 
         JLabel lblSupplier = createFormLabel("Supplier:");
-        lblSupplier.setBounds(70, 215, 170, 30);
-        pnlForm.add(lblSupplier);
+        lblSupplier.setBounds(70, 125, 170, 30);
+        pnlStockDetails.add(lblSupplier);
 
         JTextField txtSupplier = createFormTextField();
-        txtSupplier.setBounds(250, 215, 580, 30);
-        pnlForm.add(txtSupplier);
+        txtSupplier.setBounds(250, 125, 580, 30);
+        pnlStockDetails.add(txtSupplier);
 
         JLabel lblNotes = createFormLabel("Notes:");
-        lblNotes.setBounds(70, 265, 170, 30);
-        pnlForm.add(lblNotes);
+        lblNotes.setBounds(70, 180, 170, 30);
+        pnlStockDetails.add(lblNotes);
 
         JTextArea txaNotes = new JTextArea("Write notes here...");
         txaNotes.setFont(FontsTheme.Info_Texts);
@@ -139,8 +143,8 @@ public class NewpharmacyDialog extends JDialog {
         txaNotes.setWrapStyleWord(true);
 
         JScrollPane scrollNotes = new JScrollPane(txaNotes);
-        scrollNotes.setBounds(250, 265, 580, 70);
-        pnlForm.add(scrollNotes);
+        scrollNotes.setBounds(250, 180, 580, 90);
+        pnlStockDetails.add(scrollNotes);
 
         JButton btnCancel = new JButton("Cancel");
         btnCancel.setBounds(635, 495, 150, 40);
@@ -173,12 +177,52 @@ public class NewpharmacyDialog extends JDialog {
         return textField;
     }
 
+    private JPanel createFormPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(50, 155, 950, 325);
+        panel.setBackground(ColorsTheme.Main_Card);
+        return panel;
+    }
+
+    private JButton createTabButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(FontsTheme.Buttons);
+        button.setBackground(ColorsTheme.Search_Button);
+        button.setForeground(ColorsTheme.Text_White);
+        button.setFocusPainted(false);
+        return button;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnMedicationInfo) {
+            pnlMedicationInfo.setVisible(true);
+            pnlStockDetails.setVisible(false);
+        } else if (e.getSource() == btnStockDetails) {
+            pnlMedicationInfo.setVisible(false);
+            pnlStockDetails.setVisible(true);
+        }
+        
+        revalidate();
+        repaint();
+    }
+
     private JLabel createIconLabel(String path) {
         java.net.URL resource = getClass().getResource(path);
-        ImageIcon icon = resource == null
-                ? new ImageIcon("src/main/resources" + path)
-                : new ImageIcon(resource);
-        Image scaledImage = icon.getImage().getScaledInstance(56, 56, Image.SCALE_SMOOTH);
-        return new JLabel(new ImageIcon(scaledImage));
+        ImageIcon icon;
+        
+        if (resource != null) {
+            icon = new ImageIcon(resource);
+        } else {
+            icon = new ImageIcon("src/main/resources" + path);
+        }
+        
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(56, 56, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel label = new JLabel(scaledIcon);
+        
+        return label;
     }
 }

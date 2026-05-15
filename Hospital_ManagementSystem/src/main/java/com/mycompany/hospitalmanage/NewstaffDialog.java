@@ -4,21 +4,26 @@
  */
 package com.mycompany.hospitalmanage;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
- * @author eiros
+ * @author Admin
  */
-public class NewpatientDialog extends JDialog {
-
-    NewpatientDialog() {
+public class NewstaffDialog extends JDialog {
+    
+    NewstaffDialog() {
         setLayout(null);
         setSize(1050, 585);
         setLocationRelativeTo(null);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
 
-        JLabel lblDialogTitle = new JLabel("Patient Information");
+        JLabel lblDialogTitle = new JLabel("Employee Information");
         lblDialogTitle.setBounds(40, 25, 350, 35);
         lblDialogTitle.setFont(FontsTheme.Bold_Texts);
         lblDialogTitle.setForeground(ColorsTheme.Text_Black);
@@ -34,9 +39,9 @@ public class NewpatientDialog extends JDialog {
         pnlTabPersonal.setBounds(50, 115, 250, 40);
         add(pnlTabPersonal);
 
-        JPanel pnlTabMedical = createTab("Medical History");
-        pnlTabMedical.setBounds(300, 115, 250, 40);
-        add(pnlTabMedical);
+        JPanel pnlTabPerf = createTab("Performance");
+        pnlTabPerf.setBounds(300, 115, 250, 40);
+        add(pnlTabPerf);
 
         JPanel pnlForm = new JPanel();
         pnlForm.setLayout(null);
@@ -44,15 +49,15 @@ public class NewpatientDialog extends JDialog {
         pnlForm.setBackground(ColorsTheme.Main_Card);
         add(pnlForm);
 
-        JLabel lblPatientID = createFormLabel("Patient ID :");
-        lblPatientID.setBounds(40, 40, 170, 30);
-        pnlForm.add(lblPatientID);
+        JLabel lblEmpID = createFormLabel("Employee ID :");
+        lblEmpID.setBounds(40, 40, 170, 30);
+        pnlForm.add(lblEmpID);
 
-        JTextField txtPatientID = createFormTextField();
-        txtPatientID.setBounds(220, 40, 230, 30);
-        pnlForm.add(txtPatientID);
+        JTextField txtEmpID = createFormTextField();
+        txtEmpID.setBounds(220, 40, 230, 30);
+        pnlForm.add(txtEmpID);
 
-        JLabel lblName = createFormLabel("Name :");
+        JLabel lblName = createFormLabel("Full Name :");
         lblName.setBounds(40, 80, 170, 30);
         pnlForm.add(lblName);
 
@@ -60,29 +65,30 @@ public class NewpatientDialog extends JDialog {
         txtName.setBounds(220, 80, 230, 30);
         pnlForm.add(txtName);
 
-        JLabel lblAge = createFormLabel("Age :");
-        lblAge.setBounds(40, 120, 170, 30);
-        pnlForm.add(lblAge);
+        JLabel lblBday = createFormLabel("Birthday :");
+        lblBday.setBounds(40, 120, 170, 30);
+        pnlForm.add(lblBday);
 
-        JTextField txtAge = createFormTextField();
-        txtAge.setBounds(220, 120, 230, 30);
-        pnlForm.add(txtAge);
+        JTextField txtBday = createFormTextField();
+        txtBday.setBounds(220, 120, 230, 30);
+        pnlForm.add(txtBday);
 
-        JLabel lblBirthday = createFormLabel("Birthday :");
-        lblBirthday.setBounds(40, 160, 170, 30);
-        pnlForm.add(lblBirthday);
+        JLabel lblGen = createFormLabel("Gender :");
+        lblGen.setBounds(40, 160, 170, 30);
+        pnlForm.add(lblGen);
 
-        JTextField txtBirthday = createFormTextField();
-        txtBirthday.setBounds(220, 160, 230, 30);
-        pnlForm.add(txtBirthday);
+        JComboBox<String> cmbGen = createFormComboBox(new String[]{"", "Female", "Male"});
+        cmbGen.setBounds(220, 160, 230, 30);
+        pnlForm.add(cmbGen);
 
-        JLabel lblGender = createFormLabel("Gender :");
-        lblGender.setBounds(40, 200, 170, 30);
-        pnlForm.add(lblGender);
-
-        JComboBox<String> cmbGender = createFormComboBox(new String[]{"", "Female", "Male"});
-        cmbGender.setBounds(220, 200, 230, 30);
-        pnlForm.add(cmbGender);
+        
+        JLabel lblEmail = createFormLabel("Email Address: ");
+        lblEmail.setBounds(40, 200, 170, 30);
+        pnlForm.add(lblEmail);
+        
+        JTextField txtEmail = createFormTextField();
+        txtEmail.setBounds(220, 200, 230, 30);
+        pnlForm.add(txtEmail);
 
         JLabel lblContact = createFormLabel("Contact Number :");
         lblContact.setBounds(40, 240, 170, 30);
@@ -100,45 +106,46 @@ public class NewpatientDialog extends JDialog {
         cmbMarital.setBounds(720, 40, 180, 30);
         pnlForm.add(cmbMarital);
 
-        JLabel lblEmail = createFormLabel("Email Address :");
-        lblEmail.setBounds(540, 80, 170, 30);
-        pnlForm.add(lblEmail);
+        JLabel lblDep = createFormLabel("Department :");
+        lblDep.setBounds(540, 80, 170, 30);
+        pnlForm.add(lblDep);
 
-        JTextField txtEmail = createFormTextField();
-        txtEmail.setBounds(720, 80, 180, 30);
-        pnlForm.add(txtEmail);
+        JTextField txtDep = createFormTextField();
+        txtDep.setBounds(720, 80, 180, 30);
+        pnlForm.add(txtDep);
 
-        JLabel lblAddress = createFormLabel("Home Address :");
-        lblAddress.setBounds(540, 120, 170, 30);
-        pnlForm.add(lblAddress);
+        JLabel lblRole = createFormLabel("Role :");
+        lblRole.setBounds(540, 120, 170, 30);
+        pnlForm.add(lblRole);
 
-        JTextField txtAddress = createFormTextField();
-        txtAddress.setBounds(720, 120, 180, 30);
-        pnlForm.add(txtAddress);
+        JTextField txtRole = createFormTextField();
+        txtRole.setBounds(720, 120, 180, 30);
+        pnlForm.add(txtRole);
 
-        JLabel lblBlood = createFormLabel("Blood Type :");
-        lblBlood.setBounds(540, 160, 170, 30);
-        pnlForm.add(lblBlood);
+        JLabel lblHired = createFormLabel("Hire Date :");
+        lblHired.setBounds(540, 160, 170, 30);
+        pnlForm.add(lblHired);
 
-        JTextField txtBlood = createFormTextField();
-        txtBlood.setBounds(720, 160, 180, 30);
-        pnlForm.add(txtBlood);
+        JTextField txtHired = createFormTextField();
+        txtHired.setBounds(720, 160, 180, 30);
+        pnlForm.add(txtHired);
 
-        JLabel lblStatus = createFormLabel("Patient Status :");
-        lblStatus.setBounds(540, 200, 170, 30);
+        JLabel lblOff = createFormLabel("Day Off :");
+        lblOff.setBounds(540, 200, 170, 30);
+        pnlForm.add(lblOff);
+
+        JComboBox<String> cmbOff = createFormComboBox(new String[]{"", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"});
+        cmbOff.setBounds(720, 200, 180, 30);
+        pnlForm.add(cmbOff);
+
+        JLabel lblStatus = createFormLabel("Status :");
+        lblStatus.setBounds(540, 240, 170, 30);
         pnlForm.add(lblStatus);
 
-        JComboBox<String> cmbStatus = createFormComboBox(new String[]{"", "Admitted", "Outpatient", "Discharged"});
-        cmbStatus.setBounds(720, 200, 180, 30);
-        pnlForm.add(cmbStatus);
-
-        JLabel lblRoom = createFormLabel("Room Number :");
-        lblRoom.setBounds(540, 240, 170, 30);
-        pnlForm.add(lblRoom);
-
-        JTextField txtRoom = createFormTextField();
-        txtRoom.setBounds(720, 240, 180, 30);
-        pnlForm.add(txtRoom);
+        JComboBox<String> cmbStats = createFormComboBox(new String[]{"", "Active", "On Leave", "Contract"});
+        cmbStats.setBounds(720, 240, 180, 30);
+        pnlForm.add(cmbStats);
+       
 
         JButton btnSave = new JButton("Save Information");
         btnSave.setBounds(800, 495, 200, 40);
@@ -156,6 +163,7 @@ public class NewpatientDialog extends JDialog {
         add(btnCancel);
 
         setVisible(true);
+        
     }
 
     private JPanel createTab(String text) {
@@ -192,3 +200,4 @@ public class NewpatientDialog extends JDialog {
         return comboBox;
     }
 }
+
