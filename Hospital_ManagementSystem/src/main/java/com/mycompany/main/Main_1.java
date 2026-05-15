@@ -4,13 +4,18 @@
 
 package com.mycompany.main;
 
+import com.mycompany.hospitalmanage.*;
+
 /**
  *
- * @author Admin
+ * @author Arabella
  */
 public class Main_1 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        HospitalDashboard hd = new HospitalDashboard();
+        hd.setVisible(true);
     }
 }
+ 
