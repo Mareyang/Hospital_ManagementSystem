@@ -4,6 +4,8 @@
  */
 package com.mycompany.hospitalmanage;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -16,12 +18,14 @@ public class AddPatientDialog extends JDialog implements ActionListener {
     
     private JPanel pnlContent;
     private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblName, lblAge, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, 
-            lblHistory, lblBlood, lblRoom, lblMarital, lblChronic, lblChronic1, lblChronic2, lblChronic3;
-    private JTextField txtID, txtName, txtAge, txtNumber, txtEmail, txtAddress, txtBlood, txtRoom, txtBirth, txtChronic1, txtChronic2, txtChronic3;
+            lblSurgery, lblBlood, lblRoom, lblMarital, lblChronic, lblChronic1, lblChronic2, lblChronic3, lblChronic4, lblAllergy,
+            lblAllergy1, lblAllergy2, lblAllergy3, lblAllergy4, lblMedi, lblNote;
+    private JTextField txtID, txtName, txtAge, txtNumber, txtEmail, txtAddress, txtBlood, txtBirth, txtChronic1, txtChronic2, txtChronic3,
+            txtChronic4, txtAllergy1, txtAllergy2, txtAllergy3, txtAllergy4;
     private JButton btnPersonal, btnHistory, btnAddInfo,btnCancel;
-    private JComboBox<String> cmbStatus, cmbGender, cmbMarital;
-    private JTextArea txaHistory;
-    private JScrollPane scrollHistory;
+    private JComboBox<String> cmbStatus, cmbGender, cmbMarital, cmbRoom;
+    private JTextArea txaHistory, txaHistory1, txaNote;
+    private JScrollPane scrollHistory, scrollHistory1, scrollNote;
     
     
     
@@ -41,7 +45,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         lblSubtitle = new JLabel("Complete all the required fields to add a record.");
         lblSubtitle.setBounds(30, 40, 500, 40);
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
-        lblSubtitle.setForeground(ColorsTheme.Text_Black);
+        lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
         
         
@@ -49,14 +53,14 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         btnPersonal.setBounds(40, 100, 250, 40);
         btnPersonal.setFont(FontsTheme.Buttons);
         btnPersonal.setForeground(ColorsTheme.Text_White);
-        btnPersonal.setBackground(ColorsTheme.Blue);
+        btnPersonal.setBackground(ColorsTheme.Header);
         add(btnPersonal);
         
         btnHistory = new JButton("Medical History");
         btnHistory.setBounds(290, 100, 250, 40);
         btnHistory.setFont(FontsTheme.Buttons);
         btnHistory.setForeground(ColorsTheme.Text_White);
-        btnHistory.setBackground(ColorsTheme.Blue);
+        btnHistory.setBackground(ColorsTheme.Header);
         add(btnHistory);
         
         
@@ -232,12 +236,16 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         lblRoom.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblRoom);
         
-        txtRoom = new JTextField("");
-        txtRoom.setBounds(690, 240, 230, 30);
-        txtRoom.setFont(FontsTheme.Plain_Texts);
-        txtRoom.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtRoom);
+        cmbRoom = new JComboBox<>(new String[]{
+        " ", "ER-01", "ER-02", "LAB-01", "LAB-02", "RM-201", "RM-202", "XRAY-01", "ICU-01", "ICU-02", "OR-01"
+        });
+        cmbRoom.setBounds(690, 240, 230, 30);
+        cmbRoom.setFont(FontsTheme.Plain_Texts);
+        cmbRoom.setForeground(ColorsTheme.Text_Black);
+        cmbRoom.setBackground(ColorsTheme.Text_White);
+        pnlContent.add(cmbRoom);
         
+       
 
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(580, 450, 200, 30);
@@ -263,53 +271,174 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         pnlContent.revalidate();
         
         lblChronic = new JLabel("Chronic Illnesses");
-        lblChronic.setBounds(10, 10, 200, 30);
+        lblChronic.setBounds(70, 10, 200, 30);
         lblChronic.setFont(FontsTheme.Title_Texts);
         lblChronic.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblChronic);
         
-//        lblAllergy = new JLabel("Allergies");
-//        lblAllergy.setBounds(10, 0, 200, 30);
-//        lblAllergy.setFont(FontsTheme.Info_Texts);
-//        lblAllergy.setForeground(ColorsTheme.Text_Black);
-//        pnlContent.add(lblAllergy);
         
-        lblChronic1 = new JLabel("Patient ID : ");
-        lblChronic1.setBounds(40, 30, 200, 30);
-        lblChronic1.setFont(FontsTheme.Plain_Texts);
+        lblChronic1 = new JLabel("Diabetes : ");
+        lblChronic1.setBounds(40, 50, 100, 30);
+        lblChronic1.setFont(FontsTheme.Dialog_Texts);
         lblChronic1.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblChronic1);
         
-        txtChronic1 = new JTextField("");
-        txtChronic1.setBounds(220, 30, 230, 30);
-        txtChronic1.setFont(FontsTheme.Plain_Texts);
+        txtChronic1 = new JTextField(" ");
+        txtChronic1.setBounds(170, 50, 100, 20);
+        txtChronic1.setFont(FontsTheme.Dialog_Texts);
         txtChronic1.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtChronic1);
         
-        lblChronic2 = new JLabel("Name : ");
-        lblChronic2.setBounds(40, 70, 200, 30);
-        lblChronic2.setFont(FontsTheme.Plain_Texts);
+        lblChronic2 = new JLabel("Hypertension : ");
+        lblChronic2.setBounds(40, 80, 100, 30);
+        lblChronic2.setFont(FontsTheme.Dialog_Texts);
         lblChronic2.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblChronic2);
         
-        txtChronic2 = new JTextField("");
-        txtChronic2.setBounds(220, 70, 230, 30);
-        txtChronic2.setFont(FontsTheme.Plain_Texts);
+        txtChronic2 = new JTextField(" ");
+        txtChronic2.setBounds(170, 80, 100, 20);
+        txtChronic2.setFont(FontsTheme.Dialog_Texts);
         txtChronic2.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtChronic2);
         
-        lblChronic2 = new JLabel("Age : ");
-        lblChronic2.setBounds(40, 110, 200, 30);
-        lblChronic2.setFont(FontsTheme.Plain_Texts);
-        lblChronic2.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblChronic2);
+        lblChronic3 = new JLabel("Asthma : ");
+        lblChronic3.setBounds(40, 110, 100, 30);
+        lblChronic3.setFont(FontsTheme.Dialog_Texts);
+        lblChronic3.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblChronic3);
         
-        txtChronic3 = new JTextField("");
-        txtChronic3.setBounds(220, 110, 230, 30);
-        txtChronic3.setFont(FontsTheme.Plain_Texts);
+        txtChronic3 = new JTextField(" ");
+        txtChronic3.setBounds(170, 110, 100, 20);
+        txtChronic3.setFont(FontsTheme.Dialog_Texts);
         txtChronic3.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtChronic3);
         
+        lblChronic4 = new JLabel("Other : ");
+        lblChronic4.setBounds(40, 140, 100, 30);
+        lblChronic4.setFont(FontsTheme.Dialog_Texts);
+        lblChronic4.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblChronic4);
+        
+        txtChronic4 = new JTextField(" ");
+        txtChronic4.setBounds(170, 140, 100, 20);
+        txtChronic4.setFont(FontsTheme.Dialog_Texts);
+        txtChronic4.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtChronic4);
+        
+        
+        lblAllergy = new JLabel("Allergies");
+        lblAllergy.setBounds(380, 10, 200, 30);
+        lblAllergy.setFont(FontsTheme.Title_Texts);
+        lblAllergy.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblAllergy);
+        
+        lblAllergy1 = new JLabel("Medication : ");
+        lblAllergy1.setBounds(330, 50, 100, 30);
+        lblAllergy1.setFont(FontsTheme.Dialog_Texts);
+        lblAllergy1.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblAllergy1);
+        
+        txtAllergy1 = new JTextField(" ");
+        txtAllergy1.setBounds(460, 50, 100, 20);
+        txtAllergy1.setFont(FontsTheme.Dialog_Texts);
+        txtAllergy1.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtAllergy1);
+        
+        lblAllergy2 = new JLabel("Environmental : ");
+        lblAllergy2.setBounds(330, 80, 120, 30);
+        lblAllergy2.setFont(FontsTheme.Dialog_Texts);
+        lblAllergy2.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblAllergy2);
+        
+        txtAllergy2 = new JTextField(" ");
+        txtAllergy2.setBounds(460, 80, 100, 20);
+        txtAllergy2.setFont(FontsTheme.Dialog_Texts);
+        txtAllergy2.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtAllergy2);
+        
+        lblAllergy3 = new JLabel("Food : ");
+        lblAllergy3.setBounds(330, 110, 100, 30);
+        lblAllergy3.setFont(FontsTheme.Dialog_Texts);
+        lblAllergy3.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblAllergy3);
+        
+        txtAllergy3 = new JTextField(" ");
+        txtAllergy3.setBounds(460, 110, 100, 20);
+        txtAllergy3.setFont(FontsTheme.Dialog_Texts);
+        txtAllergy3.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtAllergy3);
+        
+        lblAllergy4 = new JLabel("Other : ");
+        lblAllergy4.setBounds(330, 140, 100, 30);
+        lblAllergy4.setFont(FontsTheme.Dialog_Texts);
+        lblAllergy4.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblAllergy4);
+        
+        txtAllergy4 = new JTextField(" ");
+        txtAllergy4.setBounds(460, 140, 100, 20);
+        txtAllergy4.setFont(FontsTheme.Dialog_Texts);
+        txtAllergy4.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtAllergy4);
+        
+        
+        lblSurgery = new JLabel("Past Hospitalizations");
+        lblSurgery.setBounds(660, 10, 200, 30);
+        lblSurgery.setFont(FontsTheme.Title_Texts);
+        lblSurgery.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblSurgery);
+        
+        txaHistory = new JTextArea(" ");
+        txaHistory.setText("Write here...");
+        txaHistory.setEditable(true);
+        txaHistory.setFont(FontsTheme.Dialog_Texts);
+        txaHistory.setForeground(ColorsTheme.Text_Gray);
+        txaHistory.setLineWrap(true);
+        txaHistory.setWrapStyleWord(true);
+        
+        scrollHistory = new JScrollPane(txaHistory);
+        scrollHistory.setBounds(620, 50, 300, 80);
+        pnlContent.setLayout(null);
+        pnlContent.add(scrollHistory);
+        
+        
+        lblMedi = new JLabel("Current Medications");
+        lblMedi.setBounds(660, 150, 200, 30);
+        lblMedi.setFont(FontsTheme.Title_Texts);
+        lblMedi.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblMedi);
+        
+        txaHistory1 = new JTextArea(" ");
+        txaHistory1.setText("Write here...");
+        txaHistory1.setEditable(true);
+        txaHistory1.setFont(FontsTheme.Dialog_Texts);
+        txaHistory1.setForeground(ColorsTheme.Text_Gray);
+        txaHistory1.setLineWrap(true);
+        txaHistory1.setWrapStyleWord(true);
+        
+        scrollHistory1 = new JScrollPane(txaHistory1);
+        scrollHistory1.setBounds(620, 190, 300, 80);
+        pnlContent.setLayout(null);
+        pnlContent.add(scrollHistory1);
+        
+        
+        lblNote = new JLabel("Additional Note");
+        lblNote.setBounds(70, 180, 200, 30);
+        lblNote.setFont(FontsTheme.Title_Texts);
+        lblNote.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblNote);
+        
+        txaNote = new JTextArea(" ");
+        txaNote.setText("Write here...");
+        txaNote.setEditable(true);
+        txaNote.setFont(FontsTheme.Dialog_Texts);
+        txaNote.setForeground(ColorsTheme.Text_Gray);
+        txaNote.setLineWrap(true);
+        txaNote.setWrapStyleWord(true);
+        
+        scrollNote = new JScrollPane(txaNote);
+        scrollNote.setBounds(40, 210, 520, 60);
+        pnlContent.setLayout(null);
+        pnlContent.add(scrollNote);
     
     
     }

@@ -18,12 +18,9 @@ public class PatientsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch, pnlHeader;
     private JTable tblPatient;
-    private JLabel lblPatient, lblDetails, lblID, lblName, lblAge, lblBirth, lblNumber, lblGender, lblStatus, lblEmail, lblMarital, lblAddress, 
-            lblHistory, lblBlood, lblRoom;
-    private JTextField txtID, txtName, txtAge, txtBirth, txtNumber, txtEmail, txtAddress, txtBlood, txtRoom, txtSearch;
+    private JLabel lblPatient, lblDetails, lblTitle;
+    private JTextField txtSearch;
     private JButton btnAdd, btnSearch, btnRefresh;
-    private JComboBox<String> cmbMarital, cmbStatus, cmbGender;
-    private JTextArea txaHistory;
     private JScrollPane scrollPatient;
     //private ImagePanel imgPatient;
     
@@ -56,10 +53,10 @@ public class PatientsPanel extends JPanel implements ActionListener {
         lblPatient.setForeground(ColorsTheme.Text_Black);
         add(lblPatient);
 
-        lblDetails = new JLabel("Manage patient records and information");
+        lblDetails = new JLabel("Manage patient records and information.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
         btnAdd = new JButton("+  Add Patient");
@@ -71,6 +68,10 @@ public class PatientsPanel extends JPanel implements ActionListener {
 
 
         //Search Bar
+//        lblSearchIcon = new JLabel(IconClass.search);
+//        lblSearchIcon.setBounds(40, 25, 25, 25);
+//        pnlSearch.add(lblSearchIcon);
+        
         txtSearch = new JTextField("Search by patient name or patient id...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -121,8 +122,14 @@ public class PatientsPanel extends JPanel implements ActionListener {
         tblPatient.getTableHeader().setForeground(ColorsTheme.Text_White);
         
         scrollPatient = new JScrollPane(tblPatient);
-        scrollPatient.setBounds(0, 60, 1500, 420);
+        scrollPatient.setBounds(0, 60, 1500, 560);
         pnlMiddle.add(scrollPatient);
+        
+        lblTitle = new JLabel("Recent Admissions");
+        lblTitle.setBounds(30, 20, 300, 30);
+        lblTitle.setFont(FontsTheme.Title_Texts);
+        lblTitle.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblTitle);
         
         
 

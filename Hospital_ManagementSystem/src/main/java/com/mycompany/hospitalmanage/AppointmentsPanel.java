@@ -6,13 +6,15 @@ package com.mycompany.hospitalmanage;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
  *
  * @author Arabella
  */
-public class AppointmentsPanel extends JPanel {
+public class AppointmentsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlConfirm, pnlPending, pnlUrgent, cardPanel, TopPanel;
     private JLabel lblDetails, lblAppointment, lblTitle, lblValue;
@@ -78,10 +80,10 @@ public class AppointmentsPanel extends JPanel {
         lblAppointment.setForeground(ColorsTheme.Text_Black);
         add(lblAppointment);
 
-        lblDetails = new JLabel("Manage and schedule patient appointments");
+        lblDetails = new JLabel("Manage and schedule patient appointments.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
         
@@ -148,12 +150,25 @@ public class AppointmentsPanel extends JPanel {
         tblPatient.getTableHeader().setForeground(ColorsTheme.Text_White);
         
         scrollPatient = new JScrollPane(tblPatient);
-        scrollPatient.setBounds(0, 0, 1500, 620);
+        scrollPatient.setBounds(0, 60, 1500, 560);
         pnlMiddle.add(scrollPatient);
+        
+        lblTitle = new JLabel("Upcoming Visits");
+        lblTitle.setBounds(30, 20, 300, 30);
+        lblTitle.setFont(FontsTheme.Title_Texts);
+        lblTitle.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblTitle);
+        
+        
+        
+        
+        //ActionListener
+        btnAdd.addActionListener(this);
+        
         
         
         }
-        
+    
     
     
     public JPanel createCard(String title, String value, Color topColor) {
@@ -188,7 +203,23 @@ public class AppointmentsPanel extends JPanel {
         
         
             }
+    
+    //ActionListener
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnAdd) {
+        NewAppointmentDialog appointment = new NewAppointmentDialog();
+        appointment.setVisible(true);
+        }
+
     }
+    
+    
+    
+    
+    }
+
         
         
         
