@@ -50,7 +50,8 @@ public class DashboardPanel extends JPanel {
         pnlPatients = createCard(
                 "Total Patients",
                 "2,847",
-                "Active Records");
+                "Active Records",
+                ColorsTheme.Yellow);
         pnlPatients.setBounds(70, 130, 350, 140);
         add(pnlPatients);
         
@@ -58,7 +59,8 @@ public class DashboardPanel extends JPanel {
         pnlAppointments = createCard(
                 "Today's Appointments",
                 "156",
-                "32 remaining");
+                "32 remaining",
+                ColorsTheme.Orange);
         pnlAppointments.setBounds(450, 130, 350, 140);
         add(pnlAppointments);
         
@@ -66,7 +68,8 @@ public class DashboardPanel extends JPanel {
         pnlBeds = createCard(
                 "Bed Occupancy",
                 "78%",
-                "156 of 200 beds");
+                "156 of 200 beds",
+                ColorsTheme.Blue);
         pnlBeds.setBounds(830, 130, 350, 140);
         add(pnlBeds);
         
@@ -74,7 +77,8 @@ public class DashboardPanel extends JPanel {
         pnlRevenue = createCard(
                 "Revenue (MTD)",
                 "₱125K",
-                "Target: $150K");
+                "Target: $150K",
+                ColorsTheme.Green);
         pnlRevenue.setBounds(1210, 130, 350, 140);
         add(pnlRevenue);
         
@@ -156,7 +160,7 @@ public class DashboardPanel extends JPanel {
     }
 
     
-    public JPanel createCard(String title, String value, String subtitle) {
+    public JPanel createCard(String title, String value, String subtitle, Color topLineColor) {
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -164,7 +168,7 @@ public class DashboardPanel extends JPanel {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
+        TopPanel.setBackground(topLineColor);
         cardPanel.add(TopPanel);
 
         lblTitle = new JLabel(title);

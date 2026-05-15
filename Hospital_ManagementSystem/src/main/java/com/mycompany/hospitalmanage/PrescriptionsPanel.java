@@ -85,21 +85,24 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         
         pnlPending = createCard(
                 "Pending",
-                "30");
+                "30",
+                ColorsTheme.Orange);
         pnlPending.setBounds(170, 130, 400, 110);
         add(pnlPending);
         
         
         pnlDispense = createCard(
                 "Dispensed Today",
-                "17");
+                "17",
+                ColorsTheme.Green);
         pnlDispense.setBounds(620, 130, 400, 110);
         add(pnlDispense);
         
        
         pnlCancel = createCard(
                 "Cancelled",
-                "4");
+                "4",
+                ColorsTheme.Red);
         pnlCancel.setBounds(1070, 130, 400, 110);
         add(pnlCancel);
         
@@ -129,7 +132,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
     }
 
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value, Color topLineColor) {
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -137,7 +140,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 400, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
+        TopPanel.setBackground(topLineColor);
         cardPanel.add(TopPanel);
 
         lblTitle = new JLabel(title);

@@ -33,6 +33,12 @@ public class ColorsTheme {
     public static final Color Update_Pending = Color.decode("#FFC107");
     public static final Color Delete_Urgent = Color.decode("#B22222");
     public static final Color Cancel = Color.decode("#BFC6C4");
+    public static final Color Gray = Color.decode("#EDE9E6");
+    public static final Color Green = Color.decode("#48A111");
+    public static final Color Yellow = Color.decode("#FFE400");
+    public static final Color Red = Color.decode("#FF1700");
+    public static final Color Blue = Color.decode("#4300FF");
+    public static final Color Orange = Color.decode("#FF8E00");
     
     
 }
