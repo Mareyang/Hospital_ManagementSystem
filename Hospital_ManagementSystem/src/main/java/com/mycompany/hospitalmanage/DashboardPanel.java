@@ -17,8 +17,8 @@ import java.awt.*;
 public class DashboardPanel extends JPanel {
     
     private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, cardPanel, TopPanel, pnlMiddle;
-    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle, lblDistributionTitle;
-    private JPanel pnlDistribution;
+    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle, lblDistributionTitle, lblOverviewTitle;
+    private JPanel pnlDistribution, pnlOverview, pnlImage, pnlMetrics;
     private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
     
             
@@ -33,9 +33,7 @@ public class DashboardPanel extends JPanel {
         pnlMiddle.setBounds(70, 300, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
-        
-        
-        //Greetings
+
         lblGreet = new JLabel("Welcome back to CareLink Hospital!");
         lblGreet.setBounds(30, 30, 1000, 40);
         lblGreet.setForeground(ColorsTheme.Text_Black);
@@ -115,6 +113,45 @@ public class DashboardPanel extends JPanel {
         pnlDistribution.add(leg3);
         pnlDistribution.add(leg4);
         pnlDistribution.add(leg5);
+        
+        pnlOverview = new JPanel();
+        pnlOverview.setLayout(null);
+        pnlOverview.setBackground(ColorsTheme.Middle_Panel);
+        pnlOverview.setBounds(50,50,850,380);
+        pnlMiddle.add(pnlOverview);
+        
+        lblOverviewTitle = new JLabel("Overview");
+        lblOverviewTitle.setFont(FontsTheme.Title_Texts);
+        lblOverviewTitle.setForeground(ColorsTheme.Text_Black);
+        lblOverviewTitle.setBounds(20,15,180,35);
+        pnlOverview.add(lblOverviewTitle);
+        
+        pnlImage = new JPanel();
+        pnlImage.setLayout(null);
+        pnlImage.setBounds(20,65,380,300);
+        pnlImage.setBackground(ColorsTheme.Top_Line);
+        pnlOverview.add(pnlImage);
+        
+        JLabel lblIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/placeholder.png")));
+        lblIcon.setBounds(0,0,380,300);
+        pnlImage.add(lblIcon);
+
+        pnlMetrics = new JPanel();
+        pnlMetrics.setLayout(null);
+        pnlMetrics.setBounds(410,65,410,300);
+        pnlMetrics.setBackground(Color.WHITE);
+        pnlOverview.add(pnlMetrics);
+        
+        JPanel newPatient = createMetricsCard(3,"New Patients: 342", new Color(191,64,191), "👥");
+        JPanel discharged = createMetricsCard(78,"Discharged: 287", new Color(80,200,120), "✅");
+        JPanel admitted = createMetricsCard(153,"Admitted: 189", new Color(137,207,240), "🛌");
+        JPanel averageStayDuration = createMetricsCard(223,"Avg. Stay Duration: 2.6 Days", new Color(255,191,0), "🕜");
+        
+        pnlMetrics.add(newPatient);
+        pnlMetrics.add(discharged);
+        pnlMetrics.add(admitted);
+        pnlMetrics.add(averageStayDuration);
+        
 
     }
 
@@ -130,24 +167,18 @@ public class DashboardPanel extends JPanel {
         TopPanel.setBackground(ColorsTheme.Top_Line);
         cardPanel.add(TopPanel);
 
-
-        //Title
         lblTitle = new JLabel(title);
         lblTitle.setBounds(20, 25, 250, 25);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         lblTitle.setFont(FontsTheme.Plain_Texts);
         cardPanel.add(lblTitle);
 
-
-        //Value
         lblValue = new JLabel(value);
         lblValue.setBounds(20, 50, 200, 50);
         lblValue.setForeground(Color.BLACK);
         lblValue.setFont(FontsTheme.Bold_Texts);
         cardPanel.add(lblValue);
 
-
-        //Subtitle
         lblSubtitle = new JLabel(subtitle);
         lblSubtitle.setBounds(20, 100, 250, 25);
         lblSubtitle.setForeground(Color.GRAY);
@@ -191,8 +222,40 @@ public class DashboardPanel extends JPanel {
 
         return item;
     }
+    
+    private JPanel createMetricsCard(int y, String text, Color color,String icon)
+    {
+        JPanel card = new JPanel();
+        card.setLayout(null);
+        card.setBounds(20,y,350,70);
+        
+        JLabel title = new JLabel(text);
+        title.setBounds(80,0,350,70);
+        title.setFont(FontsTheme.Plain_Texts);
+        title.setForeground(ColorsTheme.Text_Black);
+        card.add(title);
+        
+        JPanel iconPanel = new JPanel();
+        iconPanel.setBackground(color);
+        iconPanel.setBounds(15, 12, 40, 40);
+        card.add(iconPanel);
+        
+        JLabel lblIcon = new JLabel(icon, JLabel.CENTER);
+        lblIcon.setBounds(0, 0, 40, 40);
+        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 30));
+        lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
+        lblIcon.setVerticalAlignment(SwingConstants.CENTER);
+        iconPanel.add(lblIcon);
+        
+        
+        return card;
+    }
+    
+    
     }
 
+
+    
     
 
     

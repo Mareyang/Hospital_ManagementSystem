@@ -5,12 +5,15 @@
 package com.mycompany.hospitalmanage;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
  * @author Arabella
  */
-public class MedicalRecordsPanel extends JPanel {
+public class MedicalRecordsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch;
     private JLabel lblMedical, lblDetails;
@@ -43,11 +46,8 @@ public class MedicalRecordsPanel extends JPanel {
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.addActionListener(this);
         add(btnAdd);
-        
-        //        imgPatient = new ImagePanel("/patient.png"); 
-//        imgPatient.setBounds(80, 150, 380, 450);
-//        add(imgPatient);
         
         lblMedical = new JLabel("Medical Records");
         lblMedical.setBounds(30, 30, 500, 40);
@@ -61,8 +61,6 @@ public class MedicalRecordsPanel extends JPanel {
         lblDetails.setForeground(ColorsTheme.Text_Black);
         add(lblDetails);
 
-
-        //Search Bar
         txtSearch = new JTextField("Search by patient name or patient id...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -92,8 +90,8 @@ public class MedicalRecordsPanel extends JPanel {
         
         table = new JTable(data, columns);
         table.setRowHeight(50);
-        table.setDefaultEditor(Object.class, null); // para di ma edit mga text sa mga cells
-        table.getTableHeader().setReorderingAllowed(false); //para di ma galaw yung header ng table
+        table.setDefaultEditor(Object.class, null);
+        table.getTableHeader().setReorderingAllowed(false);
         table.getTableHeader().setFont(FontsTheme.Title_Texts);
         table.setFont(FontsTheme.Info_Texts);
         table.getTableHeader().setBackground(ColorsTheme.Header); 
@@ -105,4 +103,14 @@ public class MedicalRecordsPanel extends JPanel {
         pnlMiddle.add(scrollPane);
     
         }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        if (e.getSource() == btnAdd) {
+        AddMedicalRecordDialog record = new AddMedicalRecordDialog();
+        record.setVisible(true);
+        }
+        
+    }
 }
