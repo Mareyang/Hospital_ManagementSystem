@@ -4,6 +4,22 @@
  */
 package com.mycompany.hospitalmanage;
 
+import constants.ButtonStyles;
+import constants.ColorsTheme;
+import panels.MessagesPanel;
+import panels.ReportsPanel;
+import panels.BedManagementPanel;
+import panels.MedicalRecordsPanel;
+import panels.PharmacyPanel;
+import panels.PrescriptionsPanel;
+import panels.EmergencyPanel;
+import panels.AppointmentsPanel;
+import panels.DashboardPanel;
+import panels.PatientsPanel;
+import panels.StaffManagementPanel;
+import panels.SettingsPanel;
+import panels.LaboratoryPanel;
+import panels.BillingPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
