@@ -1,17 +1,15 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.hospitalmanage;
+
+import javax.swing.*;
 
 /**
  *
  * @author Arabella
  */
-public class HospitalManage {
-
-    public static void main(String[] args) {
-
-        HospitalDashboard hd = new HospitalDashboard();
-        hd.setVisible(true);
-    }
+public class SettingsPanel extends JPanel {
+    
 }
