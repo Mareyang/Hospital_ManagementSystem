@@ -12,7 +12,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.event.*;
 import dialogs.NewpharmacyDialog;
+<<<<<<< HEAD
 import dialogs.NewpharmacyDialog;
+=======
+>>>>>>> Agulto
 
 /**
  *

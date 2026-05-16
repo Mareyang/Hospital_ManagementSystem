@@ -4,6 +4,7 @@
  */
 package panels;
 
+<<<<<<< HEAD
 import com.mycompany.hospitalmanage.*;
 import constants.ColorsTheme;
 import constants.FontsTheme;
@@ -14,11 +15,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 
+=======
+import javax.swing.*;
+>>>>>>> Agulto
 
 /**
  *
  * @author Arabella
  */
+<<<<<<< HEAD
 public class EmergencyPanel extends JPanel implements ActionListener{
     
     private JPanel pnlActive, pnlDispatch, pnlAvail, pnlReturn, cardPanel, TopPanel,pnlAmbulance,pnlMiddle,pnlAmb1,pnlAmb2,pnlAmb3,pnlAmb4;
@@ -41,6 +46,21 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
+=======
+public class EmergencyPanel extends JPanel {
+    
+    private JPanel pnlActive, pnlDispatch, pnlAvail, pnlReturn, cardPanel, TopPanel;
+    private JLabel lblDetails, lblEmergency, lblTitle, lblValue;
+    private JTextField txtSearch;
+    private JButton btnSearch, btnRefresh, btnAdd;
+   // private ImagePanel imgPatient;
+    
+    
+    EmergencyPanel() {
+        setLayout(null);
+        setBackground(ColorsTheme.Middle_Panel);
+        
+>>>>>>> Agulto
         
         lblEmergency = new JLabel("Emergency Services");
         lblEmergency.setBounds(30, 30, 500, 40);
@@ -58,17 +78,24 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Delete_Urgent);
+<<<<<<< HEAD
         btnAdd.setFocusPainted(false);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.addActionListener(this);
+=======
+        btnAdd.setForeground(ColorsTheme.Text_White);
+>>>>>>> Agulto
         add(btnAdd);
         
         
         pnlAvail = createCard(
                 "Available",
                 "3");
+<<<<<<< HEAD
         TopPanel.setBackground(Color.green);
        
+=======
+>>>>>>> Agulto
         pnlAvail.setBounds(70, 130, 350, 110);
         add(pnlAvail);
         
@@ -76,8 +103,11 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         pnlDispatch = createCard(
                 "Dispatched",
                 "1");
+<<<<<<< HEAD
         TopPanel.setBackground(Color.red);
      
+=======
+>>>>>>> Agulto
         pnlDispatch.setBounds(450, 130, 350, 110);
         add(pnlDispatch);
         
@@ -85,14 +115,18 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         pnlReturn = createCard(
                 "Returning",
                 "1");
+<<<<<<< HEAD
         TopPanel.setBackground(Color.orange);
        
+=======
+>>>>>>> Agulto
         pnlReturn.setBounds(830, 130, 350, 110);
         add(pnlReturn);
         
         
         pnlActive = createCard(
                 "Active Cases",
+<<<<<<< HEAD
                 "2");  
         TopPanel.setBackground(Color.blue);
        
@@ -233,13 +267,22 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         
          emergencyTable ();
          
+=======
+                "2");
+        pnlActive.setBounds(1210, 130, 350, 110);
+        add(pnlActive);
+        
+>>>>>>> Agulto
     }
 
     
     public JPanel createCard(String title, String value) {
 
+<<<<<<< HEAD
         
         
+=======
+>>>>>>> Agulto
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
         cardPanel.setBackground(ColorsTheme.Main_Card);
@@ -248,9 +291,13 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         TopPanel.setBounds(0, 0, 350, 10);
         TopPanel.setBackground(ColorsTheme.Top_Line);
         cardPanel.add(TopPanel);
+<<<<<<< HEAD
         
         
         
+=======
+
+>>>>>>> Agulto
 
         //Title
         lblTitle = new JLabel(title);
@@ -272,6 +319,7 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         
         
             }
+<<<<<<< HEAD
         public JPanel roomCard (String title, String value) {
             
         cardPanel = new JPanel();
@@ -373,5 +421,8 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         }
         }
     
+=======
+    }
+>>>>>>> Agulto
     
 

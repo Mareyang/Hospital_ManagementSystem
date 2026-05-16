@@ -12,7 +12,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import dialogs.NewreportDialog;
+<<<<<<< HEAD
 import dialogs.NewreportDialog;
+=======
+>>>>>>> Agulto
 
 /**
  *

@@ -13,7 +13,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.event.ActionListener;
 import dialogs.NewlabDialog;
+<<<<<<< HEAD
 import dialogs.NewlabDialog;
+=======
+>>>>>>> Agulto
 /**
  *
  * @author Arabella

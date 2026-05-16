@@ -4,6 +4,7 @@
  */
 package panels;
 
+<<<<<<< HEAD
 import com.mycompany.hospitalmanage.*;
 import constants.ColorsTheme;
 import constants.FontsTheme;
@@ -13,11 +14,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 
+=======
+import javax.swing.*;
+>>>>>>> Agulto
 
 /**
  *
  * @author Arabella
  */
+<<<<<<< HEAD
 public class SettingsPanel extends JPanel implements ActionListener{
     
     private JPanel pnlGeneral, pnlAppearance, pnlSystem, TopPanel, cardPanel;
@@ -366,3 +371,8 @@ public class SettingsPanel extends JPanel implements ActionListener{
     
     
 
+=======
+public class SettingsPanel extends JPanel {
+    
+}
+>>>>>>> Agulto

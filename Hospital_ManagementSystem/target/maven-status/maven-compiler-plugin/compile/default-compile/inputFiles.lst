@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalDashboard.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManage.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\loginPage.java
@@ -30,3 +31,30 @@ C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\ReportsPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\SettingsPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\StaffManagementPanel.java
+=======
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\Main.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewlabDialog.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewpatientDialog.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewpharmacyDialog.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewreportDialog.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewstaffDialog.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\AppointmentsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\BedManagementPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\BillingPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\ButtonStyles.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\ColorsTheme.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\DashboardPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\EmergencyPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\FontsTheme.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\HospitalDashboard.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\HospitalManage.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\LaboratoryPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\MedicalRecordsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\MessagesPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PatientsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PharmacyPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PrescriptionsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\ReportsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\SettingsPanel.java
+D:\REPO\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\StaffManagementPanel.java
+>>>>>>> Agulto
