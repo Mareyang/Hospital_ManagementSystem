@@ -4,13 +4,9 @@
  */
 package panels;
 
-<<<<<<< HEAD
 import dialogs.AddPatientDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
-=======
-import dialogs.NewpatientDialog;
->>>>>>> Agulto
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

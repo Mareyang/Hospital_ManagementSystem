@@ -12,8 +12,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import panels.ColorsTheme;
-import panels.FontsTheme;
 
 /**
  *
