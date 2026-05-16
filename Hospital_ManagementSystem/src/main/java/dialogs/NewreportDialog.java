@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package dialogs;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import panels.ColorsTheme;
+import panels.FontsTheme;
 /**
  *
  * @author eiros
@@ -16,7 +18,7 @@ public class NewreportDialog extends JDialog implements ActionListener {
     private JButton btnReportDetails, btnFiltersNotes;
     private JPanel pnlReportDetails, pnlFiltersNotes;
     
-    NewreportDialog() {
+    public NewreportDialog() {
         
         setLayout(null);
         setSize(1050, 585);

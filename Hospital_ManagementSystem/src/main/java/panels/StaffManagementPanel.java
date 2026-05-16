@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package panels;
 
-import com.mycompany.hospitalmanage.ColorsTheme;
-import com.mycompany.hospitalmanage.FontsTheme;
+import dialogs.NewstaffDialog;
+import panels.ColorsTheme;
+import panels.FontsTheme;
 //import com.mycompany.hospitalmanage.NewstaffDialog;
 import java.awt.Color;
 import java.awt.Image;

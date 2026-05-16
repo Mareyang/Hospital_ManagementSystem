@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package dialogs;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -10,6 +10,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import panels.ColorsTheme;
+import panels.FontsTheme;
 
 /**
  *
@@ -17,7 +19,7 @@ import javax.swing.JTextField;
  */
 public class NewstaffDialog extends JDialog {
     
-    NewstaffDialog() {
+    public NewstaffDialog() {
         setLayout(null);
         setSize(1050, 585);
         setLocationRelativeTo(null);

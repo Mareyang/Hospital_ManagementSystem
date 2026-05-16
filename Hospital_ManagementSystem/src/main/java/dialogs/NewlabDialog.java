@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package dialogs;
 
 import java.awt.Dialog;
 import java.awt.Image;
@@ -10,6 +10,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import panels.ColorsTheme;
+import panels.FontsTheme;
 /**
  *
  * @author eiros
@@ -19,7 +21,7 @@ public class NewlabDialog extends JDialog implements ActionListener {
     private JButton btnPatientTestInfo, btnClinicalNotes;
     private JPanel pnlPatientTestInfo, pnlClinicalNotes;
     
-        NewlabDialog() {
+        public NewlabDialog() {
         
         
         setLayout(null);
