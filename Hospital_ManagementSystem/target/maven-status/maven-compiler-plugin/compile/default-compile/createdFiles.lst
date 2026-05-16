@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 panels\PatientsPanel.class
 panels\BedManagementPanel.class
 panels\DashboardPanel.class
@@ -12,7 +13,6 @@ dialogs\NewreportDialog.class
 panels\EmergencyPanel.class
 panels\PharmacyPanel$1.class
 panels\MessagesPanel.class
-com\mycompany\hospitalmanage\HospitalDashboard.class
 dialogs\AddBillingDialog.class
 panels\PrescriptionsPanel.class
 panels\ReportsPanel$1.class
@@ -27,7 +27,6 @@ panels\ReportsPanel.class
 dialogs\NewAppointmentDialog.class
 dialogs\NewpatientDialog.class
 panels\MedicalRecordsPanel.class
-com\mycompany\hospitalmanage\HospitalManage.class
 com\mycompany\hospitalmanage\loginPage.class
 panels\LaboratoryPanel.class
 dialogs\AddPatientDialog.class
@@ -38,3 +37,35 @@ constants\FontsTheme.class
 dialogs\AddMedicalRecordDialog.class
 dialogs\NewpharmacyDialog.class
 constants\StatusColor.class
+=======
+com\mycompany\hospitalmanage\StaffManagementPanel.class
+com\mycompany\hospitalmanage\NewlabDialog.class
+com\mycompany\hospitalmanage\NewreportDialog.class
+com\mycompany\hospitalmanage\HospitalDashboard$2.class
+com\mycompany\hospitalmanage\NewpharmacyDialog.class
+com\mycompany\hospitalmanage\ColorsTheme.class
+com\mycompany\hospitalmanage\PatientsPanel.class
+com\mycompany\hospitalmanage\ButtonStyles.class
+com\mycompany\hospitalmanage\PharmacyPanel.class
+com\mycompany\hospitalmanage\BedManagementPanel.class
+com\mycompany\hospitalmanage\ReportsPanel$1.class
+com\mycompany\hospitalmanage\MedicalRecordsPanel.class
+com\mycompany\main\Main.class
+com\mycompany\hospitalmanage\ReportsPanel.class
+com\mycompany\hospitalmanage\HospitalDashboard.class
+com\mycompany\hospitalmanage\NewpatientDialog.class
+com\mycompany\hospitalmanage\LaboratoryPanel.class
+com\mycompany\hospitalmanage\EmergencyPanel.class
+com\mycompany\hospitalmanage\DashboardPanel.class
+com\mycompany\hospitalmanage\HospitalDashboard$1.class
+com\mycompany\hospitalmanage\NewstaffDialog.class
+com\mycompany\hospitalmanage\PharmacyPanel$1.class
+com\mycompany\hospitalmanage\AppointmentsPanel.class
+com\mycompany\hospitalmanage\FontsTheme.class
+com\mycompany\hospitalmanage\LaboratoryPanel$1.class
+com\mycompany\hospitalmanage\HospitalManage.class
+com\mycompany\hospitalmanage\BillingPanel.class
+com\mycompany\hospitalmanage\PrescriptionsPanel.class
+com\mycompany\hospitalmanage\SettingsPanel.class
+com\mycompany\hospitalmanage\MessagesPanel.class
+>>>>>>> parent of 720ed23 (meow)

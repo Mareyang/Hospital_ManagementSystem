@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/BillingPanel.java
 package panels;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,10 @@ import com.mycompany.hospitalmanage.*;
 import dialogs.AddBillingDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+=======
+package com.mycompany.hospitalmanage;
+
+>>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/BillingPanel.java
 import java.awt.Color;
 import javax.swing.*;
 

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package panels;
+package com.mycompany.hospitalmanage;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
@@ -12,8 +12,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/LaboratoryPanel.java
 import dialogs.NewlabDialog;
 import dialogs.NewlabDialog;
+=======
+import com.mycompany.hospitalmanage.NewlabDialog;
+>>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/LaboratoryPanel.java
 /**
  *
  * @author Arabella
