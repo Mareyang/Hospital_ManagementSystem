@@ -2,11 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/ColorsTheme.java
+<<<<<<< HEAD
+>>>>>>> parent of 0505475 (add top panel)
 <<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/constants/ColorsTheme.java
 package constants;
 ========
 package com.mycompany.hospitalmanage;
 >>>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/ColorsTheme.java
+<<<<<<< HEAD
+=======
+=======
+package com.mycompany.hospitalmanage;
+>>>>>>> parent of 720ed23 (meow)
+========
+package constants;
+>>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/constants/ColorsTheme.java
+>>>>>>> parent of 0505475 (add top panel)
 
 /**
  *
@@ -17,11 +31,33 @@ import java.awt.Color;
 public class ColorsTheme {
     
     // Main Colors
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/ColorsTheme.java
+<<<<<<< HEAD
+>>>>>>> parent of 0505475 (add top panel)
     public static final Color Side_Panel = Color.decode("#1E3163");
     public static final Color Middle_Panel = Color.decode("#F4F4F4");
     public static final Color Main_Card = Color.WHITE;
     public static final Color Top_Line = Color.decode("#3BC1A8");
     public static final Color Header = Color.decode("#406AAF");
+<<<<<<< HEAD
+=======
+=======
+    public static final Color Side_Panel = Color.decode("#281C59");
+    public static final Color Middle_Panel = Color.decode("#F4F4F4");
+    public static final Color Main_Card = Color.WHITE;
+    public static final Color Top_Line = Color.decode("#3BC1A8");
+    public static final Color Header = Color.decode("#547A95");
+>>>>>>> parent of 720ed23 (meow)
+========
+    public static final Color Side_Panel = Color.decode("#1E3163");
+    public static final Color Middle_Panel = Color.decode("#F4F4F4");
+    public static final Color Main_Card = Color.WHITE;
+    public static final Color Top_Line = Color.decode("#3BC1A8");
+    public static final Color Header = Color.decode("#406AAF");
+>>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/constants/ColorsTheme.java
+>>>>>>> parent of 0505475 (add top panel)
 
 
     
@@ -32,6 +68,13 @@ public class ColorsTheme {
     
     // Status Colors
     public static final Color Active_Button = Color.decode("#018790");
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/ColorsTheme.java
+<<<<<<< HEAD
+========
+>>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/constants/ColorsTheme.java
+>>>>>>> parent of 0505475 (add top panel)
     public static final Color Search = Color.decode("#406AAF");
     public static final Color Gray = Color.decode("#EDE9E6");
     public static final Color Green = Color.decode("#48A111");
@@ -48,12 +91,33 @@ public class ColorsTheme {
 
     
     // Status Colors
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/ColorsTheme.java
+>>>>>>> parent of 0505475 (add top panel)
     public static final Color Search_Button = Color.decode("#406AAF");
     public static final Color Gray_Button = Color.decode("#EDE9E6");
     public static final Color Update_Pending = Color.decode("#FFC107");
 
 
     
+<<<<<<< HEAD
+=======
+=======
+========
+>>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/constants/ColorsTheme.java
+    public static final Color Search_Button = Color.decode("#406AAF");
+    public static final Color Gray_Button = Color.decode("#EDE9E6");
+    public static final Color Update_Pending = Color.decode("#FFC107");
+<<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/ColorsTheme.java
+    public static final Color Delete_Urgent = Color.decode("#B22222");
+>>>>>>> parent of 720ed23 (meow)
+========
+
+
+    
+>>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/constants/ColorsTheme.java
+>>>>>>> parent of 0505475 (add top panel)
     
     
 }

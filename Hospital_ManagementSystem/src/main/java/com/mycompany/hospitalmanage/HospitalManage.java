@@ -3,11 +3,15 @@
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> parent of 720ed23 (meow)
 =======
 >>>>>>> parent of 720ed23 (meow)
+=======
+
+>>>>>>> parent of 0505475 (add top panel)
 package com.mycompany.hospitalmanage;
 
 /**

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package dialogs;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
@@ -14,7 +14,7 @@ import javax.swing.*;
  */
 public class NewpatientDialog extends JDialog {
 
-    NewpatientDialog() {
+    public NewpatientDialog() {
         setLayout(null);
         setSize(1050, 585);
         setLocationRelativeTo(null);

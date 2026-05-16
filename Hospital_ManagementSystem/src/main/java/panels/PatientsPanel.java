@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package panels;
 
+<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/PatientsPanel.java
 <<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/PatientsPanel.java
 import dialogs.AddPatientDialog;
@@ -13,6 +14,11 @@ import constants.FontsTheme;
 >>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/PatientsPanel.java
 =======
 >>>>>>> parent of 720ed23 (meow)
+=======
+import dialogs.AddPatientDialog;
+import constants.ColorsTheme;
+import constants.FontsTheme;
+>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/panels/PatientsPanel.java
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

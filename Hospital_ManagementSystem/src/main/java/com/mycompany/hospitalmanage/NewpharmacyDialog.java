@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package dialogs;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
@@ -19,7 +19,7 @@ public class NewpharmacyDialog extends JDialog implements ActionListener {
     private JButton btnMedicationInfo, btnStockDetails;
     private JPanel pnlMedicationInfo, pnlStockDetails;
     
-    NewpharmacyDialog() {
+    public NewpharmacyDialog() {
         
         
         setLayout(null);

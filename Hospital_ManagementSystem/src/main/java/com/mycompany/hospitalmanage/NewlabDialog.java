@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package dialogs;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
@@ -21,6 +21,7 @@ public class NewlabDialog extends JDialog implements ActionListener {
     private JButton btnPatientTestInfo, btnClinicalNotes;
     private JPanel pnlPatientTestInfo, pnlClinicalNotes;
     
+<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/NewlabDialog.java
 <<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/dialogs/NewlabDialog.java
     public NewlabDialog() {
@@ -30,6 +31,9 @@ public class NewlabDialog extends JDialog implements ActionListener {
 =======
         NewlabDialog() {
 >>>>>>> parent of 720ed23 (meow)
+=======
+    public NewlabDialog() {
+>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/dialogs/NewlabDialog.java
         
         
         setLayout(null);

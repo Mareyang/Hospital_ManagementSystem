@@ -2,11 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/FontsTheme.java
+<<<<<<< HEAD
+>>>>>>> parent of 0505475 (add top panel)
 <<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/constants/FontsTheme.java
 package constants;
 ========
 package com.mycompany.hospitalmanage;
 >>>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/FontsTheme.java
+<<<<<<< HEAD
+=======
+=======
+package com.mycompany.hospitalmanage;
+>>>>>>> parent of 720ed23 (meow)
+========
+package constants;
+>>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/constants/FontsTheme.java
+>>>>>>> parent of 0505475 (add top panel)
 
 /**
  *

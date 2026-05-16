@@ -2,44 +2,53 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package panels;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
+<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/LaboratoryPanel.java
 <<<<<<< HEAD
-<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/PharmacyPanel.java
-import dialogs.NewpharmacyDialog;
-import dialogs.NewpharmacyDialog;
+<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/LaboratoryPanel.java
+import dialogs.NewlabDialog;
+import dialogs.NewlabDialog;
 =======
-import com.mycompany.hospitalmanage.NewpharmacyDialog;
->>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/PharmacyPanel.java
+import com.mycompany.hospitalmanage.NewlabDialog;
+>>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/LaboratoryPanel.java
 =======
-import com.mycompany.hospitalmanage.NewpharmacyDialog;
+import com.mycompany.hospitalmanage.NewlabDialog;
 >>>>>>> parent of 720ed23 (meow)
-
+=======
+import dialogs.NewlabDialog;
+import dialogs.NewlabDialog;
+>>>>>>> parent of 0505475 (add top panel):Hospital_ManagementSystem/src/main/java/panels/LaboratoryPanel.java
 /**
  *
  * @author Arabella
  */
-public class PharmacyPanel extends JPanel implements ActionListener{
+public class LaboratoryPanel extends JPanel implements ActionListener{
     
-    private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlIn, pnlLow, pnlCrit, cardPanel, TopPanel;
-    private JLabel lblDetails, lblPharmacy, lblTitle, lblValue, lblSubtitle, lblTableTitle;
+    private JPanel pnlMiddle, pnlSearch, pnlPending, pnlProcessing, pnlCompleted, pnlStats, cardPanel, TopPanel;
+    private JLabel lblSystemName, lblDetails, lblAppointment, lblTitle, lblValue, lblSubtitle, lblTableTitle;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable tblInventory;
-    private JScrollPane scrollInventory;
+    private JTable tblLabOrders;
+    private JScrollPane scrollLabOrders;
    // private ImagePanel imgPatient;
     
     
-    public PharmacyPanel() {
+    public LaboratoryPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
+        
+        JLabel lbllabIcon = createIconLabel("/icons/lab.png");
+        lbllabIcon.setBounds(30, 25, 72, 72);
+        add(lbllabIcon);
         
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
@@ -53,7 +62,7 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
-        btnAdd = new JButton("+  Add Medication");
+        btnAdd = new JButton("+  New Lab Order");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
@@ -62,7 +71,7 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         add(btnAdd);
         
         //Search Bar
-        txtSearch = new JTextField("Search medication name, item code, or category...");
+        txtSearch = new JTextField("Search patient name, patient ID, or test type...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
         txtSearch.setForeground(ColorsTheme.Text_Gray);
@@ -84,60 +93,56 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         
         
         
-        
-        JLabel lblPharmacyIcon = createIconLabel("/icons/pharmacy.png");
-        lblPharmacyIcon.setBounds(30, 25, 72, 72);
-        add(lblPharmacyIcon);
 
-        lblPharmacy = new JLabel("Pharmacy");
-        lblPharmacy.setBounds(120, 30, 500, 40);
-        lblPharmacy.setFont(FontsTheme.Bold_Texts);
-        lblPharmacy.setForeground(ColorsTheme.Text_Black);
-        add(lblPharmacy);
+        lblAppointment = new JLabel("Laboratory");
+        lblAppointment.setBounds(120, 30, 500, 40);
+        lblAppointment.setFont(FontsTheme.Bold_Texts);
+        lblAppointment.setForeground(ColorsTheme.Text_Black);
+        add(lblAppointment);
 
-        lblDetails = new JLabel("Manage medications and inventory");
+        lblDetails = new JLabel("Manage lab tests and results");
         lblDetails.setBounds(120, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
         lblDetails.setForeground(ColorsTheme.Text_Black);
         add(lblDetails);
         
         
-        pnlTotal = createCard(
-                "Total Items",
-                "1,245",
-                "All medicines",
-                ColorsTheme.Top_Line);
-        pnlTotal.setBounds(70, 130, 350, 110);
-        add(pnlTotal);
+        pnlPending = createCard(
+                "Pending",
+                "10",
+                "Awaiting sample",
+                ColorsTheme.Update_Pending);
+        pnlPending.setBounds(70, 130, 350, 110);
+        add(pnlPending);
         
         
-        pnlIn = createCard(
-                "In Stock",
-                "1,180",
-                "Available items",
-                ColorsTheme.Add_Confirm);
-        pnlIn.setBounds(450, 130, 350, 110);
-        add(pnlIn);
+        pnlProcessing = createCard(
+                "Processing",
+                "12",
+                "Tests in progress",
+                ColorsTheme.Search_Button);
+        pnlProcessing.setBounds(450, 130, 350, 110);
+        add(pnlProcessing);
         
        
-        pnlLow = createCard(
-                "Low Stock",
-                "48",
-                "Needs reorder",
-                ColorsTheme.Update_Pending);
-        pnlLow.setBounds(830, 130, 350, 110);
-        add(pnlLow);
+        pnlCompleted = createCard(
+                "Completed",
+                "45",
+                "Results released",
+                ColorsTheme.Add_Confirm);
+        pnlCompleted.setBounds(830, 130, 350, 110);
+        add(pnlCompleted);
         
         
-        pnlCrit = createCard(
-                "Critical",
-                "17",
-                "Urgent restock",
+        pnlStats = createCard(
+                "STAT Orders",
+                "5",
+                "Urgent priority",
                 ColorsTheme.Delete_Urgent);
-        pnlCrit.setBounds(1210, 130, 350, 110);
-        add(pnlCrit);
+        pnlStats.setBounds(1210, 130, 350, 110);
+        add(pnlStats);
         
-        createInventoryTable();
+        createLabOrdersTable();
         
     }
 
@@ -150,9 +155,10 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
+        TopPanel.setLayout(null);
         TopPanel.setBackground(accentColor);
         cardPanel.add(TopPanel);
-
+        
 
         //Title
         lblTitle = new JLabel(title);
@@ -165,7 +171,7 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         //Value
         lblValue = new JLabel(value);
         lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(Color.BLACK);
+        lblValue.setForeground(ColorsTheme.Text_Black);
         lblValue.setFont(FontsTheme.Bold_Texts);
         cardPanel.add(lblValue);
         
@@ -182,55 +188,57 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         
             }
     
-    private void createInventoryTable() {
-        lblTableTitle = new JLabel("Medication Inventory");
+    private void createLabOrdersTable() {
+        lblTableTitle = new JLabel("Recent Lab Orders");
         lblTableTitle.setBounds(25, 20, 400, 30);
         lblTableTitle.setFont(FontsTheme.Title_Texts);
         lblTableTitle.setForeground(ColorsTheme.Text_Black);
         pnlMiddle.add(lblTableTitle);
         
-        String[] columns = {"Medication", "Item Code", "Category", "Stock", "Reorder Level", "Expiry Date", "Status"};
+        String[] columns = {"Patient Name", "Patient ID", "Test Type", "Priority", "Status", "Requested Date", "Actions"};
         Object[][] data = {
-                {"Paracetamol 500mg", "MED-001", "Pain Reliever", "320", "100", "Dec 20, 2026", "In Stock"},
-                {"Amoxicillin 500mg", "MED-014", "Antibiotic", "42", "50", "Aug 15, 2026", "Low Stock"},
-                {"Salbutamol Inhaler", "MED-022", "Respiratory", "12", "30", "Oct 03, 2026", "Critical"},
-                {"Cetirizine 10mg", "MED-031", "Antihistamine", "180", "60", "Jan 10, 2027", "In Stock"},
-                {"Metformin 500mg", "MED-047", "Diabetes", "65", "80", "Nov 29, 2026", "Low Stock"},
-                {"Losartan 50mg", "MED-053", "Hypertension", "210", "70", "Mar 18, 2027", "In Stock"},
-                {"Omeprazole 20mg", "MED-066", "Gastrointestinal", "25", "40", "Jul 02, 2026", "Critical"},
-                {"Ibuprofen 200mg", "MED-078", "Pain Reliever", "140", "50", "Sep 25, 2026", "In Stock"}
+                {"Maria Leonora", "000021", "Complete Blood Count", "Routine", "Pending", "May 12, 2026", "View"},
+                {"Jose Felipe", "000054", "Chest X-Ray", "STAT", "Processing", "May 12, 2026", "View"},
+                {"Angela Cruz", "000078", "Urinalysis", "Routine", "Completed", "May 11, 2026", "Print"},
+                {"Nathaniel Ong", "000142", "Blood Chemistry", "Routine", "Pending", "May 11, 2026", "View"},
+                {"Miguel Santos", "000205", "ECG", "STAT", "Processing", "May 10, 2026", "View"},
+                {"Ella Villanueva", "000219", "Pregnancy Test", "Routine", "Completed", "May 10, 2026", "Print"},
+                {"Sophia Reyes", "000115", "Lipid Profile", "Routine", "Completed", "May 09, 2026", "Print"},
+                {"Daniel Garcia", "000126", "Fasting Blood Sugar", "Routine", "Pending", "May 09, 2026", "View"}
         };
         
-        tblInventory = new JTable(data, columns);
-        tblInventory.setFont(FontsTheme.Info_Texts);
-        tblInventory.setRowHeight(48);
-        tblInventory.setDefaultEditor(Object.class, null);
-        tblInventory.setShowGrid(false);
-        tblInventory.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblLabOrders = new JTable(data, columns);
+        tblLabOrders.setFont(FontsTheme.Info_Texts);
+        tblLabOrders.setRowHeight(48);
+        tblLabOrders.setDefaultEditor(Object.class, null);
+        tblLabOrders.setShowGrid(false);
+        tblLabOrders.setIntercellSpacing(new java.awt.Dimension(0, 0));
         
-        JTableHeader tableHeader = tblInventory.getTableHeader();
+        JTableHeader tableHeader = tblLabOrders.getTableHeader();
         tableHeader.setFont(FontsTheme.Title_Texts);
         tableHeader.setBackground(ColorsTheme.Header);
         tableHeader.setForeground(ColorsTheme.Text_White);
         tableHeader.setReorderingAllowed(false);
         
-        tblInventory.getColumnModel().getColumn(6).setCellRenderer(createStockStatusRenderer());
-        
-        scrollInventory = new JScrollPane(tblInventory);
-        scrollInventory.setBounds(25, 65, 1450, 405);
-        pnlMiddle.add(scrollInventory);
+        tblLabOrders.getColumnModel().getColumn(3).setCellRenderer(createStatusRenderer());
+        tblLabOrders.getColumnModel().getColumn(4).setCellRenderer(createStatusRenderer());
+
+        scrollLabOrders = new JScrollPane(tblLabOrders);
+        scrollLabOrders.setBounds(25, 65, 1450, 405);
+        pnlMiddle.add(scrollLabOrders);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
         if (btnAdd == e.getSource()) {
-            NewpharmacyDialog phar = new NewpharmacyDialog();
-            phar.setVisible(true);
+            
+            NewlabDialog dialog = new NewlabDialog();
+            dialog.setVisible(true);
         }
     }
     
-    private DefaultTableCellRenderer createStockStatusRenderer() {
+    private DefaultTableCellRenderer createStatusRenderer() {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             
             @Override
@@ -240,7 +248,7 @@ public class PharmacyPanel extends JPanel implements ActionListener{
                 java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 String status = value.toString();
                 
-                changeStockStatusColor(cell, status);
+                changeStatusColor(cell, status);
                 
                 return cell;
             }
@@ -249,15 +257,17 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         return renderer;
     }
     
-    private void changeStockStatusColor(java.awt.Component cell, String status) {
+    private void changeStatusColor(java.awt.Component cell, String status) {
         cell.setForeground(ColorsTheme.Text_Black);
         
-        if (status.equals("In Stock")) {
-            cell.setForeground(ColorsTheme.Add_Confirm);
-        } else if (status.equals("Low Stock")) {
-            cell.setForeground(new Color(180, 120, 0));
-        } else if (status.equals("Critical")) {
+        if (status.equals("STAT")) {
             cell.setForeground(ColorsTheme.Delete_Urgent);
+        } else if (status.equals("Pending")) {
+            cell.setForeground(new Color(180, 120, 0));
+        } else if (status.equals("Processing")) {
+            cell.setForeground(ColorsTheme.Search_Button);
+        } else if (status.equals("Completed")) {
+            cell.setForeground(ColorsTheme.Add_Confirm);
         }
     }
     
@@ -292,8 +302,7 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         return label;
     }
     
+    
+
     }
-        
-    
-    
 
