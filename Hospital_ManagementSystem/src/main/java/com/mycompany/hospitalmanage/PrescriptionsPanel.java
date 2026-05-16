@@ -5,19 +5,22 @@
 package com.mycompany.hospitalmanage;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
  *
  * @author Arabella
  */
-public class PrescriptionsPanel extends JPanel {
+public class PrescriptionsPanel extends JPanel implements ActionListener{
     
     private JPanel pnlMiddle, pnlSearch, pnlPending, pnlDispense, pnlCancel, cardPanel, TopPanel;
     private JLabel lblDetails, lblPrescription, lblTitle, lblValue;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-   // private ImagePanel imgPatient;
+    private JTable table;
+    private JScrollPane scrollPane;
     
     
     PrescriptionsPanel() {
@@ -41,9 +44,9 @@ public class PrescriptionsPanel extends JPanel {
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.addActionListener(this);
         add(btnAdd);
         
-        //Search Bar
         txtSearch = new JTextField("Search by patient name or patient id...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -82,30 +85,54 @@ public class PrescriptionsPanel extends JPanel {
         
         pnlPending = createCard(
                 "Pending",
-                "30");
+                "30",
+                ColorsTheme.Orange);
         pnlPending.setBounds(170, 130, 400, 110);
         add(pnlPending);
         
         
         pnlDispense = createCard(
                 "Dispensed Today",
-                "17");
+                "17",
+                ColorsTheme.Green);
         pnlDispense.setBounds(620, 130, 400, 110);
         add(pnlDispense);
         
        
         pnlCancel = createCard(
                 "Cancelled",
-                "4");
+                "4",
+                ColorsTheme.Red);
         pnlCancel.setBounds(1070, 130, 400, 110);
         add(pnlCancel);
+        
+        String[] columns = {"Patient", "Doctor", "Date", "Medications", "Status"};
+        
+        Object[][] data = {
+            {"John Smith", "Dr. Chen", "2024-01-15", "3 items", "Pending"},
+            {"Sarah Johnson", "Dr. Williams", "2024-01-14", "2 items", "Dispensed"}
+        };
+        
+        table = new JTable(data, columns);
+        table.setRowHeight(50);
+        table.setDefaultEditor(Object.class, null);
+        table.getTableHeader().setReorderingAllowed(false);
+        table.getTableHeader().setFont(FontsTheme.Title_Texts);
+        table.setFont(FontsTheme.Info_Texts);
+        table.getTableHeader().setBackground(ColorsTheme.Header); 
+        table.getTableHeader().setForeground(ColorsTheme.Text_White);
+
+        scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(0,0,1500,500);
+
+        pnlMiddle.add(scrollPane);
         
         
         
     }
 
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value, Color topLineColor) {
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -113,19 +140,15 @@ public class PrescriptionsPanel extends JPanel {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 400, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
+        TopPanel.setBackground(topLineColor);
         cardPanel.add(TopPanel);
 
-
-        //Title
         lblTitle = new JLabel(title);
         lblTitle.setBounds(20, 25, 250, 25);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         lblTitle.setFont(FontsTheme.Plain_Texts);
         cardPanel.add(lblTitle);
 
-
-        //Value
         lblValue = new JLabel(value);
         lblValue.setBounds(20, 50, 200, 50);
         lblValue.setForeground(Color.BLACK);
@@ -137,6 +160,14 @@ public class PrescriptionsPanel extends JPanel {
         
         
             }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnAdd) {
+        AddPrescriptionDialog prescription = new AddPrescriptionDialog();
+        prescription.setVisible(true);
+        }
+    }
     }
         
 
