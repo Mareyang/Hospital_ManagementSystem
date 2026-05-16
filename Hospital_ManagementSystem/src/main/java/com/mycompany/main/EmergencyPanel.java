@@ -55,6 +55,7 @@ public class EmergencyPanel extends JPanel implements ActionListener{
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Delete_Urgent);
+        btnAdd.setFocusPainted(false);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.addActionListener(this);
         add(btnAdd);
