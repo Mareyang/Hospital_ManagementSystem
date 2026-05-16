@@ -5,6 +5,7 @@
 package com.mycompany.hospitalmanage;
 
 import java.awt.Color;
+import java.awt.Image;
 import javax.swing.*;
 
 /**
@@ -16,7 +17,7 @@ public class PrescriptionsPanel extends JPanel {
     private JPanel pnlMiddle, pnlSearch, pnlPending, pnlDispense, pnlCancel, cardPanel, TopPanel;
     private JLabel lblDetails, lblPrescription, lblTitle, lblValue;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd;
+    private JButton btnSearch, btnRefresh, btnAdd, btnSearch1;
    // private ImagePanel imgPatient;
     
     
@@ -49,7 +50,21 @@ public class PrescriptionsPanel extends JPanel {
         txtSearch.setFont(FontsTheme.Info_Texts);
         txtSearch.setForeground(ColorsTheme.Text_Gray);
         pnlSearch.add(txtSearch);
-      
+        
+        ImageIcon icon = new ImageIcon(getClass().getResource("/icons/search.png"));
+
+        Image img = icon.getImage();
+        Image scaledImg = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+
+        ImageIcon scaledIcon = new ImageIcon(scaledImg);
+
+        btnSearch1 = new JButton(scaledIcon); // use your class variable
+        btnSearch1.setBounds(40, 20, 40, 39);
+        btnSearch1.setBackground(Color.decode("#3A2A75"));
+        btnSearch1.setBorder(BorderFactory.createEmptyBorder());
+        btnSearch1.setEnabled(false);
+        pnlSearch.add(btnSearch1);
+        
         btnSearch = new JButton("Search");
         btnSearch.setBounds(1200, 20, 130, 40); 
         btnSearch.setFont(FontsTheme.Buttons);
