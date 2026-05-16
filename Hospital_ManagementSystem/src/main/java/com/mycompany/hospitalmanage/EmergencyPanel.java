@@ -5,6 +5,7 @@
 package com.mycompany.hospitalmanage;
 
 import javax.swing.*;
+import java.awt.Color;
 
 /**
  *
@@ -46,35 +47,39 @@ public class EmergencyPanel extends JPanel {
         
         pnlAvail = createCard(
                 "Available",
-                "3");
+                "3",
+                ColorsTheme.Green);
         pnlAvail.setBounds(70, 130, 350, 110);
         add(pnlAvail);
         
         
         pnlDispatch = createCard(
                 "Dispatched",
-                "1");
+                "1",
+                ColorsTheme.Yellow);
         pnlDispatch.setBounds(450, 130, 350, 110);
         add(pnlDispatch);
         
        
         pnlReturn = createCard(
                 "Returning",
-                "1");
+                "1",
+                ColorsTheme.Blue);
         pnlReturn.setBounds(830, 130, 350, 110);
         add(pnlReturn);
         
         
         pnlActive = createCard(
                 "Active Cases",
-                "2");
+                "2",
+                ColorsTheme.Red);
         pnlActive.setBounds(1210, 130, 350, 110);
         add(pnlActive);
         
     }
 
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value, Color topColor) {
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -82,7 +87,7 @@ public class EmergencyPanel extends JPanel {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
+        TopPanel.setBackground(topColor);
         cardPanel.add(TopPanel);
 
 
