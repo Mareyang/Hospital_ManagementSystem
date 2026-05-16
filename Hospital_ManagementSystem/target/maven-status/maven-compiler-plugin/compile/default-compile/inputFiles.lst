@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalDashboard.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManage.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\ButtonStyles.java
@@ -30,30 +29,3 @@ C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\ReportsPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\SettingsPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\StaffManagementPanel.java
-=======
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\AppointmentsPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\BedManagementPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\BillingPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ButtonStyles.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ColorsTheme.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\DashboardPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\EmergencyPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\FontsTheme.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalDashboard.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManage.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\LaboratoryPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\MedicalRecordsPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\MessagesPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewlabDialog.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewpatientDialog.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewpharmacyDialog.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewreportDialog.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewstaffDialog.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PatientsPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PharmacyPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PrescriptionsPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ReportsPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\SettingsPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\StaffManagementPanel.java
-C:\Users\Eros\Desktop\repo\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\Main.java
->>>>>>> Agulto
