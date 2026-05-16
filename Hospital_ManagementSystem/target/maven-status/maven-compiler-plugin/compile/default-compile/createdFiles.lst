@@ -26,6 +26,7 @@ panels\ReportsPanel.class
 dialogs\NewAppointmentDialog.class
 dialogs\NewpatientDialog.class
 panels\MedicalRecordsPanel.class
+com\mycompany\hospitalmanage\loginPage.class
 panels\LaboratoryPanel.class
 dialogs\AddPatientDialog.class
 dialogs\emergencyDialog$2.class

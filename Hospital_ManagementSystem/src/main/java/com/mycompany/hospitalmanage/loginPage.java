@@ -1,5 +1,7 @@
 package com.mycompany.hospitalmanage;
 
+import constants.ColorsTheme;
+import constants.FontsTheme;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,6 +23,7 @@ public class loginPage extends JFrame implements ActionListener {
 
     JButton loginButton = new JButton("Login");
 
+    
     loginPage() {
 
         setTitle("Hospital Management System");
@@ -32,50 +35,50 @@ public class loginPage extends JFrame implements ActionListener {
 
         // LEFT PANEL
         leftPanel.setBounds(0, 0, 350, 600);
-        leftPanel.setBackground(new Color(16, 23, 95));
+        leftPanel.setBackground(ColorsTheme.Side_Panel);
         leftPanel.setLayout(null);
         add(leftPanel);
 
         // RIGHT PANEL
         rightPanel.setBounds(350, 0, 650, 600);
-        rightPanel.setBackground(Color.WHITE);
+        rightPanel.setBackground(ColorsTheme.Main_Card);
         rightPanel.setLayout(null);
         add(rightPanel);
 
         // HOSPITAL NAME
         hospitalName.setBounds(40, 200, 300, 40);
-        hospitalName.setForeground(Color.WHITE);
-        hospitalName.setFont(new Font("Arial", Font.BOLD, 28));
+        hospitalName.setForeground(ColorsTheme.Text_White);
+        hospitalName.setFont(FontsTheme.Bold_Texts);
         leftPanel.add(hospitalName);
 
         // TITLE
         titleLabel.setBounds(250, 80, 200, 40);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titleLabel.setFont(FontsTheme.Bold_Texts);
         rightPanel.add(titleLabel);
 
         // USERNAME
         usernameLabel.setBounds(120, 170, 100, 30);
-        usernameLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        usernameLabel.setFont(FontsTheme.Plain);
         rightPanel.add(usernameLabel);
 
         usernameField.setBounds(120, 210, 350, 40);
-        usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
+        usernameField.setFont(FontsTheme.Plain_Small);
         rightPanel.add(usernameField);
 
         // PASSWORD
         passwordLabel.setBounds(120, 280, 100, 30);
-        passwordLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        passwordLabel.setFont(FontsTheme.Plain);
         rightPanel.add(passwordLabel);
 
         passwordField.setBounds(120, 320, 350, 40);
-        passwordField.setFont(new Font("Arial", Font.PLAIN, 16));
+        passwordField.setFont(FontsTheme.Plain_Small);
         rightPanel.add(passwordField);
 
         // LOGIN BUTTON
         loginButton.setBounds(120, 400, 350, 45);
-        loginButton.setBackground(new Color(37, 99, 235));
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setFont(new Font("Arial", Font.BOLD, 18));
+        loginButton.setBackground(ColorsTheme.Search);
+        loginButton.setForeground(ColorsTheme.Text_White);
+        loginButton.setFont(FontsTheme.Bold);
         loginButton.addActionListener(this);
         rightPanel.add(loginButton);
 
