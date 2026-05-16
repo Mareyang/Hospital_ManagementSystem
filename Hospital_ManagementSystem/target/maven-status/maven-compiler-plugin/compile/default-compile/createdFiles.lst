@@ -2,6 +2,7 @@ com/mycompany/hospitalmanage/HospitalDashboard$1.class
 dialogs/NewAppointmentDialog.class
 panels/PharmacyPanel$1.class
 dialogs/NewpatientDialog.class
+com/mycompany/hospitalmanage/loginPage.class
 constants/StatusColor.class
 panels/ReportsPanel$1.class
 panels/LaboratoryPanel$1.class

@@ -142,12 +142,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
 
         //ActionListener
         btnAdd.addActionListener(this);
-        
-        
-
-        
-        
-        
+ 
         
     }
 
