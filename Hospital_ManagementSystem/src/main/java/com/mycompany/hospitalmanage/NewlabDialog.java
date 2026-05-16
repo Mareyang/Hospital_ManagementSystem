@@ -21,11 +21,15 @@ public class NewlabDialog extends JDialog implements ActionListener {
     private JButton btnPatientTestInfo, btnClinicalNotes;
     private JPanel pnlPatientTestInfo, pnlClinicalNotes;
     
+<<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/dialogs/NewlabDialog.java
     public NewlabDialog() {
 =======
         NewlabDialog() {
 >>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/NewlabDialog.java
+=======
+        NewlabDialog() {
+>>>>>>> parent of 720ed23 (meow)
         
         
         setLayout(null);

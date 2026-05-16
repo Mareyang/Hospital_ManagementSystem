@@ -4,6 +4,7 @@
  */
 package com.mycompany.hospitalmanage;
 
+<<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/BedManagementPanel.java
 import constants.ColorsTheme;
 import constants.ColorsTheme;
@@ -13,6 +14,10 @@ import constants.FontsTheme;
 import com.mycompany.hospitalmanage.ColorsTheme;
 import com.mycompany.hospitalmanage.FontsTheme;
 >>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/BedManagementPanel.java
+=======
+import com.mycompany.hospitalmanage.ColorsTheme;
+import com.mycompany.hospitalmanage.FontsTheme;
+>>>>>>> parent of 720ed23 (meow)
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.*;

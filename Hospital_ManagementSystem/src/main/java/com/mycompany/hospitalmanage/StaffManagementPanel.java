@@ -4,6 +4,7 @@
  */
 package com.mycompany.hospitalmanage;
 
+<<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/StaffManagementPanel.java
 import constants.ColorsTheme;
 import constants.ColorsTheme;
@@ -14,6 +15,10 @@ import dialogs.NewstaffDialog;
 import com.mycompany.hospitalmanage.ColorsTheme;
 import com.mycompany.hospitalmanage.FontsTheme;
 >>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/StaffManagementPanel.java
+=======
+import com.mycompany.hospitalmanage.ColorsTheme;
+import com.mycompany.hospitalmanage.FontsTheme;
+>>>>>>> parent of 720ed23 (meow)
 //import com.mycompany.hospitalmanage.NewstaffDialog;
 import java.awt.Color;
 import java.awt.event.ActionEvent;

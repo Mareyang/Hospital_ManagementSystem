@@ -11,12 +11,16 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+<<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/ReportsPanel.java
 import dialogs.NewreportDialog;
 import dialogs.NewreportDialog;
 =======
 import com.mycompany.hospitalmanage.NewreportDialog;
 >>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/ReportsPanel.java
+=======
+import com.mycompany.hospitalmanage.NewreportDialog;
+>>>>>>> parent of 720ed23 (meow)
 
 /**
  *

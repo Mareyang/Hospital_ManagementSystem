@@ -12,12 +12,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/LaboratoryPanel.java
 import dialogs.NewlabDialog;
 import dialogs.NewlabDialog;
 =======
 import com.mycompany.hospitalmanage.NewlabDialog;
 >>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/LaboratoryPanel.java
+=======
+import com.mycompany.hospitalmanage.NewlabDialog;
+>>>>>>> parent of 720ed23 (meow)
 /**
  *
  * @author Arabella

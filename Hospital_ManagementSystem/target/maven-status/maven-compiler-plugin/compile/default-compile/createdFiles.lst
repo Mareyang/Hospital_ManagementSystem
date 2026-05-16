@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 panels\PatientsPanel.class
 panels\BedManagementPanel.class
 panels\DashboardPanel.class
@@ -38,6 +39,8 @@ dialogs\AddMedicalRecordDialog.class
 dialogs\NewpharmacyDialog.class
 constants\StatusColor.class
 =======
+=======
+>>>>>>> parent of 720ed23 (meow)
 com\mycompany\hospitalmanage\StaffManagementPanel.class
 com\mycompany\hospitalmanage\NewlabDialog.class
 com\mycompany\hospitalmanage\NewreportDialog.class
@@ -68,4 +71,7 @@ com\mycompany\hospitalmanage\BillingPanel.class
 com\mycompany\hospitalmanage\PrescriptionsPanel.class
 com\mycompany\hospitalmanage\SettingsPanel.class
 com\mycompany\hospitalmanage\MessagesPanel.class
+<<<<<<< HEAD
+>>>>>>> parent of 720ed23 (meow)
+=======
 >>>>>>> parent of 720ed23 (meow)

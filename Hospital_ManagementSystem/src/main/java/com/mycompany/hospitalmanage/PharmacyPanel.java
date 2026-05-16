@@ -11,12 +11,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.event.*;
+<<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/PharmacyPanel.java
 import dialogs.NewpharmacyDialog;
 import dialogs.NewpharmacyDialog;
 =======
 import com.mycompany.hospitalmanage.NewpharmacyDialog;
 >>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/PharmacyPanel.java
+=======
+import com.mycompany.hospitalmanage.NewpharmacyDialog;
+>>>>>>> parent of 720ed23 (meow)
 
 /**
  *

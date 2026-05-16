@@ -2,11 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<< HEAD
 <<<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/constants/ButtonStyles.java
 package constants;
 ========
 package com.mycompany.hospitalmanage;
 >>>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/ButtonStyles.java
+=======
+package com.mycompany.hospitalmanage;
+>>>>>>> parent of 720ed23 (meow)
 
 /**
  *

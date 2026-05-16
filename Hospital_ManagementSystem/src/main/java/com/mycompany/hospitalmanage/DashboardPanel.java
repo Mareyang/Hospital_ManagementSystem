@@ -9,16 +9,23 @@ package com.mycompany.hospitalmanage;
  * @author Arabella
  */
 
+<<<<<<< HEAD
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.*;
+=======
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.*;
+>>>>>>> parent of 720ed23 (meow)
 
 public class DashboardPanel extends JPanel {
     
     private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, cardPanel, TopPanel, pnlMiddle;
+<<<<<<< HEAD
     private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle, lblDistributionTitle, lblOverviewTitle;
     private JPanel pnlDistribution, pnlOverview, pnlImage, pnlMetrics;
     private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
@@ -26,6 +33,13 @@ public class DashboardPanel extends JPanel {
             
             
     public DashboardPanel() {
+=======
+    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle;
+    
+            
+            
+    DashboardPanel() {
+>>>>>>> parent of 720ed23 (meow)
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
@@ -35,7 +49,13 @@ public class DashboardPanel extends JPanel {
         pnlMiddle.setBounds(70, 300, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
+<<<<<<< HEAD
 
+=======
+        
+        
+        //Greetings
+>>>>>>> parent of 720ed23 (meow)
         lblGreet = new JLabel("Welcome back to CareLink Hospital!");
         lblGreet.setBounds(30, 30, 1000, 40);
         lblGreet.setForeground(ColorsTheme.Text_Black);
@@ -52,8 +72,12 @@ public class DashboardPanel extends JPanel {
         pnlPatients = createCard(
                 "Total Patients",
                 "2,847",
+<<<<<<< HEAD
                 "Active Records",
                 ColorsTheme.Yellow);
+=======
+                "Active Records");
+>>>>>>> parent of 720ed23 (meow)
         pnlPatients.setBounds(70, 130, 350, 140);
         add(pnlPatients);
         
@@ -61,8 +85,12 @@ public class DashboardPanel extends JPanel {
         pnlAppointments = createCard(
                 "Today's Appointments",
                 "156",
+<<<<<<< HEAD
                 "32 remaining",
                 ColorsTheme.Orange);
+=======
+                "32 remaining");
+>>>>>>> parent of 720ed23 (meow)
         pnlAppointments.setBounds(450, 130, 350, 140);
         add(pnlAppointments);
         
@@ -70,8 +98,12 @@ public class DashboardPanel extends JPanel {
         pnlBeds = createCard(
                 "Bed Occupancy",
                 "78%",
+<<<<<<< HEAD
                 "156 of 200 beds",
                 ColorsTheme.Blue);
+=======
+                "156 of 200 beds");
+>>>>>>> parent of 720ed23 (meow)
         pnlBeds.setBounds(830, 130, 350, 140);
         add(pnlBeds);
         
@@ -79,6 +111,7 @@ public class DashboardPanel extends JPanel {
         pnlRevenue = createCard(
                 "Revenue (MTD)",
                 "₱125K",
+<<<<<<< HEAD
                 "Target: $150K",
                 ColorsTheme.Green);
         pnlRevenue.setBounds(1210, 130, 350, 140);
@@ -158,11 +191,21 @@ public class DashboardPanel extends JPanel {
         pnlMetrics.add(admitted);
         pnlMetrics.add(averageStayDuration);
         
+=======
+                "Target: $150K");
+        pnlRevenue.setBounds(1210, 130, 350, 140);
+        add(pnlRevenue);
+        
+>>>>>>> parent of 720ed23 (meow)
 
     }
 
     
+<<<<<<< HEAD
     public JPanel createCard(String title, String value, String subtitle, Color topLineColor) {
+=======
+    public JPanel createCard(String title, String value, String subtitle) {
+>>>>>>> parent of 720ed23 (meow)
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -170,21 +213,39 @@ public class DashboardPanel extends JPanel {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
+<<<<<<< HEAD
         TopPanel.setBackground(topLineColor);
         cardPanel.add(TopPanel);
 
+=======
+        TopPanel.setBackground(ColorsTheme.Top_Line);
+        cardPanel.add(TopPanel);
+
+
+        //Title
+>>>>>>> parent of 720ed23 (meow)
         lblTitle = new JLabel(title);
         lblTitle.setBounds(20, 25, 250, 25);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         lblTitle.setFont(FontsTheme.Plain_Texts);
         cardPanel.add(lblTitle);
 
+<<<<<<< HEAD
+=======
+
+        //Value
+>>>>>>> parent of 720ed23 (meow)
         lblValue = new JLabel(value);
         lblValue.setBounds(20, 50, 200, 50);
         lblValue.setForeground(Color.BLACK);
         lblValue.setFont(FontsTheme.Bold_Texts);
         cardPanel.add(lblValue);
 
+<<<<<<< HEAD
+=======
+
+        //Subtitle
+>>>>>>> parent of 720ed23 (meow)
         lblSubtitle = new JLabel(subtitle);
         lblSubtitle.setBounds(20, 100, 250, 25);
         lblSubtitle.setForeground(Color.GRAY);
@@ -196,6 +257,7 @@ public class DashboardPanel extends JPanel {
         
         
             }
+<<<<<<< HEAD
     
     
     private JProgressBar createCustomProgressBar(int x, int y, int width, int height, int value, Color filledColor) {
@@ -265,3 +327,6 @@ public class DashboardPanel extends JPanel {
     
 
     
+=======
+    }
+>>>>>>> parent of 720ed23 (meow)

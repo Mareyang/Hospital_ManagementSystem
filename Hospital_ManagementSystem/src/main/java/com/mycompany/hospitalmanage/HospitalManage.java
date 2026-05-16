@@ -2,7 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 720ed23 (meow)
 =======
 >>>>>>> parent of 720ed23 (meow)
 package com.mycompany.hospitalmanage;

@@ -4,12 +4,15 @@
  */
 package com.mycompany.hospitalmanage;
 
+<<<<<<< HEAD
 <<<<<<< HEAD:Hospital_ManagementSystem/src/main/java/panels/PatientsPanel.java
 import dialogs.AddPatientDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 =======
 >>>>>>> parent of 720ed23 (meow):Hospital_ManagementSystem/src/main/java/com/mycompany/hospitalmanage/PatientsPanel.java
+=======
+>>>>>>> parent of 720ed23 (meow)
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
