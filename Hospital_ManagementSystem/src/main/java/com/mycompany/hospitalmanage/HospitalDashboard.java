@@ -9,7 +9,25 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.CardLayout;
 import java.awt.*;
-import javax.swing.border.Border;
+//import javax.swing.border.Border;
+//import constants.ColorsTheme;
+//import constants.ButtonStyles;
+//import constants.FontsTheme;
+//import constants.StatusColor;
+//import panels.DashboardPanel;
+//import panels.PatientsPanel;
+//import panels.AppointmentsPanel;
+//import panels.MedicalRecordsPanel;
+//import panels.PrescriptionsPanel;
+//import panels.LaboratoryPanel;
+//import panels.PharmacyPanel;
+//import panels.BedManagementPanel;
+//import panels.BillingPanel;
+//import panels.StaffManagementPanel;
+//import panels.EmergencyPanel;
+//import panels.ReportsPanel;
+//import panels.MessagesPanel;
+//import panels.SettingsPanel;
 
 /**
  *
