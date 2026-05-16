@@ -36,7 +36,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
     private JPanel SidePanel, TopPanel, ContainerPanel;
     private CardLayout cardLayout;
     private JButton btnDashboard, btnPatients, btnAppointments, btnMedRec, btnPrescription, btnLab, btnPharmacy,
-            btnBed, btnBill, btnStaff, btnEmergency, btnReports, btnSettings;
+            btnBed, btnBill, btnStaff, btnEmergency, btnReports, btnSettings, btnLogout;
     private JLabel lblSystemName;
     private JTextField txtSearchField;
     private JPanel dashboardPanel;
@@ -154,6 +154,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         btnEmergency = createButton("Emergency", "/icons/emergency.png", 550);
         btnReports = createButton("Reports", "/icons/report.png", 600);
         btnSettings = createButton("Settings", "/icons/setting.png", 650);
+        btnLogout = createButton("Logout", "/icons/logout.png", 850);
 
         //ActionListener
         btnDashboard.addActionListener(this);
@@ -170,6 +171,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         btnReports.addActionListener(this);
 //        btnMessage.addActionListener(this);
         btnSettings.addActionListener(this);
+        btnLogout.addActionListener(this);
         
         
     }
@@ -252,6 +254,12 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         
         else if (e.getSource() == btnSettings) {
             cardLayout.show(ContainerPanel, "settings");
+        }
+        else if(e.getSource() == btnLogout)
+        {
+            dispose();
+            loginPage lp = new loginPage();
+            lp.setVisible(true);
         }
     }
 }
