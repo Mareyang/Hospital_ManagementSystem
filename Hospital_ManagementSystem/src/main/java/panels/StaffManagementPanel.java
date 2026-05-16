@@ -4,17 +4,11 @@
  */
 package panels;
 
-<<<<<<< HEAD
 import constants.ColorsTheme;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import constants.FontsTheme;
 import dialogs.NewstaffDialog;
-=======
-import dialogs.NewstaffDialog;
-import panels.ColorsTheme;
-import panels.FontsTheme;
->>>>>>> Agulto
 //import com.mycompany.hospitalmanage.NewstaffDialog;
 import java.awt.Color;
 import java.awt.event.ActionEvent;

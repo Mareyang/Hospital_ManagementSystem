@@ -4,14 +4,14 @@
  */
 package dialogs;
 
+import constants.ColorsTheme;
+import constants.FontsTheme;
 import java.awt.Dialog;
 import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import panels.ColorsTheme;
-import panels.FontsTheme;
 /**
  *
  * @author eiros
@@ -21,7 +21,7 @@ public class NewlabDialog extends JDialog implements ActionListener {
     private JButton btnPatientTestInfo, btnClinicalNotes;
     private JPanel pnlPatientTestInfo, pnlClinicalNotes;
     
-        public NewlabDialog() {
+    public NewlabDialog() {
         
         
         setLayout(null);

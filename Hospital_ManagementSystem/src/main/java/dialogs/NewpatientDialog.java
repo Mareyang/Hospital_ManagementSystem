@@ -7,8 +7,6 @@ package dialogs;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import javax.swing.*;
-import panels.ColorsTheme;
-import panels.FontsTheme;
 
 /**
  *

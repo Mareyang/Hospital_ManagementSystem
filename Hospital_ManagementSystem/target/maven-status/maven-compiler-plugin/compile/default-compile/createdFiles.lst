@@ -1,6 +1,5 @@
 panels\PatientsPanel.class
 panels\BedManagementPanel.class
-<<<<<<< HEAD
 panels\DashboardPanel.class
 panels\EmergencyPanel$StatusColor.class
 panels\LaboratoryPanel$1.class
@@ -13,6 +12,7 @@ dialogs\NewreportDialog.class
 panels\EmergencyPanel.class
 panels\PharmacyPanel$1.class
 panels\MessagesPanel.class
+com\mycompany\hospitalmanage\HospitalDashboard.class
 dialogs\AddBillingDialog.class
 panels\PrescriptionsPanel.class
 panels\ReportsPanel$1.class
@@ -27,6 +27,7 @@ panels\ReportsPanel.class
 dialogs\NewAppointmentDialog.class
 dialogs\NewpatientDialog.class
 panels\MedicalRecordsPanel.class
+com\mycompany\hospitalmanage\HospitalManage.class
 com\mycompany\hospitalmanage\loginPage.class
 panels\LaboratoryPanel.class
 dialogs\AddPatientDialog.class
@@ -37,33 +38,3 @@ constants\FontsTheme.class
 dialogs\AddMedicalRecordDialog.class
 dialogs\NewpharmacyDialog.class
 constants\StatusColor.class
-=======
-panels\ReportsPanel.class
-panels\DashboardPanel.class
-panels\HospitalDashboard$2.class
-panels\LaboratoryPanel$1.class
-panels\AppointmentsPanel.class
-panels\ButtonStyles.class
-dialogs\NewpatientDialog.class
-panels\MedicalRecordsPanel.class
-dialogs\NewlabDialog.class
-panels\HospitalDashboard.class
-panels\ColorsTheme.class
-panels\LaboratoryPanel.class
-dialogs\NewreportDialog.class
-panels\EmergencyPanel.class
-com\mycompany\main\Main.class
-panels\PharmacyPanel$1.class
-panels\PharmacyPanel.class
-panels\HospitalDashboard$1.class
-panels\HospitalManage.class
-panels\MessagesPanel.class
-panels\BillingPanel.class
-panels\PrescriptionsPanel.class
-dialogs\NewpharmacyDialog.class
-panels\ReportsPanel$1.class
-dialogs\NewstaffDialog.class
-panels\SettingsPanel.class
-panels\FontsTheme.class
-panels\StaffManagementPanel.class
->>>>>>> Agulto

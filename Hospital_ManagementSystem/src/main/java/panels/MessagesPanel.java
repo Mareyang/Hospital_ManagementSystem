@@ -4,15 +4,10 @@
  */
 package panels;
 
-<<<<<<< HEAD
 import constants.ColorsTheme;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import constants.FontsTheme;
-=======
-import panels.ColorsTheme;
-import panels.FontsTheme;
->>>>>>> Agulto
 import javax.swing.*;
 
 /**
