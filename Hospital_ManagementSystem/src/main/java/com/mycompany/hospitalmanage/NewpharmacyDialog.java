@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dialogs;
+package com.mycompany.hospitalmanage;
 
-import constants.ColorsTheme;
-import constants.FontsTheme;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -19,7 +17,7 @@ public class NewpharmacyDialog extends JDialog implements ActionListener {
     private JButton btnMedicationInfo, btnStockDetails;
     private JPanel pnlMedicationInfo, pnlStockDetails;
     
-    public NewpharmacyDialog() {
+    NewpharmacyDialog() {
         
         
         setLayout(null);

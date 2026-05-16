@@ -4,31 +4,6 @@
  */
 package com.mycompany.hospitalmanage;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 0505475 (add top panel)
-import constants.ButtonStyles;
-import constants.ColorsTheme;
-import panels.MessagesPanel;
-import panels.ReportsPanel;
-import panels.BedManagementPanel;
-import panels.MedicalRecordsPanel;
-import panels.PharmacyPanel;
-import panels.PrescriptionsPanel;
-import panels.EmergencyPanel;
-import panels.AppointmentsPanel;
-import panels.DashboardPanel;
-import panels.PatientsPanel;
-import panels.StaffManagementPanel;
-import panels.SettingsPanel;
-import panels.LaboratoryPanel;
-import panels.BillingPanel;
-<<<<<<< HEAD
-=======
->>>>>>> parent of 720ed23 (meow)
-=======
->>>>>>> parent of 0505475 (add top panel)
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -45,27 +20,11 @@ public class HospitalDashboard extends JFrame implements ActionListener {
     private JPanel SidePanel, TopPanel, ContainerPanel;
     private CardLayout cardLayout;
     private JButton btnDashboard, btnPatients, btnAppointments, btnMedRec, btnPrescription, btnLab, btnPharmacy,
-<<<<<<< HEAD
-<<<<<<< HEAD
-            btnBed, btnBill, btnStaff, btnEmergency, btnReports, btnSettings, btnLogout;
-    private JLabel lblSystemName;
-    private JTextField txtSearchField;
-    private JPanel dashboardPanel;
-    private JLabel dashboardIconLbl, dashboardTxtLbl;
-=======
             btnBed, btnBill, btnStaff, btnEmergency, btnReports, btnMessage, btnSettings, btnSearch, btnNotification, btnAdmin;
     private JLabel lblSystemName, lblDateTime, lblCalendarIcon;
     private JTextField txtSearchField;
     private JPopupMenu adminMenu;
     private JMenuItem settings, logout, switchUser;
->>>>>>> parent of 720ed23 (meow)
-=======
-            btnBed, btnBill, btnStaff, btnEmergency, btnReports, btnSettings, btnLogout;
-    private JLabel lblSystemName;
-    private JTextField txtSearchField;
-    private JPanel dashboardPanel;
-    private JLabel dashboardIconLbl, dashboardTxtLbl;
->>>>>>> parent of 0505475 (add top panel)
     
     HospitalDashboard() {
         setSize(1920, 1080);
@@ -88,13 +47,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         add(TopPanel);
         
         //TopPanel Inside
-<<<<<<< HEAD
-<<<<<<< HEAD
-        JLabel lblSystemName = new JLabel("Carelink Management System");
-        lblSystemName.setBounds(120, 30, 600, 40);
-        lblSystemName.setFont(new Font("Tahoma", Font.BOLD, 34));
-        lblSystemName.setForeground(Color.WHITE);
-=======
         lblSystemName = new JLabel("Carelink Management System");
 
         lblSystemName.setBounds(125, 25, 800, 60);
@@ -102,13 +54,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         lblSystemName.setFont(new Font("Tahoma", Font.BOLD, 36));
         lblSystemName.setForeground(Color.WHITE);
 
->>>>>>> parent of 720ed23 (meow)
-=======
-        JLabel lblSystemName = new JLabel("Carelink Management System");
-        lblSystemName.setBounds(120, 30, 600, 40);
-        lblSystemName.setFont(new Font("Tahoma", Font.BOLD, 34));
-        lblSystemName.setForeground(Color.WHITE);
->>>>>>> parent of 0505475 (add top panel)
         TopPanel.add(lblSystemName);
         
         
@@ -116,15 +61,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         String placeholder = "Search patients, records, appointments...";
 
         txtSearchField = new JTextField(placeholder);
-<<<<<<< HEAD
-<<<<<<< HEAD
-        txtSearchField.setBounds(700, 30, 500, 40);
-=======
         txtSearchField.setBounds(750, 30, 500, 40);
->>>>>>> parent of 720ed23 (meow)
-=======
-        txtSearchField.setBounds(700, 30, 500, 40);
->>>>>>> parent of 0505475 (add top panel)
         txtSearchField.setFont(new Font("Arial", Font.PLAIN, 18));
 
         txtSearchField.setForeground(new Color(200, 200, 200)); // placeholder color
@@ -134,83 +71,32 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         txtSearchField.setOpaque(true);
         txtSearchField.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        txtSearchField.addFocusListener(new java.awt.event.FocusAdapter() {
-
-            public void focusGained(java.awt.event.FocusEvent e) {
-                if (txtSearchField.getText().equals(placeholder)) {
-                    txtSearchField.setText("");
-                    txtSearchField.setForeground(Color.WHITE);
-                }
-            }
-
-            public void focusLost(java.awt.event.FocusEvent e) {
-                if (txtSearchField.getText().isEmpty()) {
-                    txtSearchField.setText(placeholder);
-                    txtSearchField.setForeground(new Color(200, 200, 200));
-                }
-            }
-        });
-        
-        //to avoid jtextfield focus
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowOpened(java.awt.event.WindowEvent e) {
-            TopPanel.requestFocusInWindow();
-            }
-        });
-
-        SwingUtilities.invokeLater(() -> {
-            TopPanel.requestFocusInWindow();
-        });
-=======
         txtSearchField.addMouseListener(new java.awt.event.MouseAdapter() {
-=======
-        txtSearchField.addFocusListener(new java.awt.event.FocusAdapter() {
->>>>>>> parent of 0505475 (add top panel)
 
-            public void focusGained(java.awt.event.FocusEvent e) {
-                if (txtSearchField.getText().equals(placeholder)) {
-                    txtSearchField.setText("");
-                    txtSearchField.setForeground(Color.WHITE);
-                }
-            }
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
 
-            public void focusLost(java.awt.event.FocusEvent e) {
-                if (txtSearchField.getText().isEmpty()) {
-                    txtSearchField.setText(placeholder);
-                    txtSearchField.setForeground(new Color(200, 200, 200));
-                }
+            if (txtSearchField.getText().equals(placeholder)) {
+                txtSearchField.setText("");
+                txtSearchField.setForeground(Color.WHITE);
             }
-<<<<<<< HEAD
+        }
+
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent e) {
+
+            if (txtSearchField.getText().isEmpty()) {
+                txtSearchField.setText(placeholder);
+                txtSearchField.setForeground(new Color(200, 200, 200));
+            }
         }
     });
->>>>>>> parent of 720ed23 (meow)
-=======
-        });
-        
-        //to avoid jtextfield focus
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowOpened(java.awt.event.WindowEvent e) {
-            TopPanel.requestFocusInWindow();
-            }
-        });
-
-        SwingUtilities.invokeLater(() -> {
-            TopPanel.requestFocusInWindow();
-        });
->>>>>>> parent of 0505475 (add top panel)
         
         
         // add to panel
         TopPanel.add(txtSearchField);
         
         
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/search.png"));
 
         Image img = icon.getImage();
@@ -341,9 +227,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         
         
         
->>>>>>> parent of 720ed23 (meow)
-=======
->>>>>>> parent of 0505475 (add top panel)
         //CardLayout
         cardLayout = new CardLayout();
         ContainerPanel = new JPanel(cardLayout);
@@ -367,27 +250,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         ContainerPanel.add(new SettingsPanel(), "settings");
         add(ContainerPanel);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 0505475 (add top panel)
-        btnDashboard = createButton("Dashboard", "/icons/home.png", 100);        
-        btnPatients = createButton("Patients", "/icons/patient.png", 150);
-        btnAppointments = createButton("Appointments", "/icons/appointment.png", 200);
-        btnMedRec = createButton("Medical Records", "/icons/record.png", 250);
-        btnPrescription = createButton("Prescriptions", "/icons/prescription.png", 300);
-        btnLab = createButton("Laboratory", "/icons/laboratory.png", 350);
-        btnPharmacy = createButton("Pharmacy", "/icons/pharmacy2.png", 400);
-        btnBed = createButton("Bed Management", "/icons/bed.png", 400);
-        btnBill = createButton("Bill", "/icons/bill.png", 450);
-        btnStaff = createButton("Staff", "/icons/staff.png", 500);
-        btnEmergency = createButton("Emergency", "/icons/emergency.png", 550);
-        btnReports = createButton("Reports", "/icons/report.png", 600);
-        btnSettings = createButton("Settings", "/icons/setting.png", 650);
-        btnLogout = createButton("Logout", "/icons/logout.png", 850);
-
-<<<<<<< HEAD
-=======
         //Button
         btnDashboard = new JButton("Dashboard");
         btnDashboard.setBounds(40, 100, 220, 50);
@@ -462,9 +324,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         
         
         
->>>>>>> parent of 720ed23 (meow)
-=======
->>>>>>> parent of 0505475 (add top panel)
         //ActionListener
         btnDashboard.addActionListener(this);
         btnPatients.addActionListener(this);
@@ -478,183 +337,78 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         btnStaff.addActionListener(this);
         btnEmergency.addActionListener(this);
         btnReports.addActionListener(this);
-<<<<<<< HEAD
-<<<<<<< HEAD
-//        btnMessage.addActionListener(this);
-        btnSettings.addActionListener(this);
-        btnLogout.addActionListener(this);
-=======
         btnMessage.addActionListener(this);
         btnSettings.addActionListener(this);
->>>>>>> parent of 720ed23 (meow)
-=======
-//        btnMessage.addActionListener(this);
-        btnSettings.addActionListener(this);
-        btnLogout.addActionListener(this);
->>>>>>> parent of 0505475 (add top panel)
         
         
     }
     
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 0505475 (add top panel)
-    public JButton createButton(String text, String path, int y)
-{
-    JPanel panel1 = new JPanel();
-    panel1.setLayout(null);
-    panel1.setBounds(0, y, 220, 50);
-    panel1.setBackground(ColorsTheme.Side_Panel);
-
-    JLabel iconLbl = new JLabel(
-            new ImageIcon(getClass().getResource(path))
-    );
-    iconLbl.setBounds(18, 9, 32, 32);
-    panel1.add(iconLbl);
-
-    JButton btnClick = new JButton(text);
-    btnClick.setBounds(60, 0, 150, 50);
-
-    ButtonStyles.sidebarButton(btnClick);
-
-    panel1.add(btnClick);
-
-    SidePanel.add(panel1);
-
-    return btnClick;
-}
-<<<<<<< HEAD
     
     
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnDashboard) {
-        cardLayout.show(ContainerPanel, "dashboard");
-        }
-       
-        else if (e.getSource() == btnPatients) {
-            cardLayout.show(ContainerPanel, "patients");
-        }
+        @Override
+        public void actionPerformed(ActionEvent c) {
 
-        else if (e.getSource() == btnAppointments) {
-            cardLayout.show(ContainerPanel, "appointments");
-        }
-        
-        else if (e.getSource() == btnMedRec) {
-            cardLayout.show(ContainerPanel, "medicalRecords");
-        }
-        
-        else if (e.getSource() == btnPrescription) {
-            cardLayout.show(ContainerPanel, "prescriptions");
-        }
-        
-        else if (e.getSource() == btnLab) {
-            cardLayout.show(ContainerPanel, "laboratory");
-        }
+            // SIDEBAR NAVIGATION
+            if (c.getSource() == btnDashboard) {
+                cardLayout.show(ContainerPanel, "dashboard");
+            }
+            else if (c.getSource() == btnPatients) {
+                cardLayout.show(ContainerPanel, "patients");
+            }
+            else if (c.getSource() == btnAppointments) {
+                cardLayout.show(ContainerPanel, "appointments");
+            }
+            else if (c.getSource() == btnMedRec) {
+                cardLayout.show(ContainerPanel, "medicalRecords");
+            }
+            else if (c.getSource() == btnPrescription) {
+                cardLayout.show(ContainerPanel, "prescriptions");
+            }
+            else if (c.getSource() == btnLab) {
+                cardLayout.show(ContainerPanel, "laboratory");
+            }
+            else if (c.getSource() == btnPharmacy) {
+                cardLayout.show(ContainerPanel, "pharmacy");
+            }
+            else if (c.getSource() == btnBed) {
+                cardLayout.show(ContainerPanel, "bedManagement");
+            }
+            else if (c.getSource() == btnBill) {
+                cardLayout.show(ContainerPanel, "billing");
+            }
+            else if (c.getSource() == btnStaff) {
+                cardLayout.show(ContainerPanel, "staffManagement");
+            }
+            else if (c.getSource() == btnEmergency) {
+                cardLayout.show(ContainerPanel, "emergency");
+            }
+            else if (c.getSource() == btnReports) {
+                cardLayout.show(ContainerPanel, "reports");
+            }
+            else if (c.getSource() == btnMessage) {
+                cardLayout.show(ContainerPanel, "messages");
+            }
+            else if (c.getSource() == btnSettings) {
+                cardLayout.show(ContainerPanel, "settings");
+            }
 
-        else if (e.getSource() == btnPharmacy) {
-            cardLayout.show(ContainerPanel, "pharmacy");
-        }
-        
-        else if (e.getSource() == btnBed) {
-            cardLayout.show(ContainerPanel, "bedManagement");
-        }
-        
-        else if (e.getSource() == btnBill) {
-            cardLayout.show(ContainerPanel, "billing");
-        }
-        
-        else if (e.getSource() == btnStaff) {
-            cardLayout.show(ContainerPanel, "staffManagement");
-        }
+            // ADMIN BUTTON
+            else if (c.getSource() == btnAdmin) {
+                adminMenu.show(btnAdmin, 0, btnAdmin.getHeight());
+            }
 
-        else if (e.getSource() == btnEmergency) {
-            cardLayout.show(ContainerPanel, "emergency");
+            // ADMIN MENU ITEMS
+            else if (c.getSource() == logout) {
+                System.out.println("Logging out...");
+            }
+            else if (c.getSource() == settings) {
+                System.out.println("Opening settings...");
+            }
+            else if (c.getSource() == switchUser) {
+                System.out.println("Switching user...");
+            }
         }
-        
-        else if (e.getSource() == btnReports) {
-            cardLayout.show(ContainerPanel, "reports");
         }
-       
-        
-        else if (e.getSource() == btnSettings) {
-            cardLayout.show(ContainerPanel, "settings");
-        }
-        else if(e.getSource() == btnLogout)
-        {
-            dispose();
-            loginPage lp = new loginPage();
-            lp.setVisible(true);
-        }
-    }
-}
-=======
-=======
->>>>>>> parent of 0505475 (add top panel)
-    
-    
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnDashboard) {
-        cardLayout.show(ContainerPanel, "dashboard");
-        }
-       
-        else if (e.getSource() == btnPatients) {
-            cardLayout.show(ContainerPanel, "patients");
-        }
->>>>>>> parent of 720ed23 (meow)
-
-        else if (e.getSource() == btnAppointments) {
-            cardLayout.show(ContainerPanel, "appointments");
-        }
-        
-        else if (e.getSource() == btnMedRec) {
-            cardLayout.show(ContainerPanel, "medicalRecords");
-        }
-        
-        else if (e.getSource() == btnPrescription) {
-            cardLayout.show(ContainerPanel, "prescriptions");
-        }
-        
-        else if (e.getSource() == btnLab) {
-            cardLayout.show(ContainerPanel, "laboratory");
-        }
-
-        else if (e.getSource() == btnPharmacy) {
-            cardLayout.show(ContainerPanel, "pharmacy");
-        }
-        
-        else if (e.getSource() == btnBed) {
-            cardLayout.show(ContainerPanel, "bedManagement");
-        }
-        
-        else if (e.getSource() == btnBill) {
-            cardLayout.show(ContainerPanel, "billing");
-        }
-        
-        else if (e.getSource() == btnStaff) {
-            cardLayout.show(ContainerPanel, "staffManagement");
-        }
-
-        else if (e.getSource() == btnEmergency) {
-            cardLayout.show(ContainerPanel, "emergency");
-        }
-        
-        else if (e.getSource() == btnReports) {
-            cardLayout.show(ContainerPanel, "reports");
-        }
-       
-        
-        else if (e.getSource() == btnSettings) {
-            cardLayout.show(ContainerPanel, "settings");
-        }
-        else if(e.getSource() == btnLogout)
-        {
-            dispose();
-            loginPage lp = new loginPage();
-            lp.setVisible(true);
-        }
-    }
-}
 
 
 

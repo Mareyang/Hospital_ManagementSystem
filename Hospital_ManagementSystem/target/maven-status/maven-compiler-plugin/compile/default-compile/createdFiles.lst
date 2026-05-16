@@ -1,46 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-panels\PatientsPanel.class
-panels\BedManagementPanel.class
-panels\DashboardPanel.class
-panels\EmergencyPanel$StatusColor.class
-panels\LaboratoryPanel$1.class
-panels\AppointmentsPanel.class
-constants\ColorsTheme.class
-com\mycompany\hospitalmanage\HospitalDashboard$2.class
-dialogs\NewlabDialog.class
-dialogs\AddPrescriptionDialog.class
-dialogs\NewreportDialog.class
-panels\EmergencyPanel.class
-panels\PharmacyPanel$1.class
-panels\MessagesPanel.class
-dialogs\AddBillingDialog.class
-panels\PrescriptionsPanel.class
-panels\ReportsPanel$1.class
-dialogs\NewstaffDialog.class
-dialogs\emergencyDialog$1.class
-dialogs\emergencyDialog.class
-panels\SettingsPanel.class
-constants\ButtonStyles.class
-panels\StaffManagementPanel.class
-com\mycompany\hospitalmanage\HospitalDashboard$1.class
-panels\ReportsPanel.class
-dialogs\NewAppointmentDialog.class
-dialogs\NewpatientDialog.class
-panels\MedicalRecordsPanel.class
-com\mycompany\hospitalmanage\loginPage.class
-panels\LaboratoryPanel.class
-dialogs\AddPatientDialog.class
-dialogs\emergencyDialog$2.class
-panels\PharmacyPanel.class
-panels\BillingPanel.class
-constants\FontsTheme.class
-dialogs\AddMedicalRecordDialog.class
-dialogs\NewpharmacyDialog.class
-constants\StatusColor.class
-=======
-=======
->>>>>>> parent of 720ed23 (meow)
 com\mycompany\hospitalmanage\StaffManagementPanel.class
 com\mycompany\hospitalmanage\NewlabDialog.class
 com\mycompany\hospitalmanage\NewreportDialog.class
@@ -71,7 +28,3 @@ com\mycompany\hospitalmanage\BillingPanel.class
 com\mycompany\hospitalmanage\PrescriptionsPanel.class
 com\mycompany\hospitalmanage\SettingsPanel.class
 com\mycompany\hospitalmanage\MessagesPanel.class
-<<<<<<< HEAD
->>>>>>> parent of 720ed23 (meow)
-=======
->>>>>>> parent of 720ed23 (meow)

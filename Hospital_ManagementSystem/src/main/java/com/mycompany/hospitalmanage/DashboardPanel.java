@@ -9,37 +9,18 @@ package com.mycompany.hospitalmanage;
  * @author Arabella
  */
 
-<<<<<<< HEAD
-import constants.ColorsTheme;
-import constants.FontsTheme;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
-import java.awt.*;
-=======
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.*;
->>>>>>> parent of 720ed23 (meow)
 
 public class DashboardPanel extends JPanel {
     
     private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, cardPanel, TopPanel, pnlMiddle;
-<<<<<<< HEAD
-    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle, lblDistributionTitle, lblOverviewTitle;
-    private JPanel pnlDistribution, pnlOverview, pnlImage, pnlMetrics;
-    private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
-    
-            
-            
-    public DashboardPanel() {
-=======
     private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle;
     
             
             
     DashboardPanel() {
->>>>>>> parent of 720ed23 (meow)
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
@@ -49,13 +30,9 @@ public class DashboardPanel extends JPanel {
         pnlMiddle.setBounds(70, 300, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
-<<<<<<< HEAD
-
-=======
         
         
         //Greetings
->>>>>>> parent of 720ed23 (meow)
         lblGreet = new JLabel("Welcome back to CareLink Hospital!");
         lblGreet.setBounds(30, 30, 1000, 40);
         lblGreet.setForeground(ColorsTheme.Text_Black);
@@ -72,12 +49,7 @@ public class DashboardPanel extends JPanel {
         pnlPatients = createCard(
                 "Total Patients",
                 "2,847",
-<<<<<<< HEAD
-                "Active Records",
-                ColorsTheme.Yellow);
-=======
                 "Active Records");
->>>>>>> parent of 720ed23 (meow)
         pnlPatients.setBounds(70, 130, 350, 140);
         add(pnlPatients);
         
@@ -85,12 +57,7 @@ public class DashboardPanel extends JPanel {
         pnlAppointments = createCard(
                 "Today's Appointments",
                 "156",
-<<<<<<< HEAD
-                "32 remaining",
-                ColorsTheme.Orange);
-=======
                 "32 remaining");
->>>>>>> parent of 720ed23 (meow)
         pnlAppointments.setBounds(450, 130, 350, 140);
         add(pnlAppointments);
         
@@ -98,12 +65,7 @@ public class DashboardPanel extends JPanel {
         pnlBeds = createCard(
                 "Bed Occupancy",
                 "78%",
-<<<<<<< HEAD
-                "156 of 200 beds",
-                ColorsTheme.Blue);
-=======
                 "156 of 200 beds");
->>>>>>> parent of 720ed23 (meow)
         pnlBeds.setBounds(830, 130, 350, 140);
         add(pnlBeds);
         
@@ -111,101 +73,15 @@ public class DashboardPanel extends JPanel {
         pnlRevenue = createCard(
                 "Revenue (MTD)",
                 "₱125K",
-<<<<<<< HEAD
-                "Target: $150K",
-                ColorsTheme.Green);
-        pnlRevenue.setBounds(1210, 130, 350, 140);
-        add(pnlRevenue);
-        
-        pnlDistribution = new JPanel();
-        pnlDistribution.setLayout(null);
-        pnlDistribution.setBackground(ColorsTheme.Middle_Panel);
-        pnlDistribution.setBounds(950,50,500,400);
-        pnlMiddle.add(pnlDistribution);
-        
-        lblDistributionTitle = new JLabel("Department Distribution");
-        lblDistributionTitle.setFont(FontsTheme.Title_Texts);
-        lblDistributionTitle.setBounds(10,20,300,30);
-        pnlDistribution.add(lblDistributionTitle);
-        
-        barCardiology = createCustomProgressBar(10,70,480,30,25,new Color(0,0,255));
-        barOrthopedics = createCustomProgressBar(10,120,480,30,22,new Color(0,255,0));
-        barEmergency = createCustomProgressBar(10,170,480,30,20, new Color(255,0,0));
-        barNeurology = createCustomProgressBar(10,220,480,30,18, new Color(255,0,255));
-        barPediatrics = createCustomProgressBar(10,270,480,30,15, new Color(255,200,200));
-        
-        pnlDistribution.add(barCardiology);
-        pnlDistribution.add(barOrthopedics);
-        pnlDistribution.add(barEmergency);
-        pnlDistribution.add(barNeurology);
-        pnlDistribution.add(barPediatrics);
-        
-        
-        JPanel leg1 = createLegendItem(20, 300, "Cardiology", new Color(0,0,255));
-        JPanel leg2 = createLegendItem(20, 330, "Neurology", new Color(0,255,0));
-        JPanel leg3 = createLegendItem(20, 360, "Orthopedics", new Color(255,0,0));
-        JPanel leg4 = createLegendItem(200, 300, "Pediatrics", new Color(255,0,255));
-        JPanel leg5 = createLegendItem(200, 330, "Emergency", new Color(255,200,200));
-
-        pnlDistribution.add(leg1);
-        pnlDistribution.add(leg2);
-        pnlDistribution.add(leg3);
-        pnlDistribution.add(leg4);
-        pnlDistribution.add(leg5);
-        
-        pnlOverview = new JPanel();
-        pnlOverview.setLayout(null);
-        pnlOverview.setBackground(ColorsTheme.Middle_Panel);
-        pnlOverview.setBounds(50,50,850,380);
-        pnlMiddle.add(pnlOverview);
-        
-        lblOverviewTitle = new JLabel("Overview");
-        lblOverviewTitle.setFont(FontsTheme.Title_Texts);
-        lblOverviewTitle.setForeground(ColorsTheme.Text_Black);
-        lblOverviewTitle.setBounds(20,15,180,35);
-        pnlOverview.add(lblOverviewTitle);
-        
-        pnlImage = new JPanel();
-        pnlImage.setLayout(null);
-        pnlImage.setBounds(20,65,380,300);
-        pnlImage.setBackground(ColorsTheme.Top_Line);
-        pnlOverview.add(pnlImage);
-        
-        JLabel lblIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/placeholder.png")));
-        lblIcon.setBounds(0,0,380,300);
-        pnlImage.add(lblIcon);
-
-        pnlMetrics = new JPanel();
-        pnlMetrics.setLayout(null);
-        pnlMetrics.setBounds(410,65,410,300);
-        pnlMetrics.setBackground(Color.WHITE);
-        pnlOverview.add(pnlMetrics);
-        
-        JPanel newPatient = createMetricsCard(3,"New Patients: 342", new Color(191,64,191), "👥");
-        JPanel discharged = createMetricsCard(78,"Discharged: 287", new Color(80,200,120), "✅");
-        JPanel admitted = createMetricsCard(153,"Admitted: 189", new Color(137,207,240), "🛌");
-        JPanel averageStayDuration = createMetricsCard(223,"Avg. Stay Duration: 2.6 Days", new Color(255,191,0), "🕜");
-        
-        pnlMetrics.add(newPatient);
-        pnlMetrics.add(discharged);
-        pnlMetrics.add(admitted);
-        pnlMetrics.add(averageStayDuration);
-        
-=======
                 "Target: $150K");
         pnlRevenue.setBounds(1210, 130, 350, 140);
         add(pnlRevenue);
         
->>>>>>> parent of 720ed23 (meow)
 
     }
 
     
-<<<<<<< HEAD
-    public JPanel createCard(String title, String value, String subtitle, Color topLineColor) {
-=======
     public JPanel createCard(String title, String value, String subtitle) {
->>>>>>> parent of 720ed23 (meow)
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -213,39 +89,27 @@ public class DashboardPanel extends JPanel {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
-<<<<<<< HEAD
-        TopPanel.setBackground(topLineColor);
-        cardPanel.add(TopPanel);
-
-=======
         TopPanel.setBackground(ColorsTheme.Top_Line);
         cardPanel.add(TopPanel);
 
 
         //Title
->>>>>>> parent of 720ed23 (meow)
         lblTitle = new JLabel(title);
         lblTitle.setBounds(20, 25, 250, 25);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         lblTitle.setFont(FontsTheme.Plain_Texts);
         cardPanel.add(lblTitle);
 
-<<<<<<< HEAD
-=======
 
         //Value
->>>>>>> parent of 720ed23 (meow)
         lblValue = new JLabel(value);
         lblValue.setBounds(20, 50, 200, 50);
         lblValue.setForeground(Color.BLACK);
         lblValue.setFont(FontsTheme.Bold_Texts);
         cardPanel.add(lblValue);
 
-<<<<<<< HEAD
-=======
 
         //Subtitle
->>>>>>> parent of 720ed23 (meow)
         lblSubtitle = new JLabel(subtitle);
         lblSubtitle.setBounds(20, 100, 250, 25);
         lblSubtitle.setForeground(Color.GRAY);
@@ -257,76 +121,4 @@ public class DashboardPanel extends JPanel {
         
         
             }
-<<<<<<< HEAD
-    
-    
-    private JProgressBar createCustomProgressBar(int x, int y, int width, int height, int value, Color filledColor) {
-        JProgressBar bar = new JProgressBar(0, 100);   
-        bar.setBounds(x, y, width, height);            
-        bar.setValue(value);                           
-        bar.setStringPainted(true);                   
-        bar.setForeground(filledColor);                
-        bar.setBackground(new Color(220, 220, 220));   
-        return bar;
     }
-    
-    
-    
-    private JPanel createLegendItem(int x, int y, String text, Color color) {
-        JPanel item = new JPanel();
-        item.setLayout(null);
-        item.setOpaque(false);
-        item.setBounds(x, y, 300, 28);
-
-        JPanel cube = new JPanel();
-        cube.setBackground(color);
-        cube.setBounds(0, 6, 16, 16);
-        item.add(cube);
-
-        JLabel label = new JLabel(text);
-        label.setFont(FontsTheme.Info_Texts);
-        label.setBounds(20, 2, 260, 24);
-        item.add(label);
-
-        return item;
-    }
-    
-    private JPanel createMetricsCard(int y, String text, Color color,String icon)
-    {
-        JPanel card = new JPanel();
-        card.setLayout(null);
-        card.setBounds(20,y,350,70);
-        
-        JLabel title = new JLabel(text);
-        title.setBounds(80,0,350,70);
-        title.setFont(FontsTheme.Plain_Texts);
-        title.setForeground(ColorsTheme.Text_Black);
-        card.add(title);
-        
-        JPanel iconPanel = new JPanel();
-        iconPanel.setBackground(color);
-        iconPanel.setBounds(15, 12, 40, 40);
-        card.add(iconPanel);
-        
-        JLabel lblIcon = new JLabel(icon, JLabel.CENTER);
-        lblIcon.setBounds(0, 0, 40, 40);
-        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 30));
-        lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        lblIcon.setVerticalAlignment(SwingConstants.CENTER);
-        iconPanel.add(lblIcon);
-        
-        
-        return card;
-    }
-    
-    
-    }
-
-
-    
-    
-
-    
-=======
-    }
->>>>>>> parent of 720ed23 (meow)
