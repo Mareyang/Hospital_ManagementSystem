@@ -4,6 +4,7 @@
  */
 package com.mycompany.hospitalmanage;
 
+import com.mycompany.hospitalmanage.ColorsTheme;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -128,7 +129,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
         scrollPatient.setBounds(0, 60, 1500, 560);
         pnlMiddle.add(scrollPatient);
         
-        lblTitle = new JLabel("Recent Admissions");
+        lblTitle = new JLabel("Staffs Activities");
         lblTitle.setBounds(30, 20, 300, 30);
         lblTitle.setFont(FontsTheme.Title_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
@@ -143,8 +144,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
         
 
         
-        
-        
+     
         
     }
 
@@ -160,14 +160,8 @@ public class PatientsPanel extends JPanel implements ActionListener {
         
     }
 }   
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (btnAdd == e.getSource()) {
-            NewpatientDialog dialog = new NewpatientDialog();
-            dialog.setVisible(true);
-        }
-    }
-             }   
+ 
+
+
     
 

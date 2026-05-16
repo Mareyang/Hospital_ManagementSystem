@@ -7,6 +7,7 @@ package com.mycompany.hospitalmanage;
 import com.mycompany.hospitalmanage.ColorsTheme;
 import com.mycompany.hospitalmanage.FontsTheme;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.*;
 
@@ -17,18 +18,20 @@ import javax.swing.*;
 public class BedManagementPanel extends JPanel {
     
     private JPanel pnlTotal, pnlOccupied, pnlAvail, pnlMaintenance, cardPanel, TopPanel;
-    private JPanel pnlICU, pnlWardA, pnlOR, pnlMaternity, pnlER, pnlPriv;
+    private JPanel pnlICU, pnlWardA, pnlMaternity, pnlSearch, pnlRefresh;
     private JPanel icu1, icu2, icu3;
     private JPanel ward1, ward2, ward3;
-    private JPanel priv1, priv2, priv3;
-    private JPanel or1, or2, or3;
     private JPanel mat1, mat2, mat3;
-    private JPanel er1, er2, er3;
     
     private JLabel Licu1;
+    private JLabel lblMatAvail, lblMatAvailNum, lblMatOccu, lblMatOccuNum, lblMatMain, lblMatMainNum, lblMatLabel;
+    private JLabel lblicuAvail, lblicuAvailNum, lblicuOccu, lblicuOccuNum, lblicuMain, lblicuMainNum, lblICULabel;
+    private JLabel lblWardAvail, lblWardAvailNum, lblWardsOccu, lblWardOccuNum, lblWardMain, lblWardMainNum, lblWardLabel;
+
     private JLabel lblDetails, lblBed, lblTitle, lblValue;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh;
+    private JProgressBar ProgMat, ProgICU, ProgWard;
    // private ImagePanel imgPatient;
     
     
@@ -49,148 +52,271 @@ public class BedManagementPanel extends JPanel {
         lblDetails.setForeground(ColorsTheme.Text_Black);
         add(lblDetails);
         
-        
-        pnlTotal = createCard(
-                "Total Beds",
-                "200");
+        pnlTotal = createCard("Total Beds", "200", ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
-        
-        pnlOccupied = createCard(
-                "Occupied",
-                "150");
+        pnlOccupied = createCard("Occupied", "150", ColorsTheme.Yellow);
         pnlOccupied.setBounds(450, 130, 350, 110);
         add(pnlOccupied);
-        
-       
-        pnlAvail = createCard(
-                "Available",
-                "43");
+
+        pnlAvail = createCard("Available", "43", ColorsTheme.Green);
         pnlAvail.setBounds(830, 130, 350, 110);
         add(pnlAvail);
         
-        
-        pnlMaintenance = createCard(
-                "Maintenance",
-                "7");
+        pnlMaintenance = createCard("Maintenance", "7", ColorsTheme.Red);
         pnlMaintenance.setBounds(1210, 130, 350, 110);
         add(pnlMaintenance);
         
-        //ROOMS
+        pnlSearch = new JPanel();
+        pnlSearch.setLayout(null);
+        pnlSearch.setBounds(70, 270, 1500, 80);
+        pnlSearch.setBackground(ColorsTheme.Main_Card);
+        add(pnlSearch);
         
-        pnlICU = roomCard (
-                "Intensive Care Unit",
-                "Floor 2");
-        pnlICU.setBounds(70, 290, 480, 300);
+        //Search Bar
+        txtSearch = new JTextField("Search appointments...");
+        txtSearch.setBounds(80, 20, 1100, 40);
+        txtSearch.setFont(FontsTheme.Info_Texts);
+        txtSearch.setForeground(ColorsTheme.Text_Gray);
+        pnlSearch.add(txtSearch);
+      
+        btnSearch = new JButton("Search");
+        btnSearch.setBounds(1200, 20, 130, 40); 
+        btnSearch.setFont(FontsTheme.Buttons);
+        btnSearch.setBackground(ColorsTheme.Search);
+        btnSearch.setForeground(ColorsTheme.Text_White);
+        pnlSearch.add(btnSearch);
+        
+        btnRefresh = new JButton("Refresh");
+        btnRefresh.setBounds(1350, 20, 130, 40); 
+        btnRefresh.setFont(FontsTheme.Buttons);
+        btnRefresh.setBackground(ColorsTheme.Text_Gray);
+        btnRefresh.setForeground(ColorsTheme.Text_White);
+        pnlSearch.add(btnRefresh);
+        
+   
+        //ICU
+   
+        pnlICU = roomCard ("Intensive Care Unit", "Floor 2");
+        pnlICU.setBounds(70, 390, 420, 240);
         pnlICU.setLayout(null);
         
-        
         JPanel icu1 = new JPanel();
-        icu1.setBounds(20, 120, 135, 80);
-//        JLabel Licu1 = new JLabel("Available", SwingConstants.CENTER);
-//        Licu1.setBounds(15, 130, 130, 100);
-//        icu1.add(Licu1);
-         //icu1.setBackground(Color.red);
+        icu1.setBounds(25, 95, 110, 60);
+        icu1.setLayout(null);
         
+        JLabel lblicuAvail = new JLabel("Available");
+        lblicuAvail.setBounds(25, 8, 100, 20);
+        lblicuAvail.setFont(FontsTheme.Dialog_Texts);
+        lblicuAvail.setForeground(ColorsTheme.Text_Black);
+        icu1.add(lblicuAvail);
+        
+        JLabel lblicuAvailNum = new JLabel("2");
+        lblicuAvailNum.setBounds(48, 25, 50, 30);
+        lblicuAvailNum.setFont(FontsTheme.Title_Texts);
+        lblicuAvailNum.setForeground(ColorsTheme.Text_Black);
+        icu1.add(lblicuAvailNum);
+
         JPanel icu2 = new JPanel();
-        icu2.setBounds(170, 120, 135, 80);
+        icu2.setBounds(150, 90, 110, 60);
+        icu2.setLayout(null);
+        
+        
+        JLabel lblicuOccu = new JLabel("Occupied");
+        lblicuOccu.setBounds(15, 8, 100, 20);
+        lblicuOccu.setFont(FontsTheme.Dialog_Texts);
+        lblicuOccu.setForeground(ColorsTheme.Text_Black);
+        icu2.add(lblicuOccu);
+        
+        JLabel lblicuOccuNum = new JLabel("18");
+        lblicuOccuNum.setBounds(45, 25, 50, 30);
+        lblicuOccuNum.setFont(FontsTheme.Title_Texts);
+        lblicuOccuNum.setForeground(ColorsTheme.Text_Black);
+        icu2.add(lblicuOccuNum);
+       
+
         JPanel icu3 = new JPanel();
-        icu3.setBounds(320, 120, 135, 80);        
-        add(pnlICU);
+        icu3.setBounds(280, 90, 110, 60);
+        icu3.setLayout(null);
+        
+        JLabel lblicuMain = new JLabel("Maintenance");
+        lblicuMain.setBounds(18, 8, 100, 20);
+        lblicuMain.setFont(FontsTheme.Dialog_Texts);
+        lblicuMain.setForeground(ColorsTheme.Text_Black);
+        icu3.add(lblicuMain);
+        
+        JLabel lblicuMainNum = new JLabel("18");
+        lblicuMainNum.setBounds(45, 25, 50, 30);
+        lblicuMainNum.setFont(FontsTheme.Title_Texts);
+        lblicuMainNum.setForeground(ColorsTheme.Text_Black);
+        icu3.add(lblicuMainNum);
+      
+        JProgressBar ProgICU = new JProgressBar();
+        ProgICU.setBounds(20,170,370,10);
+        ProgICU.setValue(90);
+        
+        JLabel lblICULabel = new JLabel("15 out of 20 beds occupied");
+        lblICULabel.setBounds(100, 140, 180, 120);
+        lblICULabel.setFont(FontsTheme.Dialog_Texts);
+        lblICULabel.setForeground(ColorsTheme.Text_Black);
+        pnlICU.add(lblICULabel);
+
         pnlICU.add(icu1);
         pnlICU.add(icu2);
         pnlICU.add(icu3);
+        pnlICU.add(ProgICU);
+        add(pnlICU);
        
-       
+        // WARD AREA
         
-        pnlWardA = roomCard (
-                "Ward Area",
-                "Floor 1");
-        pnlWardA.setBounds(575, 290, 480, 300);
+        pnlWardA = roomCard ("Ward Area","Floor 1");
+        pnlWardA.setBounds(600, 390, 420, 240);
         
         JPanel ward1 = new JPanel();
-        ward1.setBounds(20, 120, 135, 80);
+        ward1.setBounds(25, 95, 110, 60);
+        ward1.setLayout(null);
+        
+        JLabel lblWardAvail = new JLabel("Available");
+        lblWardAvail.setBounds(25, 8, 100, 20);
+        lblWardAvail.setFont(FontsTheme.Dialog_Texts);
+        lblWardAvail.setForeground(ColorsTheme.Text_Black);
+        ward1.add(lblWardAvail);
+        
+        JLabel lblWardAvailNum = new JLabel("2");
+        lblWardAvailNum.setBounds(48, 25, 50, 30);
+        lblWardAvailNum.setFont(FontsTheme.Title_Texts);
+        lblWardAvailNum.setForeground(ColorsTheme.Text_Black);
+        ward1.add(lblWardAvailNum);
+
         JPanel ward2 = new JPanel();
-        ward2.setBounds(170, 120, 135, 80);
+        ward2.setBounds(150, 90, 110, 60);
+        ward2.setLayout(null);
+        
+        
+        JLabel lblWardsOccu = new JLabel("Occupied");
+        lblWardsOccu.setBounds(15, 8, 100, 20);
+        lblWardsOccu.setFont(FontsTheme.Dialog_Texts);
+        lblWardsOccu.setForeground(ColorsTheme.Text_Black);
+        ward2.add(lblWardsOccu);
+        
+        JLabel lblWardsOccuNum = new JLabel("18");
+        lblWardsOccuNum.setBounds(45, 25, 50, 30);
+        lblWardsOccuNum.setFont(FontsTheme.Title_Texts);
+        lblWardsOccuNum.setForeground(ColorsTheme.Text_Black);
+        ward2.add(lblWardsOccuNum);
+       
+
         JPanel ward3 = new JPanel();
-        ward3.setBounds(320, 120, 135, 80);  
-        add(pnlWardA);
+        ward3.setBounds(280, 90, 110, 60);
+        ward3.setLayout(null);
+        
+        JLabel lblWardMain = new JLabel("Maintenance");
+        lblWardMain.setBounds(18, 8, 100, 20);
+        lblWardMain.setFont(FontsTheme.Dialog_Texts);
+        lblWardMain.setForeground(ColorsTheme.Text_Black);
+        ward3.add(lblWardMain);
+        
+        JLabel lblWardMainNum = new JLabel("18");
+        lblWardMainNum.setBounds(45, 25, 50, 30);
+        lblWardMainNum.setFont(FontsTheme.Title_Texts);
+        lblWardMainNum.setForeground(ColorsTheme.Text_Black);
+        ward3.add(lblWardMainNum);
+      
+        JProgressBar ProgWard = new JProgressBar();
+        ProgWard.setBounds(20,170,370,10);
+        ProgWard.setValue(90);
+        
+        JLabel lblWardLabel = new JLabel("15 out of 20 beds occupied");
+        lblWardLabel.setBounds(100, 140, 180, 120);
+        lblWardLabel.setFont(FontsTheme.Dialog_Texts);
+        lblWardLabel.setForeground(ColorsTheme.Text_Black);
+        pnlWardA.add(lblWardLabel);
+
         pnlWardA.add(ward1);
         pnlWardA.add(ward2);
         pnlWardA.add(ward3);
-        
-        
-        pnlPriv = roomCard (
-                "Private Rooms",
-                "Floor 2");
-        pnlPriv.setBounds(1080, 290, 480, 300);
-        JPanel priv1 = new JPanel();
-        priv1.setBounds(20, 120, 135, 80);
-        JPanel priv2 = new JPanel();
-        priv2.setBounds(170, 120, 135, 80);
-        JPanel priv3 = new JPanel();
-        priv3.setBounds(320, 120, 135, 80);  
-        add(pnlPriv);
-        pnlPriv.add(priv1);
-        pnlPriv.add(priv2);
-        pnlPriv.add(priv3);
-        
-        
-        pnlOR = roomCard (
-                "Operating Room",
-                "Floor 2");
-        pnlOR.setBounds(70, 620, 480, 300);
-        JPanel or1 = new JPanel();
-        or1.setBounds(20, 120, 135, 80);
-        JPanel or2 = new JPanel();
-        or2.setBounds(170, 120, 135, 80);
-        JPanel or3 = new JPanel();
-        or3.setBounds(320, 120, 135, 80);  
-        add(pnlOR);
-        pnlOR.add(or1);
-        pnlOR.add(or2);
-        pnlOR.add(or3);
-        
-      
-        pnlMaternity = roomCard (
-                "Delivery Room",
-                "Floor 1");
-        pnlMaternity.setBounds(575, 620, 480, 300);
+        pnlWardA.add(ProgWard);
+        add(pnlWardA);
+       
+              
+     // MATERNITY 
+
+        pnlMaternity = roomCard("Maternity Rooms", "Floor 2");
+        pnlMaternity.setBounds(1135, 390, 420, 240);
+
         JPanel mat1 = new JPanel();
-        mat1.setBounds(20, 120, 135, 80);
+        mat1.setBounds(25, 95, 110, 60);
+        mat1.setLayout(null);
+        
+        JLabel lblMatAvail = new JLabel("Available");
+        lblMatAvail.setBounds(18, 8, 100, 20);
+        lblMatAvail.setFont(FontsTheme.Dialog_Texts);
+        lblMatAvail.setForeground(ColorsTheme.Text_Black);
+        mat1.add(lblMatAvail);
+        
+        JLabel lblMatAvailNum = new JLabel("2");
+        lblMatAvailNum.setBounds(48, 24, 50, 30);
+        lblMatAvailNum.setFont(FontsTheme.Title_Texts);
+        lblMatAvailNum.setForeground(ColorsTheme.Text_Black);
+        mat1.add(lblMatAvailNum);
+
         JPanel mat2 = new JPanel();
-        mat2.setBounds(170, 120, 135, 80);
+        mat2.setBounds(150, 90, 110, 60);
+        mat2.setLayout(null);
+        
+        
+        JLabel lblMatOccu = new JLabel("Occupied");
+        lblMatOccu.setBounds(18, 8, 100, 20);
+        lblMatOccu.setFont(FontsTheme.Dialog_Texts);
+        lblMatOccu.setForeground(ColorsTheme.Text_Black);
+        mat2.add(lblMatOccu);
+        
+        JLabel lblMatOccuNum = new JLabel("18");
+        lblMatOccuNum.setBounds(48, 24, 50, 30);
+        lblMatOccuNum.setFont(FontsTheme.Title_Texts);
+        lblMatOccuNum.setForeground(ColorsTheme.Text_Black);
+        mat2.add(lblMatOccuNum);
+       
+
         JPanel mat3 = new JPanel();
-        mat3.setBounds(320, 120, 135, 80);  
-        add(pnlMaternity);
+        mat3.setBounds(280, 90, 110, 60);
+        mat3.setLayout(null);
+        
+        JLabel lblMatMain = new JLabel("Maintenance");
+        lblMatMain.setBounds(18, 8, 100, 20);
+        lblMatMain.setFont(FontsTheme.Dialog_Texts);
+        lblMatMain.setForeground(ColorsTheme.Text_Black);
+        mat3.add(lblMatMain);
+        
+        JLabel lblMatMainNum = new JLabel("18");
+        lblMatMainNum.setBounds(48, 24, 50, 30);
+        lblMatMainNum.setFont(FontsTheme.Title_Texts);
+        lblMatMainNum.setForeground(ColorsTheme.Text_Black);
+        mat3.add(lblMatMainNum);
+      
+        JProgressBar ProgMat = new JProgressBar();
+        ProgMat.setBounds(20,170,370,10);
+        ProgMat.setValue(90);
+        
+        JLabel lblMatLabel = new JLabel("15 out of 20 beds occupied");
+        lblMatLabel.setBounds(100, 140, 180, 120);
+        lblMatLabel.setFont(FontsTheme.Dialog_Texts);
+        lblMatLabel.setForeground(ColorsTheme.Text_Black);
+        pnlMaternity.add(lblMatLabel);
+
         pnlMaternity.add(mat1);
         pnlMaternity.add(mat2);
         pnlMaternity.add(mat3);
-        
-        
-
-        pnlER = roomCard (
-                "Emergency Room",
-                "Floor 1");
-        pnlER.setBounds(1080, 620, 480, 300);
-        JPanel er1 = new JPanel();
-        er1.setBounds(20, 120, 135, 80);
-        JPanel er2 = new JPanel();
-        er2.setBounds(170, 120, 135, 80);
-        JPanel er3 = new JPanel();
-        er3.setBounds(320, 120, 135, 80);  
-        add(pnlER);
-        pnlER.add(er1);
-        pnlER.add(er2);
-        pnlER.add(er3);
-        
+        pnlMaternity.add(ProgMat);
+        add(pnlMaternity);
+ 
        
         
     }
 
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value, Color topColor) {
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -198,7 +324,7 @@ public class BedManagementPanel extends JPanel {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
+        TopPanel.setBackground(topColor);
         cardPanel.add(TopPanel);
 
 
@@ -251,24 +377,7 @@ public class BedManagementPanel extends JPanel {
         return cardPanel;
     
     }
-}
-    
-//    public JPanel roomStats (String title, String value) {
-//        
-//         //Title
-//        lblTitle = new JLabel(title);
-//        lblTitle.setBounds(15, 25, 130, 100);
-//        lblTitle.setForeground(ColorsTheme.Text_Black);
-//        lblTitle.setFont(FontsTheme.Bold_Texts);
-//        cardPanel.add(lblTitle);
-//           
-//          //Value
-//        lblValue = new JLabel(value);
-//        lblValue.setBounds(15, 45, 130, 100);
-//        lblValue.setForeground(ColorsTheme.Text_Black);
-//        lblValue.setFont(FontsTheme.Plain_Texts);
-//        cardPanel.add(lblValue);
-//        
-//         return cardPanel;
-    
 
+
+
+}

@@ -43,15 +43,17 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
+        
         btnAdd = new JButton("+  Add Staff");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.addActionListener(this);
         add(btnAdd);
         
         //Search Bar
-        txtSearch = new JTextField("Search by patient name or patient id...");
+        txtSearch = new JTextField("Search by Employee name or Emloyee ID...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
         txtSearch.setForeground(ColorsTheme.Text_Gray);
@@ -87,30 +89,20 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         add(lblDetails);
         
         
-        pnlTotal = createCard(
-                "Total Staff",
-                "245");
+        pnlTotal = createCard("Total Staff", "245", ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
-        
-        pnlOn = createCard(
-                "On Duty",
-                "180");
+        pnlOn = createCard("On Duty", "180", ColorsTheme.Green);
         pnlOn.setBounds(450, 130, 350, 110);
         add(pnlOn);
-        
-       
-        pnlOff = createCard(
-                "Off Duty",
-                "52");
+
+        pnlOff = createCard("Off Duty", "52", ColorsTheme.Yellow);
         pnlOff.setBounds(830, 130, 350, 110);
         add(pnlOff);
         
-        
-        pnlLeave = createCard(
-                "On Leave",
-                "13");
+ 
+        pnlLeave = createCard("On Leave", "13", ColorsTheme.Red);
         pnlLeave.setBounds(1210, 130, 350, 110);
         add(pnlLeave);
         
@@ -182,19 +174,25 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         tblEmployee.setRowHeight(50);
         tblEmployee.setDefaultEditor(Object.class, null);
         tblEmployee.getTableHeader().setReorderingAllowed(false);
-       // tblEmployee.getTableHeader().setBackground(ColorsTheme.Header); 
+        tblEmployee.getTableHeader().setBackground(ColorsTheme.Header); 
         tblEmployee.getTableHeader().setForeground(ColorsTheme.Text_White);
         
         scrollEmployee = new JScrollPane(tblEmployee);
-        scrollEmployee.setBounds(0, 0, 1500, 620);
+        scrollEmployee.setBounds(0, 60, 1500, 620);
         pnlMiddle.add(scrollEmployee);
+        
+        lblTitle = new JLabel("Recent Staff Activities");
+        lblTitle.setBounds(30, 20, 300, 30);
+        lblTitle.setFont(FontsTheme.Title_Texts);
+        lblTitle.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblTitle);
         
         btnAdd.addActionListener(this);
         
     }
     
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value,Color topColor) {
 
         cardPanel = new JPanel();
         cardPanel.setLayout(null);
@@ -202,7 +200,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         
         TopPanel = new JPanel();
         TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
+        TopPanel.setBackground(topColor);
         cardPanel.add(TopPanel);
 
 
@@ -212,7 +210,6 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         lblTitle.setForeground(ColorsTheme.Text_Black);
         lblTitle.setFont(FontsTheme.Plain_Texts);
         cardPanel.add(lblTitle);
-
 
         //Value
         lblValue = new JLabel(value);
