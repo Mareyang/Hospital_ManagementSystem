@@ -1,12 +1,13 @@
 com\mycompany\hospitalmanage\DashboardPanel.class
+com\mycompany\hospitalmanage\HospitalDashboard$1.class
 com\mycompany\hospitalmanage\StaffManagementPanel.class
 com\mycompany\hospitalmanage\NewlabDialog.class
-com\mycompany\hospitalmanage\ReportsPanel$ReportStatusColor.class
 com\mycompany\hospitalmanage\NewstaffDialog.class
 com\mycompany\hospitalmanage\AppointmentsPanel.class
 com\mycompany\hospitalmanage\FontsTheme.class
 com\mycompany\hospitalmanage\NewreportDialog.class
 com\mycompany\hospitalmanage\LaboratoryPanel$1.class
+com\mycompany\hospitalmanage\HospitalDashboard$2.class
 com\mycompany\hospitalmanage\NewpharmacyDialog.class
 com\mycompany\hospitalmanage\ColorsTheme.class
 com\mycompany\hospitalmanage\PatientsPanel.class

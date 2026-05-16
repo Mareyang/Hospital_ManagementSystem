@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.CardLayout;
+import java.awt.*;
+import javax.swing.border.Border;
 
 /**
  *
@@ -19,7 +21,8 @@ public class HospitalDashboard extends JFrame implements ActionListener {
     private CardLayout cardLayout;
     private JButton btnDashboard, btnPatients, btnAppointments, btnMedRec, btnPrescription, btnLab, btnPharmacy,
             btnBed, btnBill, btnStaff, btnEmergency, btnReports, btnMessage, btnSettings;
-    
+    private JLabel lblSystemName;
+    private JTextField txtSearchField;
     
     HospitalDashboard() {
         setSize(1920, 1080);
@@ -31,15 +34,86 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         //Panels
         SidePanel = new JPanel();
         SidePanel.setLayout(null);
-        SidePanel.setBounds(0, 0, 270, 1080);
+        SidePanel.setBounds(0, 100, 270, 1080);
         SidePanel.setBackground(ColorsTheme.Side_Panel);
         add(SidePanel);
         
         TopPanel = new JPanel();
         TopPanel.setLayout(null);
-        TopPanel.setBounds(250, 0, 1670, 100);
+        TopPanel.setBounds(0, 0, 1920, 100);
         TopPanel.setBackground(ColorsTheme.Side_Panel);
         add(TopPanel);
+        
+        //TopPanel Inside
+        JLabel lblSystemName = new JLabel("Carelink Management System");
+        lblSystemName.setBounds(120, 30, 600, 40);
+        lblSystemName.setFont(new Font("Tahoma", Font.BOLD, 34));
+        lblSystemName.setForeground(Color.WHITE);
+        TopPanel.add(lblSystemName);
+        
+        
+        //With removable text
+        String placeholder = "Search patients, records, appointments...";
+
+        txtSearchField = new JTextField(placeholder);
+        txtSearchField.setBounds(700, 30, 500, 40);
+        txtSearchField.setFont(new Font("Arial", Font.PLAIN, 18));
+
+        txtSearchField.setForeground(new Color(200, 200, 200)); // placeholder color
+
+        txtSearchField.setBackground(Color.decode("#3A2A75"));
+        txtSearchField.setCaretColor(Color.WHITE);
+        txtSearchField.setOpaque(true);
+        txtSearchField.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+
+        txtSearchField.addFocusListener(new java.awt.event.FocusAdapter() {
+
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (txtSearchField.getText().equals(placeholder)) {
+                    txtSearchField.setText("");
+                    txtSearchField.setForeground(Color.WHITE);
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (txtSearchField.getText().isEmpty()) {
+                    txtSearchField.setText(placeholder);
+                    txtSearchField.setForeground(new Color(200, 200, 200));
+                }
+            }
+        });
+        
+        //to avoid jtextfield focus
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowOpened(java.awt.event.WindowEvent e) {
+            TopPanel.requestFocusInWindow();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            TopPanel.requestFocusInWindow();
+        });
+        
+        
+        // add to panel
+        TopPanel.add(txtSearchField);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         //CardLayout
         cardLayout = new CardLayout();
