@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 com\mycompany\hospitalmanage\StaffManagementPanel.class
 com\mycompany\hospitalmanage\NewlabDialog.class
 com\mycompany\hospitalmanage\NewreportDialog.class
@@ -29,32 +28,3 @@ com\mycompany\hospitalmanage\BillingPanel.class
 com\mycompany\hospitalmanage\PrescriptionsPanel.class
 com\mycompany\hospitalmanage\SettingsPanel.class
 com\mycompany\hospitalmanage\MessagesPanel.class
-=======
-com/mycompany/hospitalmanage/HospitalDashboard$1.class
-dialogs/NewAppointmentDialog.class
-panels/PharmacyPanel$1.class
-dialogs/NewpatientDialog.class
-com/mycompany/hospitalmanage/loginPage.class
-constants/StatusColor.class
-panels/ReportsPanel$1.class
-panels/LaboratoryPanel$1.class
-dialogs/AddPatientDialog.class
-dialogs/emergencyDialog$1.class
-dialogs/AddMedicalRecordDialog.class
-dialogs/emergencyDialog.class
-dialogs/NewlabDialog.class
-com/mycompany/hospitalmanage/HospitalDashboard$2.class
-dialogs/NewstaffDialog.class
-dialogs/BillDialog$1.class
-panels/EmergencyPanel$StatusColor.class
-panels/BillingPanel$StatusColor.class
-dialogs/NewreportDialog.class
-dialogs/AddPrescriptionDialog.class
-constants/ButtonStyles.class
-dialogs/BillDialog.class
-constants/FontsTheme.class
-dialogs/emergencyDialog$2.class
-constants/ColorsTheme.class
-dialogs/BillDialog$2.class
-dialogs/NewpharmacyDialog.class
->>>>>>> main

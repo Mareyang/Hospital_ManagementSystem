@@ -4,22 +4,6 @@
  */
 package com.mycompany.hospitalmanage;
 
-import constants.ButtonStyles;
-import constants.ColorsTheme;
-import panels.MessagesPanel;
-import panels.ReportsPanel;
-import panels.BedManagementPanel;
-import panels.MedicalRecordsPanel;
-import panels.PharmacyPanel;
-import panels.PrescriptionsPanel;
-import panels.EmergencyPanel;
-import panels.AppointmentsPanel;
-import panels.DashboardPanel;
-import panels.PatientsPanel;
-import panels.StaffManagementPanel;
-import panels.SettingsPanel;
-import panels.LaboratoryPanel;
-import panels.BillingPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -36,19 +20,11 @@ public class HospitalDashboard extends JFrame implements ActionListener {
     private JPanel SidePanel, TopPanel, ContainerPanel;
     private CardLayout cardLayout;
     private JButton btnDashboard, btnPatients, btnAppointments, btnMedRec, btnPrescription, btnLab, btnPharmacy,
-<<<<<<< HEAD
             btnBed, btnBill, btnStaff, btnEmergency, btnReports, btnMessage, btnSettings, btnSearch, btnNotification, btnAdmin;
     private JLabel lblSystemName, lblDateTime, lblCalendarIcon;
     private JTextField txtSearchField;
     private JPopupMenu adminMenu;
     private JMenuItem settings, logout, switchUser;
-=======
-            btnBed, btnBill, btnStaff, btnEmergency, btnReports, btnSettings, btnLogout;
-    private JLabel lblSystemName;
-    private JTextField txtSearchField;
-    private JPanel dashboardPanel;
-    private JLabel dashboardIconLbl, dashboardTxtLbl;
->>>>>>> main
     
     HospitalDashboard() {
         setSize(1920, 1080);
@@ -121,7 +97,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         TopPanel.add(txtSearchField);
         
         
-<<<<<<< HEAD
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/search.png"));
 
         Image img = icon.getImage();
@@ -252,8 +227,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         
         
         
-=======
->>>>>>> main
         //CardLayout
         cardLayout = new CardLayout();
         ContainerPanel = new JPanel(cardLayout);
@@ -277,21 +250,80 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         ContainerPanel.add(new SettingsPanel(), "settings");
         add(ContainerPanel);
 
-        btnDashboard = createButton("Dashboard", "/icons/home.png", 100);        
-        btnPatients = createButton("Patients", "/icons/patient.png", 150);
-        btnAppointments = createButton("Appointments", "/icons/appointment.png", 200);
-        btnMedRec = createButton("Medical Records", "/icons/record.png", 250);
-        btnPrescription = createButton("Prescriptions", "/icons/prescription.png", 300);
-        btnLab = createButton("Laboratory", "/icons/laboratory.png", 350);
-        btnPharmacy = createButton("Pharmacy", "/icons/pharmacy2.png", 400);
-        btnBed = createButton("Bed Management", "/icons/bed.png", 400);
-        btnBill = createButton("Bill", "/icons/bill.png", 450);
-        btnStaff = createButton("Staff", "/icons/staff.png", 500);
-        btnEmergency = createButton("Emergency", "/icons/emergency.png", 550);
-        btnReports = createButton("Reports", "/icons/report.png", 600);
-        btnSettings = createButton("Settings", "/icons/setting.png", 650);
-        btnLogout = createButton("Logout", "/icons/logout.png", 850);
-
+        //Button
+        btnDashboard = new JButton("Dashboard");
+        btnDashboard.setBounds(40, 100, 220, 50);
+        ButtonStyles.sidebarButton(btnDashboard);
+        SidePanel.add(btnDashboard);
+        
+        btnPatients = new JButton("Patients");
+        btnPatients.setBounds(40, 150, 220, 50);
+        ButtonStyles.sidebarButton(btnPatients);
+        SidePanel.add(btnPatients);
+        
+        btnAppointments = new JButton("Appointments");
+        btnAppointments.setBounds(40, 200, 220, 50);
+        ButtonStyles.sidebarButton(btnAppointments);
+        SidePanel.add(btnAppointments);
+        
+        btnMedRec = new JButton("Medical Records");
+        btnMedRec.setBounds(40, 250, 220, 50);
+        ButtonStyles.sidebarButton(btnMedRec);
+        SidePanel.add(btnMedRec);
+        
+        btnPrescription = new JButton("Prescriptions");
+        btnPrescription.setBounds(40, 300, 220, 50);
+        ButtonStyles.sidebarButton(btnPrescription);
+        SidePanel.add(btnPrescription);
+        
+        btnLab = new JButton("Laboratory");
+        btnLab.setBounds(40, 350, 220, 50);
+        ButtonStyles.sidebarButton(btnLab);
+        SidePanel.add(btnLab);
+        
+        btnPharmacy = new JButton("Pharmacy");
+        btnPharmacy.setBounds(40, 400, 220, 50);
+        ButtonStyles.sidebarButton(btnPharmacy);
+        SidePanel.add(btnPharmacy);
+        
+        btnBed = new JButton("Bed Management");
+        btnBed.setBounds(40, 450, 220, 50);
+        ButtonStyles.sidebarButton(btnBed);
+        SidePanel.add(btnBed);
+        
+        btnBill = new JButton("Billing");
+        btnBill.setBounds(40, 500, 220, 50);
+        ButtonStyles.sidebarButton(btnBill);
+        SidePanel.add(btnBill);
+        
+        btnStaff = new JButton("Staff Management");
+        btnStaff.setBounds(40, 550, 220, 50);
+        ButtonStyles.sidebarButton(btnStaff);
+        SidePanel.add(btnStaff);
+        
+        btnEmergency = new JButton("Emergency");
+        btnEmergency.setBounds(40, 600, 220, 50);
+        ButtonStyles.sidebarButton(btnEmergency);
+        SidePanel.add(btnEmergency);
+        
+        btnReports = new JButton("Reports");
+        btnReports.setBounds(40, 650, 220, 50);
+        ButtonStyles.sidebarButton(btnReports);
+        SidePanel.add(btnReports);
+        
+        btnMessage = new JButton("Messages");
+        btnMessage.setBounds(40, 700, 220, 50);
+        ButtonStyles.sidebarButton(btnMessage);
+        SidePanel.add(btnMessage);
+        
+        btnSettings = new JButton("Settings");
+        btnSettings.setBounds(40, 750, 220, 50);
+        ButtonStyles.sidebarButton(btnSettings);
+        SidePanel.add(btnSettings);
+        
+        
+        
+        
         //ActionListener
         btnDashboard.addActionListener(this);
         btnPatients.addActionListener(this);
@@ -305,37 +337,12 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         btnStaff.addActionListener(this);
         btnEmergency.addActionListener(this);
         btnReports.addActionListener(this);
-//        btnMessage.addActionListener(this);
+        btnMessage.addActionListener(this);
         btnSettings.addActionListener(this);
-        btnLogout.addActionListener(this);
         
         
     }
     
-    public JButton createButton(String text, String path, int y)
-{
-    JPanel panel1 = new JPanel();
-    panel1.setLayout(null);
-    panel1.setBounds(0, y, 220, 50);
-    panel1.setBackground(ColorsTheme.Side_Panel);
-
-    JLabel iconLbl = new JLabel(
-            new ImageIcon(getClass().getResource(path))
-    );
-    iconLbl.setBounds(18, 9, 32, 32);
-    panel1.add(iconLbl);
-
-    JButton btnClick = new JButton(text);
-    btnClick.setBounds(60, 0, 150, 50);
-
-    ButtonStyles.sidebarButton(btnClick);
-
-    panel1.add(btnClick);
-
-    SidePanel.add(panel1);
-
-    return btnClick;
-}
     
     
         @Override
@@ -402,22 +409,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
             }
         }
         }
-<<<<<<< HEAD
-=======
-       
-        
-        else if (e.getSource() == btnSettings) {
-            cardLayout.show(ContainerPanel, "settings");
-        }
-        else if(e.getSource() == btnLogout)
-        {
-            dispose();
-            loginPage lp = new loginPage();
-            lp.setVisible(true);
-        }
-    }
-}
->>>>>>> main
 
 
 
