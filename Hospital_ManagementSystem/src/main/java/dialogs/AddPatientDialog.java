@@ -56,6 +56,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         btnPersonal.setFont(FontsTheme.Buttons);
         btnPersonal.setForeground(ColorsTheme.Text_White);
         btnPersonal.setBackground(ColorsTheme.Header);
+        btnPersonal.setFocusPainted(false);
         add(btnPersonal);
         
         btnHistory = new JButton("Medical History");
@@ -63,6 +64,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         btnHistory.setFont(FontsTheme.Buttons);
         btnHistory.setForeground(ColorsTheme.Text_White);
         btnHistory.setBackground(ColorsTheme.Header);
+        btnHistory.setFocusPainted(false);
         add(btnHistory);
         
         
@@ -71,6 +73,25 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         pnlContent.setBounds(40, 140, 950, 300);
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
+        
+        
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(580, 450, 200, 30);
+        btnCancel.setFont(FontsTheme.Buttons);
+        btnCancel.setForeground(ColorsTheme.Text_White);
+        btnCancel.setBackground(ColorsTheme.Cancel);
+        btnCancel.setFocusPainted(false);
+        add(btnCancel);
+        
+        btnAddInfo = new JButton("Save Information");
+        btnAddInfo.setBounds(790, 450, 200, 30);
+        btnAddInfo.setFont(FontsTheme.Buttons);
+        btnAddInfo.setForeground(ColorsTheme.Text_White);
+        btnAddInfo.setBackground(ColorsTheme.Green);
+        btnAddInfo.setFocusPainted(false);
+        add(btnAddInfo);
+        
+        
         
         
         //ActionListener
@@ -248,21 +269,6 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         pnlContent.add(cmbRoom);
         
        
-
-        btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(580, 450, 200, 30);
-        btnCancel.setFont(FontsTheme.Buttons);
-        btnCancel.setForeground(ColorsTheme.Text_White);
-        btnCancel.setBackground(ColorsTheme.Cancel);
-        add(btnCancel);
-        
-        btnAddInfo = new JButton("Save Information");
-        btnAddInfo.setBounds(790, 450, 200, 30);
-        btnAddInfo.setFont(FontsTheme.Buttons);
-        btnAddInfo.setForeground(ColorsTheme.Text_White);
-        btnAddInfo.setBackground(ColorsTheme.Green);
-        add(btnAddInfo);
-        
 
     }
 
@@ -444,10 +450,6 @@ public class AddPatientDialog extends JDialog implements ActionListener {
     
     
     }
-    
-    
-    
-    
     
     
     

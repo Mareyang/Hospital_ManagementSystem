@@ -59,6 +59,23 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         add(pnlContent);
         
         
+        
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(480, 450, 200, 30);
+        btnCancel.setFont(FontsTheme.Buttons);
+        btnCancel.setForeground(ColorsTheme.Text_White);
+        btnCancel.setBackground(ColorsTheme.Cancel);
+        add(btnCancel);
+        
+        btnConfirm = new JButton("Confirm Appointment");
+        btnConfirm.setBounds(690, 450, 300, 30);
+        btnConfirm.setFont(FontsTheme.Buttons);
+        btnConfirm.setForeground(ColorsTheme.Text_White);
+        btnConfirm.setBackground(ColorsTheme.Green);
+        add(btnConfirm);
+        
+        
+        
         //ActionListener
         btnAppoint.addActionListener(this);
         
@@ -207,21 +224,6 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         pnlContent.setLayout(null);
         pnlContent.add(scrollNote);
         
-        
-        
-        btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(480, 450, 200, 30);
-        btnCancel.setFont(FontsTheme.Buttons);
-        btnCancel.setForeground(ColorsTheme.Text_White);
-        btnCancel.setBackground(ColorsTheme.Cancel);
-        add(btnCancel);
-        
-        btnConfirm = new JButton("Confirm Appointment");
-        btnConfirm.setBounds(690, 450, 300, 30);
-        btnConfirm.setFont(FontsTheme.Buttons);
-        btnConfirm.setForeground(ColorsTheme.Text_White);
-        btnConfirm.setBackground(ColorsTheme.Green);
-        add(btnConfirm);
         
         
         

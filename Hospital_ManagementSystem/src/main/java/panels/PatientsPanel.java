@@ -21,13 +21,12 @@ import javax.swing.*;
  */
 public class PatientsPanel extends JPanel implements ActionListener {
     
-    private JPanel pnlMiddle, pnlSearch, pnlHeader;
+    private JPanel pnlMiddle, pnlSearch;
     private JTable tblPatient;
     private JLabel lblPatient, lblDetails, lblTitle;
     private JTextField txtSearch;
     private JButton btnAdd, btnSearch, btnRefresh;
     private JScrollPane scrollPatient;
-    //private ImagePanel imgPatient;
     
     
     public PatientsPanel() {
@@ -46,11 +45,6 @@ public class PatientsPanel extends JPanel implements ActionListener {
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
-     
-        
-        //        imgPatient = new ImagePanel("/patient.png"); 
-//        imgPatient.setBounds(80, 150, 380, 450);
-//        add(imgPatient);
         
         lblPatient = new JLabel("Patient Management");
         lblPatient.setBounds(30, 30, 500, 40);
@@ -69,14 +63,10 @@ public class PatientsPanel extends JPanel implements ActionListener {
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.setFocusPainted(false);
         btnAdd.addActionListener(this);
         add(btnAdd);
 
-
-        //Search Bar
-//        lblSearchIcon = new JLabel(IconClass.search);
-//        lblSearchIcon.setBounds(40, 25, 25, 25);
-//        pnlSearch.add(lblSearchIcon);
         
         txtSearch = new JTextField("Search by patient name or patient id...");
         txtSearch.setBounds(80, 20, 1100, 40);
@@ -89,6 +79,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
         btnSearch.setFont(FontsTheme.Buttons);
         btnSearch.setBackground(ColorsTheme.Search);
         btnSearch.setForeground(ColorsTheme.Text_White);
+        btnSearch.setFocusPainted(false);
         pnlSearch.add(btnSearch);
         
         btnRefresh = new JButton("Refresh");
@@ -96,6 +87,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
         btnRefresh.setFont(FontsTheme.Buttons);
         btnRefresh.setBackground(ColorsTheme.Text_Gray);
         btnRefresh.setForeground(ColorsTheme.Text_White);
+        btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
         
         

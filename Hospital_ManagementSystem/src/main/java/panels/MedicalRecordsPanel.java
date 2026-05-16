@@ -19,11 +19,11 @@ import java.awt.event.ActionListener;
 public class MedicalRecordsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch;
-    private JLabel lblMedical, lblDetails;
+    private JLabel lblMedical, lblDetails, lblTitle;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
     private JTable table;
-    private JScrollPane scrollPane;
+    private JScrollPane scrollTable;
     
     
     
@@ -49,6 +49,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.setFocusPainted(false);
         btnAdd.addActionListener(this);
         add(btnAdd);
         
@@ -58,10 +59,10 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         lblMedical.setForeground(ColorsTheme.Text_Black);
         add(lblMedical);
 
-        lblDetails = new JLabel("Access and manage patient medical records");
+        lblDetails = new JLabel("Access and manage patient medical records.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
 
         txtSearch = new JTextField("Search by patient name or patient id...");
@@ -75,6 +76,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         btnSearch.setFont(FontsTheme.Buttons);
         btnSearch.setBackground(ColorsTheme.Search);
         btnSearch.setForeground(ColorsTheme.Text_White);
+        btnSearch.setFocusPainted(false);
         pnlSearch.add(btnSearch);
         
         btnRefresh = new JButton("Refresh");
@@ -82,13 +84,22 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         btnRefresh.setFont(FontsTheme.Buttons);
         btnRefresh.setBackground(ColorsTheme.Text_Gray);
         btnRefresh.setForeground(ColorsTheme.Text_White);
+        btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
         
-        String[] columns = {"Patient", "MRN", "Type", "Doctor", "Date"};
+        String[] columns = {"Patient Name", "Patient ID", "Type", "Doctor", "Date"};
         
         Object[][] data = {
-            {"John Smith", "MRN000001", "Consultation", "Dr. Chen", "2024-01-15", "Cardiology"},
-            {"Sarah Johnson", "MRN000002", "Lab Result", "Dr. Williams", "2024-01-14", "Laboratory"}
+            {"Maria Leonora", "000021", "New Consultation", "Dr. Robert Chen", "May 15, 2026"},
+            {"Jose Felipe", "000054", "Follow-up Visit", "Dr. Sarah Jenkins", "May 15, 2026"},
+            {"Angela Cruz", "000078", "Routine Check-up", "Dr. Alan Reyes", "May 14, 2026"},
+            {"Mark Anthony", "000103", "Emergency Visit", "Dr. Grace Torres", "May 14, 2026"},
+            {"Sophia Reyes", "000115", "Diagnostic/Lab Test", "Dr. Robert Chen", "May 13, 2026"},
+            {"Daniel Garcia", "000126", "Follow-up Visit", "Dr. David Kim", "May 12, 2026"},
+            {"Christine Mae", "000138", "New Consultation", "Dr. Sarah Jenkins", "May 12, 2026"},
+            {"Nathaniel Ong", "000142", "Pre-Surgical Clearance", "Dr. Alan Reyes", "May 10, 2026"},
+            {"Francis Mendoza", "000189", "Emergency Visit", "Dr. Grace Torres", "May 09, 2026"},
+            {"Jasmine Aquino", "000193", "Post-Operative Check", "Dr. David Kim", "May 08, 2026"}
         };
         
         table = new JTable(data, columns);
@@ -100,10 +111,15 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         table.getTableHeader().setBackground(ColorsTheme.Header); 
         table.getTableHeader().setForeground(ColorsTheme.Text_White);
 
-        scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(0,0,1500,620);
-
-        pnlMiddle.add(scrollPane);
+        scrollTable = new JScrollPane(table);
+        scrollTable.setBounds(0, 60, 1500, 560);
+        pnlMiddle.add(scrollTable);
+        
+        lblTitle = new JLabel("Recent Medical Records");
+        lblTitle.setBounds(30, 20, 300, 30);
+        lblTitle.setFont(FontsTheme.Title_Texts);
+        lblTitle.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblTitle);
     
         }
 

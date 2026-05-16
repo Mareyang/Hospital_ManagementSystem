@@ -17,17 +17,15 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
   
     private JPanel pnlContent;
    
-    private JLabel lblTitle, lblSubtitle;
+    private JLabel lblTitle, lblSubtitle, lblBP, lblHR, lblTemp;
     private JLabel lblPatient, lblMRN, lblType, lblDoctor, lblDate;
     private JLabel lblDiagnosis;
     private JLabel lblVitalSigns;
-   
-    private JTextField txtPatient, txtMRN, txtDoctor, txtDate;
+    private JTextField txtPatient, txtMRN, txtDoctor, txtDate, txtVitals;
     private JTextField txtDiagnosis;
     private JTextField txtBloodPressure, txtHeartRate, txtTemperature;
     private JComboBox<String> cmbType;
-   
-    private JButton btnAddInfo, btnCancel;
+    private JButton btnAddInfo, btnCancel, btnMed;
 
     public AddMedicalRecordDialog() {
         setSize(1050, 550);
@@ -35,16 +33,16 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         setLocationRelativeTo(null);
         setModal(true);
       
-        lblTitle = new JLabel("Medical Record");
+        lblTitle = new JLabel("Patient Medical Record");
         lblTitle.setBounds(30, 10, 500, 40);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         add(lblTitle);
       
-        lblSubtitle = new JLabel("Complete all the required fields to add a record.");
+        lblSubtitle = new JLabel("Manage patient case details and medical history.");
         lblSubtitle.setBounds(30, 40, 500, 40);
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
-        lblSubtitle.setForeground(ColorsTheme.Text_Black);
+        lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
       
         pnlContent = new JPanel();
@@ -53,7 +51,13 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
       
-        createMedicalRecordForm();
+        btnMed = new JButton("Medical Records");
+        btnMed.setBounds(40, 100, 250, 40);
+        btnMed.setFont(FontsTheme.Buttons);
+        btnMed.setForeground(ColorsTheme.Text_White);
+        btnMed.setBackground(ColorsTheme.Header);
+        add(btnMed);
+        
        
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(580, 450, 200, 30);
@@ -71,6 +75,9 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
        
         btnCancel.addActionListener(this);
         btnAddInfo.addActionListener(this);
+        
+        createMedicalRecordForm();
+        
     }
   
     private void createMedicalRecordForm() {
@@ -78,7 +85,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         pnlContent.repaint();
         pnlContent.revalidate();
 
-        lblPatient = new JLabel("Patient : ");
+        lblPatient = new JLabel("Patient Name : ");
         lblPatient.setBounds(40, 40, 200, 30);
         lblPatient.setFont(FontsTheme.Plain_Texts);
         lblPatient.setForeground(ColorsTheme.Text_Black);
@@ -90,20 +97,20 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         txtPatient.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtPatient);
       
-        lblMRN = new JLabel("MRN : ");
-        lblMRN.setBounds(40, 90, 200, 30);
+        lblMRN = new JLabel("Patient ID : ");
+        lblMRN.setBounds(40, 80, 200, 30);
         lblMRN.setFont(FontsTheme.Plain_Texts);
         lblMRN.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblMRN);
       
         txtMRN = new JTextField("");
-        txtMRN.setBounds(220, 90, 230, 30);
+        txtMRN.setBounds(220, 80, 230, 30);
         txtMRN.setFont(FontsTheme.Plain_Texts);
         txtMRN.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtMRN);
       
         lblType = new JLabel("Type : ");
-        lblType.setBounds(40, 140, 200, 30);
+        lblType.setBounds(40, 120, 200, 30);
         lblType.setFont(FontsTheme.Plain_Texts);
         lblType.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblType);
@@ -111,79 +118,90 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         cmbType = new JComboBox<>(new String[]{
             " ", "Consultation", "Lab Result", "Imaging", "Procedure", "Surgery", "Follow-up", "Other"
         });
-        cmbType.setBounds(220, 140, 230, 30);
+        cmbType.setBounds(220, 120, 230, 30);
         cmbType.setFont(FontsTheme.Plain_Texts);
         cmbType.setForeground(ColorsTheme.Text_Black);
         cmbType.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbType);
         
         lblDiagnosis = new JLabel("Diagnosis : ");
-        lblDiagnosis.setBounds(40, 190, 200, 30);
+        lblDiagnosis.setBounds(40, 160, 200, 30);
         lblDiagnosis.setFont(FontsTheme.Plain_Texts);
         lblDiagnosis.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDiagnosis);
       
         txtDiagnosis = new JTextField("");
-        txtDiagnosis.setBounds(220, 190, 230, 30);
+        txtDiagnosis.setBounds(220, 160, 230, 30);
         txtDiagnosis.setFont(FontsTheme.Plain_Texts);
         txtDiagnosis.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtDiagnosis);
 
         lblDoctor = new JLabel("Doctor : ");
-        lblDoctor.setBounds(510, 40, 200, 30);
+        lblDoctor.setBounds(40, 200, 200, 30);
         lblDoctor.setFont(FontsTheme.Plain_Texts);
         lblDoctor.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDoctor);
       
         txtDoctor = new JTextField("");
-        txtDoctor.setBounds(690, 40, 230, 30);
+        txtDoctor.setBounds(220, 200, 230, 30);
         txtDoctor.setFont(FontsTheme.Plain_Texts);
         txtDoctor.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtDoctor);
       
+        
+        //LEFT
         lblDate = new JLabel("Date : ");
-        lblDate.setBounds(510, 90, 200, 30);
+        lblDate.setBounds(510, 40, 200, 30);
         lblDate.setFont(FontsTheme.Plain_Texts);
         lblDate.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDate);
       
         txtDate = new JTextField(""); 
-        txtDate.setBounds(690, 90, 230, 30);
+        txtDate.setBounds(690, 40, 230, 30);
         txtDate.setFont(FontsTheme.Plain_Texts);
         txtDate.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtDate);
         
         lblVitalSigns = new JLabel("Vital Signs :");
-        lblVitalSigns.setBounds(510, 140, 150, 30);
+        lblVitalSigns.setBounds(510, 80, 200, 30);
         lblVitalSigns.setFont(FontsTheme.Plain_Texts);
         lblVitalSigns.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblVitalSigns);
+        
+        txtVitals = new JTextField(""); 
+        txtVitals.setBounds(690, 80, 230, 30);
+        txtVitals.setFont(FontsTheme.Plain_Texts);
+        txtVitals.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtVitals);
 
-        JLabel lblBP = new JLabel("BP:");
-        lblBP.setBounds(665, 140, 40, 30);
+        lblBP = new JLabel("Blood Pressure :");
+        lblBP.setBounds(510, 120, 200, 30);
         lblBP.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblBP);
+        
         txtBloodPressure = new JTextField("");
-        txtBloodPressure.setBounds(705, 140, 85, 30);
+        txtBloodPressure.setBounds(690, 120, 230, 30);
         txtBloodPressure.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtBloodPressure);
 
-        JLabel lblHR = new JLabel("HR:");
-        lblHR.setBounds(800, 140, 40, 30);
+        lblHR = new JLabel("Heart Rate :");
+        lblHR.setBounds(510, 160, 200, 30);
         lblHR.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblHR);
+        
         txtHeartRate = new JTextField("");
-        txtHeartRate.setBounds(840, 140, 65, 30);
+        txtHeartRate.setBounds(690, 160, 230, 30);
         txtHeartRate.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtHeartRate);
 
         
-        JLabel lblTemp = new JLabel("Temp:");
-        lblTemp.setBounds(665, 175, 65, 30);
+        lblTemp = new JLabel("Temperature :");
+        lblTemp.setBounds(510, 200, 200, 30);
         lblTemp.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblTemp);
+        
         txtTemperature = new JTextField("");
-        txtTemperature.setBounds(730, 175, 90, 30);
+        txtTemperature.setBounds(690, 200, 230, 30);
         txtTemperature.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtTemperature);
     }

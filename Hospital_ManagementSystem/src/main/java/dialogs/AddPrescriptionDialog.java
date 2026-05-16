@@ -16,18 +16,13 @@ import javax.swing.*;
 public class AddPrescriptionDialog extends JDialog implements ActionListener {
   
     private JPanel pnlContent;
-   
-    private JLabel lblTitle, lblSubtitle;
-    private JLabel lblPatient, lblDoctor, lblDate, lblMedications, lblStatus;
-    private JLabel lblQuantity, lblDuration;
-   
-    private JTextField txtPatient, txtDoctor, txtDate;
-    private JTextField txtQuantity, txtDuration;
-    private JTextArea txaMedications;
-    private JScrollPane scrollMedications;
-    private JComboBox<String> cmbStatus;
-   
-    private JButton btnAddInfo, btnCancel;
+    private JLabel lblPatient, lblMed, lblDate, lblDura, lblDosage, lblQty, lblDiagnosis, lblTitle, lblSubtitle,
+            lblFreq, lblRefill, lblNote;
+    private JTextField txtPatient, txtMed, txtDate, txtQty, txtDiagnosis, txtDura, txtRefill;
+    private JTextArea txaNote;
+    private JScrollPane scrollNote;
+    private JComboBox<String> cmbDosage, cmbFreq;
+    private JButton btnAddInfo, btnCancel, btnPrescript;
 
     public AddPrescriptionDialog() {
         setSize(1050, 550);
@@ -35,16 +30,16 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         setLocationRelativeTo(null);
         setModal(true);
       
-        lblTitle = new JLabel("Prescription");
+        lblTitle = new JLabel("Patient Prescription");
         lblTitle.setBounds(30, 10, 500, 40);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         add(lblTitle);
       
-        lblSubtitle = new JLabel("Complete all the required fields to add a prescription.");
+        lblSubtitle = new JLabel("Issue and manage patient medications and dosages.");
         lblSubtitle.setBounds(30, 40, 500, 40);
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
-        lblSubtitle.setForeground(ColorsTheme.Text_Black);
+        lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
       
         pnlContent = new JPanel();
@@ -53,24 +48,37 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
       
-        createPrescriptionForm();
+        
+        btnPrescript = new JButton("Prescription Details");
+        btnPrescript.setBounds(40, 100, 250, 40);
+        btnPrescript.setFont(FontsTheme.Buttons);
+        btnPrescript.setForeground(ColorsTheme.Text_White);
+        btnPrescript.setBackground(ColorsTheme.Header);
+        btnPrescript.setFocusPainted(false);
+        add(btnPrescript);
        
         btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(580, 450, 200, 30);
+        btnCancel.setBounds(480, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);
+        btnCancel.setFocusPainted(false);
         add(btnCancel);
       
         btnAddInfo = new JButton("Save Prescription");
-        btnAddInfo.setBounds(790, 450, 200, 30);
+        btnAddInfo.setBounds(690, 450, 300, 30);
         btnAddInfo.setFont(FontsTheme.Buttons);
         btnAddInfo.setForeground(ColorsTheme.Text_White);
         btnAddInfo.setBackground(ColorsTheme.Add_Confirm);
+        btnAddInfo.setFocusPainted(false);
         add(btnAddInfo);
        
+        
         btnCancel.addActionListener(this);
         btnAddInfo.addActionListener(this);
+        
+        createPrescriptionForm();
+        
     }
   
     private void createPrescriptionForm() {
@@ -78,7 +86,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         pnlContent.repaint();
         pnlContent.revalidate();
      
-        lblPatient = new JLabel("Patient : ");
+        lblPatient = new JLabel("Patient Name : ");
         lblPatient.setBounds(40, 40, 200, 30);
         lblPatient.setFont(FontsTheme.Plain_Texts);
         lblPatient.setForeground(ColorsTheme.Text_Black);
@@ -90,83 +98,134 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         txtPatient.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtPatient);
       
-        lblDoctor = new JLabel("Doctor : ");
-        lblDoctor.setBounds(40, 90, 200, 30);
-        lblDoctor.setFont(FontsTheme.Plain_Texts);
-        lblDoctor.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblDoctor);
+        lblMed = new JLabel("Medication Name : ");
+        lblMed.setBounds(40, 80, 200, 30);
+        lblMed.setFont(FontsTheme.Plain_Texts);
+        lblMed.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblMed);
       
-        txtDoctor = new JTextField("");
-        txtDoctor.setBounds(220, 90, 230, 30);
-        txtDoctor.setFont(FontsTheme.Plain_Texts);
-        txtDoctor.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtDoctor);
+        txtMed = new JTextField("");
+        txtMed.setBounds(220, 80, 230, 30);
+        txtMed.setFont(FontsTheme.Plain_Texts);
+        txtMed.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtMed);
       
-        lblDate = new JLabel("Date : ");
-        lblDate.setBounds(40, 140, 200, 30);
+        lblDate = new JLabel("Date/Time : ");
+        lblDate.setBounds(40, 120, 200, 30);
         lblDate.setFont(FontsTheme.Plain_Texts);
         lblDate.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDate);
       
         txtDate = new JTextField(""); 
-        txtDate.setBounds(220, 140, 230, 30);
+        txtDate.setBounds(220, 120, 230, 30);
         txtDate.setFont(FontsTheme.Plain_Texts);
         txtDate.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtDate);
 
-        lblStatus = new JLabel("Status : ");
-        lblStatus.setBounds(40, 190, 200, 30);
-        lblStatus.setFont(FontsTheme.Plain_Texts);
-        lblStatus.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblStatus);
+        lblDosage = new JLabel("Dosage : ");
+        lblDosage.setBounds(40, 160, 200, 30);
+        lblDosage.setFont(FontsTheme.Plain_Texts);
+        lblDosage.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblDosage);
       
-        cmbStatus = new JComboBox<>(new String[]{
+        cmbDosage = new JComboBox<>(new String[]{
             " ", "Pending", "Dispensed", "Cancelled", "On Hold"
         });
-        cmbStatus.setBounds(220, 190, 230, 30);
-        cmbStatus.setFont(FontsTheme.Plain_Texts);
-        cmbStatus.setForeground(ColorsTheme.Text_Black);
-        cmbStatus.setBackground(ColorsTheme.Main_Card);
-        pnlContent.add(cmbStatus);
+        cmbDosage.setBounds(220, 160, 230, 30);
+        cmbDosage.setFont(FontsTheme.Plain_Texts);
+        cmbDosage.setForeground(ColorsTheme.Text_Black);
+        cmbDosage.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbDosage);
       
-        lblMedications = new JLabel("Medications : ");
-        lblMedications.setBounds(510, 40, 200, 30);
-        lblMedications.setFont(FontsTheme.Plain_Texts);
-        lblMedications.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblMedications);
+        lblFreq = new JLabel("Frequency : ");
+        lblFreq.setBounds(40, 200, 200, 30);
+        lblFreq.setFont(FontsTheme.Plain_Texts);
+        lblFreq.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblFreq);
+        
+        cmbFreq = new JComboBox<>(new String[]{
+            " ", "Pending", "Dispensed", "Cancelled", "On Hold"
+        });
+        cmbFreq.setBounds(220, 200, 230, 30);
+        cmbFreq.setFont(FontsTheme.Plain_Texts);
+        cmbFreq.setForeground(ColorsTheme.Text_Black);
+        cmbFreq.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbFreq);
       
-        txaMedications = new JTextArea();
-        txaMedications.setFont(FontsTheme.Plain_Texts);
-        txaMedications.setLineWrap(true);
-        txaMedications.setWrapStyleWord(true);
-       
-        scrollMedications = new JScrollPane(txaMedications);
-        scrollMedications.setBounds(690, 40, 230, 100);
-        pnlContent.add(scrollMedications);
+        
+        // Left
+        lblDura = new JLabel("Duration : ");
+        lblDura.setBounds(510, 40, 200, 30);
+        lblDura.setFont(FontsTheme.Plain_Texts);
+        lblDura.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblDura);
+      
+        txtDura = new JTextField("");
+        txtDura.setBounds(690, 40, 230, 30);
+        txtDura.setFont(FontsTheme.Plain_Texts);
+        txtDura.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtDura);
 
-        lblQuantity = new JLabel("Quantity : ");
-        lblQuantity.setBounds(510, 155, 200, 30);
-        lblQuantity.setFont(FontsTheme.Plain_Texts);
-        lblQuantity.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblQuantity);
+        lblQty = new JLabel("Quantity : ");
+        lblQty.setBounds(510, 80, 200, 30);
+        lblQty.setFont(FontsTheme.Plain_Texts);
+        lblQty.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblQty);
       
-        txtQuantity = new JTextField("");
-        txtQuantity.setBounds(690, 155, 230, 30);
-        txtQuantity.setFont(FontsTheme.Plain_Texts);
-        txtQuantity.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtQuantity);
-
-        lblDuration = new JLabel("Duration : ");
-        lblDuration.setBounds(510, 195, 200, 30);
-        lblDuration.setFont(FontsTheme.Plain_Texts);
-        lblDuration.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblDuration);
+        txtQty = new JTextField("");
+        txtQty.setBounds(690, 80, 230, 30);
+        txtQty.setFont(FontsTheme.Plain_Texts);
+        txtQty.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtQty);
+        
+        
+        lblDiagnosis = new JLabel("Diagnosis : ");
+        lblDiagnosis.setBounds(510, 120, 200, 30);
+        lblDiagnosis.setFont(FontsTheme.Plain_Texts);
+        lblDiagnosis.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblDiagnosis);
       
-        txtDuration = new JTextField("");
-        txtDuration.setBounds(690, 195, 230, 30);
-        txtDuration.setFont(FontsTheme.Plain_Texts);
-        txtDuration.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtDuration);
+        txtDiagnosis = new JTextField("");
+        txtDiagnosis.setBounds(690, 120, 230, 30);
+        txtDiagnosis.setFont(FontsTheme.Plain_Texts);
+        txtDiagnosis.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtDiagnosis);
+        
+        
+        lblRefill = new JLabel("Refill Info : ");
+        lblRefill.setBounds(510, 160, 200, 30);
+        lblRefill.setFont(FontsTheme.Plain_Texts);
+        lblRefill.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblRefill);
+      
+        txtRefill = new JTextField("");
+        txtRefill.setBounds(690, 160, 230, 30);
+        txtRefill.setFont(FontsTheme.Plain_Texts);
+        txtRefill.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtRefill);
+        
+        lblNote = new JLabel("Special Notes : ");
+        lblNote.setBounds(510, 200, 200, 30);
+        lblNote.setFont(FontsTheme.Plain_Texts);
+        lblNote.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblNote);
+        
+        txaNote = new JTextArea(" ");
+        txaNote.setText("Write here...");
+        txaNote.setEditable(true);
+        txaNote.setFont(FontsTheme.Dialog_Texts);
+        txaNote.setForeground(ColorsTheme.Text_Gray);
+        txaNote.setLineWrap(true);
+        txaNote.setWrapStyleWord(true);
+        
+        scrollNote = new JScrollPane(txaNote);
+        scrollNote.setBounds(690, 200, 230, 50);
+        pnlContent.setLayout(null);
+        pnlContent.add(scrollNote);
+        
+        
+        
+        
     }
   
     @Override

@@ -6,25 +6,24 @@ package panels;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import com.mycompany.hospitalmanage.*;
-import dialogs.BillDialog;
+import dialogs.AddBillingDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import java.awt.Color;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author Arabella
  */
 public class BillingPanel extends JPanel implements ActionListener  {
     
-    private JPanel pnlMiddle, pnlSearch, pnlRevenue, pnlOverdue, pnlPending, pnlInsurance, cardPanel, TopPanel;
+    private JPanel pnlMiddle, pnlSearch, pnlRevenue, pnlOverdue, pnlPending, pnlInsurance, pnlCard, pnlTop;
     private JLabel lblDetails, lblBilling, lblTitle, lblValue,lblTableTitle;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable table,tblBill;
-    private JScrollPane scrollPane;
+    private JTable tblBill;
+    private JScrollPane scrollBill;
    // private ImagePanel imgPatient;
     
     
@@ -49,6 +48,7 @@ public class BillingPanel extends JPanel implements ActionListener  {
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.setFocusPainted(false);
         btnAdd.addActionListener(this);
         add(btnAdd);
         
@@ -66,6 +66,7 @@ public class BillingPanel extends JPanel implements ActionListener  {
         btnSearch.setFont(FontsTheme.Buttons);
         btnSearch.setBackground(ColorsTheme.Search_Button);
         btnSearch.setForeground(ColorsTheme.Text_White);
+        btnSearch.setFocusPainted(false);
         pnlSearch.add(btnSearch);
         
         btnRefresh = new JButton("Refresh");
@@ -73,6 +74,7 @@ public class BillingPanel extends JPanel implements ActionListener  {
         btnRefresh.setFont(FontsTheme.Buttons);
         btnRefresh.setBackground(ColorsTheme.Text_Gray);
         btnRefresh.setForeground(ColorsTheme.Text_White);
+        btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
         
         
@@ -84,59 +86,84 @@ public class BillingPanel extends JPanel implements ActionListener  {
         lblBilling.setForeground(ColorsTheme.Text_Black);
         add(lblBilling);
 
-        lblDetails = new JLabel("Manage invoices and payments");
+        lblDetails = new JLabel("Manage invoices and payments.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
         
-        pnlRevenue = createCard(
-                "Today's Revenue",
-                "₱12,500");
-           TopPanel.setBackground(Color.green);
+        pnlRevenue = createCard("Today's Revenue", "₱12,500", ColorsTheme.Blue);
         pnlRevenue.setBounds(70, 130, 350, 110);
         add(pnlRevenue);
         
         
-        pnlPending = createCard(
-                "Pending",
-                "₱8,250");
-        TopPanel.setBackground(Color.orange);
+        pnlPending = createCard("Pending", "₱8,250", ColorsTheme.Yellow);
         pnlPending.setBounds(450, 130, 350, 110);
         add(pnlPending);
         
        
-        pnlOverdue = createCard(
-                "Overdue",
-                "₱3,670");
-        TopPanel.setBackground(Color.red);
+        pnlOverdue = createCard("Overdue", "₱3,670", ColorsTheme.Red);
         pnlOverdue.setBounds(830, 130, 350, 110);
         add(pnlOverdue);
         
         
-        pnlInsurance = createCard(
-                "Insurance Claims",
-                "₱18,700");
-        TopPanel.setBackground(Color.blue);
+        pnlInsurance = createCard("Insurance Claims", "₱18,700", ColorsTheme.Green);
         pnlInsurance.setBounds(1210, 130, 350, 110);
         add(pnlInsurance);
        
-        billTable();
+        
+        //Table
+        String[] columns = {"Patient Name", "Patient ID", "Total Amount", "Due Date", "Status"};
+        Object[][] data = {
+                {"Maria Leonora", "000021", "₱4,500.00", "May 15, 2026", "Unpaid"},
+                {"Jose Felipe", "000054", "₱12,850.00", "May 15, 2026", "Partial"},
+                {"Angela Cruz", "000078", "₱1,200.00", "May 14, 2026", "Paid"},
+                {"Mark Anthony", "000103", "₱28,400.00", "May 14, 2026", "Unpaid"},
+                {"Sophia Reyes", "000115", "₱3,500.00", "May 13, 2026", "Paid"},
+                {"Daniel Garcia", "000126", "₱2,150.00", "May 12, 2026", "Paid"},
+                {"Christine Mae", "000138", "₱8,900.00", "May 12, 2026", "Partial"},
+                {"Nathaniel Ong", "000142", "₱15,600.00", "May 10, 2026", "Paid"},
+                {"Francis Mendoza", "000189", "₱45,200.00", "May 09, 2026", "Unpaid"},
+                {"Jasmine Aquino", "000193", "₱6,300.00", "May 08, 2026", "Paid"}
+          };
+        
+        tblBill = new JTable (data, columns);
+        tblBill.getTableHeader().setFont(FontsTheme.Title_Texts);
+        tblBill.setFont(FontsTheme.Info_Texts);
+        tblBill.setRowHeight(50);
+        tblBill.setDefaultEditor(Object.class, null);
+        tblBill.getTableHeader().setReorderingAllowed(false);
+        tblBill.getTableHeader().setBackground(ColorsTheme.Header); 
+        tblBill.getTableHeader().setForeground(ColorsTheme.Text_White);
+        
+        scrollBill = new JScrollPane(tblBill);
+        scrollBill.setBounds(0, 60, 1500, 560);
+        pnlMiddle.add(scrollBill);
+        
+        lblTitle = new JLabel("Recent Billings");
+        lblTitle.setBounds(30, 20, 300, 30);
+        lblTitle.setFont(FontsTheme.Title_Texts);
+        lblTitle.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblTitle);
+        
+        
+        
+        btnAdd.addActionListener(this);
    
     }
 
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value, Color topColor) {
 
-        cardPanel = new JPanel();
-        cardPanel.setLayout(null);
-        cardPanel.setBackground(ColorsTheme.Main_Card);
+        pnlCard = new JPanel();
+        pnlCard.setLayout(null);
+        pnlCard.setBackground(ColorsTheme.Main_Card);
         
-        TopPanel = new JPanel();
-        TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
-        cardPanel.add(TopPanel);
+        pnlTop = new JPanel();
+        pnlTop.setBounds(0, 0, 350, 10);
+        pnlTop.setBackground(topColor);
+        pnlCard.add(pnlTop);
 
 
         //Title
@@ -144,7 +171,7 @@ public class BillingPanel extends JPanel implements ActionListener  {
         lblTitle.setBounds(20, 25, 250, 25);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         lblTitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblTitle);
+        pnlCard.add(lblTitle);
 
 
         //Value
@@ -152,95 +179,25 @@ public class BillingPanel extends JPanel implements ActionListener  {
         lblValue.setBounds(20, 50, 200, 50);
         lblValue.setForeground(ColorsTheme.Text_Black);
         lblValue.setFont(FontsTheme.Bold_Texts);
-        cardPanel.add(lblValue);
+        pnlCard.add(lblValue);
 
 
-        return cardPanel;
+        return pnlCard;
         
         
             } 
     
     
-    private void billTable() {
-
-    lblTableTitle = new JLabel("Recent Emergency Services");
-    lblTableTitle.setBounds(25, 20, 400, 30);
-    lblTableTitle.setFont(FontsTheme.Title_Texts);
-    lblTableTitle.setForeground(ColorsTheme.Text_Black);
-    pnlMiddle.add(lblTableTitle);
-
-    String[] columns = {
-        "Patient Id",
-        "Name",
-        "Date",
-        "Amount",
-        "Status",
-        "Payment Method"
-    };
-
-    Object[][] data = {
-        {"001", "Kurt Redondo", "12/05/26", "₱53,222", "Paid", "Cash"},
-        {"002", "Karlo Alatiit", "12/05/26", "₱103,222", "Pending", "GCash"},
-        {"003", "Karlo Alatiit", "12/05/26", "₱103,222", "Overdue", "GCash"}
-    };
-
-    table = new JTable(data, columns);
-
-    table.getTableHeader().setFont(FontsTheme.Bold_Texts);
-    table.setFont(FontsTheme.Plain_Texts);
-    table.setRowHeight(50);
-    table.setDefaultEditor(Object.class, null);
-
-    table.setShowGrid(false);
-    table.setIntercellSpacing(new java.awt.Dimension(0, 0));
-
-    JTableHeader header = table.getTableHeader();
-    header.setBackground(ColorsTheme.Header);
-    header.setForeground(ColorsTheme.Text_White);
-    header.setReorderingAllowed(false);
-
-    table.getColumnModel().getColumn(4)
-            .setCellRenderer(new StatusColor());
-
-    scrollPane = new JScrollPane(table);
-    scrollPane.setBounds(0, 60, 1500, 420);
-
-    pnlMiddle.add(scrollPane);
-}  
-           @Override
-            public void actionPerformed(ActionEvent e) { 
-                if (e.getSource()== btnAdd) {
-                    BillDialog bill = new BillDialog ();
-                    bill.setVisible(true);
-                }
-            }
-            
-            
-             private static class StatusColor extends DefaultTableCellRenderer {
-            
-              @Override
-            
-              public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
-            
-            java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            String status = value.toString();
-            
-            cell.setForeground(ColorsTheme.Text_Black);
-            
-            if (status.equals("STAT")) {
-                cell.setForeground(ColorsTheme.Delete_Urgent);
-            } else if (status.equals("Pending")) {
-                cell.setForeground(new Color(180, 120, 0));
-            } else if (status.equals("Overdue")) {
-                cell.setForeground(Color.red);
-            } else if (status.equals("Paid")) {
-                cell.setForeground(ColorsTheme.Add_Confirm);
-            }
-            
-            return cell;
-        }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btnAdd);
+        AddBillingDialog bill = new AddBillingDialog();
+        bill.setVisible(true);
     }
+}
             
-    }
+             
+    
+            
+    
 
