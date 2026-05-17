@@ -25,6 +25,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
     private JButton btnSearch, btnRefresh, btnAdd;
     private JScrollPane scrollPatient;
     private JTable tblPatient;
+    
 
     
     

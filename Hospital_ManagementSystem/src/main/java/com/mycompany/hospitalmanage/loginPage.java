@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class loginPage extends JFrame implements ActionListener {
+public class LoginPage extends JFrame implements ActionListener {
 
     JPanel leftPanel = new JPanel();
     JPanel rightPanel = new JPanel();
@@ -24,7 +24,7 @@ public class loginPage extends JFrame implements ActionListener {
     JButton loginButton = new JButton("Login");
 
     
-    loginPage() {
+    LoginPage() {
 
         setTitle("Hospital Management System");
         setSize(1000, 600);
@@ -110,6 +110,6 @@ public class loginPage extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new loginPage();
+        new LoginPage();
     }
 }

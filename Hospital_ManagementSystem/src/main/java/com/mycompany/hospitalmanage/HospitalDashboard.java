@@ -258,7 +258,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         else if(e.getSource() == btnLogout)
         {
             dispose();
-            loginPage lp = new loginPage();
+            LoginPage lp = new LoginPage();
             lp.setVisible(true);
         }
     }
