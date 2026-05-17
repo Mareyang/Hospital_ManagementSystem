@@ -144,16 +144,16 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         btnDashboard = createButton("Dashboard", "/icons/home.png", 100);        
         btnPatients = createButton("Patients", "/icons/patient.png", 150);
         btnAppointments = createButton("Appointments", "/icons/appointment.png", 200);
-        btnMedRec = createButton("Medical Records", "/icons/record.png", 250);
+        btnMedRec = createButton("Medical", "/icons/record.png", 250);
         btnPrescription = createButton("Prescriptions", "/icons/prescription.png", 300);
         btnLab = createButton("Laboratory", "/icons/laboratory.png", 350);
         btnPharmacy = createButton("Pharmacy", "/icons/pharmacy2.png", 400);
-        btnBed = createButton("Bed Management", "/icons/bed.png", 400);
-        btnBill = createButton("Bill", "/icons/bill.png", 450);
-        btnStaff = createButton("Staff", "/icons/staff.png", 500);
-        btnEmergency = createButton("Emergency", "/icons/emergency.png", 550);
-        btnReports = createButton("Reports", "/icons/report.png", 600);
-        btnSettings = createButton("Settings", "/icons/setting.png", 650);
+        btnBed = createButton("Bed Management", "/icons/bed.png", 450);
+        btnBill = createButton("Bill", "/icons/bill.png", 500);
+        btnStaff = createButton("Staff", "/icons/staff.png", 550);
+        btnEmergency = createButton("Emergency", "/icons/emergency.png", 600);
+        btnReports = createButton("Reports", "/icons/report.png", 650);
+        btnSettings = createButton("Settings", "/icons/setting.png", 700);
         btnLogout = createButton("Logout", "/icons/logout.png", 850);
 
         //ActionListener

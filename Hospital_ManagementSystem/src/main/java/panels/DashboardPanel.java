@@ -87,20 +87,40 @@ public class DashboardPanel extends JPanel {
         pnlDistribution = new JPanel();
         pnlDistribution.setLayout(null);
         pnlDistribution.setBackground(ColorsTheme.Middle_Panel);
-        pnlDistribution.setBounds(950,50,500,400);
+        pnlDistribution.setBounds(950, 0, 550, 500);
         pnlMiddle.add(pnlDistribution);
-        
+
         lblDistributionTitle = new JLabel("Department Distribution");
         lblDistributionTitle.setFont(FontsTheme.Title_Texts);
-        lblDistributionTitle.setBounds(10,20,300,30);
+        lblDistributionTitle.setForeground(ColorsTheme.Text_Black);
+        lblDistributionTitle.setBounds(25, 20, 350, 35);
         pnlDistribution.add(lblDistributionTitle);
         
-        barCardiology = createCustomProgressBar(10,70,480,30,25,new Color(0,0,255));
-        barOrthopedics = createCustomProgressBar(10,120,480,30,22,new Color(0,255,0));
-        barEmergency = createCustomProgressBar(10,170,480,30,20, new Color(255,0,0));
-        barNeurology = createCustomProgressBar(10,220,480,30,18, new Color(255,0,255));
-        barPediatrics = createCustomProgressBar(10,270,480,30,15, new Color(255,200,200));
-        
+        barCardiology = createCustomProgressBar(
+        25, 80, 450, 28,
+        25,
+        new Color(52, 152, 219));
+
+        barOrthopedics = createCustomProgressBar(
+                25, 140, 450, 28,
+                22,
+                new Color(46, 204, 113));
+
+        barEmergency = createCustomProgressBar(
+                25, 200, 450, 28,
+                20,
+                new Color(231, 76, 60));
+
+        barNeurology = createCustomProgressBar(
+                25, 260, 450, 28,
+                18,
+                new Color(155, 89, 182));
+
+        barPediatrics = createCustomProgressBar(
+                25, 320, 450, 28,
+                15,
+                new Color(241, 196, 15));
+
         pnlDistribution.add(barCardiology);
         pnlDistribution.add(barOrthopedics);
         pnlDistribution.add(barEmergency);
@@ -108,11 +128,30 @@ public class DashboardPanel extends JPanel {
         pnlDistribution.add(barPediatrics);
         
         
-        JPanel leg1 = createLegendItem(20, 300, "Cardiology", new Color(0,0,255));
-        JPanel leg2 = createLegendItem(20, 330, "Neurology", new Color(0,255,0));
-        JPanel leg3 = createLegendItem(20, 360, "Orthopedics", new Color(255,0,0));
-        JPanel leg4 = createLegendItem(200, 300, "Pediatrics", new Color(255,0,255));
-        JPanel leg5 = createLegendItem(200, 330, "Emergency", new Color(255,200,200));
+        JPanel leg1 = createLegendItem(
+        30, 390,
+        "Cardiology",
+        new Color(52, 152, 219));
+
+        JPanel leg2 = createLegendItem(
+                250, 390,
+                "Orthopedics",
+                new Color(46, 204, 113));
+
+        JPanel leg3 = createLegendItem(
+                30, 425,
+                "Emergency",
+                new Color(231, 76, 60));
+
+        JPanel leg4 = createLegendItem(
+                250, 425,
+                "Neurology",
+                new Color(155, 89, 182));
+
+        JPanel leg5 = createLegendItem(
+                30, 460,
+                "Pediatrics",
+                new Color(241, 196, 15));
 
         pnlDistribution.add(leg1);
         pnlDistribution.add(leg2);
@@ -120,43 +159,19 @@ public class DashboardPanel extends JPanel {
         pnlDistribution.add(leg4);
         pnlDistribution.add(leg5);
         
-        pnlOverview = new JPanel();
-        pnlOverview.setLayout(null);
-        pnlOverview.setBackground(ColorsTheme.Middle_Panel);
-        pnlOverview.setBounds(50,50,850,380);
-        pnlMiddle.add(pnlOverview);
         
-        lblOverviewTitle = new JLabel("Overview");
-        lblOverviewTitle.setFont(FontsTheme.Title_Texts);
-        lblOverviewTitle.setForeground(ColorsTheme.Text_Black);
-        lblOverviewTitle.setBounds(20,15,180,35);
-        pnlOverview.add(lblOverviewTitle);
         
         pnlImage = new JPanel();
         pnlImage.setLayout(null);
-        pnlImage.setBounds(20,65,380,300);
-        pnlImage.setBackground(ColorsTheme.Top_Line);
-        pnlOverview.add(pnlImage);
+        pnlImage.setBounds(0,0,950,500);
+        pnlImage.setBackground(ColorsTheme.Blue);
+        pnlMiddle.add(pnlImage);
         
-        JLabel lblIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/placeholder.png")));
-        lblIcon.setBounds(0,0,380,300);
+        JLabel lblIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/hospi.jpg")));
+        lblIcon.setBounds(0,0,950,500);
         pnlImage.add(lblIcon);
 
-        pnlMetrics = new JPanel();
-        pnlMetrics.setLayout(null);
-        pnlMetrics.setBounds(410,65,410,300);
-        pnlMetrics.setBackground(Color.WHITE);
-        pnlOverview.add(pnlMetrics);
-        
-        JPanel newPatient = createMetricsCard(3,"New Patients: 342", new Color(191,64,191), "👥");
-        JPanel discharged = createMetricsCard(78,"Discharged: 287", new Color(80,200,120), "✅");
-        JPanel admitted = createMetricsCard(153,"Admitted: 189", new Color(137,207,240), "🛌");
-        JPanel averageStayDuration = createMetricsCard(223,"Avg. Stay Duration: 2.6 Days", new Color(255,191,0), "🕜");
-        
-        pnlMetrics.add(newPatient);
-        pnlMetrics.add(discharged);
-        pnlMetrics.add(admitted);
-        pnlMetrics.add(averageStayDuration);
+       
         
 
     }
@@ -198,15 +213,31 @@ public class DashboardPanel extends JPanel {
             }
     
     
-    private JProgressBar createCustomProgressBar(int x, int y, int width, int height, int value, Color filledColor) {
-        JProgressBar bar = new JProgressBar(0, 100);   
-        bar.setBounds(x, y, width, height);            
-        bar.setValue(value);                           
-        bar.setStringPainted(true);                   
-        bar.setForeground(filledColor);                
-        bar.setBackground(new Color(220, 220, 220));   
-        return bar;
-    }
+    private JProgressBar createCustomProgressBar(
+        int x,
+        int y,
+        int width,
+        int height,
+        int value,
+        Color filledColor) {
+
+    JProgressBar bar = new JProgressBar(0, 100);
+
+    bar.setBounds(x, y, width, height);
+    bar.setValue(value);
+
+    bar.setStringPainted(true);
+
+    bar.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+    bar.setForeground(filledColor);
+
+    bar.setBackground(new Color(230, 230, 230));
+
+    bar.setBorderPainted(false);
+
+    return bar;
+}
     
     
     
