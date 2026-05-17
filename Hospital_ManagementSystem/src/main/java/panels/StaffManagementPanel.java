@@ -5,10 +5,8 @@
 package panels;
 
 import constants.ColorsTheme;
-import constants.ColorsTheme;
 import constants.FontsTheme;
-import constants.FontsTheme;
-import dialogs.NewstaffDialog;
+import dialogs.NewStaffDialog;
 //import com.mycompany.hospitalmanage.NewstaffDialog;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -21,9 +19,9 @@ import javax.swing.*;
  */
 public class StaffManagementPanel extends JPanel implements ActionListener {
     
-    private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlOn, pnlOff, pnlLeave, cardPanel, TopPanel;
+    private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlOn, pnlOff, pnlLeave, pnlCard, pnlTop;
     private JTable tblEmployee;
-    private JLabel lblDetails, lblStaff, lblTitle, lblValue;
+    private JLabel lblDetails, lblStaff, lblTitle, lblValue, lblHead;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
     private JScrollPane scrollEmployee;
@@ -83,37 +81,29 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         lblStaff.setForeground(ColorsTheme.Text_Black);
         add(lblStaff);
 
-        lblDetails = new JLabel("Manage hospital staffs and schedules");
+        lblDetails = new JLabel("Manage hospital staffs and schedules.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
         
-        pnlTotal = createCard(
-                "Total Staff",
-                "245");
+        pnlTotal = createCard("Total Staff", "245", ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
         
-        pnlOn = createCard(
-                "On Duty",
-                "180");
+        pnlOn = createCard("On Duty", "180", ColorsTheme.Green);
         pnlOn.setBounds(450, 130, 350, 110);
         add(pnlOn);
         
        
-        pnlOff = createCard(
-                "Off Duty",
-                "52");
+        pnlOff = createCard("Off Duty", "52", ColorsTheme.Yellow);
         pnlOff.setBounds(830, 130, 350, 110);
         add(pnlOff);
         
         
-        pnlLeave = createCard(
-                "On Leave",
-                "13");
+        pnlLeave = createCard("On Leave", "13", ColorsTheme.Red);
         pnlLeave.setBounds(1210, 130, 350, 110);
         add(pnlLeave);
         
@@ -185,28 +175,37 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         tblEmployee.setRowHeight(50);
         tblEmployee.setDefaultEditor(Object.class, null);
         tblEmployee.getTableHeader().setReorderingAllowed(false);
-       // tblEmployee.getTableHeader().setBackground(ColorsTheme.Header); 
+        tblEmployee.getTableHeader().setBackground(ColorsTheme.Header); 
         tblEmployee.getTableHeader().setForeground(ColorsTheme.Text_White);
         
         scrollEmployee = new JScrollPane(tblEmployee);
-        scrollEmployee.setBounds(0, 0, 1500, 620);
+        scrollEmployee.setBounds(0, 60, 1500, 560);
         pnlMiddle.add(scrollEmployee);
         
+        lblHead = new JLabel("Employee Records");
+        lblHead.setBounds(30, 20, 300, 30);
+        lblHead.setFont(FontsTheme.Title_Texts);
+        lblHead.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblHead);
+        
+        
+        
+        //ActionListener
         btnAdd.addActionListener(this);
         
     }
     
     
-    public JPanel createCard(String title, String value) {
+    public JPanel createCard(String title, String value, Color topColor) {
 
-        cardPanel = new JPanel();
-        cardPanel.setLayout(null);
-        cardPanel.setBackground(ColorsTheme.Main_Card);
+        pnlCard = new JPanel();
+        pnlCard.setLayout(null);
+        pnlCard.setBackground(ColorsTheme.Main_Card);
         
-        TopPanel = new JPanel();
-        TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(ColorsTheme.Top_Line);
-        cardPanel.add(TopPanel);
+        pnlTop = new JPanel();
+        pnlTop.setBounds(0, 0, 350, 10);
+        pnlTop.setBackground(topColor);
+        pnlCard.add(pnlTop);
 
 
         //Title
@@ -214,7 +213,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         lblTitle.setBounds(20, 25, 250, 25);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         lblTitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblTitle);
+        pnlCard.add(lblTitle);
 
 
         //Value
@@ -222,10 +221,10 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         lblValue.setBounds(20, 50, 200, 50);
         lblValue.setForeground(Color.BLACK);
         lblValue.setFont(FontsTheme.Bold_Texts);
-        cardPanel.add(lblValue);
+        pnlCard.add(lblValue);
 
 
-      return cardPanel;
+      return pnlCard;
              
       
     }
@@ -233,7 +232,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (btnAdd == e.getSource()) {
-            NewstaffDialog dialog = new NewstaffDialog();
+            NewStaffDialog dialog = new NewStaffDialog();
             dialog.setVisible(true);
         }
     }

@@ -461,6 +461,9 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         else if(e.getSource() == btnHistory) {
             showMedicalHistory();
         }
+        else if(e.getSource() == btnCancel);
+            dispose();
+        }
         
     }
-}
+

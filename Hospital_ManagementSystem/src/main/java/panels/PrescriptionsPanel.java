@@ -104,21 +104,21 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         
         
         //Table
-        String[] columns = {"Patient Name", "Doctor", "Date", "Medications", "Status"};
+        String[] columns = {"Patient Name", "Doctor", "Date", "Medications", "Status", "Actions"};
         
         Object[][] data = {
-            {"John Smith", "Dr. Chen", "May 13, 2026", "3x daily / 20 days", "Pending"},
-            {"Sarah Johnson", "Dr. Williams", "May 14, 2026", "2x daily / 3 days", "Dispensed"},
-            {"Maria Leonora", "Dr. Robert Chen", "May 15, 2026", "Amoxicillin 500mg (3x daily / 7 days)", "Active"},
-            {"Jose Felipe", "Dr. Sarah Jenkins", "May 15, 2026", "Metformin 850mg (2x daily / 30 days)", "Active"},
-            {"Angela Cruz", "Dr. Alan Reyes", "May 14, 2026", "Paracetamol 500mg (As needed for pain)", "Completed"},
-            {"Mark Anthony", "Dr. Grace Torres", "May 14, 2026", "Losartan 50mg (Once daily / 60 days)", "Active"},
-            {"Sophia Reyes", "Dr. Robert Chen", "May 13, 2026", "Cetirizine 10mg (Once nightly / 10 days)", "Completed"},
-            {"Daniel Garcia", "Dr. David Kim", "May 12, 2026", "Ibuprofen 400mg (Every 8 hours / 5 days)", "Cancelled"},
-            {"Christine Mae", "Dr. Sarah Jenkins", "May 12, 2026", "Atorvastatin 20mg (Once nightly / 30 days)", "Active"},
-            {"Nathaniel Ong", "Dr. Alan Reyes", "May 10, 2026", "Omeprazole 20mg (Before breakfast / 14 days)", "Completed"},
-            {"Francis Mendoza", "Dr. Grace Torres", "May 09, 2026", "Salbutamol Inhaler (1-2 puffs as needed)", "Active"},
-            {"Jasmine Aquino", "Dr. David Kim", "May 08, 2026", "Prednisone 5mg (Once daily / 5 days)", "Completed"}
+            {"John Smith", "Dr. Chen", "May 13, 2026", "3x daily / 20 days", "Pending"," "},
+            {"Sarah Johnson", "Dr. Williams", "May 14, 2026", "2x daily / 3 days", "Dispensed"," "},
+            {"Maria Leonora", "Dr. Robert Chen", "May 15, 2026", "Amoxicillin 500mg (3x daily / 7 days)", "Active"," "},
+            {"Jose Felipe", "Dr. Sarah Jenkins", "May 15, 2026", "Metformin 850mg (2x daily / 30 days)", "Active"," "},
+            {"Angela Cruz", "Dr. Alan Reyes", "May 14, 2026", "Paracetamol 500mg (As needed for pain)", "Completed"," "},
+            {"Mark Anthony", "Dr. Grace Torres", "May 14, 2026", "Losartan 50mg (Once daily / 60 days)", "Active"," "},
+            {"Sophia Reyes", "Dr. Robert Chen", "May 13, 2026", "Cetirizine 10mg (Once nightly / 10 days)", "Completed"," "},
+            {"Daniel Garcia", "Dr. David Kim", "May 12, 2026", "Ibuprofen 400mg (Every 8 hours / 5 days)", "Cancelled"," "},
+            {"Christine Mae", "Dr. Sarah Jenkins", "May 12, 2026", "Atorvastatin 20mg (Once nightly / 30 days)", "Active"," "},
+            {"Nathaniel Ong", "Dr. Alan Reyes", "May 10, 2026", "Omeprazole 20mg (Before breakfast / 14 days)", "Completed"," "},
+            {"Francis Mendoza", "Dr. Grace Torres", "May 09, 2026", "Salbutamol Inhaler (1-2 puffs as needed)", "Active"," "},
+            {"Jasmine Aquino", "Dr. David Kim", "May 08, 2026", "Prednisone 5mg (Once daily / 5 days)", "Completed"," "}
         };
         
         table = new JTable(data, columns);

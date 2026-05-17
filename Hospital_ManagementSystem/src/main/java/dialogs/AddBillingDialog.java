@@ -6,19 +6,22 @@ import constants.FontsTheme;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-    public class AddBillingDialog extends JDialog implements ActionListener {
 
-    JLabel lblInvNo,lblPatientId, lblName,lblDoctor,lblDate,lblConsultation,lblMedicine,lblLab, lblAmount,lblDiscount, lblPayment,lblStatus, lblTitle,lblSubtitle,lblInvoice;
-    JTextField txtInvNo,txtPatientId, txtName, txtDoctor,txtDate,txtConsultation,txtMedicine,txtLab,txtAmount,txtDiscount;
-    JComboBox<String> cmbStatus, cmbPayment;
-    JButton btnSave, btnCancel,btnPersonal,btnHistory;
-    JPanel pnlContent;
-    public AddBillingDialog() {
+   
+ 
+public class AddBillingDialog extends JDialog implements ActionListener {
 
-        
+    private JLabel lblInvNo, lblPatientId, lblName, lblDoctor, lblDate, lblConsultation, lblMedicine, lblLab, lblAmount, 
+            lblDiscount, lblPayment, lblStatus, lblTitle, lblSubtitle, lblInvoice;
+    private JTextField txtInvNo, txtPatientId, txtName, txtDoctor, txtDate, txtConsultation, txtMedicine, txtLab, txtAmount, txtDiscount;
+    private JComboBox<String> cmbStatus, cmbPayment;
+    private JButton btnSave, btnCancel,btnPersonal;
+    private JPanel pnlContent;
+    
+    
+    
+    public AddBillingDialog() { 
         setSize(1050, 550);
         setLocationRelativeTo(null);
         setLayout(null); 

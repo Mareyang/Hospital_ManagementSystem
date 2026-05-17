@@ -6,7 +6,7 @@ package com.mycompany.hospitalmanage;
 
 import constants.ButtonStyles;
 import constants.ColorsTheme;
-import panels.MessagesPanel;
+//import panels.MessagesPanel;
 import panels.ReportsPanel;
 import panels.BedManagementPanel;
 import panels.MedicalRecordsPanel;
@@ -137,7 +137,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         ContainerPanel.add(new StaffManagementPanel(), "staffManagement");
         ContainerPanel.add(new EmergencyPanel(), "emergency");
         ContainerPanel.add(new ReportsPanel(), "reports");
-        ContainerPanel.add(new MessagesPanel(), "messages");
+        //ContainerPanel.add(new MessagesPanel(), "messages");
         ContainerPanel.add(new SettingsPanel(), "settings");
         add(ContainerPanel);
 

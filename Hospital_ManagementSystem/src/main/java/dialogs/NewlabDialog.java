@@ -6,9 +6,6 @@ package dialogs;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
-import java.awt.Dialog;
-import java.awt.Image;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -16,208 +13,249 @@ import javax.swing.*;
  *
  * @author eiros
  */
-public class NewlabDialog extends JDialog implements ActionListener {
+public class NewLabDialog extends JDialog implements ActionListener {
     
-    private JButton btnPatientTestInfo, btnClinicalNotes;
-    private JPanel pnlPatientTestInfo, pnlClinicalNotes;
     
-    public NewlabDialog() {
-        
-        
+    private JLabel lblDialogTitle, lblDialogDetails, lblID, lblName, lblDate, lblDoc, lblDepart, lblType, lblStatus, lblTest, lblNote;
+    private JTextField txtID, txtName, txtDate, txtTest;
+    private JTextArea txaNote;
+    private JScrollPane scrollNote;
+    private JComboBox<String> cmbDepart, cmbDoc, cmbType, cmbStatus;
+    private JButton btnPatientTestInfo, btnCancel, btnAddInfo;
+    private JPanel pnlContent;
+    
+    
+    
+    public NewLabDialog() {
+        setSize(1050, 550);
         setLayout(null);
-        setSize(1050, 585);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(ColorsTheme.Middle_Panel);
+        setModal(true);
         
-        JLabel lbllabIcon = createIconLabel("/icons/lab.png");
-        lbllabIcon.setBounds(30, 25, 72, 72);
-        add(lbllabIcon);
 
-        JLabel lblDialogTitle = new JLabel("New Lab Order");
-        lblDialogTitle.setBounds(110, 25, 300, 35);
+        lblDialogTitle = new JLabel("Patient Laboratory");
+        lblDialogTitle.setBounds(30, 10, 500, 40);
         lblDialogTitle.setFont(FontsTheme.Bold_Texts);
         lblDialogTitle.setForeground(ColorsTheme.Text_Black);
         add(lblDialogTitle);
         
-        JLabel lblDialogDetails = new JLabel("Create a laboratory request for a patient");
-        lblDialogDetails.setBounds(110, 60, 450, 30);
-        lblDialogDetails.setFont(FontsTheme.Info_Texts);
+        lblDialogDetails = new JLabel("Create a laboratory request for a patient.");
+        lblDialogDetails.setBounds(30, 40, 500, 40);
+        lblDialogDetails.setFont(FontsTheme.Plain_Texts);
         lblDialogDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDialogDetails);
 
-        btnPatientTestInfo = createTabButton("Patient/Test Info");
-        btnPatientTestInfo.setBounds(50, 115, 250, 40);
-        btnPatientTestInfo.addActionListener(this);
+        btnPatientTestInfo = new JButton("Lab Form");
+        btnPatientTestInfo.setBounds(40, 100, 250, 40);
+        btnPatientTestInfo.setFont(FontsTheme.Buttons);
+        btnPatientTestInfo.setForeground(ColorsTheme.Text_White);
+        btnPatientTestInfo.setBackground(ColorsTheme.Header);
+        btnPatientTestInfo.setFocusPainted(false);
         add(btnPatientTestInfo);
 
-        btnClinicalNotes = createTabButton("Clinical Notes");
-        btnClinicalNotes.setBounds(300, 115, 250, 40);
-        btnClinicalNotes.addActionListener(this);
-        add(btnClinicalNotes);
-
-        pnlPatientTestInfo = createFormPanel();
-        add(pnlPatientTestInfo);
-
-        pnlClinicalNotes = createFormPanel();
-        pnlClinicalNotes.setVisible(false);
-        add(pnlClinicalNotes);
         
-        JLabel lblPatientID = createFormLabel("Patient ID:");
-        lblPatientID.setBounds(70, 35, 160, 30);
-        pnlPatientTestInfo.add(lblPatientID);
+        pnlContent = new JPanel();
+        pnlContent.setLayout(null);
+        pnlContent.setBounds(40, 140, 950, 300);
+        pnlContent.setBackground(ColorsTheme.Main_Card);
+        add(pnlContent);
         
-        JTextField txtPatientID = createFormTextField();
-        txtPatientID.setBounds(230, 35, 300, 30);
-        pnlPatientTestInfo.add(txtPatientID);
         
-        JButton btnFindPatient = new JButton("Find Patient");
-        btnFindPatient.setBounds(550, 35, 170, 30);
-        btnFindPatient.setFont(FontsTheme.Info_Texts);
-        btnFindPatient.setBackground(ColorsTheme.Search_Button);
-        btnFindPatient.setForeground(ColorsTheme.Text_White);
-        pnlPatientTestInfo.add(btnFindPatient);
-        
-        JLabel lblPatientName = createFormLabel("Patient Name:");
-        lblPatientName.setBounds(70, 80, 160, 30);
-        pnlPatientTestInfo.add(lblPatientName);
-        
-        JTextField txtPatientName = createFormTextField();
-        txtPatientName.setBounds(230, 80, 600, 30);
-        pnlPatientTestInfo.add(txtPatientName);
-        
-        JLabel lblTestType = createFormLabel("Test Type:");
-        lblTestType.setBounds(70, 125, 160, 30);
-        pnlPatientTestInfo.add(lblTestType);
-        
-        JComboBox<String> cmbTestType = new JComboBox<>(new String[]{
-                "Complete Blood Count",
-                "Urinalysis",
-                "Blood Chemistry",
-                "Lipid Profile",
-                "Fasting Blood Sugar",
-                "Chest X-Ray",
-                "ECG"
-        });
-        cmbTestType.setBounds(230, 125, 600, 30);
-        cmbTestType.setFont(FontsTheme.Info_Texts);
-        pnlPatientTestInfo.add(cmbTestType);
-        
-        JLabel lblPriority = createFormLabel("Priority:");
-        lblPriority.setBounds(70, 170, 160, 30);
-        pnlPatientTestInfo.add(lblPriority);
-        
-        JComboBox<String> cmbPriority = new JComboBox<>(new String[]{"Routine", "STAT"});
-        cmbPriority.setBounds(230, 170, 220, 30);
-        cmbPriority.setFont(FontsTheme.Info_Texts);
-        pnlPatientTestInfo.add(cmbPriority);
-        
-        JLabel lblRequestedDate = createFormLabel("Requested Date:");
-        lblRequestedDate.setBounds(510, 170, 170, 30);
-        pnlPatientTestInfo.add(lblRequestedDate);
-        
-        JTextField txtRequestedDate = createFormTextField();
-        txtRequestedDate.setText("MM/DD/YYYY");
-        txtRequestedDate.setBounds(680, 170, 150, 30);
-        pnlPatientTestInfo.add(txtRequestedDate);
-        
-        JLabel lblRequestedBy = createFormLabel("Requested By:");
-        lblRequestedBy.setBounds(70, 215, 160, 30);
-        pnlPatientTestInfo.add(lblRequestedBy);
-        
-        JTextField txtRequestedBy = createFormTextField();
-        txtRequestedBy.setBounds(230, 215, 600, 30);
-        pnlPatientTestInfo.add(txtRequestedBy);
-        
-        JLabel lblNotes = createFormLabel("Clinical Notes:");
-        lblNotes.setBounds(70, 45, 200, 30);
-        pnlClinicalNotes.add(lblNotes);
-        
-        JTextArea txaNotes = new JTextArea("Write notes here...");
-        txaNotes.setFont(FontsTheme.Info_Texts);
-        txaNotes.setForeground(ColorsTheme.Text_Gray);
-        txaNotes.setLineWrap(true);
-        txaNotes.setWrapStyleWord(true);
-        
-        JScrollPane scrollNotes = new JScrollPane(txaNotes);
-        scrollNotes.setBounds(230, 45, 600, 210);
-        pnlClinicalNotes.add(scrollNotes);
-
-        JButton btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(635, 495, 150, 40);
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(480, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
-        btnCancel.setBackground(ColorsTheme.Text_Gray);
         btnCancel.setForeground(ColorsTheme.Text_White);
-        btnCancel.addActionListener(e -> dispose());
+        btnCancel.setBackground(ColorsTheme.Cancel);
+        btnCancel.setFocusPainted(false);
         add(btnCancel);
-
-        JButton btnSave = new JButton("Save Lab Order");
-        btnSave.setBounds(800, 495, 200, 40);
-        btnSave.setFont(FontsTheme.Buttons);
-        btnSave.setBackground(ColorsTheme.Add_Confirm);
-        btnSave.setForeground(ColorsTheme.Text_White);
-        add(btnSave);
         
-        setVisible(true);
-    }
-        private JLabel createFormLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(FontsTheme.Plain_Texts);
-        label.setForeground(ColorsTheme.Text_Black);
-        return label;
-    }
-    
-    private JTextField createFormTextField() {
-        JTextField textField = new JTextField();
-        textField.setFont(FontsTheme.Info_Texts);
-        return textField;
-    }
+        btnAddInfo = new JButton("Submit Lab Request");
+        btnAddInfo.setBounds(690, 450, 300, 30);
+        btnAddInfo.setFont(FontsTheme.Buttons);
+        btnAddInfo.setForeground(ColorsTheme.Text_White);
+        btnAddInfo.setBackground(ColorsTheme.Green);
+        btnAddInfo.setFocusPainted(false);
+        add(btnAddInfo);
+        
 
-    private JPanel createFormPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBounds(50, 155, 950, 325);
-        panel.setBackground(ColorsTheme.Main_Card);
-        return panel;
-    }
+        
+        //ActionListener
+        btnPatientTestInfo.addActionListener(this);
+        
+        showTestInfo();
 
-    private JButton createTabButton(String text) {
-        JButton button = new JButton(text);
-        button.setFont(FontsTheme.Buttons);
-        button.setBackground(ColorsTheme.Search_Button);
-        button.setForeground(ColorsTheme.Text_White);
-        button.setFocusPainted(false);
-        return button;
+}
+        
+        
+    public void showTestInfo() {
+        pnlContent.removeAll();
+        pnlContent.repaint();
+        pnlContent.revalidate();
+       
+        lblID = new JLabel("Lab ID : ");
+        lblID.setBounds(40, 30, 200, 30);
+        lblID.setFont(FontsTheme.Plain_Texts);
+        lblID.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblID);
+        
+        txtID = new JTextField("");
+        txtID.setBounds(220, 30, 230, 30);
+        txtID.setFont(FontsTheme.Plain_Texts);
+        txtID.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtID);
+        
+        lblName = new JLabel("Name : ");
+        lblName.setBounds(40, 70, 200, 30);
+        lblName.setFont(FontsTheme.Plain_Texts);
+        lblName.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblName);
+        
+        txtName = new JTextField("");
+        txtName.setBounds(220, 70, 230, 30);
+        txtName.setFont(FontsTheme.Plain_Texts);
+        txtName.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtName);
+        
+        lblDate = new JLabel("Requested Date : ");
+        lblDate.setBounds(40, 110, 200, 30);
+        lblDate.setFont(FontsTheme.Plain_Texts);
+        lblDate.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblDate);
+        
+        txtDate = new JTextField("");
+        txtDate.setBounds(220, 110, 230, 30);
+        txtDate.setFont(FontsTheme.Plain_Texts);
+        txtDate.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtDate);
+        
+        lblType = new JLabel("Test Type : ");
+        lblType.setBounds(40, 150, 300, 30);
+        lblType.setFont(FontsTheme.Plain_Texts);
+        lblType.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblType);
+        
+        cmbType = new JComboBox<>(new String[]{
+        " ", "Hematology", "Urinalysis", "Immunology", "Clinical Chemistry ",
+        });
+        cmbType.setBounds(220, 150, 230, 30);
+        cmbType.setFont(FontsTheme.Plain_Texts);
+        cmbType.setForeground(ColorsTheme.Text_Black);
+        cmbType.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbType);
+        
+        
+        
+        //Left
+        lblDepart = new JLabel("Department : ");
+        lblDepart.setBounds(510, 30, 200, 30);
+        lblDepart.setFont(FontsTheme.Plain_Texts);
+        lblDepart.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblDepart);
+        
+        
+        cmbDepart = new JComboBox<>(new String[]{
+        " ", "Emergency(ER)", "Laboratory", "Cardiology", "Pediatrics ", "Surgery", "OB-GYN", "Radiology",
+        });
+        cmbDepart.setBounds(690, 30, 230, 30);
+        cmbDepart.setFont(FontsTheme.Plain_Texts);
+        cmbDepart.setForeground(ColorsTheme.Text_Black);
+        cmbDepart.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbDepart);
+        
+       
+        lblDoc = new JLabel("Physician/Doctor : ");
+        lblDoc.setBounds(510, 70, 200, 30);
+        lblDoc.setFont(FontsTheme.Plain_Texts);
+        lblDoc.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblDoc);
+        
+        cmbDoc = new JComboBox<>(new String[]{
+        " ", "Dr. Juan dela Cruz", "Dr. Maria Santos", "Dr. Ricardo Reyes", "Dr. Elena Garcia", "Dr. Roberto Castro"
+        });
+        cmbDoc.setBounds(690, 70, 230, 30);
+        cmbDoc.setFont(FontsTheme.Plain_Texts);
+        cmbDoc.setForeground(ColorsTheme.Text_Black);
+        cmbDoc.setBackground(ColorsTheme.Text_White);
+        pnlContent.add(cmbDoc);
+        
+        lblTest = new JLabel("Specific Test : ");
+        lblTest.setBounds(510, 110, 200, 30);
+        lblTest.setFont(FontsTheme.Plain_Texts);
+        lblTest.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblTest);
+        
+        
+        txtTest = new JTextField("");
+        txtTest.setBounds(690, 110, 230, 30);
+        txtTest.setFont(FontsTheme.Plain_Texts);
+        txtTest.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtTest);
+        
+       
+        lblStatus = new JLabel("Collection Status : ");
+        lblStatus.setBounds(510, 150, 300, 30);
+        lblStatus.setFont(FontsTheme.Plain_Texts);
+        lblStatus.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblStatus);
+        
+        cmbStatus = new JComboBox<>(new String[]{
+        " ", "Routine", "STAT/Emergency", "Fasting REquired", 
+        });
+        cmbStatus.setBounds(690, 150, 230, 30);
+        cmbStatus.setFont(FontsTheme.Plain_Texts);
+        cmbStatus.setForeground(ColorsTheme.Text_Black);
+        cmbStatus.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbStatus);
+        
+        
+        lblNote = new JLabel("Clinical Remarks");
+        lblNote.setBounds(50, 200, 300, 30);
+        lblNote.setFont(FontsTheme.Title_Texts);
+        lblNote.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblNote);
+        
+        txaNote = new JTextArea(" ");
+        txaNote.setText("Write here...");
+        txaNote.setEditable(true);
+        txaNote.setFont(FontsTheme.Dialog_Texts);
+        txaNote.setForeground(ColorsTheme.Text_Gray);
+        txaNote.setLineWrap(true);
+        txaNote.setWrapStyleWord(true);
+        
+        scrollNote = new JScrollPane(txaNote);
+        scrollNote.setBounds(40, 230, 880, 50);
+        pnlContent.setLayout(null);
+        pnlContent.add(scrollNote);
+        
+        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnPatientTestInfo) {
-            pnlPatientTestInfo.setVisible(true);
-            pnlClinicalNotes.setVisible(false);
-        } else if (e.getSource() == btnClinicalNotes) {
-            pnlPatientTestInfo.setVisible(false);
-            pnlClinicalNotes.setVisible(true);
-        }
+        if(e.getSource() == btnPatientTestInfo);
+            showTestInfo();
         
-        revalidate();
-        repaint();
-    }
 
-    private JLabel createIconLabel(String path) {
-        java.net.URL resource = getClass().getResource(path);
-        ImageIcon icon;
-        
-        if (resource != null) {
-            icon = new ImageIcon(resource);
-        } else {
-            icon = new ImageIcon("src/main/resources" + path);
-        }
-        
-        Image image = icon.getImage();
-        Image scaledImage = image.getScaledInstance(56, 56, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        JLabel label = new JLabel(scaledIcon);
-        
-        return label;
     }
+    
 }
+        
+
+//    private JLabel createIconLabel(String path) {
+//        java.net.URL resource = getClass().getResource(path);
+//        ImageIcon icon;
+//        
+//        if (resource != null) {
+//            icon = new ImageIcon(resource);
+//        } else {
+//            icon = new ImageIcon("src/main/resources" + path);
+//        }
+//        
+//        Image image = icon.getImage();
+//        Image scaledImage = image.getScaledInstance(56, 56, Image.SCALE_SMOOTH);
+//        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+//        JLabel label = new JLabel(scaledIcon);
+//        
+//        return label;
+    
+

@@ -87,19 +87,19 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
         
-        String[] columns = {"Patient Name", "Patient ID", "Type", "Doctor", "Date"};
+        String[] columns = {"Patient Name", "Patient ID", "Type", "Doctor", "Date", "Actions"};
         
         Object[][] data = {
-            {"Maria Leonora", "000021", "New Consultation", "Dr. Robert Chen", "May 15, 2026"},
-            {"Jose Felipe", "000054", "Follow-up Visit", "Dr. Sarah Jenkins", "May 15, 2026"},
-            {"Angela Cruz", "000078", "Routine Check-up", "Dr. Alan Reyes", "May 14, 2026"},
-            {"Mark Anthony", "000103", "Emergency Visit", "Dr. Grace Torres", "May 14, 2026"},
-            {"Sophia Reyes", "000115", "Diagnostic/Lab Test", "Dr. Robert Chen", "May 13, 2026"},
-            {"Daniel Garcia", "000126", "Follow-up Visit", "Dr. David Kim", "May 12, 2026"},
-            {"Christine Mae", "000138", "New Consultation", "Dr. Sarah Jenkins", "May 12, 2026"},
-            {"Nathaniel Ong", "000142", "Pre-Surgical Clearance", "Dr. Alan Reyes", "May 10, 2026"},
-            {"Francis Mendoza", "000189", "Emergency Visit", "Dr. Grace Torres", "May 09, 2026"},
-            {"Jasmine Aquino", "000193", "Post-Operative Check", "Dr. David Kim", "May 08, 2026"}
+            {"Maria Leonora", "000021", "New Consultation", "Dr. Robert Chen", "May 15, 2026"," "},
+            {"Jose Felipe", "000054", "Follow-up Visit", "Dr. Sarah Jenkins", "May 15, 2026"," "},
+            {"Angela Cruz", "000078", "Routine Check-up", "Dr. Alan Reyes", "May 14, 2026"," "},
+            {"Mark Anthony", "000103", "Emergency Visit", "Dr. Grace Torres", "May 14, 2026"," "},
+            {"Sophia Reyes", "000115", "Diagnostic/Lab Test", "Dr. Robert Chen", "May 13, 2026"," "},
+            {"Daniel Garcia", "000126", "Follow-up Visit", "Dr. David Kim", "May 12, 2026"," "},
+            {"Christine Mae", "000138", "New Consultation", "Dr. Sarah Jenkins", "May 12, 2026"," "},
+            {"Nathaniel Ong", "000142", "Pre-Surgical Clearance", "Dr. Alan Reyes", "May 10, 2026"," "},
+            {"Francis Mendoza", "000189", "Emergency Visit", "Dr. Grace Torres", "May 09, 2026"," "},
+            {"Jasmine Aquino", "000193", "Post-Operative Check", "Dr. David Kim", "May 08, 2026"," "}
         };
         
         table = new JTable(data, columns);
@@ -112,7 +112,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         table.getTableHeader().setForeground(ColorsTheme.Text_White);
 
         scrollTable = new JScrollPane(table);
-        scrollTable.setBounds(0, 60, 1500, 560);
+        scrollTable.setBounds(0, 60, 1500, 620);
         pnlMiddle.add(scrollTable);
         
         lblTitle = new JLabel("Recent Medical Records");

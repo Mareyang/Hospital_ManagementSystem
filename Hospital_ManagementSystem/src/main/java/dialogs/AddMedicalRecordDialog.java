@@ -27,6 +27,9 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
     private JComboBox<String> cmbType;
     private JButton btnAddInfo, btnCancel, btnMed;
 
+    
+    
+    
     public AddMedicalRecordDialog() {
         setSize(1050, 550);
         setLayout(null);
