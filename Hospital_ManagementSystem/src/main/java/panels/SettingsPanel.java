@@ -28,10 +28,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
     private JComboBox cmbTheme, cmbDarkMode, cmbCurrency, cmbDateFormat, cmbTimeFormat, cmbStats, cmbAutoLogout, cmbAutoLogoutTime;
     private JScrollPane scrollPane;
     private String[] theme = {"Blue", "Red", "Green"},
-            enable = {"Enable", "Disable"},
-            currency = {"USD - US Dollar", "PHP - Philippine Peso", "More Soon"},
-            dateFormat = {"YYYY / MM / DD", "MM / DD / YYYY", "DD / MM / YYYY"},
-            timeFormat = {"12-Hour (AM/PM)", "24-Hour (Universal)"};
+            enable = {"Enable", "Disable"};
     private Integer[] time = {5, 10, 15, 20, 25, 30};
     
     
@@ -48,10 +45,10 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblSettingsDesc = new JLabel("Manage system preferences");
         lblSettingsDesc.setBounds(30, 70, 500, 40);
         lblSettingsDesc.setFont(FontsTheme.Plain_Texts);
-        lblSettingsDesc.setForeground(ColorsTheme.Text_Black);
+        lblSettingsDesc.setForeground(ColorsTheme.Text_Gray);
         add(lblSettingsDesc);
         
-        // GENERAL SETTINGS
+        // General Settings
         
         pnlGeneral = createCard("General Settings");
         pnlGeneral.setBounds(70, 130, 1500, 250);
@@ -71,7 +68,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblName.setForeground(ColorsTheme.Text_Black);
         pnlGeneral.add(lblName);
         
-        lblHospital = new JLabel("placeholder");
+        lblHospital = new JLabel(" ");
         lblHospital.setBounds(190, 80, 500, 30);
         lblHospital.setFont(FontsTheme.Plain_Texts);
         lblHospital.setForeground(ColorsTheme.Text_Black);
@@ -84,13 +81,17 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblCurrency.setForeground(ColorsTheme.Text_Black);
         pnlGeneral.add(lblCurrency); 
         
-        cmbDateFormat = new JComboBox<String>(currency);
-        cmbDateFormat.setBounds(940, 80, 200, 30);
-        cmbDateFormat.setUI(new javax.swing.plaf.basic.BasicComboBoxUI());
-        cmbDateFormat.setOpaque(false);
-        cmbDateFormat.setFocusable(false);
-        cmbDateFormat.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-        pnlGeneral.add(cmbDateFormat);
+
+        cmbCurrency = new JComboBox<>(new String[]{
+        " ", "USD - US Dollar", "PHP - Philippine Peso", "More Soon"
+        });
+        cmbCurrency.setBounds(940, 80, 200, 30);
+        cmbCurrency.setFont(FontsTheme.Info_Texts);
+        cmbCurrency.setForeground(ColorsTheme.Text_Black);
+        cmbCurrency.setBackground(ColorsTheme.Text_White);
+        pnlGeneral.add(cmbCurrency);
+        
+        
         
         lblDateFormat = new JLabel("Date Format");
         lblDateFormat.setBounds(800, 120, 500, 30);
@@ -98,13 +99,15 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblDateFormat.setForeground(ColorsTheme.Text_Black);
         pnlGeneral.add(lblDateFormat); 
         
-        cmbCurrency = new JComboBox<String>(dateFormat);
-        cmbCurrency.setBounds(940, 120, 200, 30);
-        cmbCurrency.setUI(new javax.swing.plaf.basic.BasicComboBoxUI());
-        cmbCurrency.setOpaque(false);
-        cmbCurrency.setFocusable(false);
-        cmbCurrency.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-        pnlGeneral.add(cmbCurrency);
+        cmbDateFormat = new JComboBox<>(new String[]{
+        " ", "YYYY / MM / DD", "MM / DD / YYYY", "DD / MM / YYYY"
+        });
+        cmbDateFormat.setBounds(940, 120, 200, 30);
+        cmbDateFormat.setFont(FontsTheme.Info_Texts);
+        cmbDateFormat.setForeground(ColorsTheme.Text_Black);
+        cmbDateFormat.setBackground(ColorsTheme.Text_White);
+        pnlGeneral.add(cmbDateFormat);
+        
         
         lblTimeFormat = new JLabel("Time Format");
         lblTimeFormat.setBounds(800, 160, 500, 30);
@@ -112,13 +115,15 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblTimeFormat.setForeground(ColorsTheme.Text_Black);
         pnlGeneral.add(lblTimeFormat); 
         
-        cmbTimeFormat = new JComboBox<String>(timeFormat);
+        cmbTimeFormat = new JComboBox<>(new String[]{
+        " ", "12-Hour (AM/PM)", "24-Hour (Universal)"
+        });
         cmbTimeFormat.setBounds(940, 160, 200, 30);
-        cmbTimeFormat.setUI(new javax.swing.plaf.basic.BasicComboBoxUI());
-        cmbTimeFormat.setOpaque(false);
-        cmbTimeFormat.setFocusable(false);
-        cmbTimeFormat.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        cmbTimeFormat.setFont(FontsTheme.Info_Texts);
+        cmbTimeFormat.setForeground(ColorsTheme.Text_Black);
+        cmbTimeFormat.setBackground(ColorsTheme.Text_White);
         pnlGeneral.add(cmbTimeFormat);
+
         
         
         
@@ -128,7 +133,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblAddress.setForeground(ColorsTheme.Text_Black);
         pnlGeneral.add(lblAddress);
         
-        lblHospitalAddress = new JLabel("placeholder");
+        lblHospitalAddress = new JLabel(" ");
         lblHospitalAddress.setBounds(190, 120, 500, 30);
         lblHospitalAddress.setFont(FontsTheme.Plain_Texts);
         lblHospitalAddress.setForeground(ColorsTheme.Text_Black);
@@ -141,7 +146,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblPhoneNumber.setForeground(ColorsTheme.Text_Black);
         pnlGeneral.add(lblPhoneNumber);
         
-        lblHospitalPhone = new JLabel("placeholder");
+        lblHospitalPhone = new JLabel(" ");
         lblHospitalPhone.setBounds(190, 160, 500, 30);
         lblHospitalPhone.setFont(FontsTheme.Plain_Texts);
         lblHospitalPhone.setForeground(ColorsTheme.Text_Black);
@@ -154,14 +159,14 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblEmail.setForeground(ColorsTheme.Text_Black);
         pnlGeneral.add(lblEmail);
         
-        lblHospitalEmail = new JLabel("placeholder");
+        lblHospitalEmail = new JLabel(" ");
         lblHospitalEmail.setBounds(190, 200, 500, 30);
         lblHospitalEmail.setFont(FontsTheme.Plain_Texts);
         lblHospitalEmail.setForeground(ColorsTheme.Text_Black);
         lblHospitalEmail.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         pnlGeneral.add(lblHospitalEmail);
         
-        // APPEARANCE
+        // Appearance
         
         pnlAppearance = createCard("Appearance");
         pnlAppearance.setBounds(70, 400, 1500, 170);
@@ -194,6 +199,8 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblDarkMode.setFont(FontsTheme.Plain_Texts);
         lblDarkMode.setForeground(ColorsTheme.Text_Black);
         pnlAppearance.add(lblDarkMode);
+        
+        
         
         cmbDarkMode = new JComboBox<String>(enable);
         cmbDarkMode.setBounds(190, 120, 130, 30);
@@ -229,7 +236,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
 //        lblHospitalAddress.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(0, 10, 0, 0)));
 //        pnlAppearance.add(lblHospitalAddress);
         
-        // SYSTEM
+        // System
         
         pnlSystem = createCard("System");
         pnlSystem.setBounds(70, 590, 1500, 210);
@@ -304,6 +311,11 @@ public class SettingsPanel extends JPanel implements ActionListener{
         btnReset.setForeground(ColorsTheme.Text_White);
         add(btnReset);
         
+        
+        // ActionListener
+        btnReset.addActionListener(this);
+                
+                
     }
 
     
@@ -328,39 +340,11 @@ public class SettingsPanel extends JPanel implements ActionListener{
         return cardPanel;
         
             }
-//    
-//        public JPanel roomCard (String title, String value) {
-//            
-//        cardPanel = new JPanel();
-//        cardPanel.setLayout(null);
-//        cardPanel.setBackground(ColorsTheme.Header);
-//        
-//        TopPanel = new JPanel();
-//        TopPanel.setBounds(0, 0, 1490, 10);
-//        TopPanel.setBackground(ColorsTheme.Header);
-//        cardPanel.add(TopPanel);
-//
-//        //Title
-//        lblTitle = new JLabel(title);
-//        lblTitle.setBounds(20, 25, 250, 25);
-//        lblTitle.setForeground(Color.white);
-//        lblTitle.setFont(FontsTheme.Bold_Texts);
-//        cardPanel.add(lblTitle);
-//
-//        //Value
-//        lblValue = new JLabel(value);
-//        lblValue.setBounds(20, 50, 200, 50);
-//        lblValue.setForeground(ColorsTheme.Text_Black);
-//        lblValue.setFont(FontsTheme.Bold_Texts);
-//        cardPanel.add(lblValue);
-//        
-//        return cardPanel;
-//    
-//        }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(e.getSource() == btnReset) {
+        }
     }
         }
     

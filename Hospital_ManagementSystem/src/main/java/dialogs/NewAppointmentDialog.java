@@ -25,6 +25,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
     private JPanel pnlContent;
     
     
+    
     public NewAppointmentDialog() {
         setSize(1050, 550);
         setLayout(null);
@@ -78,6 +79,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         
         //ActionListener
         btnAppoint.addActionListener(this);
+        btnCancel.addActionListener(this);
         
         showNewAppointment();
         
@@ -234,9 +236,11 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnAppoint);
+        if(e.getSource() == btnAppoint) {
             showNewAppointment();
-               
     }
-    
+        else if(e.getSource() == btnCancel) {
+            dispose();
+        }
+    }
 }

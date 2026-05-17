@@ -14,217 +14,243 @@ import javax.swing.*;
  *
  * @author eiros
  */
-public class NewpharmacyDialog extends JDialog implements ActionListener {
+public class NewPharmacyDialog extends JDialog implements ActionListener {
     
-    private JButton btnMedicationInfo, btnStockDetails;
-    private JPanel pnlMedicationInfo, pnlStockDetails;
+    private JLabel lblDialogTitle, lblDialogDetails, lblCode, lblName, lblGeneric, lblStrength, 
+            lblDosage, lblType, lblReorder, lblCurrent, lblPrice, lblExpire;
+    private JTextField txtCode, txtName, txtStrength, txtCurrent, txtReorder, txtPrice, txtExpire;
+    private JComboBox<String> cmbDepart, cmbType, cmbGeneric;
+    private JButton btnMedicationInfo, btnCancel, btnAddInfo;
+    private JPanel pnlContent;
     
-    public NewpharmacyDialog() {
-        
-        
+    
+    
+    
+    public NewPharmacyDialog() {
+        setSize(1050, 550);
         setLayout(null);
-        setSize(1050, 585);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(ColorsTheme.Middle_Panel);
+        setModal(true);
 
-        JLabel lblDialogIcon = createIconLabel("/icons/pharmacy.png");
-        lblDialogIcon.setBounds(40, 25, 56, 56);
-        add(lblDialogIcon);
-
-        JLabel lblDialogTitle = new JLabel("Add Medication");
-        lblDialogTitle.setBounds(110, 25, 300, 35);
+       
+        lblDialogTitle = new JLabel("Patient Medications");
+        lblDialogTitle.setBounds(30, 10, 300, 35);
         lblDialogTitle.setFont(FontsTheme.Bold_Texts);
         lblDialogTitle.setForeground(ColorsTheme.Text_Black);
         add(lblDialogTitle);
 
-        JLabel lblDialogDetails = new JLabel("Add a new medication to the inventory");
-        lblDialogDetails.setBounds(110, 60, 450, 30);
-        lblDialogDetails.setFont(FontsTheme.Info_Texts);
+        lblDialogDetails = new JLabel("Add a new medication to the inventory.");
+        lblDialogDetails.setBounds(30, 40, 450, 30);
+        lblDialogDetails.setFont(FontsTheme.Plain_Texts);
         lblDialogDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDialogDetails);
 
-        btnMedicationInfo = createTabButton("Medication Info");
-        btnMedicationInfo.setBounds(50, 115, 250, 40);
-        btnMedicationInfo.addActionListener(this);
+        btnMedicationInfo = new JButton("Medication Form");
+        btnMedicationInfo.setBounds(40, 100, 250, 40);
+        btnMedicationInfo.setFont(FontsTheme.Buttons);
+        btnMedicationInfo.setForeground(ColorsTheme.Text_White);
+        btnMedicationInfo.setBackground(ColorsTheme.Header);
+        btnMedicationInfo.setFocusPainted(false);
         add(btnMedicationInfo);
 
-        btnStockDetails = createTabButton("Stock Details");
-        btnStockDetails.setBounds(300, 115, 250, 40);
-        btnStockDetails.addActionListener(this);
-        add(btnStockDetails);
-
-        pnlMedicationInfo = createFormPanel();
-        add(pnlMedicationInfo);
-
-        pnlStockDetails = createFormPanel();
-        pnlStockDetails.setVisible(false);
-        add(pnlStockDetails);
-
-        JLabel lblMedication = createFormLabel("Medication:");
-        lblMedication.setBounds(70, 35, 170, 30);
-        pnlMedicationInfo.add(lblMedication);
-
-        JTextField txtMedication = createFormTextField();
-        txtMedication.setBounds(250, 35, 580, 30);
-        pnlMedicationInfo.add(txtMedication);
-
-        JLabel lblItemCode = createFormLabel("Item Code:");
-        lblItemCode.setBounds(70, 80, 170, 30);
-        pnlMedicationInfo.add(lblItemCode);
-
-        JTextField txtItemCode = createFormTextField();
-        txtItemCode.setBounds(250, 80, 220, 30);
-        pnlMedicationInfo.add(txtItemCode);
-
-        JLabel lblCategory = createFormLabel("Category:");
-        lblCategory.setBounds(510, 80, 120, 30);
-        pnlMedicationInfo.add(lblCategory);
-
-        JComboBox<String> cmbCategory = new JComboBox<>(new String[]{
-            "Pain Reliever",
-            "Antibiotic",
-            "Respiratory",
-            "Antihistamine",
-            "Diabetes",
-            "Hypertension",
-            "Gastrointestinal"
-        });
-        cmbCategory.setBounds(630, 80, 200, 30);
-        cmbCategory.setFont(FontsTheme.Info_Texts);
-        pnlMedicationInfo.add(cmbCategory);
-
-        JLabel lblStock = createFormLabel("Stock:");
-        lblStock.setBounds(70, 35, 170, 30);
-        pnlStockDetails.add(lblStock);
-
-        JTextField txtStock = createFormTextField();
-        txtStock.setBounds(250, 35, 220, 30);
-        pnlStockDetails.add(txtStock);
-
-        JLabel lblReorder = createFormLabel("Reorder Level:");
-        lblReorder.setBounds(510, 35, 150, 30);
-        pnlStockDetails.add(lblReorder);
-
-        JTextField txtReorder = createFormTextField();
-        txtReorder.setBounds(670, 35, 160, 30);
-        pnlStockDetails.add(txtReorder);
-
-        JLabel lblExpiry = createFormLabel("Expiry Date:");
-        lblExpiry.setBounds(70, 80, 170, 30);
-        pnlStockDetails.add(lblExpiry);
-
-        JTextField txtExpiry = createFormTextField();
-        txtExpiry.setBounds(250, 80, 220, 30);
-        pnlStockDetails.add(txtExpiry);
-
-        JLabel lblStatus = createFormLabel("Status:");
-        lblStatus.setBounds(510, 80, 120, 30);
-        pnlStockDetails.add(lblStatus);
-
-        JComboBox<String> cmbStatus = new JComboBox<>(new String[]{"In Stock", "Low Stock", "Critical"});
-        cmbStatus.setBounds(630, 80, 200, 30);
-        cmbStatus.setFont(FontsTheme.Info_Texts);
-        pnlStockDetails.add(cmbStatus);
-
-        JLabel lblSupplier = createFormLabel("Supplier:");
-        lblSupplier.setBounds(70, 125, 170, 30);
-        pnlStockDetails.add(lblSupplier);
-
-        JTextField txtSupplier = createFormTextField();
-        txtSupplier.setBounds(250, 125, 580, 30);
-        pnlStockDetails.add(txtSupplier);
-
-        JLabel lblNotes = createFormLabel("Notes:");
-        lblNotes.setBounds(70, 180, 170, 30);
-        pnlStockDetails.add(lblNotes);
-
-        JTextArea txaNotes = new JTextArea("Write notes here...");
-        txaNotes.setFont(FontsTheme.Info_Texts);
-        txaNotes.setForeground(ColorsTheme.Text_Gray);
-        txaNotes.setLineWrap(true);
-        txaNotes.setWrapStyleWord(true);
-
-        JScrollPane scrollNotes = new JScrollPane(txaNotes);
-        scrollNotes.setBounds(250, 180, 580, 90);
-        pnlStockDetails.add(scrollNotes);
-
-        JButton btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(635, 495, 150, 40);
+        
+        pnlContent = new JPanel();
+        pnlContent.setLayout(null);
+        pnlContent.setBounds(40, 140, 950, 300);
+        pnlContent.setBackground(ColorsTheme.Main_Card);
+        add(pnlContent);
+        
+        
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(580, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
-        btnCancel.setBackground(ColorsTheme.Text_Gray);
         btnCancel.setForeground(ColorsTheme.Text_White);
-        btnCancel.addActionListener(e -> dispose());
+        btnCancel.setBackground(ColorsTheme.Cancel);
+        btnCancel.setFocusPainted(false);
         add(btnCancel);
+        
+        btnAddInfo = new JButton("Save Medication");
+        btnAddInfo.setBounds(790, 450, 200, 30);
+        btnAddInfo.setFont(FontsTheme.Buttons);
+        btnAddInfo.setForeground(ColorsTheme.Text_White);
+        btnAddInfo.setBackground(ColorsTheme.Green);
+        btnAddInfo.setFocusPainted(false);
+        add(btnAddInfo);
+        
+        
 
-        JButton btnSave = new JButton("Save Medication");
-        btnSave.setBounds(800, 495, 200, 40);
-        btnSave.setFont(FontsTheme.Buttons);
-        btnSave.setBackground(ColorsTheme.Add_Confirm);
-        btnSave.setForeground(ColorsTheme.Text_White);
-        add(btnSave);
+        //ActionListener
+        btnMedicationInfo.addActionListener(this);
+        btnCancel.addActionListener(this);
 
-        setVisible(true);
+        showMedicationInfo();
+
+        
     }
 
-    private JLabel createFormLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(FontsTheme.Plain_Texts);
-        label.setForeground(ColorsTheme.Text_Black);
-        return label;
+    
+    public void showMedicationInfo() {
+        pnlContent.removeAll();
+        pnlContent.repaint();
+        pnlContent.revalidate();
+       
+        lblCode = new JLabel("Medication Code : ");
+        lblCode.setBounds(40, 40, 200, 30);
+        lblCode.setFont(FontsTheme.Plain_Texts);
+        lblCode.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblCode);
+        
+        txtCode = new JTextField("");
+        txtCode.setBounds(220, 40, 230, 30);
+        txtCode.setFont(FontsTheme.Plain_Texts);
+        txtCode.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtCode);
+        
+        lblName = new JLabel("Brand Name : ");
+        lblName.setBounds(40, 80, 200, 30);
+        lblName.setFont(FontsTheme.Plain_Texts);
+        lblName.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblName);
+        
+        txtName = new JTextField("");
+        txtName.setBounds(220, 80, 230, 30);
+        txtName.setFont(FontsTheme.Plain_Texts);
+        txtName.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtName);
+        
+        lblGeneric = new JLabel("Generic Name : ");
+        lblGeneric.setBounds(40, 120, 200, 30);
+        lblGeneric.setFont(FontsTheme.Plain_Texts);
+        lblGeneric.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblGeneric);
+        
+        cmbGeneric = new JComboBox<>(new String[]{
+        " ", "Paracetamol", "Salbutamol", "Amoxicillin", "Mefenamic",
+        });
+        cmbGeneric.setBounds(220, 120, 230, 30);
+        cmbGeneric.setFont(FontsTheme.Plain_Texts);
+        cmbGeneric.setForeground(ColorsTheme.Text_Black);
+        cmbGeneric.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbGeneric);
+        
+        lblType = new JLabel("Category : ");
+        lblType.setBounds(40, 160, 300, 30);
+        lblType.setFont(FontsTheme.Plain_Texts);
+        lblType.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblType);
+        
+        cmbType = new JComboBox<>(new String[]{
+        " ", "Antibiotic", "Analgesic/Painkiller", "Antihypertensive", "Antiviral",
+        });
+        cmbType.setBounds(220, 160, 230, 30);
+        cmbType.setFont(FontsTheme.Plain_Texts);
+        cmbType.setForeground(ColorsTheme.Text_Black);
+        cmbType.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbType);
+        
+        
+        lblDosage = new JLabel("Dosage Form : ");
+        lblDosage.setBounds(40, 200, 200, 30);
+        lblDosage.setFont(FontsTheme.Plain_Texts);
+        lblDosage.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblDosage);
+        
+        
+        cmbDepart = new JComboBox<>(new String[]{
+        " ", "Tablet", "Capsule", "Syrup", "Injection ", "Ointment", "Inhaler",
+        });
+        cmbDepart.setBounds(220, 200, 230, 30);
+        cmbDepart.setFont(FontsTheme.Plain_Texts);
+        cmbDepart.setForeground(ColorsTheme.Text_Black);
+        cmbDepart.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbDepart);
+        
+       
+        //Left
+        lblStrength = new JLabel("Strength : ");
+        lblStrength.setBounds(510, 40, 200, 30);
+        lblStrength.setFont(FontsTheme.Plain_Texts);
+        lblStrength.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblStrength);
+        
+        txtStrength = new JTextField("");
+        txtStrength.setBounds(690, 40, 230, 30);
+        txtStrength.setFont(FontsTheme.Plain_Texts);
+        txtStrength.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtStrength);
+        
+        lblCurrent = new JLabel("Current Stock : ");
+        lblCurrent.setBounds(510, 80, 200, 30);
+        lblCurrent.setFont(FontsTheme.Plain_Texts);
+        lblCurrent.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblCurrent);
+        
+        
+        txtCurrent = new JTextField("");
+        txtCurrent.setBounds(690, 80, 230, 30);
+        txtCurrent.setFont(FontsTheme.Plain_Texts);
+        txtCurrent.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtCurrent);
+        
+       
+        lblReorder = new JLabel("Reorder Level : ");
+        lblReorder.setBounds(510, 120, 300, 30);
+        lblReorder.setFont(FontsTheme.Plain_Texts);
+        lblReorder.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblReorder);
+        
+        txtReorder = new JTextField("");
+        txtReorder.setBounds(690, 120, 230, 30);
+        txtReorder.setFont(FontsTheme.Plain_Texts);
+        txtReorder.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtReorder);
+        
+        lblPrice = new JLabel("Unit Price/Cost : ");
+        lblPrice.setBounds(510, 160, 200, 30);
+        lblPrice.setFont(FontsTheme.Plain_Texts);
+        lblPrice.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblPrice);
+        
+        
+        txtPrice = new JTextField("");
+        txtPrice.setBounds(690, 160, 230, 30);
+        txtPrice.setFont(FontsTheme.Plain_Texts);
+        txtPrice.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtPrice);
+        
+       
+        lblExpire = new JLabel("Expiration Date : ");
+        lblExpire.setBounds(510, 200, 300, 30);
+        lblExpire.setFont(FontsTheme.Plain_Texts);
+        lblExpire.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(lblExpire);
+        
+        txtExpire = new JTextField("");
+        txtExpire.setBounds(690, 200, 230, 30);
+        txtExpire.setFont(FontsTheme.Plain_Texts);
+        txtExpire.setForeground(ColorsTheme.Text_Black);
+        pnlContent.add(txtExpire);
+        
+    
+    
+    
     }
-
-    private JTextField createFormTextField() {
-        JTextField textField = new JTextField();
-        textField.setFont(FontsTheme.Info_Texts);
-        return textField;
-    }
-
-    private JPanel createFormPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBounds(50, 155, 950, 325);
-        panel.setBackground(ColorsTheme.Main_Card);
-        return panel;
-    }
-
-    private JButton createTabButton(String text) {
-        JButton button = new JButton(text);
-        button.setFont(FontsTheme.Buttons);
-        button.setBackground(ColorsTheme.Search_Button);
-        button.setForeground(ColorsTheme.Text_White);
-        button.setFocusPainted(false);
-        return button;
-    }
-
+    
+    
+    
+    
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnMedicationInfo) {
-            pnlMedicationInfo.setVisible(true);
-            pnlStockDetails.setVisible(false);
-        } else if (e.getSource() == btnStockDetails) {
-            pnlMedicationInfo.setVisible(false);
-            pnlStockDetails.setVisible(true);
+        if(e.getSource() == btnMedicationInfo) {
+            showMedicationInfo();
         }
-        
-        revalidate();
-        repaint();
-    }
+        else if(e.getSource() == btnCancel);
+            dispose();
+        }
 
-    private JLabel createIconLabel(String path) {
-        java.net.URL resource = getClass().getResource(path);
-        ImageIcon icon;
-        
-        if (resource != null) {
-            icon = new ImageIcon(resource);
-        } else {
-            icon = new ImageIcon("src/main/resources" + path);
-        }
-        
-        Image image = icon.getImage();
-        Image scaledImage = image.getScaledInstance(56, 56, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        JLabel label = new JLabel(scaledIcon);
-        
-        return label;
     }
-}
+  
+        
+        

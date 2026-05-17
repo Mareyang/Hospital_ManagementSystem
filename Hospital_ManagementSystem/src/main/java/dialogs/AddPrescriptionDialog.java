@@ -24,6 +24,8 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
     private JComboBox<String> cmbDosage, cmbFreq;
     private JButton btnAddInfo, btnCancel, btnPrescript;
 
+    
+    
     public AddPrescriptionDialog() {
         setSize(1050, 550);
         setLayout(null);

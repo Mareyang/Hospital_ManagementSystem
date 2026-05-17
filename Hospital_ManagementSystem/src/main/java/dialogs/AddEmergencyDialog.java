@@ -6,44 +6,49 @@ import constants.FontsTheme;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-    public class emergencyDialog extends JDialog implements ActionListener {
 
-    JLabel lblId,lblName,lblType,lblContact,lblLocation,lblUnit,lblPriority, lblDispatch,lblETA, lblStatus,lblRemarks, lblTitle,lblSubtitle,lblInvoice;
-    JTextField txtId,txtName, txtType, txtContact,txtLocation,txtUnit,txtETA,txtDispatch,txtRemarks;
-    JComboBox<String> cmbStatus, cmbPriority;
-    JButton btnSave, btnCancel,btnPersonal,btnHistory;
-    JPanel pnlContent;
-    public emergencyDialog() {
 
-        
+
+
+public class AddEmergencyDialog extends JDialog implements ActionListener {
+
+    private JLabel lblId, lblName, lblType, lblContact, lblLocation, lblUnit, lblPriority, lblDispatch, lblETA, lblStatus,
+            lblRemarks, lblTitle, lblSubtitle;
+    private JTextField txtId, txtName, txtType, txtContact, txtLocation, txtUnit, txtETA, txtDispatch;
+    private JComboBox<String> cmbStatus, cmbPriority;
+    private JButton btnSave, btnCancel, btnEmergency, btnHistory;
+    private JPanel pnlContent;
+    private JTextArea txaNote;
+    private JScrollPane scrollNote;
+    
+    
+    public AddEmergencyDialog() {
         setSize(1050, 550);
         setLocationRelativeTo(null);
         setLayout(null); 
         setModal(true);
 
        
-        lblTitle = new JLabel("Emergency Dispatcch");
+        lblTitle = new JLabel("Emergency Dispatch");
         lblTitle.setBounds(30, 10, 500, 40);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         add(lblTitle);
         
-        lblSubtitle = new JLabel("Complete all the required fields to add a record.");
-        lblSubtitle.setBounds(30, 40, 500, 40);
+        lblSubtitle = new JLabel("Deploy ambulance units and log active emergency cases to the field.");
+        lblSubtitle.setBounds(30, 40, 600, 40);
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
-        lblSubtitle.setForeground(ColorsTheme.Text_Black);
+        lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
         
-        btnPersonal = new JButton("Personal Information");
-        btnPersonal.setBounds(40, 100, 250, 40);
-        btnPersonal.setFont(FontsTheme.Buttons);
-        btnPersonal.setFocusPainted(false);
-        btnPersonal.setForeground(ColorsTheme.Text_White);
-        btnPersonal.setBackground(ColorsTheme.Search_Button);
-        add(btnPersonal);
+        btnEmergency = new JButton("Emergency Form");
+        btnEmergency.setBounds(40, 100, 250, 40);
+        btnEmergency.setFont(FontsTheme.Buttons);
+        btnEmergency.setFocusPainted(false);
+        btnEmergency.setForeground(ColorsTheme.Text_White);
+        btnEmergency.setBackground(ColorsTheme.Search_Button);
+        add(btnEmergency);
         
         btnHistory = new JButton("Dispatch History");
         btnHistory.setBounds(290, 100, 250, 40);
@@ -60,13 +65,37 @@ import java.time.format.DateTimeFormatter;
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
     
-        //ActionListener
-        btnPersonal.addActionListener(this);
-        btnHistory.addActionListener(this);
         
-        showPersonalInfo();
+        btnSave = new JButton("Submit Dispatch");
+        btnSave.setBounds(790, 450, 200, 30);
+        btnSave.setBackground(ColorsTheme.Add_Confirm);
+        btnSave.setForeground(ColorsTheme.Text_White);
+        btnSave.setFont(FontsTheme.Buttons);
+        add(btnSave);
+
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(580, 450, 200, 30);
+        btnCancel.setFont(FontsTheme.Buttons);
+        btnCancel.setFocusPainted(false);
+        btnCancel.setForeground(ColorsTheme.Text_White);
+        btnCancel.setBackground(ColorsTheme.Cancel);
+        add(btnCancel);
+        
+        
+        //ActionListener
+        btnEmergency.addActionListener(this);
+        btnHistory.addActionListener(this);
+        btnSave.addActionListener(this);
+        btnCancel.addActionListener(this);
+        
+        
+        
+        showEmergencyForm();
     }
-        public void showPersonalInfo() {
+    
+    
+    
+    public void showEmergencyForm() {
         pnlContent.removeAll();
         pnlContent.repaint();
         pnlContent.revalidate();
@@ -124,29 +153,39 @@ import java.time.format.DateTimeFormatter;
         txtUnit = new JTextField();
         txtUnit.setBounds(220, 240, 230, 30);
         pnlContent.add(txtUnit);
+     
         
         // Left Side
-        
         lblPriority = new JLabel("Priority Level:");
         lblPriority.setBounds(510, 40, 200, 30);
         lblPriority.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblPriority);
         
-        String[] payment = {"Low", "High", "Critical"};
-        cmbPriority = new JComboBox<>(payment);
+        cmbPriority = new JComboBox<>(new String[]{
+        " ", "Low", "High", "Critical",
+        });
         cmbPriority.setBounds(690, 40, 230, 30);
+        cmbPriority.setFont(FontsTheme.Plain_Texts);
+        cmbPriority.setForeground(ColorsTheme.Text_Black);
+        cmbPriority.setBackground(ColorsTheme.Text_White);
         pnlContent.add(cmbPriority);
+        
         
         lblStatus = new JLabel("Dispatch Status:");
         lblStatus.setBounds(510, 80, 200, 30);
         lblStatus.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblStatus);
-   
-        String[] status = {"Available", "Dispatched","Returning"};
-        cmbStatus = new JComboBox<>(status);
+        
+        cmbStatus = new JComboBox<>(new String[]{
+        " ", "Available", "Dispatched", "Returning",
+        });
         cmbStatus.setBounds(690, 80, 230, 30);
+        cmbStatus.setFont(FontsTheme.Plain_Texts);
+        cmbStatus.setForeground(ColorsTheme.Text_Black);
+        cmbStatus.setBackground(ColorsTheme.Text_White);
         pnlContent.add(cmbStatus);
-
+   
+       
         lblETA = new JLabel("Estimated Arrival:");
         lblETA.setBounds(510, 120, 200, 30);
         lblETA.setFont(FontsTheme.Plain_Texts);
@@ -170,71 +209,51 @@ import java.time.format.DateTimeFormatter;
         lblRemarks.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblRemarks);
         
-        txtRemarks = new JTextField();
-        txtRemarks.setBounds(690, 200, 230, 30);
-        pnlContent.add(txtRemarks);
+        txaNote = new JTextArea(" ");
+        txaNote.setText("Write here...");
+        txaNote.setEditable(true);
+        txaNote.setFont(FontsTheme.Dialog_Texts);
+        txaNote.setForeground(ColorsTheme.Text_Gray);
+        txaNote.setLineWrap(true);
+        txaNote.setWrapStyleWord(true);
+        
+        scrollNote = new JScrollPane(txaNote);
+        scrollNote.setBounds(690, 200, 230, 60);
+        pnlContent.setLayout(null);
+        pnlContent.add(scrollNote);
 
-        btnSave = new JButton("Save Information");
-        btnSave.setBounds(790, 450, 200, 30);
-        btnSave.setBackground(ColorsTheme.Add_Confirm);
-        btnSave.setForeground(ColorsTheme.Text_White);
-        btnSave.setFont(FontsTheme.Buttons);
-        add(btnSave);
 
-        btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(580, 450, 200, 30);
-        btnCancel.setFont(FontsTheme.Buttons);
-        btnCancel.setFocusPainted(false);
-        btnCancel.setForeground(ColorsTheme.Text_White);
-        btnCancel.setBackground(ColorsTheme.Cancel);
-        add(btnCancel);
+        
         
        
     }
-        public void showInvoiceHistory() {
+    
+    
+    public void showInvoiceHistory() {
         pnlContent.removeAll();
         pnlContent.repaint();
         pnlContent.revalidate();
         
-        lblInvoice = new JLabel("Dispatch History");
-        lblInvoice.setBounds(10, 10, 200, 30);
-        lblInvoice.setFont(FontsTheme.Plain_Texts);
-        lblInvoice.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblInvoice);
+       
      
         
         
-        
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
-
-      
-        btnSave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Emergency Dispatch Added Successfully!"
-                );
-
-                dispose();
-            }
-        });
     }
         @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnPersonal) {
-            showPersonalInfo();
+        if(e.getSource() == btnEmergency) {
+            showEmergencyForm();
         }
         else if(e.getSource() == btnHistory) {
             showInvoiceHistory();
         }
-        
+        else if(e.getSource() == btnCancel) {
+            dispose();
+        }
+        else if(e.getSource() == btnSave) {
+        JOptionPane.showMessageDialog(null, "Emergency Dispatch Added Successfully!");
+         dispose();
+        }
+      }
     }
         
-}

@@ -17,27 +17,33 @@ import javax.swing.JTextField;
  *
  * @author Admin
  */
-public class NewstaffDialog extends JDialog {
+public class NewStaffDialog extends JDialog {
     
-    public NewstaffDialog() {
+    private JLabel lblDialogTitle, lblDialogDetails;
+    // private JButton ;
+    private JPanel pnlTabPersonal;
+    
+    
+    
+    public NewStaffDialog() {
         setLayout(null);
         setSize(1050, 585);
         setLocationRelativeTo(null);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
 
-        JLabel lblDialogTitle = new JLabel("Employee Information");
+        lblDialogTitle = new JLabel("Employee Information");
         lblDialogTitle.setBounds(40, 25, 350, 35);
         lblDialogTitle.setFont(FontsTheme.Bold_Texts);
         lblDialogTitle.setForeground(ColorsTheme.Text_Black);
         add(lblDialogTitle);
 
-        JLabel lblDialogDetails = new JLabel("Complete all the required fields to add a record.");
+        lblDialogDetails = new JLabel("Complete all the required fields to add a record.");
         lblDialogDetails.setBounds(40, 60, 520, 30);
         lblDialogDetails.setFont(FontsTheme.Info_Texts);
         lblDialogDetails.setForeground(ColorsTheme.Text_Black);
         add(lblDialogDetails);
 
-        JPanel pnlTabPersonal = createTab("Personal Information");
+        pnlTabPersonal = createTab("Personal Information");
         pnlTabPersonal.setBounds(50, 115, 250, 40);
         add(pnlTabPersonal);
 

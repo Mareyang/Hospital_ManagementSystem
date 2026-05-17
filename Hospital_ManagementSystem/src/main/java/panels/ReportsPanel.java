@@ -37,10 +37,7 @@ public class ReportsPanel extends JPanel implements ActionListener{
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
-        
-        JLabel lblReportsIcon = createIconLabel("/icons/reports.png");
-        lblReportsIcon.setBounds(30, 25, 72, 72);
-        add(lblReportsIcon);
+       
 
         lblReports = new JLabel("Reports");
         lblReports.setBounds(120, 30, 500, 40);

@@ -9,23 +9,20 @@ import constants.FontsTheme;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
 import java.awt.event.ActionListener;
-import dialogs.NewlabDialog;
-import dialogs.NewlabDialog;
+import dialogs.NewLabDialog;
 /**
  *
  * @author Arabella
  */
 public class LaboratoryPanel extends JPanel implements ActionListener{
     
-    private JPanel pnlMiddle, pnlSearch, pnlPending, pnlProcessing, pnlCompleted, pnlStats, cardPanel, TopPanel;
-    private JLabel lblSystemName, lblDetails, lblAppointment, lblTitle, lblValue, lblSubtitle, lblTableTitle;
+    private JPanel pnlMiddle, pnlSearch, pnlPending, pnlProcessing, pnlCompleted, pnlStats, pnlCard, pnlTop;
+    private JLabel lblDetails, lblAppointment, lblTitle, lblValue, lblHead;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable tblLabOrders;
-    private JScrollPane scrollLabOrders;
+    private JTable tblLab;
+    private JScrollPane scrollTable;
    // private ImagePanel imgPatient;
     
     
@@ -33,9 +30,6 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
-        JLabel lbllabIcon = createIconLabel("/icons/lab.png");
-        lbllabIcon.setBounds(30, 25, 72, 72);
-        add(lbllabIcon);
         
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
@@ -82,69 +76,86 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         
 
         lblAppointment = new JLabel("Laboratory");
-        lblAppointment.setBounds(120, 30, 500, 40);
+        lblAppointment.setBounds(30, 30, 500, 40);
         lblAppointment.setFont(FontsTheme.Bold_Texts);
         lblAppointment.setForeground(ColorsTheme.Text_Black);
         add(lblAppointment);
 
-        lblDetails = new JLabel("Manage lab tests and results");
-        lblDetails.setBounds(120, 70, 500, 40);
+        lblDetails = new JLabel("Manage laboratory tests and results.");
+        lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
         
-        pnlPending = createCard(
-                "Pending",
-                "10",
-                "Awaiting sample",
-                ColorsTheme.Update_Pending);
+        pnlPending = createCard("Pending", "10", ColorsTheme.Yellow);
         pnlPending.setBounds(70, 130, 350, 110);
         add(pnlPending);
         
         
-        pnlProcessing = createCard(
-                "Processing",
-                "12",
-                "Tests in progress",
-                ColorsTheme.Search_Button);
+        pnlProcessing = createCard("Processing", "12", ColorsTheme.Blue);
         pnlProcessing.setBounds(450, 130, 350, 110);
         add(pnlProcessing);
         
        
-        pnlCompleted = createCard(
-                "Completed",
-                "45",
-                "Results released",
-                ColorsTheme.Add_Confirm);
+        pnlCompleted = createCard("Completed", "45", ColorsTheme.Green);
         pnlCompleted.setBounds(830, 130, 350, 110);
         add(pnlCompleted);
         
         
-        pnlStats = createCard(
-                "STAT Orders",
-                "5",
-                "Urgent priority",
-                ColorsTheme.Delete_Urgent);
+        pnlStats = createCard("STAT Orders", "5", ColorsTheme.Red);
         pnlStats.setBounds(1210, 130, 350, 110);
         add(pnlStats);
         
-        createLabOrdersTable();
+        
+        
+        //Table
+        String[] columns = {"Patient Name", "Patient ID", "Test Type", "Priority", "Status", "Requested Date", "Actions"};
+        Object[][] data = {
+                {"Maria Leonora", "000021", "Complete Blood Count", "Routine", "Pending", "May 12, 2026", " "},
+                {"Jose Felipe", "000054", "Chest X-Ray", "STAT", "Processing", "May 12, 2026", " "},
+                {"Angela Cruz", "000078", "Urinalysis", "Routine", "Completed", "May 11, 2026", " "},
+                {"Nathaniel Ong", "000142", "Blood Chemistry", "Routine", "Pending", "May 11, 2026", " "},
+                {"Miguel Santos", "000205", "ECG", "STAT", "Processing", "May 10, 2026", "View"},
+                {"Ella Villanueva", "000219", "Pregnancy Test", "Routine", "Completed", "May 10, 2026", " "},
+                {"Sophia Reyes", "000115", "Lipid Profile", "Routine", "Completed", "May 09, 2026", " "},
+                {"Daniel Garcia", "000126", "Fasting Blood Sugar", "Routine", "Pending", "May 09, 2026", " "}
+        };
+        
+        tblLab = new JTable(data, columns);
+        tblLab.setRowHeight(50);
+        tblLab.setDefaultEditor(Object.class, null);
+        tblLab.getTableHeader().setReorderingAllowed(false);
+        tblLab.getTableHeader().setFont(FontsTheme.Title_Texts);
+        tblLab.setFont(FontsTheme.Info_Texts);
+        tblLab.getTableHeader().setBackground(ColorsTheme.Header); 
+        tblLab.getTableHeader().setForeground(ColorsTheme.Text_White);
+
+        scrollTable = new JScrollPane(tblLab);
+        scrollTable.setBounds(0, 60, 1500, 620);
+        pnlMiddle.add(scrollTable);
+        
+        lblHead = new JLabel("Recent Lab Reports");
+        lblHead.setBounds(30, 20, 300, 30);
+        lblHead.setFont(FontsTheme.Title_Texts);
+        lblHead.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblHead);
+        
         
     }
 
     
-    public JPanel createCard(String title, String value, String subtitle, Color accentColor) {
+    public JPanel createCard(String title, String value, Color topColor) {
 
-        cardPanel = new JPanel();
-        cardPanel.setLayout(null);
-        cardPanel.setBackground(ColorsTheme.Main_Card);
+        pnlCard = new JPanel();
+        pnlCard.setLayout(null);
+        pnlCard.setBackground(ColorsTheme.Main_Card);
         
-        TopPanel = new JPanel();
-        TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setLayout(null);
-        TopPanel.setBackground(accentColor);
-        cardPanel.add(TopPanel);
+        pnlTop = new JPanel();
+        pnlTop.setBounds(0, 0, 350, 10);
+        pnlTop.setLayout(null);
+        pnlTop.setBackground(topColor);
+        pnlCard.add(pnlTop);
         
 
         //Title
@@ -152,7 +163,7 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         lblTitle.setBounds(20, 25, 250, 25);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         lblTitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblTitle);
+        pnlCard.add(lblTitle);
 
 
         //Value
@@ -160,136 +171,23 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         lblValue.setBounds(20, 50, 200, 50);
         lblValue.setForeground(ColorsTheme.Text_Black);
         lblValue.setFont(FontsTheme.Bold_Texts);
-        cardPanel.add(lblValue);
+        pnlCard.add(lblValue);
         
-        //Subtitle
-        lblSubtitle = new JLabel(subtitle);
-        lblSubtitle.setBounds(20, 88, 250, 20);
-        lblSubtitle.setForeground(ColorsTheme.Text_Gray);
-        lblSubtitle.setFont(FontsTheme.Info_Texts);
-        cardPanel.add(lblSubtitle);
-
-
-        return cardPanel;
+        
+        return pnlCard;
         
         
             }
     
-    private void createLabOrdersTable() {
-        lblTableTitle = new JLabel("Recent Lab Orders");
-        lblTableTitle.setBounds(25, 20, 400, 30);
-        lblTableTitle.setFont(FontsTheme.Title_Texts);
-        lblTableTitle.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblTableTitle);
-        
-        String[] columns = {"Patient Name", "Patient ID", "Test Type", "Priority", "Status", "Requested Date", "Actions"};
-        Object[][] data = {
-                {"Maria Leonora", "000021", "Complete Blood Count", "Routine", "Pending", "May 12, 2026", "View"},
-                {"Jose Felipe", "000054", "Chest X-Ray", "STAT", "Processing", "May 12, 2026", "View"},
-                {"Angela Cruz", "000078", "Urinalysis", "Routine", "Completed", "May 11, 2026", "Print"},
-                {"Nathaniel Ong", "000142", "Blood Chemistry", "Routine", "Pending", "May 11, 2026", "View"},
-                {"Miguel Santos", "000205", "ECG", "STAT", "Processing", "May 10, 2026", "View"},
-                {"Ella Villanueva", "000219", "Pregnancy Test", "Routine", "Completed", "May 10, 2026", "Print"},
-                {"Sophia Reyes", "000115", "Lipid Profile", "Routine", "Completed", "May 09, 2026", "Print"},
-                {"Daniel Garcia", "000126", "Fasting Blood Sugar", "Routine", "Pending", "May 09, 2026", "View"}
-        };
-        
-        tblLabOrders = new JTable(data, columns);
-        tblLabOrders.setFont(FontsTheme.Info_Texts);
-        tblLabOrders.setRowHeight(48);
-        tblLabOrders.setDefaultEditor(Object.class, null);
-        tblLabOrders.setShowGrid(false);
-        tblLabOrders.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        
-        JTableHeader tableHeader = tblLabOrders.getTableHeader();
-        tableHeader.setFont(FontsTheme.Title_Texts);
-        tableHeader.setBackground(ColorsTheme.Header);
-        tableHeader.setForeground(ColorsTheme.Text_White);
-        tableHeader.setReorderingAllowed(false);
-        
-        tblLabOrders.getColumnModel().getColumn(3).setCellRenderer(createStatusRenderer());
-        tblLabOrders.getColumnModel().getColumn(4).setCellRenderer(createStatusRenderer());
 
-        scrollLabOrders = new JScrollPane(tblLabOrders);
-        scrollLabOrders.setBounds(25, 65, 1450, 405);
-        pnlMiddle.add(scrollLabOrders);
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if (btnAdd == e.getSource()) {
-            
-            NewlabDialog dialog = new NewlabDialog();
-            dialog.setVisible(true);
+        if(e.getSource() == btnAdd) {
+            NewLabDialog lab = new NewLabDialog();
+            lab.setVisible(true);
         }
-    }
-    
-    private DefaultTableCellRenderer createStatusRenderer() {
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
-            
-            @Override
-            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                    boolean hasFocus, int row, int column) {
-                
-                java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                String status = value.toString();
-                
-                changeStatusColor(cell, status);
-                
-                return cell;
-            }
-        };
-        
-        return renderer;
-    }
-    
-    private void changeStatusColor(java.awt.Component cell, String status) {
-        cell.setForeground(ColorsTheme.Text_Black);
-        
-        if (status.equals("STAT")) {
-            cell.setForeground(ColorsTheme.Delete_Urgent);
-        } else if (status.equals("Pending")) {
-            cell.setForeground(new Color(180, 120, 0));
-        } else if (status.equals("Processing")) {
-            cell.setForeground(ColorsTheme.Search_Button);
-        } else if (status.equals("Completed")) {
-            cell.setForeground(ColorsTheme.Add_Confirm);
-        }
-    }
-    
-    private JLabel createFormLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(FontsTheme.Plain_Texts);
-        label.setForeground(ColorsTheme.Text_Black);
-        return label;
-    }
-    
-    private JTextField createFormTextField() {
-        JTextField textField = new JTextField();
-        textField.setFont(FontsTheme.Info_Texts);
-        return textField;
-    }
 
-    private JLabel createIconLabel(String path) {
-        java.net.URL resource = getClass().getResource(path);
-        ImageIcon icon;
-        
-        if (resource != null) {
-            icon = new ImageIcon(resource);
-        } else {
-            icon = new ImageIcon("src/main/resources" + path);
         }
-        
-        Image image = icon.getImage();
-        Image scaledImage = image.getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        JLabel label = new JLabel(scaledIcon);
-        
-        return label;
-    }
-    
-    
-
     }
 

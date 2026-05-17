@@ -20,7 +20,7 @@ import javax.swing.*;
 public class AppointmentsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlConfirm, pnlPending, pnlUrgent, pnlCard, pnlTop;
-    private JLabel lblDetails, lblAppointment, lblTitle, lblValue;
+    private JLabel lblDetails, lblAppointment, lblTitle, lblValue, lblHead;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
     private JScrollPane scrollPatient;
@@ -140,11 +140,11 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         scrollPatient.setBounds(0, 60, 1500, 560);
         pnlMiddle.add(scrollPatient);
         
-        lblTitle = new JLabel("Upcoming Visits");
-        lblTitle.setBounds(30, 20, 300, 30);
-        lblTitle.setFont(FontsTheme.Title_Texts);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblTitle);
+        lblHead = new JLabel("Upcoming Visits");
+        lblHead.setBounds(30, 20, 300, 30);
+        lblHead.setFont(FontsTheme.Title_Texts);
+        lblHead.setForeground(ColorsTheme.Text_Black);
+        pnlMiddle.add(lblHead);
         
         
         
@@ -209,14 +209,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
 
         
         
-        
-        
-        
-//        imgPatient = new ImagePanel("/patient.png"); 
-//        imgPatient.setBounds(80, 150, 380, 450);
-//        add(imgPatient);
-        
-        
+       
         
   
         

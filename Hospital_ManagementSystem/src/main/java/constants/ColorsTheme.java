@@ -31,6 +31,7 @@ public class ColorsTheme {
     public static final Color Search = Color.decode("#406AAF");
     public static final Color Gray = Color.decode("#EDE9E6");
     public static final Color Green = Color.decode("#48A111");
+    public static final Color NeonGreen = Color.GREEN;
     public static final Color Yellow = Color.decode("#FFE400");
     public static final Color Red = Color.decode("#FF1700");
     public static final Color Blue = Color.decode("#4300FF");
