@@ -16,6 +16,11 @@ public class FontsTheme {
     
     public static final Font Plain_Texts = new Font("Arial", Font.PLAIN, 20);
     public static final Font Bold_Texts = new Font("Arial", Font.BOLD, 30);
+    public static final Font Bold = new Font("Arial", Font.BOLD, 18);
+    public static final Font Plain = new Font("Arial", Font.PLAIN,18);
+    public static final Font Plain_Small = new Font("Arial", Font.PLAIN,16);
+
+
     
     
     //Buttons
