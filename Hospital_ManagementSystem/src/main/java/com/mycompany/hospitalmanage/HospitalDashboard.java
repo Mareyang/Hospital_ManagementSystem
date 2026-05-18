@@ -148,7 +148,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         btnPrescription = createButton("Prescriptions", "/icons/prescription.png", 300);
         btnLab = createButton("Laboratory", "/icons/laboratory.png", 350);
         btnPharmacy = createButton("Pharmacy", "/icons/pharmacy2.png", 400);
-        btnBed = createButton("Bed Management", "/icons/bed.png", 450);
+        btnBed = createButton("Bed", "/icons/bed.png", 450);
         btnBill = createButton("Bill", "/icons/bill.png", 500);
         btnStaff = createButton("Staff", "/icons/staff.png", 550);
         btnEmergency = createButton("Emergency", "/icons/emergency.png", 600);

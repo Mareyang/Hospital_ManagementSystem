@@ -123,9 +123,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         cmbTimeFormat.setBackground(ColorsTheme.Text_White);
         pnlGeneral.add(cmbTimeFormat);
 
-        
-        
-        
+                        
         lblAddress = new JLabel("Address");
         lblAddress.setBounds(30, 120, 100, 30);
         lblAddress.setFont(FontsTheme.Plain_Texts);
@@ -185,13 +183,16 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblTheme.setForeground(ColorsTheme.Text_Black);
         pnlAppearance.add(lblTheme);
         
-        cmbTheme = new JComboBox<String>(theme);
+        
+        cmbTheme = new JComboBox<>(new String[]{
+        " ", "Blue", "Red", "Green",
+        });
         cmbTheme.setBounds(190, 80, 130, 30);
-        cmbTheme.setUI(new javax.swing.plaf.basic.BasicComboBoxUI());
-        cmbTheme.setOpaque(false);
-        cmbTheme.setFocusable(false);
-        cmbTheme.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        cmbTheme.setFont(FontsTheme.Info_Texts);
+        cmbTheme.setForeground(ColorsTheme.Text_Black);
+        cmbTheme.setBackground(ColorsTheme.Text_White);
         pnlAppearance.add(cmbTheme);
+        
         
         lblDarkMode = new JLabel("Dark Mode");
         lblDarkMode.setBounds(30, 120, 200, 30);
@@ -200,14 +201,18 @@ public class SettingsPanel extends JPanel implements ActionListener{
         pnlAppearance.add(lblDarkMode);
         
         
-        
-        cmbDarkMode = new JComboBox<String>(enable);
+        cmbDarkMode = new JComboBox<>(new String[]{
+        " ", "Enable", "Disable",
+        });
         cmbDarkMode.setBounds(190, 120, 130, 30);
-        cmbDarkMode.setUI(new javax.swing.plaf.basic.BasicComboBoxUI());
-        cmbDarkMode.setOpaque(false);
-        cmbDarkMode.setFocusable(false);
-        cmbDarkMode.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        cmbDarkMode.setFont(FontsTheme.Info_Texts);
+        cmbDarkMode.setForeground(ColorsTheme.Text_Black);
+        cmbDarkMode.setBackground(ColorsTheme.Text_White);
         pnlAppearance.add(cmbDarkMode);
+        
+        
+        
+        
         
 //        lblName = new JLabel("Hospital Name");
 //        lblName.setBounds(30, 80, 500, 30);
@@ -256,12 +261,13 @@ public class SettingsPanel extends JPanel implements ActionListener{
         pnlSystem.add(lblShowStats);
         
         // Can be changed to Checkbox
-        cmbStats = new JComboBox<String>(enable);
+        cmbStats = new JComboBox<>(new String[]{
+        " ", "Enable", "Disable",
+        });
         cmbStats.setBounds(320, 80, 130, 30);
-        cmbStats.setUI(new javax.swing.plaf.basic.BasicComboBoxUI());
-        cmbStats.setOpaque(false);
-        cmbStats.setFocusable(false);
-        cmbStats.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        cmbStats.setFont(FontsTheme.Info_Texts);
+        cmbStats.setForeground(ColorsTheme.Text_Black);
+        cmbStats.setBackground(ColorsTheme.Text_White);
         pnlSystem.add(cmbStats);
         
         lblShowStats = new JLabel("Enable Auto Logout");
@@ -271,13 +277,15 @@ public class SettingsPanel extends JPanel implements ActionListener{
         pnlSystem.add(lblShowStats);
         
         // Can be changed to Checkbox
-        cmbStats = new JComboBox<String>(enable);
+        cmbStats = new JComboBox<>(new String[]{
+        " ", "Enable", "Disable",
+        });
         cmbStats.setBounds(320, 120, 130, 30);
-        cmbStats.setUI(new javax.swing.plaf.basic.BasicComboBoxUI());
-        cmbStats.setOpaque(false);
-        cmbStats.setFocusable(false);
-        cmbStats.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        cmbStats.setFont(FontsTheme.Info_Texts);
+        cmbStats.setForeground(ColorsTheme.Text_Black);
+        cmbStats.setBackground(ColorsTheme.Text_White);
         pnlSystem.add(cmbStats);
+        
         
         lblAutoLogout = new JLabel("Auto Logout Time (Minutes)");
         lblAutoLogout.setBounds(30, 160, 250, 30);
@@ -285,14 +293,17 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblAutoLogout.setForeground(ColorsTheme.Text_Black);
         pnlSystem.add(lblAutoLogout);
         
-        // Can be changed to Checkbox
-        cmbAutoLogoutTime = new JComboBox<Integer>(time);
+        // Can be changed to Checkbox        
+        cmbAutoLogoutTime = new JComboBox<>(new Integer[]{
+         1, 5, 10, 15, 20, 25, 30,
+        });
         cmbAutoLogoutTime.setBounds(320, 160, 130, 30);
-        cmbAutoLogoutTime.setUI(new javax.swing.plaf.basic.BasicComboBoxUI());
-        cmbAutoLogoutTime.setOpaque(false);
-        cmbAutoLogoutTime.setFocusable(false);
-        cmbAutoLogoutTime.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        cmbAutoLogoutTime.setFont(FontsTheme.Info_Texts);
+        cmbAutoLogoutTime.setForeground(ColorsTheme.Text_Black);
+        cmbAutoLogoutTime.setBackground(ColorsTheme.Text_White);
         pnlSystem.add(cmbAutoLogoutTime);
+        
+        
         
         // BUTTONS
                 
@@ -306,7 +317,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         btnReset = new JButton("Save");
         btnReset.setBounds(1400, 820, 130, 40); 
         btnReset.setFont(FontsTheme.Buttons);
-        btnReset.setBackground(ColorsTheme.Search_Button);
+        btnReset.setBackground(ColorsTheme.Add_Confirm);
         btnReset.setForeground(ColorsTheme.Text_White);
         add(btnReset);
         
