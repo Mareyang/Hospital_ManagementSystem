@@ -12,10 +12,11 @@ public class LoginPage extends JFrame implements ActionListener {
 
     private JPanel pnlLeft, pnlRight;
     private JLabel hospitalName, hospitalDescription, lblBullets, lblBelow, 
-            lblTitle, lblUsername,lblPassword;
+            lblTitle, lblUsername,lblPassword, imgIcon;
     private JTextField txtUsername;
     private JPasswordField pxtPassword;
     private JButton btnLogin;
+    
     
    
     LoginPage() {
@@ -40,6 +41,9 @@ public class LoginPage extends JFrame implements ActionListener {
         pnlRight.setLayout(null);
         add(pnlRight);
 
+        imgIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/hospitalIcon.png")));
+        imgIcon.setBounds(125,20,150,150);
+        pnlLeft.add(imgIcon);
         
         //Hospital Name/LeftPanel
         hospitalName = new JLabel("<html>&nbsp;&nbsp;CARELINK HOSPITAL<br>"

@@ -32,7 +32,7 @@ public class DashboardPanel extends JPanel {
         
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
-        pnlMiddle.setBounds(70, 300, 1500, 500);
+        pnlMiddle.setBounds(70, 350, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
 

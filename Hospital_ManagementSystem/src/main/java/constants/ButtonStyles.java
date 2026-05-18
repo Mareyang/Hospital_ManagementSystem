@@ -11,9 +11,13 @@ package constants;
  * 
  */
 
+import com.mycompany.hospitalmanage.HospitalDashboard;
 import java.awt.Cursor;
 import java.awt.Insets;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 
@@ -33,4 +37,29 @@ public class ButtonStyles {
         button.setMargin(new Insets(0, 10, 0, 0));
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
+    
+    public static JButton createButton(String text, String path, int y, JPanel SidePanel)
+    {
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(null);
+        panel1.setBounds(0, y, 220, 50);
+        panel1.setBackground(ColorsTheme.Side_Panel);
+
+        JLabel iconLbl = new JLabel(
+                new ImageIcon(HospitalDashboard.class.getResource(path))
+        );
+        iconLbl.setBounds(18, 9, 32, 32);
+        panel1.add(iconLbl);
+
+        JButton btnClick = new JButton(text);
+        btnClick.setBounds(60, 0, 150, 50);
+
+        ButtonStyles.sidebarButton(btnClick);
+
+        panel1.add(btnClick);
+
+        SidePanel.add(panel1);
+
+        return btnClick;
+}
 }
