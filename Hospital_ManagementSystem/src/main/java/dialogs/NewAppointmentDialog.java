@@ -12,7 +12,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class NewAppointmentDialog extends JDialog implements ActionListener {
     

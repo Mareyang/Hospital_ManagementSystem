@@ -14,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class BillingPanel extends JPanel implements ActionListener  {
     

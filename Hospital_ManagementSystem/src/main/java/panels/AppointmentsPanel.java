@@ -15,7 +15,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AppointmentsPanel extends JPanel implements ActionListener {
     

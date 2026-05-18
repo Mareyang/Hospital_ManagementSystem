@@ -7,7 +7,6 @@ package panels;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import dialogs.NewStaffDialog;
-//import com.mycompany.hospitalmanage.NewstaffDialog;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class StaffManagementPanel extends JPanel implements ActionListener {
     

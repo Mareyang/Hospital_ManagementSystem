@@ -7,17 +7,13 @@ package panels;
 import dialogs.AddPatientDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class PatientsPanel extends JPanel implements ActionListener {
     

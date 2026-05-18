@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AddMedicalRecordDialog extends JDialog implements ActionListener {
   

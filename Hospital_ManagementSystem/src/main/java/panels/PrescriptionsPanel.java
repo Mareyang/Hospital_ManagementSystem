@@ -14,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class PrescriptionsPanel extends JPanel implements ActionListener{
     

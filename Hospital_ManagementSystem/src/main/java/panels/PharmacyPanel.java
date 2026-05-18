@@ -13,7 +13,7 @@ import dialogs.NewPharmacyDialog;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class PharmacyPanel extends JPanel implements ActionListener{
     

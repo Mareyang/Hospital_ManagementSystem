@@ -14,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class BedManagementPanel extends JPanel {
     
@@ -45,10 +45,10 @@ public class BedManagementPanel extends JPanel {
         lblBed.setForeground(ColorsTheme.Text_Black);
         add(lblBed);
 
-        lblDetails = new JLabel("Monitor and manage bed availability");
+        lblDetails = new JLabel("Monitor and manage bed availability.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
         

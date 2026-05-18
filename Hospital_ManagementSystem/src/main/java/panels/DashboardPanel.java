@@ -6,7 +6,7 @@ package panels;
 
 /**
  *
- * @author Arabella
+ * 
  */
 
 import constants.ColorsTheme;
@@ -97,9 +97,9 @@ public class DashboardPanel extends JPanel {
         pnlDistribution.add(lblDistributionTitle);
         
         barCardiology = createCustomProgressBar(
-        25, 80, 450, 28,
-        25,
-        new Color(52, 152, 219));
+                25, 80, 450, 28,
+                25,
+                new Color(52, 152, 219));
 
         barOrthopedics = createCustomProgressBar(
                 25, 140, 450, 28,
@@ -121,6 +121,8 @@ public class DashboardPanel extends JPanel {
                 15,
                 new Color(241, 196, 15));
 
+        
+        
         pnlDistribution.add(barCardiology);
         pnlDistribution.add(barOrthopedics);
         pnlDistribution.add(barEmergency);
@@ -129,9 +131,9 @@ public class DashboardPanel extends JPanel {
         
         
         JPanel leg1 = createLegendItem(
-        30, 390,
-        "Cardiology",
-        new Color(52, 152, 219));
+                30, 390,
+                "Cardiology",
+                new Color(52, 152, 219));
 
         JPanel leg2 = createLegendItem(
                 250, 390,

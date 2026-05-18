@@ -12,12 +12,11 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class EmergencyPanel extends JPanel implements ActionListener {
     

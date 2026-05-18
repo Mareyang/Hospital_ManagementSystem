@@ -11,12 +11,11 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class SettingsPanel extends JPanel implements ActionListener{
     
@@ -42,7 +41,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblSettings.setForeground(ColorsTheme.Text_Black);
         add(lblSettings);
 
-        lblSettingsDesc = new JLabel("Manage system preferences");
+        lblSettingsDesc = new JLabel("Manage system preferences.");
         lblSettingsDesc.setBounds(30, 70, 500, 40);
         lblSettingsDesc.setFont(FontsTheme.Plain_Texts);
         lblSettingsDesc.setForeground(ColorsTheme.Text_Gray);

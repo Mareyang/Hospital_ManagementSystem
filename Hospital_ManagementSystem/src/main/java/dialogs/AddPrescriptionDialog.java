@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AddPrescriptionDialog extends JDialog implements ActionListener {
   

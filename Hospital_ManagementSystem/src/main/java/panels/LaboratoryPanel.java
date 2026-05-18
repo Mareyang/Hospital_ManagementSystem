@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import dialogs.NewLabDialog;
 /**
  *
- * @author Arabella
+ * 
  */
 public class LaboratoryPanel extends JPanel implements ActionListener{
     
@@ -116,7 +116,7 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
                 {"Jose Felipe", "000054", "Chest X-Ray", "STAT", "Processing", "May 12, 2026", " "},
                 {"Angela Cruz", "000078", "Urinalysis", "Routine", "Completed", "May 11, 2026", " "},
                 {"Nathaniel Ong", "000142", "Blood Chemistry", "Routine", "Pending", "May 11, 2026", " "},
-                {"Miguel Santos", "000205", "ECG", "STAT", "Processing", "May 10, 2026", "View"},
+                {"Miguel Santos", "000205", "ECG", "STAT", "Processing", "May 10, 2026", " "},
                 {"Ella Villanueva", "000219", "Pregnancy Test", "Routine", "Completed", "May 10, 2026", " "},
                 {"Sophia Reyes", "000115", "Lipid Profile", "Routine", "Completed", "May 09, 2026", " "},
                 {"Daniel Garcia", "000126", "Fasting Blood Sugar", "Routine", "Pending", "May 09, 2026", " "}

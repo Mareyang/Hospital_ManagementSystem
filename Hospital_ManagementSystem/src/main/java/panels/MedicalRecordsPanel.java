@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class MedicalRecordsPanel extends JPanel implements ActionListener {
     
