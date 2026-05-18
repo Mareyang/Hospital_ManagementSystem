@@ -36,3 +36,33 @@ C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_Management
 C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\Main.java
 C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\Main_1.java
 C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\SettingsPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalDashboard.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManage.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\LoginPage.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\ButtonStyles.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\ColorsTheme.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\FontsTheme.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\StatusColor.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddBillingDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddEmergencyDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddMedicalRecordDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddPatientDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddPrescriptionDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewAppointmentDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewLabDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewPharmacyDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewreportDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewStaffDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\AppointmentsPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\BedManagementPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\BillingPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\DashboardPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\EmergencyPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\LaboratoryPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\MedicalRecordsPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PatientsPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PharmacyPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PrescriptionsPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\ReportsPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\SettingsPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\StaffManagementPanel.java
