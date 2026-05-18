@@ -42,13 +42,13 @@ public class LoginPage extends JFrame implements ActionListener {
         add(pnlRight);
 
         imgIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/hospitalIcon.png")));
-        imgIcon.setBounds(125,20,150,150);
+        imgIcon.setBounds(110, 30, 150, 150);
         pnlLeft.add(imgIcon);
         
         //Hospital Name/LeftPanel
         hospitalName = new JLabel("<html>&nbsp;&nbsp;CARELINK HOSPITAL<br>"
                 + "MANAGEMENT SYSTEM</html>");
-        hospitalName.setBounds(40, 160, 300, 100);
+        hospitalName.setBounds(40, 180, 300, 100);
         hospitalName.setForeground(ColorsTheme.Text_White);
         hospitalName.setFont(FontsTheme.Login_Title);
         pnlLeft.add(hospitalName);
@@ -57,7 +57,7 @@ public class LoginPage extends JFrame implements ActionListener {
         //Hospital Description
         hospitalDescription = new JLabel("<html> An advanced hospital information system built to <br>"
                 + "&nbsp;&nbsp;&nbsp;&nbsp; secure data and synchronize patient care. </html>");
-        hospitalDescription.setBounds(50, 250, 300, 40);
+        hospitalDescription.setBounds(50, 270, 300, 40);
         hospitalDescription.setForeground(ColorsTheme.Text_White);
         hospitalDescription.setFont(FontsTheme.Login_Subtitle);
         pnlLeft.add(hospitalDescription);
@@ -68,7 +68,7 @@ public class LoginPage extends JFrame implements ActionListener {
                 "☑&nbsp; Laboratory Tracking<br>" +
                 "☑&nbsp; Bed Management & Bill<br>" +
                 "☑&nbsp; Staff & Emergency Services<br>");
-        lblBullets.setBounds(100, 310, 300, 100);
+        lblBullets.setBounds(100, 330, 300, 100);
         lblBullets.setForeground(ColorsTheme.Text_White);
         lblBullets.setFont(FontsTheme.Login_Subtitle);
         pnlLeft.add(lblBullets);

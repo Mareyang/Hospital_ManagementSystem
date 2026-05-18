@@ -64,7 +64,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         
         //TopPanel Inside
         JLabel lblSystemName = new JLabel("Carelink Management System");
-        lblSystemName.setBounds(660, 30, 600, 40);
+        lblSystemName.setBounds(350, 30, 600, 40);
         lblSystemName.setFont(new Font("Tahoma", Font.BOLD, 34));
         lblSystemName.setForeground(Color.WHITE);
         TopPanel.add(lblSystemName);
@@ -74,7 +74,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         String placeholder = "Search patients, records, appointments...";
 
         txtSearchField = new JTextField(placeholder);
-        txtSearchField.setBounds(1400, 30, 500, 40);
+        txtSearchField.setBounds(1300, 30, 500, 40);
         txtSearchField.setFont(new Font("Arial", Font.PLAIN, 18));
 
         txtSearchField.setForeground(new Color(200, 200, 200)); // placeholder color

@@ -36,15 +36,15 @@ public class DashboardPanel extends JPanel {
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
 
-        lblGreet = new JLabel("Welcome back to CareLink Hospital!");
+        lblGreet = new JLabel("Welcome to CareLink!");
         lblGreet.setBounds(30, 30, 1000, 40);
         lblGreet.setForeground(ColorsTheme.Text_Black);
         lblGreet.setFont(FontsTheme.Bold_Texts);
         add(lblGreet);
         
-        lblDescrip = new JLabel("Here's what's happening at the hospital today");
+        lblDescrip = new JLabel("Here's what's happening at the hospital today.");
         lblDescrip.setBounds(30, 70, 500, 40);
-        lblDescrip.setForeground(ColorsTheme.Text_Black);
+        lblDescrip.setForeground(ColorsTheme.Text_Gray);
         lblDescrip.setFont(FontsTheme.Plain_Texts);
         add(lblDescrip);
         
@@ -54,7 +54,7 @@ public class DashboardPanel extends JPanel {
                 "2,847",
                 "Active Records",
                 ColorsTheme.Yellow);
-        pnlPatients.setBounds(70, 130, 350, 140);
+        pnlPatients.setBounds(70, 150, 350, 140);
         add(pnlPatients);
         
         
@@ -63,7 +63,7 @@ public class DashboardPanel extends JPanel {
                 "156",
                 "32 remaining",
                 ColorsTheme.Orange);
-        pnlAppointments.setBounds(450, 130, 350, 140);
+        pnlAppointments.setBounds(450, 150, 350, 140);
         add(pnlAppointments);
         
        
@@ -72,7 +72,7 @@ public class DashboardPanel extends JPanel {
                 "78%",
                 "156 of 200 beds",
                 ColorsTheme.Blue);
-        pnlBeds.setBounds(830, 130, 350, 140);
+        pnlBeds.setBounds(830, 150, 350, 140);
         add(pnlBeds);
         
         
@@ -81,7 +81,7 @@ public class DashboardPanel extends JPanel {
                 "₱125K",
                 "Target: $150K",
                 ColorsTheme.Green);
-        pnlRevenue.setBounds(1210, 130, 350, 140);
+        pnlRevenue.setBounds(1210, 150, 350, 140);
         add(pnlRevenue);
         
         pnlDistribution = new JPanel();
