@@ -108,7 +108,7 @@ public class LoginPage extends JFrame implements ActionListener {
         pnlRight.add(pxtPassword);
 
         
-        // LOGIN BUTTON
+        //Login 
         btnLogin = new JButton("Login");
         btnLogin.setBounds(170, 400, 350, 45);
         btnLogin.setBackground(ColorsTheme.Search);
@@ -117,9 +117,15 @@ public class LoginPage extends JFrame implements ActionListener {
         btnLogin.addActionListener(this);
         pnlRight.add(btnLogin);
 
+        
+        
+        
         setVisible(true);
     }
 
+    
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -127,20 +133,17 @@ public class LoginPage extends JFrame implements ActionListener {
         String password = new String(pxtPassword.getPassword());
 
         if (username.equals("admin") && password.equals("1234")) {
-
             JOptionPane.showMessageDialog(this, "Login Successful!");
 
             HospitalDashboard hd = new HospitalDashboard();
             hd.setVisible(true);
-
             dispose();
 
-        } else {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Invalid Username or Password"
-            );
+        } 
+        
+        else { JOptionPane.showMessageDialog(this,"Invalid Username or Password");
+        
+        
         }
     }
 
