@@ -7,80 +7,115 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class LoginPage extends JFrame implements ActionListener {
 
-    JPanel leftPanel = new JPanel();
-    JPanel rightPanel = new JPanel();
-
-    JLabel hospitalName = new JLabel("CARELINK HOSPITAL");
-    JLabel titleLabel = new JLabel("Login");
-
-    JLabel usernameLabel = new JLabel("Username");
-    JTextField usernameField = new JTextField();
-
-    JLabel passwordLabel = new JLabel("Password");
-    JPasswordField passwordField = new JPasswordField();
-
-    JButton loginButton = new JButton("Login");
-
+    private JPanel pnlLeft, pnlRight;
+    private JLabel hospitalName, hospitalDescription, lblBullets, lblBelow, 
+            lblTitle, lblUsername,lblPassword;
+    private JTextField txtUsername;
+    private JPasswordField pxtPassword;
+    private JButton btnLogin;
     
+   
     LoginPage() {
-
-        setTitle("Hospital Management System");
         setSize(1000, 600);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // LEFT PANEL
-        leftPanel.setBounds(0, 0, 350, 600);
-        leftPanel.setBackground(ColorsTheme.Side_Panel);
-        leftPanel.setLayout(null);
-        add(leftPanel);
+        //Left
+        pnlLeft = new JPanel();
+        pnlLeft.setBounds(0, 0, 400, 600);
+        pnlLeft.setBackground(ColorsTheme.Side_Panel);
+        pnlLeft.setLayout(null);
+        add(pnlLeft);
 
-        // RIGHT PANEL
-        rightPanel.setBounds(350, 0, 650, 600);
-        rightPanel.setBackground(ColorsTheme.Main_Card);
-        rightPanel.setLayout(null);
-        add(rightPanel);
+        
+        //Right
+        pnlRight = new JPanel();
+        pnlRight.setBounds(350, 0, 650, 600);
+        pnlRight.setBackground(ColorsTheme.Main_Card);
+        pnlRight.setLayout(null);
+        add(pnlRight);
 
-        // HOSPITAL NAME
-        hospitalName.setBounds(40, 200, 300, 40);
+        
+        //Hospital Name/LeftPanel
+        hospitalName = new JLabel("<html>&nbsp;&nbsp;CARELINK HOSPITAL<br>"
+                + "MANAGEMENT SYSTEM</html>");
+        hospitalName.setBounds(40, 160, 300, 100);
         hospitalName.setForeground(ColorsTheme.Text_White);
-        hospitalName.setFont(FontsTheme.Bold_Texts);
-        leftPanel.add(hospitalName);
+        hospitalName.setFont(FontsTheme.Login_Title);
+        pnlLeft.add(hospitalName);
+        
+        
+        //Hospital Description
+        hospitalDescription = new JLabel("<html> An advanced hospital information system built to <br>"
+                + "&nbsp;&nbsp;&nbsp;&nbsp; secure data and synchronize patient care. </html>");
+        hospitalDescription.setBounds(50, 250, 300, 40);
+        hospitalDescription.setForeground(ColorsTheme.Text_White);
+        hospitalDescription.setFont(FontsTheme.Login_Subtitle);
+        pnlLeft.add(hospitalDescription);
+        
+        lblBullets = new JLabel("<html> ☑&nbsp; Patient & Medical Records<br>" +
+                "☑&nbsp; Appointment Scheduling<br>" +
+                "☑&nbsp; Prescriptions & Pharmacy<br>" +
+                "☑&nbsp; Laboratory Tracking<br>" +
+                "☑&nbsp; Bed Management & Bill<br>" +
+                "☑&nbsp; Staff & Emergency Services<br>");
+        lblBullets.setBounds(100, 310, 300, 100);
+        lblBullets.setForeground(ColorsTheme.Text_White);
+        lblBullets.setFont(FontsTheme.Login_Subtitle);
+        pnlLeft.add(lblBullets);
+        
+        lblBelow = new JLabel("<html> ©&nbsp; Copyright 2026 CareLink </html>");
+        lblBelow.setBounds(110, 500, 300, 100);
+        lblBelow.setForeground(ColorsTheme.Text_White);
+        lblBelow.setFont(FontsTheme.Login_Subtitle);
+        pnlLeft.add(lblBelow);
+        
+        
+        
 
-        // TITLE
-        titleLabel.setBounds(250, 80, 200, 40);
-        titleLabel.setFont(FontsTheme.Bold_Texts);
-        rightPanel.add(titleLabel);
+        //Title/RightPanel
+        lblTitle = new JLabel("Sign in");
+        lblTitle.setBounds(300, 80, 200, 40);
+        lblTitle.setFont(FontsTheme.Bold_Texts);
+        pnlRight.add(lblTitle);
 
-        // USERNAME
-        usernameLabel.setBounds(120, 170, 100, 30);
-        usernameLabel.setFont(FontsTheme.Plain);
-        rightPanel.add(usernameLabel);
+        //Username
+        lblUsername = new JLabel("Username");
+        lblUsername.setBounds(170, 170, 100, 30);
+        lblUsername.setFont(FontsTheme.Plain);
+        pnlRight.add(lblUsername);
 
-        usernameField.setBounds(120, 210, 350, 40);
-        usernameField.setFont(FontsTheme.Plain_Small);
-        rightPanel.add(usernameField);
+        txtUsername = new JTextField();
+        txtUsername.setBounds(170, 210, 350, 40);
+        txtUsername.setFont(FontsTheme.Plain_Small);
+        pnlRight.add(txtUsername);
 
-        // PASSWORD
-        passwordLabel.setBounds(120, 280, 100, 30);
-        passwordLabel.setFont(FontsTheme.Plain);
-        rightPanel.add(passwordLabel);
+        
+        //Password
+        lblPassword = new JLabel("Password");
+        lblPassword.setBounds(170, 280, 100, 30);
+        lblPassword.setFont(FontsTheme.Plain);
+        pnlRight.add(lblPassword);
 
-        passwordField.setBounds(120, 320, 350, 40);
-        passwordField.setFont(FontsTheme.Plain_Small);
-        rightPanel.add(passwordField);
+        pxtPassword = new JPasswordField();
+        pxtPassword.setBounds(170, 320, 350, 40);
+        pxtPassword.setFont(FontsTheme.Plain_Small);
+        pnlRight.add(pxtPassword);
 
+        
         // LOGIN BUTTON
-        loginButton.setBounds(120, 400, 350, 45);
-        loginButton.setBackground(ColorsTheme.Search);
-        loginButton.setForeground(ColorsTheme.Text_White);
-        loginButton.setFont(FontsTheme.Bold);
-        loginButton.addActionListener(this);
-        rightPanel.add(loginButton);
+        btnLogin = new JButton("Login");
+        btnLogin.setBounds(170, 400, 350, 45);
+        btnLogin.setBackground(ColorsTheme.Search);
+        btnLogin.setForeground(ColorsTheme.Text_White);
+        btnLogin.setFont(FontsTheme.Bold);
+        btnLogin.addActionListener(this);
+        pnlRight.add(btnLogin);
 
         setVisible(true);
     }
@@ -88,8 +123,8 @@ public class LoginPage extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        String username = usernameField.getText();
-        String password = new String(passwordField.getPassword());
+        String username = txtUsername.getText();
+        String password = new String(pxtPassword.getPassword());
 
         if (username.equals("admin") && password.equals("1234")) {
 
