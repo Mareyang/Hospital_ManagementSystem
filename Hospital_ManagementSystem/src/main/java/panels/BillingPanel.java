@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package panels;
+
+import constants.TablePanel;
+import constants.PanelCard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import com.mycompany.hospitalmanage.*;
@@ -18,13 +21,12 @@ import javax.swing.*;
  */
 public class BillingPanel extends JPanel implements ActionListener  {
     
-    private JPanel pnlMiddle, pnlSearch, pnlRevenue, pnlOverdue, pnlPending, pnlInsurance, pnlCard, pnlTop;
-    private JLabel lblDetails, lblBilling, lblTitle, lblValue,lblTableTitle;
+    private JPanel pnlMiddle, pnlSearch, pnlRevenue, pnlOverdue, pnlPending, pnlInsurance;
+    private JLabel lblDetails, lblBilling;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable tblBill;
-    private JScrollPane scrollBill;
-   // private ImagePanel imgPatient;
+    private TablePanel tblBill;
+
     
     
     public BillingPanel() {
@@ -93,22 +95,22 @@ public class BillingPanel extends JPanel implements ActionListener  {
         add(lblDetails);
         
         
-        pnlRevenue = createCard("Today's Revenue", "₱12,500", ColorsTheme.Blue);
+        pnlRevenue = new PanelCard("Today's Revenue", "₱12,500", ColorsTheme.Blue);
         pnlRevenue.setBounds(70, 130, 350, 110);
         add(pnlRevenue);
         
         
-        pnlPending = createCard("Pending", "₱8,250", ColorsTheme.Yellow);
+        pnlPending = new PanelCard("Pending", "₱8,250", ColorsTheme.Yellow);
         pnlPending.setBounds(450, 130, 350, 110);
         add(pnlPending);
         
        
-        pnlOverdue = createCard("Overdue", "₱3,670", ColorsTheme.Red);
+        pnlOverdue = new PanelCard("Overdue", "₱3,670", ColorsTheme.Red);
         pnlOverdue.setBounds(830, 130, 350, 110);
         add(pnlOverdue);
         
         
-        pnlInsurance = createCard("Insurance Claims", "₱18,700", ColorsTheme.Green);
+        pnlInsurance = new PanelCard("Insurance Claims", "₱18,700", ColorsTheme.Green);
         pnlInsurance.setBounds(1210, 130, 350, 110);
         add(pnlInsurance);
        
@@ -125,67 +127,33 @@ public class BillingPanel extends JPanel implements ActionListener  {
                 {"Christine Mae", "000138", "₱8,900.00", "May 12, 2026", "Partial", " "},
                 {"Nathaniel Ong", "000142", "₱15,600.00", "May 10, 2026", "Paid", " "},
                 {"Francis Mendoza", "000189", "₱45,200.00", "May 09, 2026", "Unpaid", " "},
+                {"Jasmine Aquino", "000193", "₱6,300.00", "May 08, 2026", "Paid", " "},
+                {"Sophia Reyes", "000115", "₱3,500.00", "May 13, 2026", "Paid", " "},
+                {"Daniel Garcia", "000126", "₱2,150.00", "May 12, 2026", "Paid", " "},
+                {"Christine Mae", "000138", "₱8,900.00", "May 12, 2026", "Partial", " "},
+                {"Nathaniel Ong", "000142", "₱15,600.00", "May 10, 2026", "Paid", " "},
+                {"Francis Mendoza", "000189", "₱45,200.00", "May 09, 2026", "Unpaid", " "},
                 {"Jasmine Aquino", "000193", "₱6,300.00", "May 08, 2026", "Paid", " "}
+                
           };
         
-        tblBill = new JTable (data, columns);
-        tblBill.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblBill.setFont(FontsTheme.Info_Texts);
-        tblBill.setRowHeight(50);
-        tblBill.setDefaultEditor(Object.class, null);
-        tblBill.getTableHeader().setReorderingAllowed(false);
-        tblBill.getTableHeader().setBackground(ColorsTheme.Header); 
-        tblBill.getTableHeader().setForeground(ColorsTheme.Text_White);
+
         
-        scrollBill = new JScrollPane(tblBill);
-        scrollBill.setBounds(0, 60, 1500, 560);
-        pnlMiddle.add(scrollBill);
-        
-        lblTitle = new JLabel("Recent Billings");
-        lblTitle.setBounds(30, 20, 300, 30);
-        lblTitle.setFont(FontsTheme.Title_Texts);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblTitle);
+
+        tblBill = new TablePanel("Recent Billings", columns, data, 440);
+        tblBill.setBounds(0, 0, 1500, 560);
+        pnlMiddle.add(tblBill);
         
         
-        
+            
+            
+        //ActionListener    
         btnAdd.addActionListener(this);
    
     }
 
     
-    public JPanel createCard(String title, String value, Color topColor) {
-
-        pnlCard = new JPanel();
-        pnlCard.setLayout(null);
-        pnlCard.setBackground(ColorsTheme.Main_Card);
-        
-        pnlTop = new JPanel();
-        pnlTop.setBounds(0, 0, 350, 10);
-        pnlTop.setBackground(topColor);
-        pnlCard.add(pnlTop);
-
-
-        //Title
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        pnlCard.add(lblTitle);
-
-
-        //Value
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(ColorsTheme.Text_Black);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        pnlCard.add(lblValue);
-
-
-        return pnlCard;
-        
-        
-            } 
+    
     
     
     @Override

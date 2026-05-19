@@ -4,9 +4,8 @@
  */
 package panels;
 
+import constants.PanelCard;
 import constants.ColorsTheme;
-import constants.ColorsTheme;
-import constants.FontsTheme;
 import constants.FontsTheme;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -53,19 +52,19 @@ public class BedManagementPanel extends JPanel {
         lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
-        pnlTotal = createCard("Total Beds", "200", ColorsTheme.Blue);
+        pnlTotal = new PanelCard("Total Beds", "200", ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
-        pnlOccupied = createCard("Occupied", "150", ColorsTheme.Yellow);
+        pnlOccupied = new PanelCard("Occupied", "150", ColorsTheme.Yellow);
         pnlOccupied.setBounds(450, 130, 350, 110);
         add(pnlOccupied);
 
-        pnlAvail = createCard("Available", "43", ColorsTheme.Green);
+        pnlAvail = new PanelCard("Available", "43", ColorsTheme.Green);
         pnlAvail.setBounds(830, 130, 350, 110);
         add(pnlAvail);
         
-        pnlMaintenance = createCard("Maintenance", "7", ColorsTheme.Red);
+        pnlMaintenance = new PanelCard("Maintenance", "7", ColorsTheme.Red);
         pnlMaintenance.setBounds(1210, 130, 350, 110);
         add(pnlMaintenance);
         
@@ -316,36 +315,6 @@ public class BedManagementPanel extends JPanel {
         
     }
 
-    
-    public JPanel createCard(String title, String value, Color topColor) {
-
-        cardPanel = new JPanel();
-        cardPanel.setLayout(null);
-        cardPanel.setBackground(ColorsTheme.Main_Card);
-        
-        TopPanel = new JPanel();
-        TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(topColor);
-        cardPanel.add(TopPanel);
-
-
-        //Title
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblTitle);
-
-
-        //Value
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(ColorsTheme.Text_Black);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        cardPanel.add(lblValue);
-        
-         return cardPanel;
-    }
         
         
     public JPanel roomCard (String title, String value) {

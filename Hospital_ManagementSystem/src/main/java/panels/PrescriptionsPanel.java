@@ -4,9 +4,12 @@
  */
 package panels;
 
+
+import constants.PanelCard;
 import dialogs.AddPrescriptionDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.TablePanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,12 +21,11 @@ import javax.swing.*;
  */
 public class PrescriptionsPanel extends JPanel implements ActionListener{
     
-    private JPanel pnlMiddle, pnlSearch, pnlPending, pnlDispense, pnlCancel, pnlCard, pnlTop;
-    private JLabel lblDetails, lblPrescription, lblTitle, lblValue, lblHead;
+    private JPanel pnlMiddle, pnlSearch, pnlPending, pnlDispense, pnlCancel;
+    private JLabel lblDetails, lblPrescription;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable table;
-    private JScrollPane scrollTable;
+    private TablePanel tblPrescription;
     
     
     public PrescriptionsPanel() {
@@ -48,7 +50,6 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
-        btnAdd.addActionListener(this);
         add(btnAdd);
         
         txtSearch = new JTextField("Search by patient name or patient id...");
@@ -88,24 +89,25 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         
         
         //Card
-        pnlPending = createCard("Pending", "30", ColorsTheme.Orange);
+        pnlPending = new PanelCard("Pending", "30", ColorsTheme.Orange);
         pnlPending.setBounds(170, 130, 400, 110);
         add(pnlPending);
         
         
-        pnlDispense = createCard("Dispensed Today", "17", ColorsTheme.Green);
+        pnlDispense = new PanelCard("Dispensed Today", "17", ColorsTheme.Green);
         pnlDispense.setBounds(620, 130, 400, 110);
         add(pnlDispense);
         
        
-        pnlCancel = createCard("Cancelled", "4", ColorsTheme.Red);
+        pnlCancel = new PanelCard("Cancelled", "4", ColorsTheme.Red);
         pnlCancel.setBounds(1070, 130, 400, 110);
         add(pnlCancel);
         
         
+        
+        
         //Table
         String[] columns = {"Patient Name", "Doctor", "Date", "Medications", "Status", "Actions"};
-        
         Object[][] data = {
             {"John Smith", "Dr. Chen", "May 13, 2026", "3x daily / 20 days", "Pending"," "},
             {"Sarah Johnson", "Dr. Williams", "May 14, 2026", "2x daily / 3 days", "Dispensed"," "},
@@ -121,57 +123,21 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
             {"Jasmine Aquino", "Dr. David Kim", "May 08, 2026", "Prednisone 5mg (Once daily / 5 days)", "Completed"," "}
         };
         
-        table = new JTable(data, columns);
-        table.setRowHeight(50);
-        table.setDefaultEditor(Object.class, null);
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setFont(FontsTheme.Title_Texts);
-        table.setFont(FontsTheme.Info_Texts);
-        table.getTableHeader().setBackground(ColorsTheme.Header); 
-        table.getTableHeader().setForeground(ColorsTheme.Text_White);
 
-        scrollTable = new JScrollPane(table);
-        scrollTable.setBounds(0, 60, 1500, 560);
-        pnlMiddle.add(scrollTable);
         
-        lblHead = new JLabel("Recent Prescription");
-        lblHead.setBounds(30, 20, 300, 30);
-        lblHead.setFont(FontsTheme.Title_Texts);
-        lblHead.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblHead);
+        tblPrescription = new TablePanel("Recent Prescription", columns, data, 440);
+        tblPrescription.setBounds(0, 0, 1500, 560);
+        pnlMiddle.add(tblPrescription);
+
+
+
         
-        
+        //ActionListener
+        btnAdd.addActionListener(this);
     }
 
     
-    public JPanel createCard(String title, String value, Color topLineColor) {
-
-        pnlCard = new JPanel();
-        pnlCard.setLayout(null);
-        pnlCard.setBackground(ColorsTheme.Main_Card);
-        
-        pnlTop = new JPanel();
-        pnlTop.setBounds(0, 0, 400, 10);
-        pnlTop.setBackground(topLineColor);
-        pnlCard.add(pnlTop);
-
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        pnlCard.add(lblTitle);
-
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(Color.BLACK);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        pnlCard.add(lblValue);
-
-
-        return pnlCard;
-        
-        
-            }
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {

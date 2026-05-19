@@ -26,9 +26,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
     private JTable table;
     private JComboBox cmbTheme, cmbDarkMode, cmbCurrency, cmbDateFormat, cmbTimeFormat, cmbStats, cmbAutoLogout, cmbAutoLogoutTime;
     private JScrollPane scrollPane;
-    private String[] theme = {"Blue", "Red", "Green"},
-            enable = {"Enable", "Disable"};
-    private Integer[] time = {5, 10, 15, 20, 25, 30};
+    
     
     
     public SettingsPanel() {

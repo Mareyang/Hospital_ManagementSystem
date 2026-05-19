@@ -4,6 +4,9 @@
  */
 package panels;
 
+
+import constants.TablePanel;
+import constants.PanelCard;
 import com.mycompany.hospitalmanage.*;
 import constants.ColorsTheme;
 import constants.FontsTheme;
@@ -24,12 +27,10 @@ public class EmergencyPanel extends JPanel implements ActionListener {
             pnlAmbulance, pnlMiddle, pnlAmb1, pnlAmb2, pnlAmb3, pnlAmb4;
     private JLabel lblDetails, lblEmergency, lblTitle, lblValue, lblAmb1, lblAmb11, lblAmb12,
             lblAmb13, lblAmb2, lblAmb21, lblAmb22, lblAmb23, lblAmb3, lblAmb31, lblAmb32, lblAmb33, lblAmb4, 
-            lblAmb41, lblAmb42, lblAmb43, lblHead;
-    private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable tblEmergency;
-    private JScrollPane scrollEmergency;
-   // private ImagePanel imgPatient;
+            lblAmb41, lblAmb42, lblAmb43;
+    private JButton btnAdd;
+    private TablePanel tblEmergency;
+
     
     
     public EmergencyPanel() {
@@ -65,29 +66,26 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         add(btnAdd);
         
         
-        pnlAvail = createCard("Available", "3", ColorsTheme.Blue);
+        pnlAvail = new PanelCard("Available", "3", ColorsTheme.Blue);
         pnlAvail.setBounds(70, 130, 350, 110);
         add(pnlAvail);
         
         
-        pnlDispatch = createCard("Dispatched", "1", ColorsTheme.Red); 
+        pnlDispatch = new PanelCard("Dispatched", "1", ColorsTheme.Red); 
         pnlDispatch.setBounds(450, 130, 350, 110);
         add(pnlDispatch);
         
        
-        pnlReturn = createCard("Returning", "1", ColorsTheme.Yellow);
+        pnlReturn = new PanelCard("Returning", "1", ColorsTheme.Yellow);
         pnlReturn.setBounds(830, 130, 350, 110);
         add(pnlReturn);
         
         
-        pnlActive = createCard("Active Cases", "2", ColorsTheme.Green); 
+        pnlActive = new PanelCard("Active Cases", "2", ColorsTheme.Green); 
         pnlActive.setBounds(1210, 130, 350, 110);
         add(pnlActive);
         
      
-        //ActionListener
-        btnAdd.addActionListener(this);
-
         
       
         //Down Panel
@@ -96,7 +94,7 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         add(pnlAmbulance);
         
        //amb2
-        pnlAmb1 = createCard("AMB-001"," ", ColorsTheme.Gray);
+        pnlAmb1 = new PanelCard("AMB-001"," ", ColorsTheme.Gray);
         pnlAmb1.setBounds(70, 90, 300, 175);
         pnlAmb1.setForeground(ColorsTheme.Text_Black);
         pnlAmb1.setFont(FontsTheme.Title_Texts);
@@ -133,7 +131,7 @@ public class EmergencyPanel extends JPanel implements ActionListener {
 
     
         // amb2
-        pnlAmb2 = createCard("AMB-002"," ", ColorsTheme.Gray);
+        pnlAmb2 = new PanelCard("AMB-002"," ", ColorsTheme.Gray);
         pnlAmb2.setBounds(420, 90, 300, 175);
         pnlAmb2.setForeground(ColorsTheme.Text_Black);
         pnlAmb2.setFont(FontsTheme.Title_Texts);
@@ -167,7 +165,7 @@ public class EmergencyPanel extends JPanel implements ActionListener {
     
         
          // amb3
-        pnlAmb3 = createCard("AMB-003", " ", ColorsTheme.Gray);
+        pnlAmb3 = new PanelCard("AMB-003", " ", ColorsTheme.Gray);
         pnlAmb3.setBounds(770, 90, 300, 175);
         pnlAmb3.setForeground(ColorsTheme.Text_Black);
         pnlAmb3.setFont(FontsTheme.Title_Texts);
@@ -200,7 +198,7 @@ public class EmergencyPanel extends JPanel implements ActionListener {
 
         
          // amb4
-        pnlAmb4 = createCard("AMB-004", " ", ColorsTheme.Gray);
+        pnlAmb4 = new PanelCard("AMB-004", " ", ColorsTheme.Gray);
         pnlAmb4.setBounds(1110, 90, 300, 175);
         pnlAmb4.setForeground(ColorsTheme.Text_Black);
         pnlAmb4.setFont(FontsTheme.Title_Texts);
@@ -246,60 +244,19 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         };
         
         
-        tblEmergency = new JTable (data, columns);
-        tblEmergency.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblEmergency.setFont(FontsTheme.Info_Texts);
-        tblEmergency.setRowHeight(50);
-        tblEmergency.setDefaultEditor(Object.class, null);
-        tblEmergency.getTableHeader().setReorderingAllowed(false);
-        tblEmergency.getTableHeader().setBackground(ColorsTheme.Header); 
-        tblEmergency.getTableHeader().setForeground(ColorsTheme.Text_White);
         
-        scrollEmergency = new JScrollPane(tblEmergency);
-        scrollEmergency.setBounds(0, 60, 1500, 300);
-        pnlMiddle.add(scrollEmergency);
+        tblEmergency = new TablePanel("Dispatch Logs", columns, data, 240);
+        tblEmergency.setBounds(0, 0, 1500, 560);
+        pnlMiddle.add(tblEmergency);
+
         
-        lblHead = new JLabel("Dispatch Logs");
-        lblHead.setBounds(30, 20, 300, 30);
-        lblHead.setFont(FontsTheme.Title_Texts);
-        lblHead.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblHead);
         
+        //ActionListener
+        btnAdd.addActionListener(this);
+
     }
 
     
-    public JPanel createCard(String title, String value, Color topColor) {
-
-        pnlCard = new JPanel();
-        pnlCard.setLayout(null);
-        pnlCard.setBackground(ColorsTheme.Main_Card);
-        
-        pnlTop = new JPanel();
-        pnlTop.setBounds(0, 0, 350, 10);
-        pnlTop.setBackground(topColor);
-        pnlCard.add(pnlTop);
-        
-        
-        //Title
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        pnlCard.add(lblTitle);
-
-
-        //Value
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(ColorsTheme.Text_Black);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        pnlCard.add(lblValue);
-
-
-        return pnlCard;
-        
-        
-      }
     
     
     

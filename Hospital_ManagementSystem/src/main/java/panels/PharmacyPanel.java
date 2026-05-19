@@ -4,8 +4,11 @@
  */
 package panels;
 
+
+import constants.PanelCard;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.TablePanel;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -17,13 +20,11 @@ import dialogs.NewPharmacyDialog;
  */
 public class PharmacyPanel extends JPanel implements ActionListener{
     
-    private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlIn, pnlLow, pnlCrit, pnlCard, pnlTop;
-    private JLabel lblDetails, lblPharmacy, lblTitle, lblValue, lblHead;
+    private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlIn, pnlLow, pnlCrit;
+    private JLabel lblDetails, lblPharmacy;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable tblPharmacy;
-    private JScrollPane scrollPhar;
-   // private ImagePanel imgPatient;
+    private TablePanel tblPharmacy;
     
     
     public PharmacyPanel() {
@@ -47,7 +48,6 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
-        btnAdd.addActionListener(this);
         add(btnAdd);
         
         //Search Bar
@@ -86,26 +86,28 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         add(lblDetails);
         
         
-        pnlTotal = createCard("Total Items", "1,245", ColorsTheme.Blue);
+        pnlTotal = new PanelCard("Total Items", "1,245", ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
         
-        pnlIn = createCard("In Stock", "1,180", ColorsTheme.Green);
+        pnlIn = new PanelCard("In Stock", "1,180", ColorsTheme.Green);
         pnlIn.setBounds(450, 130, 350, 110);
         add(pnlIn);
         
        
-        pnlLow = createCard("Low Stock", "48", ColorsTheme.Yellow);
+        pnlLow = new PanelCard("Low Stock", "48", ColorsTheme.Yellow);
         pnlLow.setBounds(830, 130, 350, 110);
         add(pnlLow);
         
         
-        pnlCrit = createCard("Critical", "17", ColorsTheme.Red);
+        pnlCrit = new PanelCard("Critical", "17", ColorsTheme.Red);
         pnlCrit.setBounds(1210, 130, 350, 110);
         add(pnlCrit);
         
         
+        
+        //Tables
         String[] columns = {"Medication", "Item Code", "Category", "Stock", "Reorder Level", "Status", "Actions"};
         Object[][] data = {
                 {"Paracetamol 500mg", "MED-001", "Pain Reliever", "320", "100", "In Stock", " "},
@@ -118,63 +120,41 @@ public class PharmacyPanel extends JPanel implements ActionListener{
                 {"Ibuprofen 200mg", "MED-078", "Pain Reliever", "140", "50", "In Stock", " "}
         };
         
-        tblPharmacy = new JTable (data, columns);
-        tblPharmacy.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblPharmacy.setFont(FontsTheme.Info_Texts);
-        tblPharmacy.setRowHeight(50);
-        tblPharmacy.setDefaultEditor(Object.class, null);
-        tblPharmacy.getTableHeader().setReorderingAllowed(false);
-        tblPharmacy.getTableHeader().setBackground(ColorsTheme.Header); 
-        tblPharmacy.getTableHeader().setForeground(ColorsTheme.Text_White);
-        
-        scrollPhar = new JScrollPane(tblPharmacy);
-        scrollPhar.setBounds(0, 60, 1500, 560);
-        pnlMiddle.add(scrollPhar);
-        
-        lblHead = new JLabel("Medication Inventory");
-        lblHead.setBounds(30, 20, 300, 30);
-        lblHead.setFont(FontsTheme.Title_Texts);
-        lblHead.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblHead);
+//        tblPharmacy = new JTable (data, columns);
+//        tblPharmacy.getTableHeader().setFont(FontsTheme.Title_Texts);
+//        tblPharmacy.setFont(FontsTheme.Info_Texts);
+//        tblPharmacy.setRowHeight(50);
+//        tblPharmacy.setDefaultEditor(Object.class, null);
+//        tblPharmacy.getTableHeader().setReorderingAllowed(false);
+//        tblPharmacy.getTableHeader().setBackground(ColorsTheme.Header); 
+//        tblPharmacy.getTableHeader().setForeground(ColorsTheme.Text_White);
+//        
+//        scrollPhar = new JScrollPane(tblPharmacy);
+//        scrollPhar.setBounds(0, 60, 1500, 560);
+//        pnlMiddle.add(scrollPhar);
+//        
+//        lblHead = new JLabel("Medication Inventory");
+//        lblHead.setBounds(30, 20, 300, 30);
+//        lblHead.setFont(FontsTheme.Title_Texts);
+//        lblHead.setForeground(ColorsTheme.Text_Black);
+//        pnlMiddle.add(lblHead);
+
+
+        tblPharmacy = new TablePanel("Medication Inventory", columns, data, 560);
+        tblPharmacy.setBounds(0, 0, 1500, 560);
+        pnlMiddle.add(tblPharmacy);
     
+        
+        
+        //ActionListener
+        btnAdd.addActionListener(this);
         
     }
 
     
-    public JPanel createCard(String title, String value, Color topColor) {
-
-        pnlCard = new JPanel();
-        pnlCard.setLayout(null);
-        pnlCard.setBackground(ColorsTheme.Main_Card);
-        
-        pnlTop = new JPanel();
-        pnlTop.setBounds(0, 0, 350, 10);
-        pnlTop.setBackground(topColor);
-        pnlCard.add(pnlTop);
-
-
-        //Title
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        pnlCard.add(lblTitle);
-
-
-        //Value
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(Color.BLACK);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        pnlCard.add(lblValue);
+   
         
        
-
-
-        return pnlCard;
-        
-        
-            }
 
     @Override
     public void actionPerformed(ActionEvent e) {

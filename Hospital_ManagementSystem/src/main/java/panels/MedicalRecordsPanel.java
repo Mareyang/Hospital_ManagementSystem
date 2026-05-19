@@ -4,9 +4,11 @@
  */
 package panels;
 
+
 import dialogs.AddMedicalRecordDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.TablePanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,11 +21,10 @@ import java.awt.event.ActionListener;
 public class MedicalRecordsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch;
-    private JLabel lblMedical, lblDetails, lblTitle;
+    private JLabel lblMedical, lblDetails;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable table;
-    private JScrollPane scrollTable;
+    private TablePanel tblMedical;
     
     
     
@@ -50,7 +51,6 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
-        btnAdd.addActionListener(this);
         add(btnAdd);
         
         lblMedical = new JLabel("Medical Records");
@@ -87,8 +87,10 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
         
-        String[] columns = {"Patient Name", "Patient ID", "Type", "Doctor", "Date", "Actions"};
         
+        
+        //Table
+        String[] columns = {"Patient Name", "Patient ID", "Type", "Doctor", "Date", "Actions"};
         Object[][] data = {
             {"Maria Leonora", "000021", "New Consultation", "Dr. Robert Chen", "May 15, 2026"," "},
             {"Jose Felipe", "000054", "Follow-up Visit", "Dr. Sarah Jenkins", "May 15, 2026"," "},
@@ -99,28 +101,25 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
             {"Christine Mae", "000138", "New Consultation", "Dr. Sarah Jenkins", "May 12, 2026"," "},
             {"Nathaniel Ong", "000142", "Pre-Surgical Clearance", "Dr. Alan Reyes", "May 10, 2026"," "},
             {"Francis Mendoza", "000189", "Emergency Visit", "Dr. Grace Torres", "May 09, 2026"," "},
+            {"Jasmine Aquino", "000193", "Post-Operative Check", "Dr. David Kim", "May 08, 2026"," "},
+            {"Christine Mae", "000138", "New Consultation", "Dr. Sarah Jenkins", "May 12, 2026"," "},
+            {"Nathaniel Ong", "000142", "Pre-Surgical Clearance", "Dr. Alan Reyes", "May 10, 2026"," "},
+            {"Francis Mendoza", "000189", "Emergency Visit", "Dr. Grace Torres", "May 09, 2026"," "},
             {"Jasmine Aquino", "000193", "Post-Operative Check", "Dr. David Kim", "May 08, 2026"," "}
         };
         
-        table = new JTable(data, columns);
-        table.setRowHeight(50);
-        table.setDefaultEditor(Object.class, null);
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setFont(FontsTheme.Title_Texts);
-        table.setFont(FontsTheme.Info_Texts);
-        table.getTableHeader().setBackground(ColorsTheme.Header); 
-        table.getTableHeader().setForeground(ColorsTheme.Text_White);
 
-        scrollTable = new JScrollPane(table);
-        scrollTable.setBounds(0, 60, 1500, 620);
-        pnlMiddle.add(scrollTable);
-        
-        lblTitle = new JLabel("Recent Medical Records");
-        lblTitle.setBounds(30, 20, 300, 30);
-        lblTitle.setFont(FontsTheme.Title_Texts);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblTitle);
     
+        tblMedical = new TablePanel("Recent Medical Records", columns, data, 560);
+        tblMedical.setBounds(0, 0, 1500, 620);
+        pnlMiddle.add(tblMedical);
+        
+        
+        
+        //ActionListener
+        btnAdd.addActionListener(this);
+        
+        
         }
 
     @Override

@@ -9,6 +9,7 @@ package panels;
  * 
  */
 
+import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import java.awt.Color;
@@ -49,7 +50,7 @@ public class DashboardPanel extends JPanel {
         add(lblDescrip);
         
         
-        pnlPatients = createCard(
+        pnlPatients = new PanelCard2(
                 "Total Patients",
                 "2,847",
                 "Active Records",
@@ -58,7 +59,7 @@ public class DashboardPanel extends JPanel {
         add(pnlPatients);
         
         
-        pnlAppointments = createCard(
+        pnlAppointments = new PanelCard2(
                 "Today's Appointments",
                 "156",
                 "32 remaining",
@@ -67,7 +68,7 @@ public class DashboardPanel extends JPanel {
         add(pnlAppointments);
         
        
-        pnlBeds = createCard(
+        pnlBeds = new PanelCard2(
                 "Bed Occupancy",
                 "78%",
                 "156 of 200 beds",
@@ -76,13 +77,14 @@ public class DashboardPanel extends JPanel {
         add(pnlBeds);
         
         
-        pnlRevenue = createCard(
+        pnlRevenue = new PanelCard2(
                 "Revenue (MTD)",
                 "₱125K",
                 "Target: $150K",
                 ColorsTheme.Green);
         pnlRevenue.setBounds(1210, 150, 350, 140);
         add(pnlRevenue);
+        
         
         pnlDistribution = new JPanel();
         pnlDistribution.setLayout(null);
@@ -179,64 +181,24 @@ public class DashboardPanel extends JPanel {
     }
 
     
-    public JPanel createCard(String title, String value, String subtitle, Color topLineColor) {
-
-        cardPanel = new JPanel();
-        cardPanel.setLayout(null);
-        cardPanel.setBackground(ColorsTheme.Main_Card);
-        
-        TopPanel = new JPanel();
-        TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(topLineColor);
-        cardPanel.add(TopPanel);
-
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblTitle);
-
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(Color.BLACK);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        cardPanel.add(lblValue);
-
-        lblSubtitle = new JLabel(subtitle);
-        lblSubtitle.setBounds(20, 100, 250, 25);
-        lblSubtitle.setForeground(Color.GRAY);
-        lblSubtitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblSubtitle);
-
-
-        return cardPanel;
-        
-        
-            }
-    
     
     private JProgressBar createCustomProgressBar(
-        int x,
-        int y,
-        int width,
-        int height,
-        int value,
-        Color filledColor) {
+            int x,
+            int y,
+            int width,
+            int height,
+            int value,
+            Color filledColor) {
 
     JProgressBar bar = new JProgressBar(0, 100);
 
-    bar.setBounds(x, y, width, height);
-    bar.setValue(value);
-
-    bar.setStringPainted(true);
-
-    bar.setFont(new Font("Segoe UI", Font.BOLD, 13));
-
-    bar.setForeground(filledColor);
-
-    bar.setBackground(new Color(230, 230, 230));
-
-    bar.setBorderPainted(false);
+        bar.setBounds(x, y, width, height);
+        bar.setValue(value);
+        bar.setStringPainted(true);
+        bar.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        bar.setForeground(filledColor);
+        bar.setBackground(new Color(230, 230, 230));
+        bar.setBorderPainted(false);
 
     return bar;
 }

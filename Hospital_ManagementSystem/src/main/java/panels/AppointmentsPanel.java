@@ -4,6 +4,8 @@
  */
 package panels;
 
+import constants.TablePanel;
+import constants.PanelCard;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import dialogs.NewAppointmentDialog;
@@ -19,12 +21,11 @@ import javax.swing.*;
  */
 public class AppointmentsPanel extends JPanel implements ActionListener {
     
-    private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlConfirm, pnlPending, pnlUrgent, pnlCard, pnlTop;
-    private JLabel lblDetails, lblAppointment, lblTitle, lblValue, lblHead;
+    private JPanel pnlMiddle, pnlSearch, pnlTotal, pnlConfirm, pnlPending, pnlUrgent;
+    private JLabel lblDetails, lblAppointment;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JScrollPane scrollPatient;
-    private JTable tblPatient;
+    private TablePanel tblAppointments;
     
 
     
@@ -87,22 +88,22 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         add(lblDetails);
         
         
-        pnlTotal = createCard("Today's Total", "25", ColorsTheme.Blue);
+        pnlTotal = new PanelCard("Today's Total", "25", ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
         
-        pnlConfirm = createCard("Confirmed", "12", ColorsTheme.Green);
+        pnlConfirm = new PanelCard("Confirmed", "12", ColorsTheme.Green);
         pnlConfirm.setBounds(450, 130, 350, 110);
         add(pnlConfirm);
         
        
-        pnlPending = createCard("Pending", "8", ColorsTheme.Yellow);
+        pnlPending = new PanelCard("Pending", "8", ColorsTheme.Yellow);
         pnlPending.setBounds(830, 130, 350, 110);
         add(pnlPending);
         
         
-        pnlUrgent = createCard("Urgent", "5", ColorsTheme.Red);
+        pnlUrgent = new PanelCard("Urgent", "5", ColorsTheme.Red);
         pnlUrgent.setBounds(1210, 130, 350, 110);
         add(pnlUrgent);
         
@@ -128,24 +129,12 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
                 {"Adrian Torres", "Dr. Ramirez", "4:30 PM", "CT Scan", "Radiology", "Pending", " "},
           };
         
-        tblPatient = new JTable (data, columns);
-        tblPatient.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblPatient.setFont(FontsTheme.Info_Texts);
-        tblPatient.setRowHeight(50);
-        tblPatient.setDefaultEditor(Object.class, null);
-        tblPatient.getTableHeader().setReorderingAllowed(false);
-        tblPatient.getTableHeader().setBackground(ColorsTheme.Header); 
-        tblPatient.getTableHeader().setForeground(ColorsTheme.Text_White);
-        
-        scrollPatient = new JScrollPane(tblPatient);
-        scrollPatient.setBounds(0, 60, 1500, 560);
-        pnlMiddle.add(scrollPatient);
-        
-        lblHead = new JLabel("Upcoming Visits");
-        lblHead.setBounds(30, 20, 300, 30);
-        lblHead.setFont(FontsTheme.Title_Texts);
-        lblHead.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblHead);
+
+        tblAppointments = new TablePanel("Upcoming Visits", columns, data, 440);
+        tblAppointments.setBounds(0, 0, 1500, 560);
+        pnlMiddle.add(tblAppointments);
+
+
         
         
         
@@ -158,40 +147,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         }
     
     
-    
-    public JPanel createCard(String title, String value, Color topColor) {
-
-        pnlCard = new JPanel();
-        pnlCard.setLayout(null);
-        pnlCard.setBackground(ColorsTheme.Main_Card);
-        
-        pnlTop = new JPanel();
-        pnlTop.setBounds(0, 0, 350, 10);
-        pnlTop.setBackground(topColor);
-        pnlCard.add(pnlTop);
-
-
-        //Title
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        pnlCard.add(lblTitle);
-
-
-        //Value
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(ColorsTheme.Text_Black);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        pnlCard.add(lblValue);
-
-
-        return pnlCard;
-        
-        
-            }
-    
+   
     //ActionListener
 
     @Override

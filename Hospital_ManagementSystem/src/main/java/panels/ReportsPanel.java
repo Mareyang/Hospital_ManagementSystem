@@ -4,8 +4,11 @@
  */
 package panels;
 
+
+import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.TablePanel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -17,11 +20,10 @@ import dialogs.NewReportDialog;
  */
 public class ReportsPanel extends JPanel implements ActionListener{
     
-    private JPanel pnlMiddle, pnlPatient, pnlBilling, pnlLab, pnlPharmacy, cardPanel, TopPanel;
-    private JLabel lblDetails, lblReports, lblTitle, lblValue, lblSubtitle, lblHead;
+    private JPanel pnlMiddle, pnlPatient, pnlBilling, pnlLab, pnlPharmacy;
+    private JLabel lblDetails, lblReports;
     private JButton btnAdd;
-    private JTable tblReport;
-    private JScrollPane scrollReport;
+    private TablePanel tblReport;
     
     
     public ReportsPanel() {
@@ -56,22 +58,22 @@ public class ReportsPanel extends JPanel implements ActionListener{
         
         
         
-        pnlPatient = createCard("Patient Reports", "24", "Records Summary", ColorsTheme.Blue);
+        pnlPatient = new PanelCard2("Patient Reports", "24", "Records Summary", ColorsTheme.Blue);
         pnlPatient.setBounds(70, 130, 350, 140);
         add(pnlPatient);
         
         
-        pnlBilling = createCard("Billing Reports", "18", "Revenue and Invoices", ColorsTheme.Green);
+        pnlBilling = new PanelCard2("Billing Reports", "18", "Revenue and Invoices", ColorsTheme.Green);
         pnlBilling.setBounds(450, 130, 350, 140);
         add(pnlBilling);
         
        
-        pnlLab = createCard("Lab Reports", "32", "Test Results", ColorsTheme.Red);
+        pnlLab = new PanelCard2("Lab Reports", "32", "Test Results", ColorsTheme.Red);
         pnlLab.setBounds(830, 130, 350, 140);
         add(pnlLab);
         
         
-        pnlPharmacy = createCard("Pharmacy Reports", "15", "Inventory movement", ColorsTheme.Yellow);
+        pnlPharmacy = new PanelCard2("Pharmacy Reports", "15", "Inventory movement", ColorsTheme.Yellow);
         pnlPharmacy.setBounds(1210, 130, 350, 140);
         add(pnlPharmacy);
         
@@ -91,25 +93,29 @@ public class ReportsPanel extends JPanel implements ActionListener{
         };
         
         
-        tblReport = new JTable (data, columns);
-        tblReport.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblReport.setFont(FontsTheme.Info_Texts);
-        tblReport.setRowHeight(50);
-        tblReport.setDefaultEditor(Object.class, null);
-        tblReport.getTableHeader().setReorderingAllowed(false);
-        tblReport.getTableHeader().setBackground(ColorsTheme.Header); 
-        tblReport.getTableHeader().setForeground(ColorsTheme.Text_White);
-        
-        scrollReport = new JScrollPane(tblReport);
-        scrollReport.setBounds(0, 60, 1500, 900);
-        pnlMiddle.add(scrollReport);
-        
-        lblHead = new JLabel("Generated Reports");
-        lblHead.setBounds(30, 20, 300, 30);
-        lblHead.setFont(FontsTheme.Title_Texts);
-        lblHead.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblHead);
+//        tblReport = new JTable (data, columns);
+//        tblReport.getTableHeader().setFont(FontsTheme.Title_Texts);
+//        tblReport.setFont(FontsTheme.Info_Texts);
+//        tblReport.setRowHeight(50);
+//        tblReport.setDefaultEditor(Object.class, null);
+//        tblReport.getTableHeader().setReorderingAllowed(false);
+//        tblReport.getTableHeader().setBackground(ColorsTheme.Header); 
+//        tblReport.getTableHeader().setForeground(ColorsTheme.Text_White);
+//        
+//        scrollReport = new JScrollPane(tblReport);
+//        scrollReport.setBounds(0, 60, 1500, 900);
+//        pnlMiddle.add(scrollReport);
+//        
+//        lblHead = new JLabel("Generated Reports");
+//        lblHead.setBounds(30, 20, 300, 30);
+//        lblHead.setFont(FontsTheme.Title_Texts);
+//        lblHead.setForeground(ColorsTheme.Text_Black);
+//        pnlMiddle.add(lblHead);
          
+
+        tblReport = new TablePanel("Generated Reports", columns, data, 940);
+        tblReport.setBounds(0, 0, 1500, 560);
+        pnlMiddle.add(tblReport);
         
         
         //ActionListener
@@ -119,41 +125,6 @@ public class ReportsPanel extends JPanel implements ActionListener{
         
         
     }
-    
-    public JPanel createCard(String title, String value, String subtitle, Color topLineColor) {
-
-        cardPanel = new JPanel();
-        cardPanel.setLayout(null);
-        cardPanel.setBackground(ColorsTheme.Main_Card);
-        
-        TopPanel = new JPanel();
-        TopPanel.setBounds(0, 0, 350, 10);
-        TopPanel.setBackground(topLineColor);
-        cardPanel.add(TopPanel);
-
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblTitle);
-
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(Color.BLACK);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        cardPanel.add(lblValue);
-
-        lblSubtitle = new JLabel(subtitle);
-        lblSubtitle.setBounds(20, 100, 250, 25);
-        lblSubtitle.setForeground(Color.GRAY);
-        lblSubtitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblSubtitle);
-
-
-        return cardPanel;
-        
-        
-            }
     
     
     

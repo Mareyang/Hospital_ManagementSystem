@@ -4,8 +4,11 @@
  */
 package panels;
 
+
+import constants.PanelCard;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.TablePanel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -17,13 +20,11 @@ import dialogs.NewLabDialog;
  */
 public class LaboratoryPanel extends JPanel implements ActionListener{
     
-    private JPanel pnlMiddle, pnlSearch, pnlPending, pnlProcessing, pnlCompleted, pnlStats, pnlCard, pnlTop;
-    private JLabel lblDetails, lblAppointment, lblTitle, lblValue, lblHead;
+    private JPanel pnlMiddle, pnlSearch, pnlPending, pnlProcessing, pnlCompleted, pnlStats;
+    private JLabel lblDetails, lblAppointment;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable tblLab;
-    private JScrollPane scrollTable;
-   // private ImagePanel imgPatient;
+    private TablePanel tblLab;
     
     
     public LaboratoryPanel() {
@@ -48,7 +49,6 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
-        btnAdd.addActionListener(this);
         add(btnAdd);
         
         //Search Bar
@@ -88,22 +88,22 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         add(lblDetails);
         
         
-        pnlPending = createCard("Pending", "10", ColorsTheme.Yellow);
+        pnlPending = new PanelCard("Pending", "10", ColorsTheme.Yellow);
         pnlPending.setBounds(70, 130, 350, 110);
         add(pnlPending);
         
         
-        pnlProcessing = createCard("Processing", "12", ColorsTheme.Blue);
+        pnlProcessing = new PanelCard("Processing", "12", ColorsTheme.Blue);
         pnlProcessing.setBounds(450, 130, 350, 110);
         add(pnlProcessing);
         
        
-        pnlCompleted = createCard("Completed", "45", ColorsTheme.Green);
+        pnlCompleted = new PanelCard("Completed", "45", ColorsTheme.Green);
         pnlCompleted.setBounds(830, 130, 350, 110);
         add(pnlCompleted);
         
         
-        pnlStats = createCard("STAT Orders", "5", ColorsTheme.Red);
+        pnlStats = new PanelCard("STAT Orders", "5", ColorsTheme.Red);
         pnlStats.setBounds(1210, 130, 350, 110);
         add(pnlStats);
         
@@ -122,62 +122,21 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
                 {"Daniel Garcia", "000126", "Fasting Blood Sugar", "Routine", "Pending", "May 09, 2026", " "}
         };
         
-        tblLab = new JTable(data, columns);
-        tblLab.setRowHeight(50);
-        tblLab.setDefaultEditor(Object.class, null);
-        tblLab.getTableHeader().setReorderingAllowed(false);
-        tblLab.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblLab.setFont(FontsTheme.Info_Texts);
-        tblLab.getTableHeader().setBackground(ColorsTheme.Header); 
-        tblLab.getTableHeader().setForeground(ColorsTheme.Text_White);
+        
 
-        scrollTable = new JScrollPane(tblLab);
-        scrollTable.setBounds(0, 60, 1500, 620);
-        pnlMiddle.add(scrollTable);
+        tblLab = new TablePanel("Recent Lab Reports", columns, data, 560);
+        tblLab.setBounds(0, 0, 1500, 560);
+        pnlMiddle.add(tblLab);
         
-        lblHead = new JLabel("Recent Lab Reports");
-        lblHead.setBounds(30, 20, 300, 30);
-        lblHead.setFont(FontsTheme.Title_Texts);
-        lblHead.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblHead);
         
+        
+        //ActionListener
+        btnAdd.addActionListener(this);
         
     }
 
     
-    public JPanel createCard(String title, String value, Color topColor) {
-
-        pnlCard = new JPanel();
-        pnlCard.setLayout(null);
-        pnlCard.setBackground(ColorsTheme.Main_Card);
-        
-        pnlTop = new JPanel();
-        pnlTop.setBounds(0, 0, 350, 10);
-        pnlTop.setLayout(null);
-        pnlTop.setBackground(topColor);
-        pnlCard.add(pnlTop);
-        
-
-        //Title
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        pnlCard.add(lblTitle);
-
-
-        //Value
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(ColorsTheme.Text_Black);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        pnlCard.add(lblValue);
-        
-        
-        return pnlCard;
-        
-        
-            }
+   
     
 
 

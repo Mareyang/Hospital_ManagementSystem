@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package control;
 
+import control.LoginPage;
 import constants.ButtonStyles;
 import constants.ColorsTheme;
 //import panels.MessagesPanel;
@@ -42,12 +43,17 @@ public class HospitalDashboard extends JFrame implements ActionListener {
     private JPanel dashboardPanel;
     private JLabel dashboardIconLbl, dashboardTxtLbl;
     
+    
+    
+    
     HospitalDashboard() {
         setSize(1920, 1080);
         setResizable(false); 
         setLocationRelativeTo(null);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        
         
         //Panels
         SidePanel = new JPanel();
@@ -62,8 +68,10 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         TopPanel.setBackground(ColorsTheme.Side_Panel);
         add(TopPanel);
         
+        
+        
         //TopPanel Inside
-        JLabel lblSystemName = new JLabel("Carelink Management System");
+        lblSystemName = new JLabel("Carelink Management System");
         lblSystemName.setBounds(350, 30, 600, 40);
         lblSystemName.setFont(new Font("Tahoma", Font.BOLD, 34));
         lblSystemName.setForeground(Color.WHITE);
@@ -76,16 +84,15 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         txtSearchField = new JTextField(placeholder);
         txtSearchField.setBounds(1300, 30, 500, 40);
         txtSearchField.setFont(new Font("Arial", Font.PLAIN, 18));
-
         txtSearchField.setForeground(new Color(200, 200, 200)); // placeholder color
-
         txtSearchField.setBackground(Color.decode("#3A2A75"));
         txtSearchField.setCaretColor(Color.WHITE);
         txtSearchField.setOpaque(true);
         txtSearchField.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-
         txtSearchField.addFocusListener(new java.awt.event.FocusAdapter() {
 
+            
+            
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (txtSearchField.getText().equals(placeholder)) {
                     txtSearchField.setText("");
@@ -101,8 +108,11 @@ public class HospitalDashboard extends JFrame implements ActionListener {
             }
         });
         
+        
         //to avoid jtextfield focus
         this.addWindowListener(new java.awt.event.WindowAdapter() {
+            
+            
         @Override
         public void windowOpened(java.awt.event.WindowEvent e) {
             TopPanel.requestFocusInWindow();
@@ -114,7 +124,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         });
         
         
-        // add to panel
+        //add to panel
         TopPanel.add(txtSearchField);
         
         
@@ -157,6 +167,9 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         btnSettings = ButtonStyles.createButton("Settings", "/icons/setting.png", 700, SidePanel);
         btnLogout = ButtonStyles.createButton("Logout", "/icons/logout.png", 850, SidePanel);
 
+        
+        
+        
         //ActionListener
         btnDashboard.addActionListener(this);
         btnPatients.addActionListener(this);

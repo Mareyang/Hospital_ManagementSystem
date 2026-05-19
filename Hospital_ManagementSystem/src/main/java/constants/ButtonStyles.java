@@ -11,7 +11,7 @@ package constants;
  * 
  */
 
-import com.mycompany.hospitalmanage.HospitalDashboard;
+import control.HospitalDashboard;
 import java.awt.Cursor;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
@@ -45,9 +45,7 @@ public class ButtonStyles {
         panel1.setBounds(0, y, 220, 50);
         panel1.setBackground(ColorsTheme.Side_Panel);
 
-        JLabel iconLbl = new JLabel(
-                new ImageIcon(HospitalDashboard.class.getResource(path))
-        );
+        JLabel iconLbl = new JLabel(new ImageIcon(HospitalDashboard.class.getResource(path)));
         iconLbl.setBounds(18, 9, 32, 32);
         panel1.add(iconLbl);
 

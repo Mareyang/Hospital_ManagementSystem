@@ -1,1 +1,10 @@
+control\HospitalManage.class
+constants\TablePanel.class
+control\LoginPage.class
+constants\PanelCard2.class
 dialogs\AddBillingDialog.class
+com\mycompany\hospitalmanage\HospitalManagementSystem.class
+control\HospitalDashboard$2.class
+control\HospitalDashboard.class
+constants\PanelCard.class
+control\HospitalDashboard$1.class

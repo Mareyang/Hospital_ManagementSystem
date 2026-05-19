@@ -1,6 +1,10 @@
-package com.mycompany.hospitalmanage;
+package control;
 
 import constants.ColorsTheme;
+import constants.ColorsTheme;
+import constants.ColorsTheme;
+import constants.FontsTheme;
+import constants.FontsTheme;
 import constants.FontsTheme;
 import javax.swing.*;
 import java.awt.*;
@@ -19,14 +23,14 @@ public class LoginPage extends JFrame implements ActionListener {
     
     
    
-    LoginPage() {
+    public LoginPage() {
         setSize(1000, 600);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        //Left
+        //Left 
         pnlLeft = new JPanel();
         pnlLeft.setBounds(0, 0, 400, 600);
         pnlLeft.setBackground(ColorsTheme.Side_Panel);

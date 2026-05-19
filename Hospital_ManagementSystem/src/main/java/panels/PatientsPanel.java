@@ -7,6 +7,7 @@ package panels;
 import dialogs.AddPatientDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.TablePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -18,11 +19,10 @@ import javax.swing.*;
 public class PatientsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch;
-    private JTable tblPatient;
-    private JLabel lblPatient, lblDetails, lblTitle;
+    private TablePanel tblPatient;
+    private JLabel lblPatient, lblDetails;
     private JTextField txtSearch;
     private JButton btnAdd, btnSearch, btnRefresh;
-    private JScrollPane scrollPatient;
     
     
     public PatientsPanel() {
@@ -106,26 +106,12 @@ public class PatientsPanel extends JPanel implements ActionListener {
 
           };
         
-        tblPatient = new JTable (data, columns);
-        tblPatient.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblPatient.setFont(FontsTheme.Info_Texts);
-        tblPatient.setRowHeight(50);
-        tblPatient.setDefaultEditor(Object.class, null);
-        tblPatient.getTableHeader().setReorderingAllowed(false);
-        tblPatient.getTableHeader().setBackground(ColorsTheme.Header); 
-        tblPatient.getTableHeader().setForeground(ColorsTheme.Text_White);
+
         
-        scrollPatient = new JScrollPane(tblPatient);
-        scrollPatient.setBounds(0, 60, 1500, 560);
-        pnlMiddle.add(scrollPatient);
-        
-        lblTitle = new JLabel("Recent Admissions");
-        lblTitle.setBounds(30, 20, 300, 30);
-        lblTitle.setFont(FontsTheme.Title_Texts);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblTitle);
-        
-        
+        tblPatient = new TablePanel("Recent Admissions", columns, data, 560);
+        tblPatient.setBounds(0, 0, 1500, 620);
+        pnlMiddle.add(tblPatient);
+
 
 
         //ActionListener
