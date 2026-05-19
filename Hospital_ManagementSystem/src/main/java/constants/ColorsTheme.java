@@ -19,8 +19,6 @@ public class ColorsTheme {
     public static final Color Top_Line = Color.decode("#3BC1A8");
     public static final Color Header = Color.decode("#406AAF");
 
-
-    
     // Text Colors
     public static final Color Text_White = Color.WHITE;
     public static final Color Text_Black = Color.BLACK;
@@ -37,17 +35,21 @@ public class ColorsTheme {
     public static final Color Blue = Color.decode("#4300FF");
     public static final Color Orange = Color.decode("#FF8E00");
     public static final Color Cancel = Color.decode("#BFC6C4");
-    
     public static final Color Delete_Urgent = Color.decode("#A82323");
     public static final Color Add_Confirm = Color.decode("#48A111");
  
 
-
-    
     // Status Colors
     public static final Color Search_Button = Color.decode("#406AAF");
     public static final Color Gray_Button = Color.decode("#EDE9E6");
     public static final Color Update_Pending = Color.decode("#FFC107");
+    
+    //Dashboard Panel Colors
+    public static final Color Cardiology_Color = new Color(52, 152, 219);
+    public static final Color Orthophedics_Color = new Color(46, 204, 113);
+    public static final Color Emergency_Color = new Color(231, 76, 60);
+    public static final Color Neurology_Color = new Color(155, 89, 182);
+    public static final Color Pediatrics_Color = new Color(241, 196, 15);
 
 
     

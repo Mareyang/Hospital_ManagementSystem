@@ -4,11 +4,6 @@
  */
 package panels;
 
-/**
- *
- * 
- */
-
 import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
@@ -19,24 +14,30 @@ import java.awt.*;
 
 public class DashboardPanel extends JPanel {
     
+    // Main panels
     private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, cardPanel, TopPanel, pnlMiddle;
-    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle, lblDistributionTitle, lblOverviewTitle;
-    private JPanel pnlDistribution, pnlOverview, pnlImage, pnlMetrics;
-    private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
     
-            
-            
+    // Labels
+    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle, 
+                   lblDistributionTitle, lblOverviewTitle;
+    
+    // Distribution & Progress bars
+    private JPanel pnlDistribution, pnlOverview, pnlImage, pnlMetrics;
+    private JProgressBar barCardiology, barOrthopedics, barEmergency, 
+                        barNeurology, barPediatrics;
+    
     public DashboardPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
-        
+        // Middle container panel
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 350, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
 
+        // Greeting section
         lblGreet = new JLabel("Welcome to CareLink!");
         lblGreet.setBounds(30, 30, 1000, 40);
         lblGreet.setForeground(ColorsTheme.Text_Black);
@@ -49,7 +50,7 @@ public class DashboardPanel extends JPanel {
         lblDescrip.setFont(FontsTheme.Plain_Texts);
         add(lblDescrip);
         
-        
+        // Metric Cards
         pnlPatients = new PanelCard2(
                 "Total Patients",
                 "2,847",
@@ -57,7 +58,6 @@ public class DashboardPanel extends JPanel {
                 ColorsTheme.Yellow);
         pnlPatients.setBounds(70, 150, 350, 140);
         add(pnlPatients);
-        
         
         pnlAppointments = new PanelCard2(
                 "Today's Appointments",
@@ -67,7 +67,6 @@ public class DashboardPanel extends JPanel {
         pnlAppointments.setBounds(450, 150, 350, 140);
         add(pnlAppointments);
         
-       
         pnlBeds = new PanelCard2(
                 "Bed Occupancy",
                 "78%",
@@ -75,7 +74,6 @@ public class DashboardPanel extends JPanel {
                 ColorsTheme.Blue);
         pnlBeds.setBounds(830, 150, 350, 140);
         add(pnlBeds);
-        
         
         pnlRevenue = new PanelCard2(
                 "Revenue (MTD)",
@@ -85,7 +83,7 @@ public class DashboardPanel extends JPanel {
         pnlRevenue.setBounds(1210, 150, 350, 140);
         add(pnlRevenue);
         
-        
+        // Department Distribution Panel
         pnlDistribution = new JPanel();
         pnlDistribution.setLayout(null);
         pnlDistribution.setBackground(ColorsTheme.Middle_Panel);
@@ -98,64 +96,25 @@ public class DashboardPanel extends JPanel {
         lblDistributionTitle.setBounds(25, 20, 350, 35);
         pnlDistribution.add(lblDistributionTitle);
         
-        barCardiology = createCustomProgressBar(
-                25, 80, 450, 28,
-                25,
-                new Color(52, 152, 219));
+        // Progress Bars
+        barCardiology = createCustomProgressBar(25, 80, 450, 28, 25, ColorsTheme.Cardiology_Color);
+        barOrthopedics = createCustomProgressBar(25, 140, 450, 28, 22, ColorsTheme.Orthophedics_Color);
+        barEmergency = createCustomProgressBar(25, 200, 450, 28, 20, ColorsTheme.Emergency_Color);
+        barNeurology = createCustomProgressBar(25, 260, 450, 28, 18, ColorsTheme.Neurology_Color);
+        barPediatrics = createCustomProgressBar(25, 320, 450, 28, 15, ColorsTheme.Pediatrics_Color);
 
-        barOrthopedics = createCustomProgressBar(
-                25, 140, 450, 28,
-                22,
-                new Color(46, 204, 113));
-
-        barEmergency = createCustomProgressBar(
-                25, 200, 450, 28,
-                20,
-                new Color(231, 76, 60));
-
-        barNeurology = createCustomProgressBar(
-                25, 260, 450, 28,
-                18,
-                new Color(155, 89, 182));
-
-        barPediatrics = createCustomProgressBar(
-                25, 320, 450, 28,
-                15,
-                new Color(241, 196, 15));
-
-        
-        
         pnlDistribution.add(barCardiology);
         pnlDistribution.add(barOrthopedics);
         pnlDistribution.add(barEmergency);
         pnlDistribution.add(barNeurology);
         pnlDistribution.add(barPediatrics);
         
-        
-        JPanel leg1 = createLegendItem(
-                30, 390,
-                "Cardiology",
-                new Color(52, 152, 219));
-
-        JPanel leg2 = createLegendItem(
-                250, 390,
-                "Orthopedics",
-                new Color(46, 204, 113));
-
-        JPanel leg3 = createLegendItem(
-                30, 425,
-                "Emergency",
-                new Color(231, 76, 60));
-
-        JPanel leg4 = createLegendItem(
-                250, 425,
-                "Neurology",
-                new Color(155, 89, 182));
-
-        JPanel leg5 = createLegendItem(
-                30, 460,
-                "Pediatrics",
-                new Color(241, 196, 15));
+        // Legend Items
+        JPanel leg1 = createLegendItem(30, 390, "Cardiology", ColorsTheme.Cardiology_Color);
+        JPanel leg2 = createLegendItem(250, 390, "Orthopedics", ColorsTheme.Orthophedics_Color);
+        JPanel leg3 = createLegendItem(30, 425, "Emergency", ColorsTheme.Emergency_Color);
+        JPanel leg4 = createLegendItem(250, 425, "Neurology", ColorsTheme.Neurology_Color);
+        JPanel leg5 = createLegendItem(30, 460, "Pediatrics", ColorsTheme.Pediatrics_Color);
 
         pnlDistribution.add(leg1);
         pnlDistribution.add(leg2);
@@ -163,54 +122,41 @@ public class DashboardPanel extends JPanel {
         pnlDistribution.add(leg4);
         pnlDistribution.add(leg5);
         
-        
-        
+        // Background Image Panel
         pnlImage = new JPanel();
         pnlImage.setLayout(null);
-        pnlImage.setBounds(0,0,950,500);
+        pnlImage.setBounds(0, 0, 950, 500);
         pnlImage.setBackground(ColorsTheme.Blue);
         pnlMiddle.add(pnlImage);
         
-        JLabel lblIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/hospi.jpg")));
-        lblIcon.setBounds(0,0,950,500);
+        JLabel lblIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/hospi.png")));
+        lblIcon.setBounds(0, 0, 950, 500);
         pnlImage.add(lblIcon);
-
-       
-        
-
     }
 
-    
-    
-    private JProgressBar createCustomProgressBar(
-            int x,
-            int y,
-            int width,
-            int height,
-            int value,
-            Color filledColor) {
-
-    JProgressBar bar = new JProgressBar(0, 100);
-
+     // Creates a customized progress bar for department distribution.
+    private JProgressBar createCustomProgressBar(int x, int y, int width, int height, int value, Color filledColor) {
+        
+        JProgressBar bar = new JProgressBar(0, 100);
         bar.setBounds(x, y, width, height);
         bar.setValue(value);
         bar.setStringPainted(true);
-        bar.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        bar.setFont(FontsTheme.Progress_Bar_Font);
         bar.setForeground(filledColor);
-        bar.setBackground(new Color(230, 230, 230));
+        bar.setBackground(ColorsTheme.Main_Card);
         bar.setBorderPainted(false);
 
-    return bar;
-}
-    
-    
-    
+        return bar;
+    }
+
+    //Creates a legend item (color box + label) for the distribution chart.
     private JPanel createLegendItem(int x, int y, String text, Color color) {
         JPanel item = new JPanel();
         item.setLayout(null);
         item.setOpaque(false);
         item.setBounds(x, y, 300, 28);
 
+        // Color indicator square
         JPanel cube = new JPanel();
         cube.setBackground(color);
         cube.setBounds(0, 6, 16, 16);
@@ -223,40 +169,4 @@ public class DashboardPanel extends JPanel {
 
         return item;
     }
-    
-    private JPanel createMetricsCard(int y, String text, Color color,String icon)
-    {
-        JPanel card = new JPanel();
-        card.setLayout(null);
-        card.setBounds(20,y,350,70);
-        
-        JLabel title = new JLabel(text);
-        title.setBounds(80,0,350,70);
-        title.setFont(FontsTheme.Plain_Texts);
-        title.setForeground(ColorsTheme.Text_Black);
-        card.add(title);
-        
-        JPanel iconPanel = new JPanel();
-        iconPanel.setBackground(color);
-        iconPanel.setBounds(15, 12, 40, 40);
-        card.add(iconPanel);
-        
-        JLabel lblIcon = new JLabel(icon, JLabel.CENTER);
-        lblIcon.setBounds(0, 0, 40, 40);
-        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 30));
-        lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        lblIcon.setVerticalAlignment(SwingConstants.CENTER);
-        iconPanel.add(lblIcon);
-        
-        
-        return card;
-    }
-    
-    
-    }
-
-
-    
-    
-
-    
+}
