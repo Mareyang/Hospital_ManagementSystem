@@ -16,7 +16,7 @@ public class AddBillingDialog extends JDialog implements ActionListener {
             lblDiscount, lblPayment, lblStatus, lblTitle, lblSubtitle, lblInvoice;
     private JTextField txtInvNo, txtPatientId, txtName, txtDoctor, txtDate, txtConsultation, txtMedicine, txtLab, txtAmount, txtDiscount;
     private JComboBox<String> cmbStatus, cmbPayment;
-    private JButton btnSave, btnCancel,btnPersonal;
+    private JButton btnSave, btnCancel, btnBill;
     private JPanel pnlContent;
     
     
@@ -40,12 +40,13 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
         
-        btnPersonal = new JButton("Billing Details");
-        btnPersonal.setBounds(40, 100, 250, 40);
-        btnPersonal.setFont(FontsTheme.Buttons);
-        btnPersonal.setForeground(ColorsTheme.Text_White);
-        btnPersonal.setBackground(ColorsTheme.Search_Button);
-        add(btnPersonal);
+        btnBill = new JButton("Billing Details");
+        btnBill.setBounds(40, 100, 250, 40);
+        btnBill.setFont(FontsTheme.Buttons);
+        btnBill.setForeground(ColorsTheme.Text_White);
+        btnBill.setBackground(ColorsTheme.Search_Button);
+        btnBill.setFocusPainted(false);
+        add(btnBill);
         
         
         pnlContent = new JPanel();
@@ -59,6 +60,7 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         btnSave.setBackground(ColorsTheme.Add_Confirm);
         btnSave.setForeground(ColorsTheme.Text_White);
         btnSave.setFont(FontsTheme.Buttons);
+        btnSave.setFocusPainted(false);
         add(btnSave);
 
         btnCancel = new JButton("Cancel");
@@ -66,12 +68,15 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);
+        btnCancel.setFocusPainted(false);
         add(btnCancel);
         
         
     
         //ActionListener
-        btnPersonal.addActionListener(this);
+        btnBill.addActionListener(this);
+        btnSave.addActionListener(this);
+        btnCancel.addActionListener(this);
         
         showBillingDetails();
     }
@@ -217,9 +222,18 @@ public class AddBillingDialog extends JDialog implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == btnCancel);
+        if(e.getSource() == btnBill) {
+            showBillingDetails();
+        }
+            
+        else if (e.getSource() == btnCancel) {
             dispose();
+        } 
+        
+        else if (e.getSource() == btnSave) {
+            JOptionPane.showMessageDialog(this, "Billing payment completed successfully!", 
+                    "Billing Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
-        
+}

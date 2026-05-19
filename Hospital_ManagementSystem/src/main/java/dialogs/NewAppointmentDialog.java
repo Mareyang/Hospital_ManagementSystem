@@ -50,6 +50,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         btnAppoint.setFont(FontsTheme.Buttons);
         btnAppoint.setForeground(ColorsTheme.Text_White);
         btnAppoint.setBackground(ColorsTheme.Header);
+        btnAppoint.setFocusPainted(false);
         add(btnAppoint);
        
         
@@ -66,6 +67,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);
+        btnCancel.setFocusPainted(false);
         add(btnCancel);
         
         btnConfirm = new JButton("Confirm Appointment");
@@ -73,6 +75,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         btnConfirm.setFont(FontsTheme.Buttons);
         btnConfirm.setForeground(ColorsTheme.Text_White);
         btnConfirm.setBackground(ColorsTheme.Green);
+        btnConfirm.setFocusPainted(false);
         add(btnConfirm);
         
         
@@ -80,6 +83,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         //ActionListener
         btnAppoint.addActionListener(this);
         btnCancel.addActionListener(this);
+        btnConfirm.addActionListener(this);
         
         showNewAppointment();
         
@@ -238,9 +242,14 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnAppoint) {
             showNewAppointment();
-    }
-        else if(e.getSource() == btnCancel) {
+        }
+        else if (e.getSource() == btnCancel) {
             dispose();
+        } 
+        
+        else if (e.getSource() == btnConfirm) {
+            JOptionPane.showMessageDialog(this, "Appointment scheduled successfully!", 
+                    "Appointment Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

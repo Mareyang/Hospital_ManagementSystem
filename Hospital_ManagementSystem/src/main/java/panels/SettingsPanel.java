@@ -307,23 +307,26 @@ public class SettingsPanel extends JPanel implements ActionListener{
         
         // BUTTONS
                 
-        btnSave = new JButton("Reset");
-        btnSave.setBounds(1250  , 820, 130, 40); 
-        btnSave.setFont(FontsTheme.Buttons);
-        btnSave.setBackground(ColorsTheme.Text_Gray);
-        btnSave.setForeground(ColorsTheme.Text_White);
-        add(btnSave);
-        
-        btnReset = new JButton("Save");
-        btnReset.setBounds(1400, 820, 130, 40); 
+        btnReset = new JButton("Reset");
+        btnReset.setBounds(1250  , 820, 130, 40); 
         btnReset.setFont(FontsTheme.Buttons);
-        btnReset.setBackground(ColorsTheme.Add_Confirm);
+        btnReset.setBackground(ColorsTheme.Text_Gray);
         btnReset.setForeground(ColorsTheme.Text_White);
+        btnReset.setFocusPainted(false);
         add(btnReset);
+        
+        btnSave = new JButton("Save");
+        btnSave.setBounds(1400, 820, 130, 40); 
+        btnSave.setFont(FontsTheme.Buttons);
+        btnSave.setBackground(ColorsTheme.Add_Confirm);
+        btnSave.setForeground(ColorsTheme.Text_White);
+        btnSave.setFocusPainted(false);
+        add(btnSave);
         
         
         // ActionListener
         btnReset.addActionListener(this);
+        btnSave.addActionListener(this);
                 
                 
     }
@@ -353,10 +356,14 @@ public class SettingsPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnReset) {
+        if (e.getSource() == btnReset) {
+            
+        } 
+        
+        else if (e.getSource() == btnSave) {
+            
         }
-    }
         }
-    
+}
     
 

@@ -50,6 +50,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         btnStaff.setFont(FontsTheme.Buttons);
         btnStaff.setForeground(ColorsTheme.Text_White);
         btnStaff.setBackground(ColorsTheme.Header);
+        btnStaff.setFocusPainted(false);
         add(btnStaff);
         
         btnPerf = new JButton("Performance and Suggestions");
@@ -57,6 +58,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         btnPerf.setFont(FontsTheme.Buttons);
         btnPerf.setForeground(ColorsTheme.Text_White);
         btnPerf.setBackground(ColorsTheme.Header);
+        btnPerf.setFocusPainted(false);
         add(btnPerf);
         
         
@@ -74,6 +76,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         btnSave.setFont(FontsTheme.Buttons);
         btnSave.setForeground(ColorsTheme.Text_White);
         btnSave.setBackground(ColorsTheme.Green);
+        btnSave.setFocusPainted(false);
         add(btnSave);
 
         btnCancel = new JButton("Cancel");
@@ -81,7 +84,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);
-        btnCancel.addActionListener(e -> dispose());
+        btnCancel.setFocusPainted(false);
         add(btnCancel);
         
         
@@ -89,6 +92,10 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         
         btnStaff.addActionListener(this);
         btnPerf.addActionListener(this);
+        btnCancel.addActionListener(this);
+        btnSave.addActionListener(this);
+        
+        
 
         showStaffInfo();
         
@@ -361,6 +368,13 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         else if(e.getSource() == btnPerf) {
             showPerfRate();
         }
+        else if (e.getSource() == btnCancel) {
+            dispose();
+        } 
         
+        else if (e.getSource() == btnSave) {
+            JOptionPane.showMessageDialog(this, "Staff record added successfully!", 
+                    "Staff Success", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

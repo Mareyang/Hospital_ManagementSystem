@@ -114,18 +114,18 @@ public class BillingPanel extends JPanel implements ActionListener  {
        
         
         //Table
-        String[] columns = {"Patient Name", "Patient ID", "Total Amount", "Due Date", "Status"};
+        String[] columns = {"Patient Name", "Patient ID", "Total Amount", "Due Date", "Status", "Actions"};
         Object[][] data = {
-                {"Maria Leonora", "000021", "₱4,500.00", "May 15, 2026", "Unpaid"},
-                {"Jose Felipe", "000054", "₱12,850.00", "May 15, 2026", "Partial"},
-                {"Angela Cruz", "000078", "₱1,200.00", "May 14, 2026", "Paid"},
-                {"Mark Anthony", "000103", "₱28,400.00", "May 14, 2026", "Unpaid"},
-                {"Sophia Reyes", "000115", "₱3,500.00", "May 13, 2026", "Paid"},
-                {"Daniel Garcia", "000126", "₱2,150.00", "May 12, 2026", "Paid"},
-                {"Christine Mae", "000138", "₱8,900.00", "May 12, 2026", "Partial"},
-                {"Nathaniel Ong", "000142", "₱15,600.00", "May 10, 2026", "Paid"},
-                {"Francis Mendoza", "000189", "₱45,200.00", "May 09, 2026", "Unpaid"},
-                {"Jasmine Aquino", "000193", "₱6,300.00", "May 08, 2026", "Paid"}
+                {"Maria Leonora", "000021", "₱4,500.00", "May 15, 2026", "Unpaid", " "},
+                {"Jose Felipe", "000054", "₱12,850.00", "May 15, 2026", "Partial", " "},
+                {"Angela Cruz", "000078", "₱1,200.00", "May 14, 2026", "Paid", " "},
+                {"Mark Anthony", "000103", "₱28,400.00", "May 14, 2026", "Unpaid", " "},
+                {"Sophia Reyes", "000115", "₱3,500.00", "May 13, 2026", "Paid", " "},
+                {"Daniel Garcia", "000126", "₱2,150.00", "May 12, 2026", "Paid", " "},
+                {"Christine Mae", "000138", "₱8,900.00", "May 12, 2026", "Partial", " "},
+                {"Nathaniel Ong", "000142", "₱15,600.00", "May 10, 2026", "Paid", " "},
+                {"Francis Mendoza", "000189", "₱45,200.00", "May 09, 2026", "Unpaid", " "},
+                {"Jasmine Aquino", "000193", "₱6,300.00", "May 08, 2026", "Paid", " "}
           };
         
         tblBill = new JTable (data, columns);
