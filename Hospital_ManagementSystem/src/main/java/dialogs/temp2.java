@@ -14,7 +14,7 @@ import javax.swing.*;
  *
  * @author eiros
  */
-public class NewPharmacyDialog extends JDialog implements ActionListener {
+public class temp2 extends JDialog implements ActionListener {
     
     private JLabel lblDialogTitle, lblDialogDetails, lblCode, lblName, lblGeneric, lblStrength, 
             lblDosage, lblType, lblReorder, lblCurrent, lblPrice, lblExpire;
@@ -26,7 +26,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
     
     
     
-    public NewPharmacyDialog() {
+    public temp2() {
         setSize(1050, 550);
         setLayout(null);
         setLocationRelativeTo(null);

@@ -12,7 +12,7 @@ import constants.TablePanel;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import dialogs.NewPharmacyDialog;
+import dialogs.temp2;
 
 /**
  *
@@ -147,7 +147,7 @@ public class PharmacyPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         //Opens pharmacy form dialog
         if(e.getSource() == btnAdd) {
-            NewPharmacyDialog pharmacy = new NewPharmacyDialog();
+            temp2 pharmacy = new temp2();
             pharmacy.setVisible(true);
         }
     }

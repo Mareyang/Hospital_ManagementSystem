@@ -13,7 +13,7 @@ import javax.swing.*;
  *
  * @author eiros
  */
-public class NewLabDialog extends JDialog implements ActionListener {
+public class temp1 extends JDialog implements ActionListener {
     
     
     private JLabel lblDialogTitle, lblDialogDetails, lblID, lblName, lblDate, lblDoc, lblDepart, lblType, lblStatus, lblTest, lblNote;
@@ -26,7 +26,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
     
     
     
-    public NewLabDialog() {
+    public temp1() {
         setSize(1050, 550);
         setLayout(null);
         setLocationRelativeTo(null);

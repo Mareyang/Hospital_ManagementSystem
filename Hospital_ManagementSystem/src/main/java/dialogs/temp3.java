@@ -13,7 +13,7 @@ import javax.swing.*;
  *
  * @author eiros
  */
-public class NewReportDialog extends JDialog implements ActionListener {
+public class temp3 extends JDialog implements ActionListener {
     
     private JLabel lblTitle, lblSubtitle, lblCateg, lblName, lblNote, lblBy, lblDate, lblID, lblPeriod; 
     private JButton btnReportDetails, btnWrite, btnCancel, btnConfirm;
@@ -25,7 +25,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
     
     
     
-    public NewReportDialog() {
+    public temp3() {
         setSize(1050, 550);
         setLayout(null);
         setLocationRelativeTo(null);
