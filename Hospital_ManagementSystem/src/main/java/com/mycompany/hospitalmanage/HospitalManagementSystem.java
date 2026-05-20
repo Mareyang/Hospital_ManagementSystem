@@ -4,7 +4,7 @@
  */
 package com.mycompany.hospitalmanage;
 
-import control.LoginPage;
+import controls.LoginPage;
 
 /**
  *

@@ -33,6 +33,8 @@ public class SettingsPanel extends JPanel implements ActionListener{
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
+        
+        //Title and subtitle label for settings section
         lblSettings = new JLabel("Settings");
         lblSettings.setBounds(30, 30, 500, 40);
         lblSettings.setFont(FontsTheme.Bold_Texts);
@@ -45,8 +47,8 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblSettingsDesc.setForeground(ColorsTheme.Text_Gray);
         add(lblSettingsDesc);
         
-        // General Settings
         
+        // General Settings
         pnlGeneral = createCard("General Settings");
         pnlGeneral.setBounds(70, 130, 1500, 250);
         add(pnlGeneral);
@@ -87,7 +89,6 @@ public class SettingsPanel extends JPanel implements ActionListener{
         cmbCurrency.setForeground(ColorsTheme.Text_Black);
         cmbCurrency.setBackground(ColorsTheme.Text_White);
         pnlGeneral.add(cmbCurrency);
-        
         
         
         lblDateFormat = new JLabel("Date Format");
@@ -161,8 +162,8 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblHospitalEmail.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         pnlGeneral.add(lblHospitalEmail);
         
-        // Appearance
         
+        //Appearance
         pnlAppearance = createCard("Appearance");
         pnlAppearance.setBounds(70, 400, 1500, 170);
         add(pnlAppearance);
@@ -181,7 +182,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblTheme.setForeground(ColorsTheme.Text_Black);
         pnlAppearance.add(lblTheme);
         
-        
+
         cmbTheme = new JComboBox<>(new String[]{
         " ", "Blue", "Red", "Green",
         });
@@ -207,8 +208,6 @@ public class SettingsPanel extends JPanel implements ActionListener{
         cmbDarkMode.setForeground(ColorsTheme.Text_Black);
         cmbDarkMode.setBackground(ColorsTheme.Text_White);
         pnlAppearance.add(cmbDarkMode);
-        
-        
         
         
         
@@ -238,8 +237,9 @@ public class SettingsPanel extends JPanel implements ActionListener{
 //        lblHospitalAddress.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(0, 10, 0, 0)));
 //        pnlAppearance.add(lblHospitalAddress);
         
-        // System
-        
+
+
+        //System
         pnlSystem = createCard("System");
         pnlSystem.setBounds(70, 590, 1500, 210);
         add(pnlSystem);
@@ -258,7 +258,8 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblShowStats.setForeground(ColorsTheme.Text_Black);
         pnlSystem.add(lblShowStats);
         
-        // Can be changed to Checkbox
+        
+        //Can be changed to Checkbox
         cmbStats = new JComboBox<>(new String[]{
         " ", "Enable", "Disable",
         });
@@ -274,7 +275,8 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblShowStats.setForeground(ColorsTheme.Text_Black);
         pnlSystem.add(lblShowStats);
         
-        // Can be changed to Checkbox
+        
+        //Can be changed to Checkbox
         cmbStats = new JComboBox<>(new String[]{
         " ", "Enable", "Disable",
         });
@@ -284,14 +286,14 @@ public class SettingsPanel extends JPanel implements ActionListener{
         cmbStats.setBackground(ColorsTheme.Text_White);
         pnlSystem.add(cmbStats);
         
-        
         lblAutoLogout = new JLabel("Auto Logout Time (Minutes)");
         lblAutoLogout.setBounds(30, 160, 250, 30);
         lblAutoLogout.setFont(FontsTheme.Plain_Texts);
         lblAutoLogout.setForeground(ColorsTheme.Text_Black);
         pnlSystem.add(lblAutoLogout);
         
-        // Can be changed to Checkbox        
+        
+        //Can be changed to Checkbox        
         cmbAutoLogoutTime = new JComboBox<>(new Integer[]{
          1, 5, 10, 15, 20, 25, 30,
         });
@@ -303,8 +305,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         
         
         
-        // BUTTONS
-                
+        //Buttons
         btnReset = new JButton("Reset");
         btnReset.setBounds(1250  , 820, 130, 40); 
         btnReset.setFont(FontsTheme.Buttons);
@@ -322,7 +323,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         add(btnSave);
         
         
-        // ActionListener
+        //ActionListener
         btnReset.addActionListener(this);
         btnSave.addActionListener(this);
                 
@@ -330,6 +331,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
     }
 
     
+    //Panel Card but title only
     public JPanel createCard(String title) {
         
         cardPanel = new JPanel();
@@ -352,8 +354,13 @@ public class SettingsPanel extends JPanel implements ActionListener{
         
             }
 
+    
+    
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
+        //No functions yet
         if (e.getSource() == btnReset) {
             
         } 

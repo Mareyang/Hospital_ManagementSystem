@@ -22,12 +22,10 @@ public class BedManagementPanel extends JPanel {
     private JPanel icu1, icu2, icu3;
     private JPanel ward1, ward2, ward3;
     private JPanel mat1, mat2, mat3;
-    
     private JLabel Licu1, lblWardsOccuNum;
     private JLabel lblMatAvail, lblMatAvailNum, lblMatOccu, lblMatOccuNum, lblMatMain, lblMatMainNum, lblMatLabel;
     private JLabel lblicuAvail, lblicuAvailNum, lblicuOccu, lblicuOccuNum, lblicuMain, lblicuMainNum, lblICULabel;
     private JLabel lblWardAvail, lblWardAvailNum, lblWardsOccu, lblWardOccuNum, lblWardMain, lblWardMainNum, lblWardLabel;
-
     private JLabel lblDetails, lblBed, lblTitle, lblValue;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh;
@@ -40,41 +38,14 @@ public class BedManagementPanel extends JPanel {
         setBackground(ColorsTheme.Middle_Panel);
         
         
-        lblBed = new JLabel("Bed Management");
-        lblBed.setBounds(30, 30, 500, 40);
-        lblBed.setFont(FontsTheme.Bold_Texts);
-        lblBed.setForeground(ColorsTheme.Text_Black);
-        add(lblBed);
-
-        lblDetails = new JLabel("Monitor and manage bed availability.");
-        lblDetails.setBounds(30, 70, 500, 40);
-        lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Gray);
-        add(lblDetails);
-        
-        pnlTotal = new PanelCard("Total Beds", "200", ColorsTheme.Blue);
-        pnlTotal.setBounds(70, 130, 350, 110);
-        add(pnlTotal);
-        
-        pnlOccupied = new PanelCard("Occupied", "150", ColorsTheme.Yellow);
-        pnlOccupied.setBounds(450, 130, 350, 110);
-        add(pnlOccupied);
-
-        pnlAvail = new PanelCard("Available", "43", ColorsTheme.Green);
-        pnlAvail.setBounds(830, 130, 350, 110);
-        add(pnlAvail);
-        
-        pnlMaintenance = new PanelCard("Maintenance", "7", ColorsTheme.Red);
-        pnlMaintenance.setBounds(1210, 130, 350, 110);
-        add(pnlMaintenance);
-        
+        //Search Panel Container 
         pnlSearch = new JPanel();
         pnlSearch.setLayout(null);
         pnlSearch.setBounds(70, 270, 1500, 80);
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
-        //Search Bar
+        //Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search appointments...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -95,9 +66,43 @@ public class BedManagementPanel extends JPanel {
         btnRefresh.setForeground(ColorsTheme.Text_White);
         pnlSearch.add(btnRefresh);
         
+        
+        
+        //Title and subtitle label for appointments section
+        lblBed = new JLabel("Bed Management");
+        lblBed.setBounds(30, 30, 500, 40);
+        lblBed.setFont(FontsTheme.Bold_Texts);
+        lblBed.setForeground(ColorsTheme.Text_Black);
+        add(lblBed);
+
+        lblDetails = new JLabel("Monitor and manage bed availability.");
+        lblDetails.setBounds(30, 70, 500, 40);
+        lblDetails.setFont(FontsTheme.Plain_Texts);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
+        add(lblDetails);
+        
+        
+        //Summary Panel Cards
+        pnlTotal = new PanelCard("Total Beds", "200", ColorsTheme.Blue);
+        pnlTotal.setBounds(70, 130, 350, 110);
+        add(pnlTotal);
+        
+        pnlOccupied = new PanelCard("Occupied", "150", ColorsTheme.Yellow);
+        pnlOccupied.setBounds(450, 130, 350, 110);
+        add(pnlOccupied);
+
+        pnlAvail = new PanelCard("Available", "43", ColorsTheme.Green);
+        pnlAvail.setBounds(830, 130, 350, 110);
+        add(pnlAvail);
+        
+        pnlMaintenance = new PanelCard("Maintenance", "7", ColorsTheme.Red);
+        pnlMaintenance.setBounds(1210, 130, 350, 110);
+        add(pnlMaintenance);
+        
+        
+        
    
-        //ICU
-   
+        //ICU Panel
         pnlICU = roomCard ("Intensive Care Unit", "Floor 2");
         pnlICU.setBounds(70, 390, 420, 240);
         pnlICU.setLayout(null);
@@ -168,8 +173,8 @@ public class BedManagementPanel extends JPanel {
         pnlICU.add(ProgICU);
         add(pnlICU);
        
-        // WARD AREA
         
+        //Ward Area Panel
         pnlWardA = roomCard ("Ward Area","Floor 1");
         pnlWardA.setBounds(600, 390, 420, 240);
         
@@ -240,8 +245,7 @@ public class BedManagementPanel extends JPanel {
         add(pnlWardA);
        
               
-     // MATERNITY 
-
+        //Maternity Panel
         pnlMaternity = roomCard("Maternity Rooms", "Floor 2");
         pnlMaternity.setBounds(1135, 390, 420, 240);
 
@@ -316,7 +320,7 @@ public class BedManagementPanel extends JPanel {
     }
 
         
-        
+    //Panel Card but with title and value only    
     public JPanel roomCard (String title, String value) {
             
         cardPanel = new JPanel();

@@ -38,25 +38,27 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         setBackground(ColorsTheme.Middle_Panel);
         
         
+        //Main Panel Container for Table
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 600, 1500, 300);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
-        
+        //Title and subtitle label for emergency section
         lblEmergency = new JLabel("Emergency Services");
         lblEmergency.setBounds(30, 30, 500, 40);
         lblEmergency.setFont(FontsTheme.Bold_Texts);
         lblEmergency.setForeground(ColorsTheme.Text_Black);
         add(lblEmergency);
-
+        
         lblDetails = new JLabel("Manage ambulance dispatch and emergency cases.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
         lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
+        //Button for adding emergency dispatch
         btnAdd = new JButton("+ Emergency Dispatch");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
@@ -66,20 +68,18 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         add(btnAdd);
         
         
+        //Summary Panel Cards
         pnlAvail = new PanelCard("Available", "3", ColorsTheme.Blue);
         pnlAvail.setBounds(70, 130, 350, 110);
         add(pnlAvail);
         
-        
         pnlDispatch = new PanelCard("Dispatched", "1", ColorsTheme.Red); 
         pnlDispatch.setBounds(450, 130, 350, 110);
         add(pnlDispatch);
-        
        
         pnlReturn = new PanelCard("Returning", "1", ColorsTheme.Yellow);
         pnlReturn.setBounds(830, 130, 350, 110);
         add(pnlReturn);
-        
         
         pnlActive = new PanelCard("Active Cases", "2", ColorsTheme.Green); 
         pnlActive.setBounds(1210, 130, 350, 110);
@@ -88,12 +88,12 @@ public class EmergencyPanel extends JPanel implements ActionListener {
      
         
       
-        //Down Panel
+        //Down Panel for Ambulance
         pnlAmbulance = roomCard("Ambulance Fleet", " ");
         pnlAmbulance.setBounds(70, 260, 1500, 300);
         add(pnlAmbulance);
         
-       //amb2
+        //Amb1
         pnlAmb1 = new PanelCard("AMB-001"," ", ColorsTheme.Gray);
         pnlAmb1.setBounds(70, 90, 300, 175);
         pnlAmb1.setForeground(ColorsTheme.Text_Black);
@@ -101,7 +101,7 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         pnlAmbulance.add(pnlAmb1);
            
        
-        //label in amb1
+        //Labels in Amb1
         lblAmb1 = new JLabel("Available", SwingConstants.RIGHT);       
         lblAmb1.setBounds(20, 25, 250, 25);
         lblAmb1.setForeground(ColorsTheme.Green);
@@ -130,14 +130,14 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         pnlAmb1.add(lblAmb13);
 
     
-        // amb2
+        //Amb2
         pnlAmb2 = new PanelCard("AMB-002"," ", ColorsTheme.Gray);
         pnlAmb2.setBounds(420, 90, 300, 175);
         pnlAmb2.setForeground(ColorsTheme.Text_Black);
         pnlAmb2.setFont(FontsTheme.Title_Texts);
         pnlAmbulance.add(pnlAmb2);
 
-       //label in amb2
+        //Label in Amb2
         lblAmb2 = new JLabel("Dispatched", SwingConstants.RIGHT);       
         lblAmb2.setBounds(20, 25, 250, 25);
         lblAmb2.setForeground(ColorsTheme.Red);
@@ -164,14 +164,14 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         pnlAmb2.add(lblAmb23);
     
         
-         // amb3
+        //Amb3
         pnlAmb3 = new PanelCard("AMB-003", " ", ColorsTheme.Gray);
         pnlAmb3.setBounds(770, 90, 300, 175);
         pnlAmb3.setForeground(ColorsTheme.Text_Black);
         pnlAmb3.setFont(FontsTheme.Title_Texts);
         pnlAmbulance.add(pnlAmb3);
         
-       //label in amb3
+       //Labels in Amb3
         lblAmb3 = new JLabel("Available", SwingConstants.RIGHT );       
         lblAmb3.setBounds(20, 25, 250, 25);
         lblAmb3.setForeground(ColorsTheme.Green);
@@ -197,14 +197,14 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         pnlAmb3.add(lblAmb33);
 
         
-         // amb4
+        //Amb4
         pnlAmb4 = new PanelCard("AMB-004", " ", ColorsTheme.Gray);
         pnlAmb4.setBounds(1110, 90, 300, 175);
         pnlAmb4.setForeground(ColorsTheme.Text_Black);
         pnlAmb4.setFont(FontsTheme.Title_Texts);
         pnlAmbulance.add(pnlAmb4);
         
-       //label in amb4
+        //Label in Amb4
         lblAmb4 = new JLabel("Returning", SwingConstants.RIGHT);       
         lblAmb4.setBounds(20, 25, 250, 25);
         lblAmb4.setForeground(ColorsTheme.Yellow);
@@ -230,8 +230,10 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         pnlAmb4.add(lblAmb43);
 
          
-        //Table
+        //Table column names
         String [] columns = {"Type", "Patient", "Location", "Status", "ETA", "Actions"};
+        
+        //Sample records
         Object [][] data = {
         {"Cardiac Emergency", "Unknown", "Downtown", "Dispatched", "8 min", " "},
          {"Cardiac Emergency", "Unknown", "Downtown", "Active Cases", "8 min", " "}, 
@@ -244,7 +246,7 @@ public class EmergencyPanel extends JPanel implements ActionListener {
         };
         
         
-        
+        //Table Panel for records
         tblEmergency = new TablePanel("Dispatch Logs", columns, data, 240);
         tblEmergency.setBounds(0, 0, 1500, 560);
         pnlMiddle.add(tblEmergency);
@@ -259,8 +261,8 @@ public class EmergencyPanel extends JPanel implements ActionListener {
     
     
     
-    
-        public JPanel roomCard (String title, String value) {
+    //Panel Card but with title and value only
+    public JPanel roomCard (String title, String value) {
             
         pnlCard = new JPanel();
         pnlCard.setLayout(null);
@@ -295,6 +297,7 @@ public class EmergencyPanel extends JPanel implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) { 
+            //Opens emergency form dialog
             if (e.getSource()== btnAdd) {
                 AddEmergencyDialog emergency = new AddEmergencyDialog ();
                 emergency.setVisible(true);

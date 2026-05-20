@@ -20,23 +20,31 @@ public class TablePanel extends JPanel {
         setLayout(null);
         setBackground(ColorsTheme.Main_Card);
 
+        
+        //Table Title
         lblTitle = new JLabel(title);
         lblTitle.setBounds(30, 20, 600, 30);
         lblTitle.setFont(FontsTheme.Title_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         add(lblTitle);
 
+        //Creates the table using columns and data
         tblTable = new JTable(data, columns);
 
+        
+        //Table design and settings
         tblTable.setRowHeight(50);
         tblTable.setFont(FontsTheme.Info_Texts);
         tblTable.setDefaultEditor(Object.class, null);
         tblTable.getTableHeader().setReorderingAllowed(false);
 
+        //Table header design
         tblTable.getTableHeader().setFont(FontsTheme.Title_Texts);
         tblTable.getTableHeader().setBackground(ColorsTheme.Header);
         tblTable.getTableHeader().setForeground(ColorsTheme.Text_White);
 
+        
+        //ScrollPane for viewing long table records
         scrollPane = new JScrollPane(tblTable);
         scrollPane.setBounds(0, 60, 1500, scrollHeight);
         add(scrollPane);

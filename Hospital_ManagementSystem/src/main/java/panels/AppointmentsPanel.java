@@ -9,8 +9,6 @@ import constants.PanelCard;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import dialogs.NewAppointmentDialog;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -34,18 +32,22 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
+        
+        //Main Panel Container for Table
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 380, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
+        //Search Panel Container 
         pnlSearch = new JPanel();
         pnlSearch.setLayout(null);
         pnlSearch.setBounds(70, 270, 1500, 80);
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
+        //Button for adding new appointment
         btnAdd = new JButton("+  New Appointment");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
@@ -53,7 +55,8 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         btnAdd.setForeground(ColorsTheme.Text_White);
         add(btnAdd);
         
-        //Search Bar
+        
+        //Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search appointments...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -75,6 +78,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         pnlSearch.add(btnRefresh);
                 
         
+        //Title and subtitle label for appointments section
         lblAppointment = new JLabel("Appointments");
         lblAppointment.setBounds(30, 30, 500, 40);
         lblAppointment.setFont(FontsTheme.Bold_Texts);
@@ -88,28 +92,28 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         add(lblDetails);
         
         
+        //Summary Panel Cards
         pnlTotal = new PanelCard("Today's Total", "25", ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
-        
         
         pnlConfirm = new PanelCard("Confirmed", "12", ColorsTheme.Green);
         pnlConfirm.setBounds(450, 130, 350, 110);
         add(pnlConfirm);
         
-       
         pnlPending = new PanelCard("Pending", "8", ColorsTheme.Yellow);
         pnlPending.setBounds(830, 130, 350, 110);
         add(pnlPending);
-        
         
         pnlUrgent = new PanelCard("Urgent", "5", ColorsTheme.Red);
         pnlUrgent.setBounds(1210, 130, 350, 110);
         add(pnlUrgent);
         
         
-        //Table
+        //Table column names
         String[] columns = {"Patient Name", "Doctor", "Time", "Type", "Department", "Status", "Actions"};
+        
+        //Sample records
         Object[][] data = {
                 {"Maria Leonora", "Dr. Santos", "8:00 AM", "Check-up", "Emergency", "Confirmed", " "},
                 {"Jose Felipe", "Dr. Ramirez", "8:30 AM", "Blood Test", "Laboratory", "Pending", " "},
@@ -130,14 +134,12 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
           };
         
 
+        //Table Panel for records
         tblAppointments = new TablePanel("Upcoming Visits", columns, data, 440);
         tblAppointments.setBounds(0, 0, 1500, 560);
         pnlMiddle.add(tblAppointments);
 
 
-        
-        
-        
         
         //ActionListener
         btnAdd.addActionListener(this);
@@ -148,10 +150,11 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
     
     
    
-    //ActionListener
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Opens appointment form dialog
         if (e.getSource() == btnAdd) {
         NewAppointmentDialog appointment = new NewAppointmentDialog();
         appointment.setVisible(true);

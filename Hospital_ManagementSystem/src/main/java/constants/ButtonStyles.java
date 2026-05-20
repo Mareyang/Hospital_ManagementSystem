@@ -11,7 +11,7 @@ package constants;
  * 
  */
 
-import control.HospitalDashboard;
+import controls.HospitalDashboard;
 import java.awt.Cursor;
 import java.awt.Insets;
 import javax.swing.ImageIcon;

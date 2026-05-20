@@ -1,4 +1,4 @@
-package control;
+package controls;
 
 import constants.ColorsTheme;
 import constants.ColorsTheme;

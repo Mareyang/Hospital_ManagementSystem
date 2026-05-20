@@ -10,7 +10,6 @@ import dialogs.AddPrescriptionDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import constants.TablePanel;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -32,18 +31,22 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
+        
+        //Main Panel Container for Table
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 380, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
+        //Search Panel Container 
         pnlSearch = new JPanel();
         pnlSearch.setLayout(null);
         pnlSearch.setBounds(70, 270, 1500, 80);
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
+        //Button for adding new prescription
         btnAdd = new JButton("+  New Prescription");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
@@ -52,6 +55,8 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         btnAdd.setFocusPainted(false);
         add(btnAdd);
         
+        
+        //Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by patient name or patient id...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -75,6 +80,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         pnlSearch.add(btnRefresh);
         
         
+        //Title and subtitle label for prescription section
         lblPrescription = new JLabel("Prescription");
         lblPrescription.setBounds(30, 30, 500, 40);
         lblPrescription.setFont(FontsTheme.Bold_Texts);
@@ -88,16 +94,14 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         add(lblDetails);
         
         
-        //Card
+        //Summary Panel Cards
         pnlPending = new PanelCard("Pending", "30", ColorsTheme.Orange);
         pnlPending.setBounds(170, 130, 400, 110);
         add(pnlPending);
         
-        
         pnlDispense = new PanelCard("Dispensed Today", "17", ColorsTheme.Green);
         pnlDispense.setBounds(620, 130, 400, 110);
         add(pnlDispense);
-        
        
         pnlCancel = new PanelCard("Cancelled", "4", ColorsTheme.Red);
         pnlCancel.setBounds(1070, 130, 400, 110);
@@ -106,8 +110,10 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         
         
         
-        //Table
+        //Table column names
         String[] columns = {"Patient Name", "Doctor", "Date", "Medications", "Status", "Actions"};
+        
+        //Sample records
         Object[][] data = {
             {"John Smith", "Dr. Chen", "May 13, 2026", "3x daily / 20 days", "Pending"," "},
             {"Sarah Johnson", "Dr. Williams", "May 14, 2026", "2x daily / 3 days", "Dispensed"," "},
@@ -124,7 +130,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
         };
         
 
-        
+        //Table Panel for records
         tblPrescription = new TablePanel("Recent Prescription", columns, data, 440);
         tblPrescription.setBounds(0, 0, 1500, 560);
         pnlMiddle.add(tblPrescription);
@@ -141,6 +147,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Opens prescription form dialog
         if (e.getSource() == btnAdd) {
         AddPrescriptionDialog prescription = new AddPrescriptionDialog();
         prescription.setVisible(true);

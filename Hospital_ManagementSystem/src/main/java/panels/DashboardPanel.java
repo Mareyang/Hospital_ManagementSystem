@@ -14,30 +14,29 @@ import java.awt.*;
 
 public class DashboardPanel extends JPanel {
     
-    // Main panels
-    private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, cardPanel, TopPanel, pnlMiddle;
+    private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, pnlMiddle;
+    private JLabel lblGreet, lblDescrip, lblDistributionTitle, lblOverviewTitle;
     
-    // Labels
-    private JLabel lblGreet, lblDescrip, lblTitle, lblValue, lblSubtitle, 
-                   lblDistributionTitle, lblOverviewTitle;
-    
-    // Distribution & Progress bars
+    //Distribution & Progress bars
     private JPanel pnlDistribution, pnlOverview, pnlImage, pnlMetrics;
-    private JProgressBar barCardiology, barOrthopedics, barEmergency, 
-                        barNeurology, barPediatrics;
+    private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
+    
+    
+    
     
     public DashboardPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
-        // Middle container panel
+        
+        //Middle Panel Container
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 350, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
 
-        // Greeting section
+        //Greeting section
         lblGreet = new JLabel("Welcome to CareLink!");
         lblGreet.setBounds(30, 30, 1000, 40);
         lblGreet.setForeground(ColorsTheme.Text_Black);
@@ -50,7 +49,8 @@ public class DashboardPanel extends JPanel {
         lblDescrip.setFont(FontsTheme.Plain_Texts);
         add(lblDescrip);
         
-        // Metric Cards
+        
+        //Summary Panel Cards
         pnlPatients = new PanelCard2(
                 "Total Patients",
                 "2,847",
@@ -83,7 +83,9 @@ public class DashboardPanel extends JPanel {
         pnlRevenue.setBounds(1210, 150, 350, 140);
         add(pnlRevenue);
         
-        // Department Distribution Panel
+        
+        
+        //Department Distribution Panel
         pnlDistribution = new JPanel();
         pnlDistribution.setLayout(null);
         pnlDistribution.setBackground(ColorsTheme.Middle_Panel);
@@ -96,7 +98,8 @@ public class DashboardPanel extends JPanel {
         lblDistributionTitle.setBounds(25, 20, 350, 35);
         pnlDistribution.add(lblDistributionTitle);
         
-        // Progress Bars
+        
+        //Progress Bars
         barCardiology = createCustomProgressBar(25, 80, 450, 28, 25, ColorsTheme.Cardiology_Color);
         barOrthopedics = createCustomProgressBar(25, 140, 450, 28, 22, ColorsTheme.Orthophedics_Color);
         barEmergency = createCustomProgressBar(25, 200, 450, 28, 20, ColorsTheme.Emergency_Color);
@@ -109,7 +112,8 @@ public class DashboardPanel extends JPanel {
         pnlDistribution.add(barNeurology);
         pnlDistribution.add(barPediatrics);
         
-        // Legend Items
+        
+        //Legend Items
         JPanel leg1 = createLegendItem(30, 390, "Cardiology", ColorsTheme.Cardiology_Color);
         JPanel leg2 = createLegendItem(250, 390, "Orthopedics", ColorsTheme.Orthophedics_Color);
         JPanel leg3 = createLegendItem(30, 425, "Emergency", ColorsTheme.Emergency_Color);
@@ -122,7 +126,8 @@ public class DashboardPanel extends JPanel {
         pnlDistribution.add(leg4);
         pnlDistribution.add(leg5);
         
-        // Background Image Panel
+        
+        //Background Image Panel
         pnlImage = new JPanel();
         pnlImage.setLayout(null);
         pnlImage.setBounds(0, 0, 950, 500);
@@ -134,7 +139,7 @@ public class DashboardPanel extends JPanel {
         pnlImage.add(lblIcon);
     }
 
-     // Creates a customized progress bar for department distribution.
+     //Creates a customized progress bar for department distribution.
     private JProgressBar createCustomProgressBar(int x, int y, int width, int height, int value, Color filledColor) {
         
         JProgressBar bar = new JProgressBar(0, 100);
@@ -156,7 +161,7 @@ public class DashboardPanel extends JPanel {
         item.setOpaque(false);
         item.setBounds(x, y, 300, 28);
 
-        // Color indicator square
+        //Color indicator square
         JPanel cube = new JPanel();
         cube.setBackground(color);
         cube.setBounds(0, 6, 16, 16);

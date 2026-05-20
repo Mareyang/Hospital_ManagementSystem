@@ -31,19 +31,21 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
-        
+        //Main Panel Container for Table
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 380, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
+        //Search Panel Container 
         pnlSearch = new JPanel();
         pnlSearch.setLayout(null);
         pnlSearch.setBounds(70, 270, 1500, 80);
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
+        //Button for adding new lab
         btnAdd = new JButton("+  New Lab Order");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
@@ -51,7 +53,7 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         btnAdd.setForeground(ColorsTheme.Text_White);
         add(btnAdd);
         
-        //Search Bar
+        //Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search patient name, patient ID, or test type...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -73,14 +75,13 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         pnlSearch.add(btnRefresh);
         
         
-        
-
+        //Title and subtitle label for lab section
         lblAppointment = new JLabel("Laboratory");
         lblAppointment.setBounds(30, 30, 500, 40);
         lblAppointment.setFont(FontsTheme.Bold_Texts);
         lblAppointment.setForeground(ColorsTheme.Text_Black);
         add(lblAppointment);
-
+       
         lblDetails = new JLabel("Manage laboratory tests and results.");
         lblDetails.setBounds(30, 70, 500, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
@@ -88,20 +89,18 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         add(lblDetails);
         
         
+        //Summary Panel Cards
         pnlPending = new PanelCard("Pending", "10", ColorsTheme.Yellow);
         pnlPending.setBounds(70, 130, 350, 110);
         add(pnlPending);
         
-        
         pnlProcessing = new PanelCard("Processing", "12", ColorsTheme.Blue);
         pnlProcessing.setBounds(450, 130, 350, 110);
         add(pnlProcessing);
-        
        
         pnlCompleted = new PanelCard("Completed", "45", ColorsTheme.Green);
         pnlCompleted.setBounds(830, 130, 350, 110);
         add(pnlCompleted);
-        
         
         pnlStats = new PanelCard("STAT Orders", "5", ColorsTheme.Red);
         pnlStats.setBounds(1210, 130, 350, 110);
@@ -109,8 +108,10 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         
         
         
-        //Table
+        //Table column names
         String[] columns = {"Patient Name", "Patient ID", "Test Type", "Priority", "Status", "Requested Date", "Actions"};
+        
+        //Sample records
         Object[][] data = {
                 {"Maria Leonora", "000021", "Complete Blood Count", "Routine", "Pending", "May 12, 2026", " "},
                 {"Jose Felipe", "000054", "Chest X-Ray", "STAT", "Processing", "May 12, 2026", " "},
@@ -123,7 +124,7 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
         };
         
         
-
+        //Table Panel for records
         tblLab = new TablePanel("Recent Lab Reports", columns, data, 560);
         tblLab.setBounds(0, 0, 1500, 560);
         pnlMiddle.add(tblLab);
@@ -142,6 +143,7 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Opens lab form dialog
         if(e.getSource() == btnAdd) {
             NewLabDialog lab = new NewLabDialog();
             lab.setVisible(true);

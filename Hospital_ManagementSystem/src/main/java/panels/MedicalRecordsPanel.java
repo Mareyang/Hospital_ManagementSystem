@@ -33,18 +33,21 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         setBackground(ColorsTheme.Middle_Panel);
         
         
+        //Main Panel Container for Table
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 250, 1500, 620);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
+        //Search Panel Container 
         pnlSearch = new JPanel();
         pnlSearch.setLayout(null);
         pnlSearch.setBounds(70, 130, 1500, 80);
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
+        //Button for adding new record
         btnAdd = new JButton("+  New Record");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
@@ -53,18 +56,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         btnAdd.setFocusPainted(false);
         add(btnAdd);
         
-        lblMedical = new JLabel("Medical Records");
-        lblMedical.setBounds(30, 30, 500, 40);
-        lblMedical.setFont(FontsTheme.Bold_Texts);
-        lblMedical.setForeground(ColorsTheme.Text_Black);
-        add(lblMedical);
-
-        lblDetails = new JLabel("Access and manage patient medical records.");
-        lblDetails.setBounds(30, 70, 500, 40);
-        lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Gray);
-        add(lblDetails);
-
+        //Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by patient name or patient id...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -88,9 +80,27 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         pnlSearch.add(btnRefresh);
         
         
+        //Title and subtitle label for medical section
+        lblMedical = new JLabel("Medical Records");
+        lblMedical.setBounds(30, 30, 500, 40);
+        lblMedical.setFont(FontsTheme.Bold_Texts);
+        lblMedical.setForeground(ColorsTheme.Text_Black);
+        add(lblMedical);
+
+        lblDetails = new JLabel("Access and manage patient medical records.");
+        lblDetails.setBounds(30, 70, 500, 40);
+        lblDetails.setFont(FontsTheme.Plain_Texts);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
+        add(lblDetails);
+
         
-        //Table
+        
+        
+        
+        //Table column names
         String[] columns = {"Patient Name", "Patient ID", "Type", "Doctor", "Date", "Actions"};
+        
+        //Sample records
         Object[][] data = {
             {"Maria Leonora", "000021", "New Consultation", "Dr. Robert Chen", "May 15, 2026"," "},
             {"Jose Felipe", "000054", "Follow-up Visit", "Dr. Sarah Jenkins", "May 15, 2026"," "},
@@ -109,7 +119,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         };
         
 
-    
+        //Table Panel for records
         tblMedical = new TablePanel("Recent Medical Records", columns, data, 560);
         tblMedical.setBounds(0, 0, 1500, 620);
         pnlMiddle.add(tblMedical);
@@ -124,7 +134,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        //Opens medical form dialog
         if (e.getSource() == btnAdd) {
         AddMedicalRecordDialog record = new AddMedicalRecordDialog();
         record.setVisible(true);
