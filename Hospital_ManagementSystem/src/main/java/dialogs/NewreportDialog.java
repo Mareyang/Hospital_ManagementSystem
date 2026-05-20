@@ -43,7 +43,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
         
-        
+        // Buttons for left upper side of panel
         btnReportDetails = new JButton("Report Details");
         btnReportDetails.setBounds(40, 100, 250, 40);
         btnReportDetails.setFont(FontsTheme.Buttons);
@@ -68,7 +68,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
         add(pnlContent);
         
         
-        
+        // Buttons for right lower side
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(580, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
@@ -100,7 +100,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
         
     }
     
-    
+    // To generate report
     public void showGenerateReport() {
         pnlContent.removeAll();
         pnlContent.repaint();
@@ -181,7 +181,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
         lblCateg.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblCateg);
         
-        
+        // Report scope options
         cmbCateg = new JComboBox<>(new String[]{
         " ", "Admissions Summary", "Billing and Revenue", "Pharmacy Dispensation", "Emergency Logs ",
         });
@@ -196,6 +196,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
         
     }
     
+    // To write report and notes.
     public void showWriteReport() {
         pnlContent.removeAll();
         pnlContent.repaint();

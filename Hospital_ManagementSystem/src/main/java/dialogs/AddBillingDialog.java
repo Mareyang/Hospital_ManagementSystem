@@ -88,6 +88,8 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         pnlContent.repaint();
         pnlContent.revalidate();
         
+        
+        // Invoice Label and TextField
         lblInvNo = new JLabel("Invoice No:");
         lblInvNo.setBounds(40, 40, 200, 30);
         lblInvNo.setFont(FontsTheme.Plain_Texts);
@@ -98,6 +100,8 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtInvNo.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtInvNo);
         
+        
+        // Patient ID Label and TextField
         lblPatientId = new JLabel("Patient ID:");
         lblPatientId.setBounds(40, 80, 200, 30);
         lblPatientId.setFont(FontsTheme.Plain_Texts);
@@ -107,7 +111,8 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtPatientId.setBounds(220, 80, 230, 30);
         txtPatientId.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtPatientId);
-
+        
+        // Patient Name Label and TextField
         lblName = new JLabel("Patient Name:");
         lblName.setBounds(40, 120, 200, 30);
         lblName.setFont(FontsTheme.Plain_Texts);
@@ -118,6 +123,7 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtName.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtName);
         
+        // Assigned Doctor Label and TextField
         lblDoctor = new JLabel("Assigned Doctor:");
         lblDoctor.setBounds(40, 160, 200, 30);
         lblDoctor.setFont(FontsTheme.Plain_Texts);
@@ -128,6 +134,7 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtDoctor.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtDoctor);
         
+        // Date Label and TextField 
         lblDate = new JLabel("Date:");
         lblDate.setBounds(40, 200, 200, 30);
         lblDate.setFont(FontsTheme.Plain_Texts);
@@ -137,7 +144,8 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtDate.setBounds(220, 200, 230, 30);
         txtDate.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtDate);
-        
+       
+        // Consultation Label and TextField
         lblConsultation = new JLabel("Consultation Fee:");
         lblConsultation.setBounds(40, 240, 200, 30);
         lblConsultation.setFont(FontsTheme.Plain_Texts);
@@ -149,7 +157,8 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         pnlContent.add(txtConsultation);
         
         
-        // Left Side
+        // Left Side : Fees 
+        // Medicine Fee Label and TextField
         lblMedicine = new JLabel("Medicine Fee:");
         lblMedicine.setBounds(510, 40, 200, 30);
         lblMedicine.setFont(FontsTheme.Plain_Texts);
@@ -160,6 +169,7 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtMedicine.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtMedicine);
         
+        // Laboratory Fee Label and TextField
         lblLab = new JLabel("Laboratory Fee:");
         lblLab.setBounds(510, 80, 200, 30);
         lblLab.setFont(FontsTheme.Plain_Texts);
@@ -170,6 +180,7 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtLab.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtLab);
         
+        // Sum of all fees and bills
         lblAmount = new JLabel("Total Amount:");
         lblAmount.setBounds(510, 120, 200, 30);
         lblAmount.setFont(FontsTheme.Plain_Texts);
@@ -179,7 +190,8 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtAmount.setBounds(690, 120, 230, 30);
         txtAmount.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtAmount);
-
+       
+        // Includes discount to lessen the total amount needs to pay
         lblDiscount = new JLabel("Discount:");
         lblDiscount.setBounds(510, 160, 200, 30);
         lblDiscount.setFont(FontsTheme.Plain_Texts);
@@ -190,23 +202,27 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         txtDiscount.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtDiscount);
         
+        // Payment methods
         lblPayment = new JLabel("Payment Method:");
         lblPayment.setBounds(510, 200, 200, 30);
         lblPayment.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblPayment);
         
+        // Options for payment methods
         cmbPayment = new JComboBox<> (new String[] {
             " ", "Cash", "GCash", "Card", "Insurance"}
         );
         cmbPayment.setBounds(690, 200, 230, 30);
         cmbPayment.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(cmbPayment);
-        
+         
+        // Bills status
         lblStatus = new JLabel("Status:");
         lblStatus.setBounds(510, 240, 200, 30);
         lblStatus.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblStatus);
    
+        // Options for bills status 
         cmbStatus = new JComboBox<> (new String[] {
             " ", "Paid", "Pending", "Overdue"}
         );
@@ -219,7 +235,6 @@ public class AddBillingDialog extends JDialog implements ActionListener {
         
        
     }
-
         @Override
         public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnBill) {

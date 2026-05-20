@@ -101,6 +101,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         
     }
         
+    // To add new employee 
     public void showStaffInfo() {
         pnlForm.removeAll();
         pnlForm.repaint();
@@ -189,6 +190,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         lblMarital.setForeground(ColorsTheme.Text_Black);
         pnlForm.add(lblMarital);
 
+        // Options for Marital status
         cmbMarital = new JComboBox(new String[]{
         "", "Single", "Married", "Widowed", "Separated"});
         cmbMarital.setBounds(720, 40, 180, 30);
@@ -239,6 +241,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         lblOff.setForeground(ColorsTheme.Text_Black);
         pnlForm.add(lblOff);
 
+        // Option for day off
         cmbOff = new JComboBox(new String[]{
         "", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"});
         cmbOff.setBounds(720, 200, 180, 30);
@@ -264,7 +267,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         
         
     }
-      
+      // To fill up performance forms to rate staffs
     public void showPerfRate() {
         pnlForm.removeAll();
         pnlForm.repaint();

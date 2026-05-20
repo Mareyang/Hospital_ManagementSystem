@@ -44,7 +44,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
         
-        
+        //Button for left upper side 
         btnAppoint = new JButton("New Appointment");
         btnAppoint.setBounds(40, 100, 250, 40);
         btnAppoint.setFont(FontsTheme.Buttons);
@@ -61,7 +61,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         add(pnlContent);
         
         
-        
+        // Buttons for right lower side 
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(480, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
@@ -90,7 +90,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         
     }
     
-    
+    // To show new appointment to set for patients
     public void showNewAppointment() {
         pnlContent.removeAll();
         pnlContent.repaint();
@@ -154,7 +154,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         lblDepart.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDepart);
         
-        
+        // Options for department needed to sched
         cmbDepart = new JComboBox<>(new String[]{
         " ", "Emergency(ER)", "Laboratory", "Cardiology", "Pediatrics ", "Surgery", "OB-GYN", "Radiology",
         });
@@ -171,6 +171,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         lblDoc.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDoc);
         
+        // Options for Doctor's name 
         cmbDoc = new JComboBox<>(new String[]{
         " ", "Dr. Juan dela Cruz", "Dr. Maria Santos", "Dr. Ricardo Reyes", "Dr. Elena Garcia", "Dr. Roberto Castro"
         });
@@ -186,6 +187,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         lblVisit.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblVisit);
         
+        //Options for Visit type and concern
         cmbVisit = new JComboBox<>(new String[]{
         " ", "New Consultation", "Follow-up Visit", "Routine Check-up", "Emergency Visit", "Diagnostic/Lab Test"
         });
@@ -201,6 +203,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         lblRoom.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblRoom);
         
+        //Options for room number available
         cmbRoom = new JComboBox<>(new String[]{
         " ", "ER-01", "ER-02", "LAB-01", "LAB-02", "RM-201", "RM-202", "XRAY-01", "ICU-01", "ICU-02", "OR-01"
         });
@@ -210,7 +213,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         cmbRoom.setBackground(ColorsTheme.Text_White);
         pnlContent.add(cmbRoom);
         
-        
+        // additional notes for reasons visit
         lblNote = new JLabel("Note/Reason for Visit");
         lblNote.setBounds(50, 200, 300, 30);
         lblNote.setFont(FontsTheme.Title_Texts);

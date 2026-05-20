@@ -45,6 +45,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblDialogDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDialogDetails);
 
+        // Button fot upper left side
         btnMedicationInfo = new JButton("Medication Form");
         btnMedicationInfo.setBounds(40, 100, 250, 40);
         btnMedicationInfo.setFont(FontsTheme.Buttons);
@@ -60,7 +61,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
         
-        
+        // Buttons for lower right side
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(580, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
@@ -125,6 +126,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblGeneric.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblGeneric);
         
+        // Generic name options
         cmbGeneric = new JComboBox<>(new String[]{
         " ", "Paracetamol", "Salbutamol", "Amoxicillin", "Mefenamic",
         });
@@ -140,6 +142,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblType.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblType);
         
+        // Category options
         cmbType = new JComboBox<>(new String[]{
         " ", "Antibiotic", "Analgesic/Painkiller", "Antihypertensive", "Antiviral",
         });
@@ -156,7 +159,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblDosage.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDosage);
         
-        
+        // Dosage form needed 
         cmbDepart = new JComboBox<>(new String[]{
         " ", "Tablet", "Capsule", "Syrup", "Injection ", "Ointment", "Inhaler",
         });

@@ -42,6 +42,8 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
         
+        
+        // Buttons for Emergency Form and Dispatch History
         btnEmergency = new JButton("Emergency Form");
         btnEmergency.setBounds(40, 100, 250, 40);
         btnEmergency.setFont(FontsTheme.Buttons);
@@ -50,15 +52,17 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         btnEmergency.setBackground(ColorsTheme.Search_Button);
         add(btnEmergency);
         
-        btnHistory = new JButton("Dispatch History");
-        btnHistory.setBounds(290, 100, 250, 40);
-        btnHistory.setFont(FontsTheme.Buttons);
-        btnHistory.setFocusPainted(false);
-        btnHistory.setForeground(ColorsTheme.Text_White);
-        btnHistory.setBackground(ColorsTheme.Search_Button);
-        add(btnHistory);
+        //  Will use when Database is already set up
+//        btnHistory = new JButton("Dispatch History");
+//        btnHistory.setBounds(290, 100, 250, 40);
+//        btnHistory.setFont(FontsTheme.Buttons);
+//        btnHistory.setFocusPainted(false);
+//        btnHistory.setForeground(ColorsTheme.Text_White);
+//        btnHistory.setBackground(ColorsTheme.Search_Button);
+//        add(btnHistory);
         
         
+        // New panel for content / Form
         pnlContent = new JPanel();
         pnlContent.setLayout(null);
         pnlContent.setBounds(40, 140, 950, 300);
@@ -101,6 +105,8 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         pnlContent.repaint();
         pnlContent.revalidate();
         
+        
+        // Right side : Emergency Form
         lblId = new JLabel("Emergency ID:");
         lblId.setBounds(40, 40, 200, 30);
         lblId.setFont(FontsTheme.Plain_Texts);
@@ -110,6 +116,8 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         txtId.setBounds(220, 40, 230, 30);
         pnlContent.add(txtId);
         
+        
+        // Patient Name Label and TextField
         lblName = new JLabel("Patient Name:");
         lblName.setBounds(40, 80, 200, 30);
         lblName.setFont(FontsTheme.Plain_Texts);
@@ -119,6 +127,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         txtName.setBounds(220, 80, 230, 30);
         pnlContent.add(txtName);
 
+        // Emergency Label and TextField
         lblType = new JLabel("Emergency Type:");
         lblType.setBounds(40, 120, 200, 30);
         lblType.setFont(FontsTheme.Plain_Texts);
@@ -128,6 +137,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         txtType.setBounds(220, 120, 230, 30);
         pnlContent.add(txtType);
         
+        // Contact Label and TextField
         lblContact = new JLabel("Contact Number:");
         lblContact.setBounds(40, 160, 200, 30);
         lblContact.setFont(FontsTheme.Plain_Texts);
@@ -137,6 +147,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         txtContact.setBounds(220, 160, 230, 30);
         pnlContent.add(txtContact);
         
+        // Location Label and TextField
         lblLocation = new JLabel("Location:");
         lblLocation.setBounds(40, 200, 200, 30);
         lblLocation.setFont(FontsTheme.Plain_Texts);
@@ -146,6 +157,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         txtLocation.setBounds(220, 200, 230, 30);
         pnlContent.add(txtLocation);        
         
+        // Ambulance Unit Label and TextField
         lblUnit = new JLabel("Ambulance Unit:");
         lblUnit.setBounds(40, 240, 200, 30);
         lblUnit.setFont(FontsTheme.Plain_Texts);
@@ -156,12 +168,13 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         pnlContent.add(txtUnit);
      
         
-        // Left Side
+        // Left Side : Priority Level
         lblPriority = new JLabel("Priority Level:");
         lblPriority.setBounds(510, 40, 200, 30);
         lblPriority.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblPriority);
         
+        // Options for priority status
         cmbPriority = new JComboBox<>(new String[]{
         " ", "Low", "High", "Critical",
         });
@@ -171,12 +184,13 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         cmbPriority.setBackground(ColorsTheme.Text_White);
         pnlContent.add(cmbPriority);
         
-        
+        // Dispatch status for updates
         lblStatus = new JLabel("Dispatch Status:");
         lblStatus.setBounds(510, 80, 200, 30);
         lblStatus.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblStatus);
         
+        // Options for dispatch status
         cmbStatus = new JComboBox<>(new String[]{
         " ", "Available", "Dispatched", "Returning",
         });
@@ -186,7 +200,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         cmbStatus.setBackground(ColorsTheme.Text_White);
         pnlContent.add(cmbStatus);
    
-       
+       // Estimated arrival of patient 
         lblETA = new JLabel("Estimated Arrival:");
         lblETA.setBounds(510, 120, 200, 30);
         lblETA.setFont(FontsTheme.Plain_Texts);
@@ -196,6 +210,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         txtETA.setBounds(690, 120, 230, 30);
         pnlContent.add(txtETA);
         
+        // Current Time Label and TextField
         lblDispatch = new JLabel("Current Time:");
         lblDispatch.setBounds(510, 160, 200, 30);
         lblDispatch.setFont(FontsTheme.Plain_Texts);
@@ -205,6 +220,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         txtDispatch.setBounds(690, 160, 230, 30);
         pnlContent.add(txtDispatch);
         
+        // Additional Details Label and TextArea to add info
         lblRemarks = new JLabel("Additional Details:");
         lblRemarks.setBounds(510, 200, 200, 30);
         lblRemarks.setFont(FontsTheme.Plain_Texts);
@@ -229,7 +245,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
        
     }
     
-    
+      // Will use if Database is already set up.
     public void showInvoiceHistory() {
         pnlContent.removeAll();
         pnlContent.repaint();

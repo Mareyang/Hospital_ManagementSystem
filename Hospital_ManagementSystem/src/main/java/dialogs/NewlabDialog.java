@@ -45,6 +45,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
         lblDialogDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDialogDetails);
 
+        // Button for left upper side 
         btnPatientTestInfo = new JButton("Lab Form");
         btnPatientTestInfo.setBounds(40, 100, 250, 40);
         btnPatientTestInfo.setFont(FontsTheme.Buttons);
@@ -60,7 +61,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
         
-        
+        // Buttons for right lower side 
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(480, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
@@ -88,7 +89,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
 
 }
         
-        
+        // Laboratory test dialog
     public void showTestInfo() {
         pnlContent.removeAll();
         pnlContent.repaint();
@@ -136,6 +137,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
         lblType.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblType);
         
+        // Options for test type 
         cmbType = new JComboBox<>(new String[]{
         " ", "Hematology", "Urinalysis", "Immunology", "Clinical Chemistry ",
         });
@@ -154,7 +156,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
         lblDepart.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDepart);
         
-        
+        // Options for department 
         cmbDepart = new JComboBox<>(new String[]{
         " ", "Emergency(ER)", "Laboratory", "Cardiology", "Pediatrics ", "Surgery", "OB-GYN", "Radiology",
         });
@@ -171,6 +173,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
         lblDoc.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDoc);
         
+        // List of doctors in specifc department 
         cmbDoc = new JComboBox<>(new String[]{
         " ", "Dr. Juan dela Cruz", "Dr. Maria Santos", "Dr. Ricardo Reyes", "Dr. Elena Garcia", "Dr. Roberto Castro"
         });
@@ -200,6 +203,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
         lblStatus.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblStatus);
         
+        // Collection status options
         cmbStatus = new JComboBox<>(new String[]{
         " ", "Routine", "STAT/Emergency", "Fasting REquired", 
         });
@@ -209,7 +213,7 @@ public class NewLabDialog extends JDialog implements ActionListener {
         cmbStatus.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbStatus);
         
-        
+        // Clinical remarks notes 
         lblNote = new JLabel("Clinical Remarks");
         lblNote.setBounds(50, 200, 300, 30);
         lblNote.setFont(FontsTheme.Title_Texts);
