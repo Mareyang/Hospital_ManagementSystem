@@ -81,6 +81,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
 
         //ActionListener
         btnMedicationInfo.addActionListener(this);
+        btnAddInfo.addActionListener(this);
         btnCancel.addActionListener(this);
 
         showMedicationInfo();
@@ -246,11 +247,16 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         if(e.getSource() == btnMedicationInfo) {
             showMedicationInfo();
         }
-        else if(e.getSource() == btnCancel);
+        else if (e.getSource() == btnCancel) {
             dispose();
+        } 
+        
+        else if (e.getSource() == btnAddInfo) {
+            JOptionPane.showMessageDialog(this, "Medication inventory saved successfully!", 
+                    "Pharmacy Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
   
         
-        
+}

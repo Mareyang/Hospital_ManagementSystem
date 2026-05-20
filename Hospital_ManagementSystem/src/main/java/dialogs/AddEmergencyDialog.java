@@ -71,6 +71,7 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         btnSave.setBackground(ColorsTheme.Add_Confirm);
         btnSave.setForeground(ColorsTheme.Text_White);
         btnSave.setFont(FontsTheme.Buttons);
+        btnSave.setFocusPainted(false);
         add(btnSave);
 
         btnCancel = new JButton("Cancel");
@@ -247,13 +248,16 @@ public class AddEmergencyDialog extends JDialog implements ActionListener {
         else if(e.getSource() == btnHistory) {
             showInvoiceHistory();
         }
-        else if(e.getSource() == btnCancel) {
+        else if (e.getSource() == btnCancel) {
             dispose();
-        }
-        else if(e.getSource() == btnSave) {
-        JOptionPane.showMessageDialog(null, "Emergency Dispatch Added Successfully!");
-         dispose();
-        }
-      }
+        } 
+        
+        else if (e.getSource() == btnSave) {
+            JOptionPane.showMessageDialog(this, "Emergency dispatch created successfully!", 
+                    "Emergency Dispatch Success", JOptionPane.INFORMATION_MESSAGE);
+        }        
     }
+    
+      }
+    
         

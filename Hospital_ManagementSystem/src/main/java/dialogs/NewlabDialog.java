@@ -81,6 +81,8 @@ public class NewLabDialog extends JDialog implements ActionListener {
         
         //ActionListener
         btnPatientTestInfo.addActionListener(this);
+        btnCancel.addActionListener(this);
+        btnAddInfo.addActionListener(this);
         
         showTestInfo();
 
@@ -232,30 +234,21 @@ public class NewLabDialog extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnPatientTestInfo);
+        if(e.getSource() == btnPatientTestInfo) {
             showTestInfo();
         
-
-    }
-    
-}
+         }
+         else if (e.getSource() == btnCancel) {
+            dispose();
+        } 
         
-
-//    private JLabel createIconLabel(String path) {
-//        java.net.URL resource = getClass().getResource(path);
-//        ImageIcon icon;
-//        
-//        if (resource != null) {
-//            icon = new ImageIcon(resource);
-//        } else {
-//            icon = new ImageIcon("src/main/resources" + path);
-//        }
-//        
-//        Image image = icon.getImage();
-//        Image scaledImage = image.getScaledInstance(56, 56, Image.SCALE_SMOOTH);
-//        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-//        JLabel label = new JLabel(scaledIcon);
-//        
-//        return label;
+        else if (e.getSource() == btnAddInfo) {
+            JOptionPane.showMessageDialog(this, "Laboratory request submitted successfully!", 
+                    "Laboratory Success", JOptionPane.INFORMATION_MESSAGE);
+        }
     
+     }
+}
+
+
 

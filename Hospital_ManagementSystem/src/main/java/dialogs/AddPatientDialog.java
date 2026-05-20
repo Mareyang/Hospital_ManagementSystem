@@ -14,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AddPatientDialog extends JDialog implements ActionListener {
     
@@ -97,6 +97,8 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         //ActionListener
         btnPersonal.addActionListener(this);
         btnHistory.addActionListener(this);
+        btnCancel.addActionListener(this);
+        btnAddInfo.addActionListener(this);
 
         showPersonalInfo();
     
@@ -461,9 +463,15 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         else if(e.getSource() == btnHistory) {
             showMedicalHistory();
         }
-        else if(e.getSource() == btnCancel);
+        else if (e.getSource() == btnCancel) {
             dispose();
+        } 
+        
+        else if (e.getSource() == btnAddInfo) {
+            JOptionPane.showMessageDialog(this, "Patient record added successfully!", 
+                    "Patient Record Success", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }
 
+}

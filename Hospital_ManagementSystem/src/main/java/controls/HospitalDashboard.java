@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.hospitalmanage;
+package controls;
 
+import controls.LoginPage;
 import constants.ButtonStyles;
 import constants.ColorsTheme;
 //import panels.MessagesPanel;
@@ -42,12 +43,17 @@ public class HospitalDashboard extends JFrame implements ActionListener {
     private JPanel dashboardPanel;
     private JLabel dashboardIconLbl, dashboardTxtLbl;
     
+    
+    
+    
     HospitalDashboard() {
         setSize(1920, 1080);
         setResizable(false); 
         setLocationRelativeTo(null);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        
         
         //Panels
         SidePanel = new JPanel();
@@ -62,9 +68,11 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         TopPanel.setBackground(ColorsTheme.Side_Panel);
         add(TopPanel);
         
+        
+        
         //TopPanel Inside
-        JLabel lblSystemName = new JLabel("Carelink Management System");
-        lblSystemName.setBounds(120, 30, 600, 40);
+        lblSystemName = new JLabel("Carelink Management System");
+        lblSystemName.setBounds(350, 30, 600, 40);
         lblSystemName.setFont(new Font("Tahoma", Font.BOLD, 34));
         lblSystemName.setForeground(Color.WHITE);
         TopPanel.add(lblSystemName);
@@ -74,18 +82,17 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         String placeholder = "Search patients, records, appointments...";
 
         txtSearchField = new JTextField(placeholder);
-        txtSearchField.setBounds(700, 30, 500, 40);
+        txtSearchField.setBounds(1300, 30, 500, 40);
         txtSearchField.setFont(new Font("Arial", Font.PLAIN, 18));
-
         txtSearchField.setForeground(new Color(200, 200, 200)); // placeholder color
-
         txtSearchField.setBackground(Color.decode("#3A2A75"));
         txtSearchField.setCaretColor(Color.WHITE);
         txtSearchField.setOpaque(true);
         txtSearchField.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-
         txtSearchField.addFocusListener(new java.awt.event.FocusAdapter() {
 
+            
+            
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (txtSearchField.getText().equals(placeholder)) {
                     txtSearchField.setText("");
@@ -101,8 +108,11 @@ public class HospitalDashboard extends JFrame implements ActionListener {
             }
         });
         
+        
         //to avoid jtextfield focus
         this.addWindowListener(new java.awt.event.WindowAdapter() {
+            
+            
         @Override
         public void windowOpened(java.awt.event.WindowEvent e) {
             TopPanel.requestFocusInWindow();
@@ -114,7 +124,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         });
         
         
-        // add to panel
+        //add to panel
         TopPanel.add(txtSearchField);
         
         
@@ -140,22 +150,26 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         //ContainerPanel.add(new MessagesPanel(), "messages");
         ContainerPanel.add(new SettingsPanel(), "settings");
         add(ContainerPanel);
+        
 
-        btnDashboard = createButton("Dashboard", "/icons/home.png", 100);        
-        btnPatients = createButton("Patients", "/icons/patient.png", 150);
-        btnAppointments = createButton("Appointments", "/icons/appointment.png", 200);
-        btnMedRec = createButton("Medical", "/icons/record.png", 250);
-        btnPrescription = createButton("Prescriptions", "/icons/prescription.png", 300);
-        btnLab = createButton("Laboratory", "/icons/laboratory.png", 350);
-        btnPharmacy = createButton("Pharmacy", "/icons/pharmacy2.png", 400);
-        btnBed = createButton("Bed Management", "/icons/bed.png", 450);
-        btnBill = createButton("Bill", "/icons/bill.png", 500);
-        btnStaff = createButton("Staff", "/icons/staff.png", 550);
-        btnEmergency = createButton("Emergency", "/icons/emergency.png", 600);
-        btnReports = createButton("Reports", "/icons/report.png", 650);
-        btnSettings = createButton("Settings", "/icons/setting.png", 700);
-        btnLogout = createButton("Logout", "/icons/logout.png", 850);
+        btnDashboard = ButtonStyles.createButton("Dashboard", "/icons/home.png", 100, SidePanel);        
+        btnPatients = ButtonStyles.createButton("Patients", "/icons/patient.png", 150, SidePanel);
+        btnAppointments = ButtonStyles.createButton("Appointments", "/icons/appointment.png", 200, SidePanel);
+        btnMedRec = ButtonStyles.createButton("Medical", "/icons/record.png", 250, SidePanel);
+        btnPrescription = ButtonStyles.createButton("Prescriptions", "/icons/prescription.png", 300, SidePanel);
+        btnLab = ButtonStyles.createButton("Laboratory", "/icons/laboratory.png", 350, SidePanel);
+        btnPharmacy = ButtonStyles.createButton("Pharmacy", "/icons/pharmacy2.png", 400, SidePanel);
+        btnBed = ButtonStyles.createButton("Bed", "/icons/bed.png", 450, SidePanel);
+        btnBill = ButtonStyles.createButton("Bill", "/icons/bill.png", 500, SidePanel);
+        btnStaff = ButtonStyles.createButton("Staff", "/icons/staff.png", 550, SidePanel);
+        btnEmergency = ButtonStyles.createButton("Emergency", "/icons/emergency.png", 600, SidePanel);
+        btnReports = ButtonStyles.createButton("Reports", "/icons/report.png", 650, SidePanel);
+        btnSettings = ButtonStyles.createButton("Settings", "/icons/setting.png", 700, SidePanel);
+        btnLogout = ButtonStyles.createButton("Logout", "/icons/logout.png", 850, SidePanel);
 
+        
+        
+        
         //ActionListener
         btnDashboard.addActionListener(this);
         btnPatients.addActionListener(this);
@@ -176,30 +190,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         
     }
     
-    public JButton createButton(String text, String path, int y)
-{
-    JPanel panel1 = new JPanel();
-    panel1.setLayout(null);
-    panel1.setBounds(0, y, 220, 50);
-    panel1.setBackground(ColorsTheme.Side_Panel);
-
-    JLabel iconLbl = new JLabel(
-            new ImageIcon(getClass().getResource(path))
-    );
-    iconLbl.setBounds(18, 9, 32, 32);
-    panel1.add(iconLbl);
-
-    JButton btnClick = new JButton(text);
-    btnClick.setBounds(60, 0, 150, 50);
-
-    ButtonStyles.sidebarButton(btnClick);
-
-    panel1.add(btnClick);
-
-    SidePanel.add(panel1);
-
-    return btnClick;
-}
+    
     
     
     public void actionPerformed(ActionEvent e) {

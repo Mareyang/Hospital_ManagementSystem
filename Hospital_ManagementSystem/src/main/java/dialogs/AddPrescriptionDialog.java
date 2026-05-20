@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AddPrescriptionDialog extends JDialog implements ActionListener {
   
@@ -76,6 +76,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         add(btnAddInfo);
        
         
+        btnPrescript.addActionListener(this);
         btnCancel.addActionListener(this);
         btnAddInfo.addActionListener(this);
         
@@ -232,10 +233,17 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
   
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnCancel) {
+        if(e.getSource() == btnPrescript) {
+            createPrescriptionForm();
+        }
+        
+        else if (e.getSource() == btnCancel) {
             dispose();
-        } else if (e.getSource() == btnAddInfo) {
-            dispose();
+        } 
+        
+        else if (e.getSource() == btnAddInfo) {
+            JOptionPane.showMessageDialog(this, "Prescription added successfully!", 
+                    "Precription Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

@@ -4,9 +4,11 @@
  */
 package panels;
 
+
 import dialogs.AddMedicalRecordDialog;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.TablePanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,16 +16,15 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class MedicalRecordsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch;
-    private JLabel lblMedical, lblDetails, lblTitle;
+    private JLabel lblMedical, lblDetails;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd;
-    private JTable table;
-    private JScrollPane scrollTable;
+    private TablePanel tblMedical;
     
     
     
@@ -32,39 +33,30 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         setBackground(ColorsTheme.Middle_Panel);
         
         
+        //Main Panel Container for Table
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 250, 1500, 620);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
+        //Search Panel Container 
         pnlSearch = new JPanel();
         pnlSearch.setLayout(null);
         pnlSearch.setBounds(70, 130, 1500, 80);
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
+        //Button for adding new record
         btnAdd = new JButton("+  New Record");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
-        btnAdd.addActionListener(this);
         add(btnAdd);
         
-        lblMedical = new JLabel("Medical Records");
-        lblMedical.setBounds(30, 30, 500, 40);
-        lblMedical.setFont(FontsTheme.Bold_Texts);
-        lblMedical.setForeground(ColorsTheme.Text_Black);
-        add(lblMedical);
-
-        lblDetails = new JLabel("Access and manage patient medical records.");
-        lblDetails.setBounds(30, 70, 500, 40);
-        lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Gray);
-        add(lblDetails);
-
+        //Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by patient name or patient id...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -87,8 +79,28 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
         
+        
+        //Title and subtitle label for medical section
+        lblMedical = new JLabel("Medical Records");
+        lblMedical.setBounds(30, 30, 500, 40);
+        lblMedical.setFont(FontsTheme.Bold_Texts);
+        lblMedical.setForeground(ColorsTheme.Text_Black);
+        add(lblMedical);
+
+        lblDetails = new JLabel("Access and manage patient medical records.");
+        lblDetails.setBounds(30, 70, 500, 40);
+        lblDetails.setFont(FontsTheme.Plain_Texts);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
+        add(lblDetails);
+
+        
+        
+        
+        
+        //Table column names
         String[] columns = {"Patient Name", "Patient ID", "Type", "Doctor", "Date", "Actions"};
         
+        //Sample records
         Object[][] data = {
             {"Maria Leonora", "000021", "New Consultation", "Dr. Robert Chen", "May 15, 2026"," "},
             {"Jose Felipe", "000054", "Follow-up Visit", "Dr. Sarah Jenkins", "May 15, 2026"," "},
@@ -99,33 +111,30 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
             {"Christine Mae", "000138", "New Consultation", "Dr. Sarah Jenkins", "May 12, 2026"," "},
             {"Nathaniel Ong", "000142", "Pre-Surgical Clearance", "Dr. Alan Reyes", "May 10, 2026"," "},
             {"Francis Mendoza", "000189", "Emergency Visit", "Dr. Grace Torres", "May 09, 2026"," "},
+            {"Jasmine Aquino", "000193", "Post-Operative Check", "Dr. David Kim", "May 08, 2026"," "},
+            {"Christine Mae", "000138", "New Consultation", "Dr. Sarah Jenkins", "May 12, 2026"," "},
+            {"Nathaniel Ong", "000142", "Pre-Surgical Clearance", "Dr. Alan Reyes", "May 10, 2026"," "},
+            {"Francis Mendoza", "000189", "Emergency Visit", "Dr. Grace Torres", "May 09, 2026"," "},
             {"Jasmine Aquino", "000193", "Post-Operative Check", "Dr. David Kim", "May 08, 2026"," "}
         };
         
-        table = new JTable(data, columns);
-        table.setRowHeight(50);
-        table.setDefaultEditor(Object.class, null);
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setFont(FontsTheme.Title_Texts);
-        table.setFont(FontsTheme.Info_Texts);
-        table.getTableHeader().setBackground(ColorsTheme.Header); 
-        table.getTableHeader().setForeground(ColorsTheme.Text_White);
 
-        scrollTable = new JScrollPane(table);
-        scrollTable.setBounds(0, 60, 1500, 620);
-        pnlMiddle.add(scrollTable);
+        //Table Panel for records
+        tblMedical = new TablePanel("Recent Medical Records", columns, data, 560);
+        tblMedical.setBounds(0, 0, 1500, 620);
+        pnlMiddle.add(tblMedical);
         
-        lblTitle = new JLabel("Recent Medical Records");
-        lblTitle.setBounds(30, 20, 300, 30);
-        lblTitle.setFont(FontsTheme.Title_Texts);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblTitle);
-    
+        
+        
+        //ActionListener
+        btnAdd.addActionListener(this);
+        
+        
         }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        //Opens medical form dialog
         if (e.getSource() == btnAdd) {
         AddMedicalRecordDialog record = new AddMedicalRecordDialog();
         record.setVisible(true);

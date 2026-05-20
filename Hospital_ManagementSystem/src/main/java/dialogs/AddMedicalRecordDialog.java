@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AddMedicalRecordDialog extends JDialog implements ActionListener {
   
@@ -59,6 +59,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         btnMed.setFont(FontsTheme.Buttons);
         btnMed.setForeground(ColorsTheme.Text_White);
         btnMed.setBackground(ColorsTheme.Header);
+        btnMed.setFocusPainted(false);
         add(btnMed);
         
        
@@ -67,6 +68,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);
+        btnCancel.setFocusPainted(false);
         add(btnCancel);
       
         btnAddInfo = new JButton("Save Record");
@@ -74,8 +76,11 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         btnAddInfo.setFont(FontsTheme.Buttons);
         btnAddInfo.setForeground(ColorsTheme.Text_White);
         btnAddInfo.setBackground(ColorsTheme.Add_Confirm);
+        btnAddInfo.setFocusPainted(false);
         add(btnAddInfo);
        
+        
+        btnMed.addActionListener(this);
         btnCancel.addActionListener(this);
         btnAddInfo.addActionListener(this);
         
@@ -211,10 +216,17 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
   
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnCancel) {
+        if(e.getSource() == btnMed) {
+            createMedicalRecordForm();
+        }
+        
+        else if (e.getSource() == btnCancel) {
             dispose();
-        } else if (e.getSource() == btnAddInfo) {
-            dispose();
+        } 
+        
+        else if (e.getSource() == btnAddInfo) {
+            JOptionPane.showMessageDialog(this, "Medical record added successfully!", 
+                    "Medical Record Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }
