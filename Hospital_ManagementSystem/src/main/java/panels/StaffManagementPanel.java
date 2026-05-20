@@ -9,7 +9,7 @@ import constants.PanelCard;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import constants.TablePanel;
-import dialogs.temp4;
+import dialogs.NewStaffDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -193,7 +193,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //Opens staff form dialog
         if (btnAdd == e.getSource()) {
-            temp4 dialog = new temp4();
+            NewStaffDialog dialog = new NewStaffDialog();
             dialog.setVisible(true);
         }
     }

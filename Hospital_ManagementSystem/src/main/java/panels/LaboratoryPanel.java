@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import dialogs.temp1;
+import dialogs.NewLabDialog;
 /**
  *
  * 
@@ -145,7 +145,7 @@ public class LaboratoryPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         //Opens lab form dialog
         if(e.getSource() == btnAdd) {
-            temp1 lab = new temp1();
+            NewLabDialog lab = new NewLabDialog();
             lab.setVisible(true);
         }
 

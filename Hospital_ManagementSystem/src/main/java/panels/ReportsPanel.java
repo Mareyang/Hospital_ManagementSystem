@@ -12,7 +12,7 @@ import constants.TablePanel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import dialogs.temp3;
+import dialogs.NewReportDialog;
 
 /**
  *
@@ -120,7 +120,7 @@ public class ReportsPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         //Opens report form dialog
         if (e.getSource() == btnAdd) {
-            temp3 report = new temp3();
+            NewReportDialog report = new NewReportDialog();
             report.setVisible(true);
         }
         

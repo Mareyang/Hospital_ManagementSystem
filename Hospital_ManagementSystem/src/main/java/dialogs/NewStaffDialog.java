@@ -14,7 +14,7 @@ import javax.swing.*;
  *
  * @author Admin
  */
-public class temp4 extends JDialog implements ActionListener {
+public class NewStaffDialog extends JDialog implements ActionListener {
       
     private JPanel pnlForm;
     private JLabel lblDialogTitle, lblDialogDetails, lblEmpID, lblName, lblBday,lblGen,lblEmail, lblContact, 
@@ -26,7 +26,7 @@ public class temp4 extends JDialog implements ActionListener {
     private JScrollPane scrollComs;
     
     
-    public temp4() {
+    public NewStaffDialog() {
         setLayout(null);
         setSize(1050, 550);
         setLocationRelativeTo(null);
