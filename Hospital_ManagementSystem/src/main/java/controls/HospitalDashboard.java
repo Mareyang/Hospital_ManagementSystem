@@ -44,8 +44,6 @@ public class HospitalDashboard extends JFrame implements ActionListener {
     private JLabel dashboardIconLbl, dashboardTxtLbl;
     
     
-    
-    
     HospitalDashboard() {
         setSize(1920, 1080);
         setResizable(false); 
@@ -72,7 +70,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         
         //TopPanel Inside
         lblSystemName = new JLabel("Carelink Management System");
-        lblSystemName.setBounds(350, 30, 600, 40);
+        lblSystemName.setBounds(100, 30, 600, 40);
         lblSystemName.setFont(new Font("Tahoma", Font.BOLD, 34));
         lblSystemName.setForeground(Color.WHITE);
         TopPanel.add(lblSystemName);
@@ -82,7 +80,7 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         String placeholder = "Search patients, records, appointments...";
 
         txtSearchField = new JTextField(placeholder);
-        txtSearchField.setBounds(1300, 30, 500, 40);
+        txtSearchField.setBounds(710, 30, 500, 40);
         txtSearchField.setFont(new Font("Arial", Font.PLAIN, 18));
         txtSearchField.setForeground(new Color(200, 200, 200)); // placeholder color
         txtSearchField.setBackground(Color.decode("#3A2A75"));
@@ -128,6 +126,26 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         TopPanel.add(txtSearchField);
         
         
+        //Top Left Logo
+        JPanel pnlLogo = new JPanel();
+        pnlLogo.setLayout(null);
+        pnlLogo.setBounds(-20, 0, 120, 120);
+        pnlLogo.setBackground(ColorsTheme.Side_Panel);
+
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/icons/logo.png"));
+
+        Image logoImg = logoIcon.getImage();
+        Image scaledLogo = logoImg.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+
+        JLabel lblLogo = new JLabel(new ImageIcon(scaledLogo));
+        lblLogo.setBounds(10, 0, 120, 120);
+
+        pnlLogo.add(lblLogo);
+
+        TopPanel.add(pnlLogo);
+        
+      
+        
         //CardLayout
         cardLayout = new CardLayout();
         ContainerPanel = new JPanel(cardLayout);
@@ -152,19 +170,19 @@ public class HospitalDashboard extends JFrame implements ActionListener {
         add(ContainerPanel);
         
 
-        btnDashboard = ButtonStyles.createButton("Dashboard", "/icons/home.png", 100, SidePanel);        
-        btnPatients = ButtonStyles.createButton("Patients", "/icons/patient.png", 150, SidePanel);
-        btnAppointments = ButtonStyles.createButton("Appointments", "/icons/appointment.png", 200, SidePanel);
-        btnMedRec = ButtonStyles.createButton("Medical", "/icons/record.png", 250, SidePanel);
-        btnPrescription = ButtonStyles.createButton("Prescriptions", "/icons/prescription.png", 300, SidePanel);
-        btnLab = ButtonStyles.createButton("Laboratory", "/icons/laboratory.png", 350, SidePanel);
-        btnPharmacy = ButtonStyles.createButton("Pharmacy", "/icons/pharmacy2.png", 400, SidePanel);
-        btnBed = ButtonStyles.createButton("Bed", "/icons/bed.png", 450, SidePanel);
-        btnBill = ButtonStyles.createButton("Bill", "/icons/bill.png", 500, SidePanel);
-        btnStaff = ButtonStyles.createButton("Staff", "/icons/staff.png", 550, SidePanel);
-        btnEmergency = ButtonStyles.createButton("Emergency", "/icons/emergency.png", 600, SidePanel);
-        btnReports = ButtonStyles.createButton("Reports", "/icons/report.png", 650, SidePanel);
-        btnSettings = ButtonStyles.createButton("Settings", "/icons/setting.png", 700, SidePanel);
+        btnDashboard = ButtonStyles.createButton("Dashboard", "/icons/home.png", 30, SidePanel);        
+        btnPatients = ButtonStyles.createButton("Patients", "/icons/patient.png", 80, SidePanel);
+        btnAppointments = ButtonStyles.createButton("Appointments", "/icons/appointment.png", 130, SidePanel);
+        btnMedRec = ButtonStyles.createButton("Medical", "/icons/record.png", 180, SidePanel);
+        btnPrescription = ButtonStyles.createButton("Prescriptions", "/icons/prescription.png", 230, SidePanel);
+        btnLab = ButtonStyles.createButton("Laboratory", "/icons/laboratory.png", 280, SidePanel);
+        btnPharmacy = ButtonStyles.createButton("Pharmacy", "/icons/pharmacy2.png", 330, SidePanel);
+        btnBed = ButtonStyles.createButton("Bed", "/icons/bed.png", 380, SidePanel);
+        btnBill = ButtonStyles.createButton("Bill", "/icons/bill.png", 430, SidePanel);
+        btnStaff = ButtonStyles.createButton("Staff", "/icons/staff.png", 480, SidePanel);
+        btnEmergency = ButtonStyles.createButton("Emergency", "/icons/emergency.png", 530, SidePanel);
+        btnReports = ButtonStyles.createButton("Reports", "/icons/report.png", 580, SidePanel);
+        btnSettings = ButtonStyles.createButton("Settings", "/icons/setting.png", 630, SidePanel);
         btnLogout = ButtonStyles.createButton("Logout", "/icons/logout.png", 850, SidePanel);
 
         
