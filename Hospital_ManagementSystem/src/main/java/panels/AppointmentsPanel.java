@@ -111,26 +111,11 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         
         
         //Table column names
-        String[] columns = {"Patient Name", "Doctor", "Time", "Type", "Department", "Status", "Actions"};
+        String[] columns = {"Appt ID", "Patient Name", "Doctor", "Department", "Date", "Time", "Status", "Actions"};
         
         //Sample records
         Object[][] data = {
-                {"Maria Leonora", "Dr. Santos", "8:00 AM", "Check-up", "Emergency", "Confirmed", " "},
-                {"Jose Felipe", "Dr. Ramirez", "8:30 AM", "Blood Test", "Laboratory", "Pending", " "},
-                {"Angela Cruz", "Dr. Garcia", "9:00 AM", "Consultation", "Cardiology", "Urgent", " "},
-                {"Mark Anthony", "Dr. Reyes", "9:30 AM", "Follow-up", "Orthopedics", "Confirmed", " "},
-                {"Sophia Reyes", "Dr. Mendoza", "10:00 AM", "Vaccination", "Pediatrics", "Pending", " "},
-                {"Daniel Garcia", "Dr. Flores", "10:30 AM", "MRI Scan", "Radiology", "Urgent", " "},
-                {"Christine Mae", "Dr. Navarro", "11:00 AM", "Physical Exam", "General Medicine", "Confirmed", " "},
-                {"Nathaniel Ong", "Dr. Aquino", "11:30 AM", "Urine Test", "Laboratory", "Pending", " "},
-                {"Patricia Gomez", "Dr. Bautista", "1:00 PM", "Dental Check", "Dental", "Confirmed", " "},
-                {"Kevin Dela Cruz", "Dr. Villanueva", "1:30 PM", "X-Ray", "Radiology", "Urgent", " "},
-                {"Isabella Flores", "Dr. Torres", "2:00 PM", "Consultation", "Neurology", "Confirmed", " "},
-                {"Francis Mendoza", "Dr. Herrera", "2:30 PM", "Heart Check", "Cardiology", "Urgent", " "},
-                {"Jasmine Aquino", "Dr. Santos", "3:00 PM", "Therapy", "Rehabilitation", "Pending", " "},
-                {"Miguel Santos", "Dr. Cruz", "3:30 PM", "Surgery Prep", "Surgery", "Urgent", " "},
-                {"Ella Villanueva", "Dr. Garcia", "4:00 PM", "Eye Check", "Ophthalmology", "Confirmed", " "},
-                {"Adrian Torres", "Dr. Ramirez", "4:30 PM", "CT Scan", "Radiology", "Pending", " "},
+                
           };
         
 

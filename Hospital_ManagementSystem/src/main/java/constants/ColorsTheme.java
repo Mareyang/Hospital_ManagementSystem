@@ -19,13 +19,17 @@ public class ColorsTheme {
     public static final Color Top_Line = Color.decode("#3BC1A8");
     public static final Color Header = Color.decode("#406AAF");
 
+    // Dashboard Search Bar
+    public static final Color Search_fg = Color.decode("#C4E2F5");
+    public static final Color Search_bg = Color.decode("#4B5694");
+    
     // Text Colors
     public static final Color Text_White = Color.WHITE;
     public static final Color Text_Black = Color.BLACK;
     public static final Color Text_Gray = Color.GRAY;
     
     // Status Colors
-    public static final Color Active_Button = Color.decode("#018790");
+    public static final Color Active_Button = Color.decode("#4B5694");
     public static final Color Search = Color.decode("#406AAF");
     public static final Color Gray = Color.decode("#EDE9E6");
     public static final Color Green = Color.decode("#48A111");

@@ -12,7 +12,7 @@ import java.awt.Font;
 import javax.swing.*;
 import java.awt.*;
 
-public class DashboardPanel extends JPanel {
+public class DoctorDashboardPanel extends JPanel {
     
     private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, pnlMiddle;
     private JLabel lblGreet, lblDescrip, lblDistributionTitle, lblOverviewTitle;
@@ -24,7 +24,7 @@ public class DashboardPanel extends JPanel {
     
     
     
-    public DashboardPanel() {
+    public DoctorDashboardPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
@@ -37,7 +37,7 @@ public class DashboardPanel extends JPanel {
         add(pnlMiddle);
 
         //Greeting section
-        lblGreet = new JLabel("Welcome to CareLink!");
+        lblGreet = new JLabel("Welcome to CareLink, Doctor!");
         lblGreet.setBounds(30, 30, 1000, 40);
         lblGreet.setForeground(ColorsTheme.Text_Black);
         lblGreet.setFont(FontsTheme.Bold_Texts);

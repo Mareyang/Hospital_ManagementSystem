@@ -111,18 +111,11 @@ public class PharmacyPanel extends JPanel implements ActionListener{
         
         
         //Table column names
-        String[] columns = {"Medication", "Item Code", "Category", "Stock", "Reorder Level", "Status", "Actions"};
+        String[] columns = {"Item Code", "Medication", "Category", "Stock", "Reorder Level", "Status", "Actions"};
         
         //Sample records
         Object[][] data = {
-                {"Paracetamol 500mg", "MED-001", "Pain Reliever", "320", "100", "In Stock", " "},
-                {"Amoxicillin 500mg", "MED-014", "Antibiotic", "42", "50", "Low Stock", " "},
-                {"Salbutamol Inhaler", "MED-022", "Respiratory", "12", "30", "Critical", " "},
-                {"Cetirizine 10mg", "MED-031", "Antihistamine", "180", "60", "In Stock", " "},
-                {"Metformin 500mg", "MED-047", "Diabetes", "65", "80", "Low Stock", " "},
-                {"Losartan 50mg", "MED-053", "Hypertension", "210", "70", "In Stock", " "},
-                {"Omeprazole 20mg", "MED-066", "Gastrointestinal", "25", "40", "Critical", " "},
-                {"Ibuprofen 200mg", "MED-078", "Pain Reliever", "140", "50", "In Stock", " "}
+                
         };
         
 

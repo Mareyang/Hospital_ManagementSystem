@@ -1,16 +1,11 @@
 package controls;
 
 import constants.ColorsTheme;
-import constants.ColorsTheme;
-import constants.ColorsTheme;
-import constants.FontsTheme;
-import constants.FontsTheme;
 import constants.FontsTheme;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 
 public class LoginPage extends JFrame implements ActionListener {
 
@@ -21,8 +16,6 @@ public class LoginPage extends JFrame implements ActionListener {
     private JPasswordField pxtPassword;
     private JButton btnLogin;
     
-    
-   
     public LoginPage() {
         setSize(1000, 600);
         setLayout(null);
@@ -30,15 +23,14 @@ public class LoginPage extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        //Left 
+        // Left Panel
         pnlLeft = new JPanel();
         pnlLeft.setBounds(0, 0, 400, 600);
         pnlLeft.setBackground(ColorsTheme.Side_Panel);
         pnlLeft.setLayout(null);
         add(pnlLeft);
 
-        
-        //Right
+        // Right Panel
         pnlRight = new JPanel();
         pnlRight.setBounds(350, 0, 650, 600);
         pnlRight.setBackground(ColorsTheme.Main_Card);
@@ -49,7 +41,7 @@ public class LoginPage extends JFrame implements ActionListener {
         imgIcon.setBounds(110, 30, 150, 150);
         pnlLeft.add(imgIcon);
         
-        //Hospital Name/LeftPanel
+        // Hospital Name/LeftPanel
         hospitalName = new JLabel("<html>&nbsp;&nbsp;CARELINK HOSPITAL<br>"
                 + "MANAGEMENT SYSTEM</html>");
         hospitalName.setBounds(40, 180, 300, 100);
@@ -57,8 +49,7 @@ public class LoginPage extends JFrame implements ActionListener {
         hospitalName.setFont(FontsTheme.Login_Title);
         pnlLeft.add(hospitalName);
         
-        
-        //Hospital Description
+        // Hospital Description
         hospitalDescription = new JLabel("<html> An advanced hospital information system built to <br>"
                 + "&nbsp;&nbsp;&nbsp;&nbsp; secure data and synchronize patient care. </html>");
         hospitalDescription.setBounds(50, 270, 300, 40);
@@ -82,17 +73,14 @@ public class LoginPage extends JFrame implements ActionListener {
         lblBelow.setForeground(ColorsTheme.Text_White);
         lblBelow.setFont(FontsTheme.Login_Subtitle);
         pnlLeft.add(lblBelow);
-        
-        
-        
 
-        //Title/RightPanel
+        // Title/RightPanel
         lblTitle = new JLabel("Sign in");
         lblTitle.setBounds(300, 80, 200, 40);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         pnlRight.add(lblTitle);
 
-        //Username
+        // Username
         lblUsername = new JLabel("Username");
         lblUsername.setBounds(170, 170, 100, 30);
         lblUsername.setFont(FontsTheme.Plain);
@@ -103,8 +91,7 @@ public class LoginPage extends JFrame implements ActionListener {
         txtUsername.setFont(FontsTheme.Plain_Small);
         pnlRight.add(txtUsername);
 
-        
-        //Password
+        // Password
         lblPassword = new JLabel("Password");
         lblPassword.setBounds(170, 280, 100, 30);
         lblPassword.setFont(FontsTheme.Plain);
@@ -115,47 +102,54 @@ public class LoginPage extends JFrame implements ActionListener {
         pxtPassword.setFont(FontsTheme.Plain_Small);
         pnlRight.add(pxtPassword);
 
-        
-        //Login 
+        // Login Button
         btnLogin = new JButton("Login");
         btnLogin.setBounds(170, 400, 350, 45);
-        btnLogin.setBackground(ColorsTheme.Search);
+        btnLogin.setBackground(ColorsTheme.Search); 
         btnLogin.setForeground(ColorsTheme.Text_White);
         btnLogin.setFont(FontsTheme.Bold);
         btnLogin.addActionListener(this);
         pnlRight.add(btnLogin);
 
-        
-        
-        
         setVisible(true);
     }
 
-    
-    
-    
     @Override
     public void actionPerformed(ActionEvent e) {
 
         String username = txtUsername.getText();
         String password = new String(pxtPassword.getPassword());
 
+        // 1. Check for Admin Role
         if (username.equals("admin") && password.equals("1234")) {
-            JOptionPane.showMessageDialog(this, "Login Successful!");
-
-            HospitalDashboard hd = new HospitalDashboard();
-            hd.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Admin Login Successful!");
+            AdminDashboard admin = new AdminDashboard();
+            admin.setVisible(true);
             dispose();
-
         } 
-        
-        else { JOptionPane.showMessageDialog(this,"Invalid Username or Password");
-        
-        
+        // 2. Check for Doctor Role
+        else if (username.equals("doctor") && password.equals("1234")) {
+            JOptionPane.showMessageDialog(this, "Doctor Login Successful!");
+            DoctorDashboard doctor = new DoctorDashboard();
+            doctor.setVisible(true);
+            dispose();
+        } 
+        // 3. Check for Nurse Role
+        else if (username.equals("nurse") && password.equals("1234")) {
+            JOptionPane.showMessageDialog(this, "Nurse Login Successful!");
+            NurseDashboard nurse = new NurseDashboard();
+            nurse.setVisible(true);
+            dispose();
+        } 
+        // 4. Invalid Credentials
+        else { 
+            JOptionPane.showMessageDialog(this,"Invalid Username or Password", "Login Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public static void main(String[] args) {
-        new LoginPage();
+            LoginPage login = new LoginPage();
+            login.setVisible(true);
+        
     }
 }

@@ -23,6 +23,10 @@ public class FontsTheme {
     public static final Font Login_Title = new Font("Tahoma", Font.BOLD, 25);
     public static final Font Login_Subtitle = new Font("Arial", Font.BOLD, 12);
 
+    public static final Font Dashboard_Title = new Font("Tahoma", Font.BOLD, 35);
+    public static final Font SearchBar = new Font("Arial", Font.PLAIN, 20);
+
+
     
     //Buttons
     public static final Font Buttons = new Font("Arial", Font.BOLD, 20);
