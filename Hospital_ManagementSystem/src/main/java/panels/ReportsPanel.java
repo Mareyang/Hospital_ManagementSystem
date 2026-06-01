@@ -4,237 +4,120 @@
  */
 package panels;
 
+
+import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.TablePanel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
-import dialogs.NewreportDialog;
-import dialogs.NewreportDialog;
+import dialogs.NewReportDialog;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class ReportsPanel extends JPanel implements ActionListener{
     
-    private JPanel pnlMiddle, pnlPatient, pnlBilling, pnlLab, pnlPharmacy, cardPanel, TopPanel;
-    private JLabel lblDetails, lblReports, lblTitle, lblValue, lblSubtitle, lblTableTitle;
+    private JPanel pnlMiddle, pnlPatient, pnlBilling, pnlLab, pnlPharmacy;
+    private JLabel lblDetails, lblReports;
     private JButton btnAdd;
-    private JTable tblReports;
-    private JScrollPane scrollReports;
+    private TablePanel tblReport;
     
     
     public ReportsPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
+        
+        //Main Panel Container for Table
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
-        pnlMiddle.setBounds(70, 130, 1500, 750);
+        pnlMiddle.setBounds(70, 300, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
-       
-
-        lblReports = new JLabel("Reports");
-        lblReports.setBounds(120, 30, 500, 40);
-        lblReports.setFont(FontsTheme.Bold_Texts);
-        lblReports.setForeground(ColorsTheme.Text_Black);
-        add(lblReports);
-
-        lblDetails = new JLabel("Generate and view hospital reports");
-        lblDetails.setBounds(120, 70, 500, 40);
-        lblDetails.setFont(FontsTheme.Plain_Texts);
-        lblDetails.setForeground(ColorsTheme.Text_Black);
-        add(lblDetails);
-        
+        //Button for adding new appointment
         btnAdd = new JButton("+  Generate Report");
         btnAdd.setBounds(1280, 40, 250, 50); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
-        btnAdd.addActionListener(this);
         add(btnAdd);
         
-        pnlPatient = createCard(
-                "Patient Reports",
-                "24",
-                "Records summary",
-                ColorsTheme.Top_Line);
-        pnlPatient.setBounds(25, 25, 330, 110);
-        pnlMiddle.add(pnlPatient);
         
-        pnlBilling = createCard(
-                "Billing Reports",
-                "18",
-                "Revenue and invoices",
-                ColorsTheme.Add_Confirm);
-        pnlBilling.setBounds(385, 25, 330, 110);
-        pnlMiddle.add(pnlBilling);
+        //Title and subtitle label for reports section
+        lblReports = new JLabel("Reports");
+        lblReports.setBounds(30, 30, 500, 40);
+        lblReports.setFont(FontsTheme.Bold_Texts);
+        lblReports.setForeground(ColorsTheme.Text_Black);
+        add(lblReports);
+
+        lblDetails = new JLabel("Generate and view hospital reports.");
+        lblDetails.setBounds(30, 70, 500, 40);
+        lblDetails.setFont(FontsTheme.Plain_Texts);
+        lblDetails.setForeground(ColorsTheme.Text_Gray);
+        add(lblDetails);
         
-        pnlLab = createCard(
-                "Lab Reports",
-                "32",
-                "Test results",
-                ColorsTheme.Search_Button);
-        pnlLab.setBounds(745, 25, 330, 110);
-        pnlMiddle.add(pnlLab);
         
-        pnlPharmacy = createCard(
-                "Pharmacy Reports",
-                "15",
-                "Inventory movement",
-                ColorsTheme.Update_Pending);
-        pnlPharmacy.setBounds(1105, 25, 330, 110);
-        pnlMiddle.add(pnlPharmacy);
+        //Summary Panel Cards
+        pnlPatient = new PanelCard2("Patient Reports", "24", "Records Summary", ColorsTheme.Blue);
+        pnlPatient.setBounds(70, 130, 350, 140);
+        add(pnlPatient);
         
-        createReportsTable();
+        pnlBilling = new PanelCard2("Billing Reports", "18", "Revenue and Invoices", ColorsTheme.Green);
+        pnlBilling.setBounds(450, 130, 350, 140);
+        add(pnlBilling);
+       
+        pnlLab = new PanelCard2("Lab Reports", "32", "Test Results", ColorsTheme.Red);
+        pnlLab.setBounds(830, 130, 350, 140);
+        add(pnlLab);
         
-    }
-    
-    public JPanel createCard(String title, String value, String subtitle, Color accentColor) {
-        cardPanel = new JPanel();
-        cardPanel.setLayout(null);
-        cardPanel.setBackground(ColorsTheme.Main_Card);
+        pnlPharmacy = new PanelCard2("Pharmacy Reports", "15", "Inventory movement", ColorsTheme.Yellow);
+        pnlPharmacy.setBounds(1210, 130, 350, 140);
+        add(pnlPharmacy);
         
-        TopPanel = new JPanel();
-        TopPanel.setBounds(0, 0, 330, 10);
-        TopPanel.setBackground(accentColor);
-        cardPanel.add(TopPanel);
         
-        lblTitle = new JLabel(title);
-        lblTitle.setBounds(20, 25, 250, 25);
-        lblTitle.setForeground(ColorsTheme.Text_Black);
-        lblTitle.setFont(FontsTheme.Plain_Texts);
-        cardPanel.add(lblTitle);
         
-        lblValue = new JLabel(value);
-        lblValue.setBounds(20, 50, 200, 50);
-        lblValue.setForeground(ColorsTheme.Text_Black);
-        lblValue.setFont(FontsTheme.Bold_Texts);
-        cardPanel.add(lblValue);
         
-        lblSubtitle = new JLabel(subtitle);
-        lblSubtitle.setBounds(20, 88, 250, 20);
-        lblSubtitle.setForeground(ColorsTheme.Text_Gray);
-        lblSubtitle.setFont(FontsTheme.Info_Texts);
-        cardPanel.add(lblSubtitle);
+        //Table column names
+        String[] columns = {"Report ID", "Report Name", "Type", "Generated By", "Date Generated", "Status", "Actions"};
         
-        return cardPanel;
-    }
-    
-    private void createReportsTable() {
-        lblTableTitle = new JLabel("Recent Reports");
-        lblTableTitle.setBounds(25, 170, 400, 30);
-        lblTableTitle.setFont(FontsTheme.Title_Texts);
-        lblTableTitle.setForeground(ColorsTheme.Text_Black);
-        pnlMiddle.add(lblTableTitle);
-        
-        String[] columns = {"Report Name", "Type", "Generated By", "Date Generated", "Status", "Actions"};
+        //Sample records
         Object[][] data = {
-                {"Daily Patient Census", "Patient", "Admin", "May 12, 2026", "Ready", "View"},
-                {"Monthly Revenue Summary", "Billing", "Cashier", "May 11, 2026", "Ready", "View"},
-                {"Laboratory Test Summary", "Laboratory", "Lab Staff", "May 11, 2026", "Processing", "View"},
-                {"Low Stock Inventory", "Pharmacy", "Pharmacist", "May 10, 2026", "Ready", "View"},
-                {"Bed Occupancy Report", "Bed Management", "Nurse Station", "May 10, 2026", "Ready", "View"},
-                {"Emergency Case Summary", "Emergency", "ER Staff", "May 09, 2026", "Failed", "Retry"},
-                {"Appointment Summary", "Appointments", "Reception", "May 09, 2026", "Ready", "View"}
+                
         };
         
-        tblReports = new JTable(data, columns);
-        tblReports.setFont(FontsTheme.Info_Texts);
-        tblReports.setRowHeight(48);
-        tblReports.setDefaultEditor(Object.class, null);
-        tblReports.setShowGrid(false);
-        tblReports.setIntercellSpacing(new java.awt.Dimension(0, 0));
         
-        JTableHeader tableHeader = tblReports.getTableHeader();
-        tableHeader.setFont(FontsTheme.Title_Texts);
-        tableHeader.setBackground(ColorsTheme.Header);
-        tableHeader.setForeground(ColorsTheme.Text_White);
-        tableHeader.setReorderingAllowed(false);
+
         
-        tblReports.getColumnModel().getColumn(4).setCellRenderer(createReportStatusRenderer());
+        //Table Panel for records
+        tblReport = new TablePanel("Generated Reports", columns, data, 940);
+        tblReport.setBounds(0, 0, 1500, 560);
+        pnlMiddle.add(tblReport);
         
-        scrollReports = new JScrollPane(tblReports);
-        scrollReports.setBounds(25, 215, 1450, 500);
-        pnlMiddle.add(scrollReports);
+        
+        //ActionListener
+        btnAdd.addActionListener(this);
+
+       
+        
+        
     }
+    
+    
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if (btnAdd == e.getSource()) {
-            NewreportDialog rep = new NewreportDialog();
-            rep.setVisible(true);
+        //Opens report form dialog
+        if (e.getSource() == btnAdd) {
+            NewReportDialog report = new NewReportDialog();
+            report.setVisible(true);
         }
         
     }
     
-    private DefaultTableCellRenderer createReportStatusRenderer() {
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
-            
-            @Override
-            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                    boolean hasFocus, int row, int column) {
-                
-                java.awt.Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                String status = value.toString();
-                
-                changeReportStatusColor(cell, status);
-                
-                return cell;
-            }
-        };
-        
-        return renderer;
-    }
-    
-    private void changeReportStatusColor(java.awt.Component cell, String status) {
-        cell.setForeground(ColorsTheme.Text_Black);
-        
-        if (status.equals("Ready")) {
-            cell.setForeground(ColorsTheme.Add_Confirm);
-        } else if (status.equals("Processing")) {
-            cell.setForeground(ColorsTheme.Search_Button);
-        } else if (status.equals("Failed")) {
-            cell.setForeground(ColorsTheme.Delete_Urgent);
-        }
-    }
-    
-    private JLabel createFormLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(FontsTheme.Plain_Texts);
-        label.setForeground(ColorsTheme.Text_Black);
-        return label;
-    }
-    
-    private JTextField createFormTextField() {
-        JTextField textField = new JTextField();
-        textField.setFont(FontsTheme.Info_Texts);
-        return textField;
-    }
-
-    private JLabel createIconLabel(String path) {
-        java.net.URL resource = getClass().getResource(path);
-        ImageIcon icon;
-        
-        if (resource != null) {
-            icon = new ImageIcon(resource);
-        } else {
-            icon = new ImageIcon("src/main/resources" + path);
-        }
-        
-        Image image = icon.getImage();
-        Image scaledImage = image.getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        JLabel label = new JLabel(scaledIcon);
-        
-        return label;
-    }
 }
-    
-

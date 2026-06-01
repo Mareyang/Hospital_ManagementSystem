@@ -1,65 +1,27 @@
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\AddMedicalRecordDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\AddPatientDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\AddPrescriptionDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\AppointmentsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\BedManagementPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\BillingPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ButtonStyles.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ColorsTheme.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\DashboardPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\EmergencyPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\FontsTheme.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalDashboard.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManage.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\LaboratoryPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\MedicalRecordsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\MessagesPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewAppointmentDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewlabDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewpatientDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewpharmacyDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewreportDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\NewstaffDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PatientsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PharmacyPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\PrescriptionsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\ReportsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\SettingsPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\StaffManagementPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\StatusColor.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\BillDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\BillingPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\emergencyDialog.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\EmergencyPanel.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\HospitalDashboard.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\HospitalManage.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\Main.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\Main_1.java
-C:\Users\Admin\OneDrive\Documents\Hospital Management System\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\main\SettingsPanel.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalDashboard.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManage.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\LoginPage.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\com\mycompany\hospitalmanage\HospitalManagementSystem.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\ButtonStyles.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\ColorsTheme.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\FontsTheme.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\PanelCard.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\PanelCard2.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\StatusColor.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddBillingDialog.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddEmergencyDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\constants\TablePanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\controls\AdminDashboard.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\controls\DoctorDashboard.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\controls\LoginPage.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\controls\NurseDashboard.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddMedicalRecordDialog.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddPatientDialog.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddPrescriptionDialog.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewAppointmentDialog.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewLabDialog.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewPharmacyDialog.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewreportDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewReportDialog.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewStaffDialog.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\AdminDashboardPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\AppointmentsPanel.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\BedManagementPanel.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\BillingPanel.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\DashboardPanel.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\EmergencyPanel.java
-C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\LaboratoryPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\DoctorDashboardPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\MedicalRecordsPanel.java
+C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\NurseDashboardPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PatientsPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PharmacyPanel.java
 C:\Users\Arabella\GitHub\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\PrescriptionsPanel.java

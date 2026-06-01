@@ -13,11 +13,15 @@ package constants;
 
 import java.awt.Cursor;
 import java.awt.Insets;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 
 public class ButtonStyles {
+    
 
     public static void sidebarButton(JButton button) {
 
@@ -33,4 +37,25 @@ public class ButtonStyles {
         button.setMargin(new Insets(0, 10, 0, 0));
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
+    
+    public static JButton createButton(String text, String path, int y, JPanel pnlSide)
+    {
+        JPanel pnlButton = new JPanel();
+        pnlButton.setLayout(null);
+        pnlButton.setBounds(20, y, 220, 50);
+        pnlButton.setBackground(ColorsTheme.Side_Panel);
+
+        JLabel lblIcon = new JLabel(new ImageIcon(ButtonStyles.class.getResource(path)));
+        lblIcon.setBounds(18, 9, 32, 32);
+        pnlButton.add(lblIcon);
+
+        JButton btnClick = new JButton(text);
+        btnClick.setBounds(60, 0, 150, 50);
+        ButtonStyles.sidebarButton(btnClick);
+
+        pnlButton.add(btnClick);
+        pnlSide.add(pnlButton);
+
+        return btnClick;
+}
 }

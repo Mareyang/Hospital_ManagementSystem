@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AddPrescriptionDialog extends JDialog implements ActionListener {
   
@@ -50,7 +50,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
       
-        
+        // Button for left upper side of the panel content
         btnPrescript = new JButton("Prescription Details");
         btnPrescript.setBounds(40, 100, 250, 40);
         btnPrescript.setFont(FontsTheme.Buttons);
@@ -59,6 +59,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         btnPrescript.setFocusPainted(false);
         add(btnPrescript);
        
+        // Buttons for right lower side 
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(480, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
@@ -76,6 +77,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         add(btnAddInfo);
        
         
+        btnPrescript.addActionListener(this);
         btnCancel.addActionListener(this);
         btnAddInfo.addActionListener(this);
         
@@ -130,6 +132,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         lblDosage.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDosage);
       
+        // Options for dosage 
         cmbDosage = new JComboBox<>(new String[]{
             " ", "Pending", "Dispensed", "Cancelled", "On Hold"
         });
@@ -145,6 +148,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         lblFreq.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblFreq);
         
+        // Options for frequency
         cmbFreq = new JComboBox<>(new String[]{
             " ", "Pending", "Dispensed", "Cancelled", "On Hold"
         });
@@ -206,6 +210,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
         txtRefill.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtRefill);
         
+        // To add important details of presciption
         lblNote = new JLabel("Special Notes : ");
         lblNote.setBounds(510, 200, 200, 30);
         lblNote.setFont(FontsTheme.Plain_Texts);
@@ -232,10 +237,17 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
   
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnCancel) {
+        if(e.getSource() == btnPrescript) {
+            createPrescriptionForm();
+        }
+        
+        else if (e.getSource() == btnCancel) {
             dispose();
-        } else if (e.getSource() == btnAddInfo) {
-            dispose();
+        } 
+        
+        else if (e.getSource() == btnAddInfo) {
+            JOptionPane.showMessageDialog(this, "Prescription added successfully!", 
+                    "Precription Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

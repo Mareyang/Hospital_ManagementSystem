@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AddMedicalRecordDialog extends JDialog implements ActionListener {
   
@@ -54,11 +54,14 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
       
+        
+        // Buttons for Medical Records, Cancel and Save Record
         btnMed = new JButton("Medical Records");
         btnMed.setBounds(40, 100, 250, 40);
         btnMed.setFont(FontsTheme.Buttons);
         btnMed.setForeground(ColorsTheme.Text_White);
         btnMed.setBackground(ColorsTheme.Header);
+        btnMed.setFocusPainted(false);
         add(btnMed);
         
        
@@ -67,6 +70,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);
+        btnCancel.setFocusPainted(false);
         add(btnCancel);
       
         btnAddInfo = new JButton("Save Record");
@@ -74,8 +78,11 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         btnAddInfo.setFont(FontsTheme.Buttons);
         btnAddInfo.setForeground(ColorsTheme.Text_White);
         btnAddInfo.setBackground(ColorsTheme.Add_Confirm);
+        btnAddInfo.setFocusPainted(false);
         add(btnAddInfo);
        
+        
+        btnMed.addActionListener(this);
         btnCancel.addActionListener(this);
         btnAddInfo.addActionListener(this);
         
@@ -87,7 +94,8 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         pnlContent.removeAll();
         pnlContent.repaint();
         pnlContent.revalidate();
-
+        
+        // Patient Name Label and TextField
         lblPatient = new JLabel("Patient Name : ");
         lblPatient.setBounds(40, 40, 200, 30);
         lblPatient.setFont(FontsTheme.Plain_Texts);
@@ -100,6 +108,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         txtPatient.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtPatient);
       
+        // Patient ID Label and TextField
         lblMRN = new JLabel("Patient ID : ");
         lblMRN.setBounds(40, 80, 200, 30);
         lblMRN.setFont(FontsTheme.Plain_Texts);
@@ -112,12 +121,14 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         txtMRN.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtMRN);
       
+        // Type of medical concern
         lblType = new JLabel("Type : ");
         lblType.setBounds(40, 120, 200, 30);
         lblType.setFont(FontsTheme.Plain_Texts);
         lblType.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblType);
       
+        // Options for type of medical concern
         cmbType = new JComboBox<>(new String[]{
             " ", "Consultation", "Lab Result", "Imaging", "Procedure", "Surgery", "Follow-up", "Other"
         });
@@ -127,6 +138,8 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         cmbType.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbType);
         
+        
+        // Diagnosis Label and TextField
         lblDiagnosis = new JLabel("Diagnosis : ");
         lblDiagnosis.setBounds(40, 160, 200, 30);
         lblDiagnosis.setFont(FontsTheme.Plain_Texts);
@@ -139,6 +152,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         txtDiagnosis.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtDiagnosis);
 
+        // Doctor Name Label and TextField
         lblDoctor = new JLabel("Doctor : ");
         lblDoctor.setBounds(40, 200, 200, 30);
         lblDoctor.setFont(FontsTheme.Plain_Texts);
@@ -152,7 +166,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         pnlContent.add(txtDoctor);
       
         
-        //LEFT
+        //LEFT : Additional info needed for form
         lblDate = new JLabel("Date : ");
         lblDate.setBounds(510, 40, 200, 30);
         lblDate.setFont(FontsTheme.Plain_Texts);
@@ -165,6 +179,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         txtDate.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtDate);
         
+        // Vital signs Label and TextField
         lblVitalSigns = new JLabel("Vital Signs :");
         lblVitalSigns.setBounds(510, 80, 200, 30);
         lblVitalSigns.setFont(FontsTheme.Plain_Texts);
@@ -177,6 +192,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         txtVitals.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtVitals);
 
+        // Info needed for Vital Signs
         lblBP = new JLabel("Blood Pressure :");
         lblBP.setBounds(510, 120, 200, 30);
         lblBP.setFont(FontsTheme.Plain_Texts);
@@ -211,10 +227,17 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
   
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnCancel) {
+        if(e.getSource() == btnMed) {
+            createMedicalRecordForm();
+        }
+        
+        else if (e.getSource() == btnCancel) {
             dispose();
-        } else if (e.getSource() == btnAddInfo) {
-            dispose();
+        } 
+        
+        else if (e.getSource() == btnAddInfo) {
+            JOptionPane.showMessageDialog(this, "Medical record added successfully!", 
+                    "Medical Record Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

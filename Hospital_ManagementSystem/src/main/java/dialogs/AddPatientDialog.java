@@ -14,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Arabella
+ * 
  */
 public class AddPatientDialog extends JDialog implements ActionListener {
     
@@ -50,7 +50,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
         
-        
+        // Buttons for left upper side
         btnPersonal = new JButton("Personal Information");
         btnPersonal.setBounds(40, 100, 250, 40);
         btnPersonal.setFont(FontsTheme.Buttons);
@@ -74,7 +74,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
         
-        
+        // Buttons for right lower side
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(580, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
@@ -97,17 +97,21 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         //ActionListener
         btnPersonal.addActionListener(this);
         btnHistory.addActionListener(this);
+        btnCancel.addActionListener(this);
+        btnAddInfo.addActionListener(this);
 
         showPersonalInfo();
     
     }
     
     
+    // To show Personal Information Form
     public void showPersonalInfo() {
         pnlContent.removeAll();
         pnlContent.repaint();
         pnlContent.revalidate();
        
+        // Patient ID Label and TextField
         lblID = new JLabel("Patient ID : ");
         lblID.setBounds(40, 40, 200, 30);
         lblID.setFont(FontsTheme.Plain_Texts);
@@ -120,6 +124,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         txtID.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtID);
         
+        // Patient Name Label and TextField
         lblName = new JLabel("Name : ");
         lblName.setBounds(40, 80, 200, 30);
         lblName.setFont(FontsTheme.Plain_Texts);
@@ -132,6 +137,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         txtName.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtName);
         
+        // Patient Age Label and TextField
         lblAge = new JLabel("Age : ");
         lblAge.setBounds(40, 120, 200, 30);
         lblAge.setFont(FontsTheme.Plain_Texts);
@@ -144,6 +150,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         txtAge.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtAge);
         
+        // Birthday Label and TextField
         lblBirth = new JLabel("Birthday : ");
         lblBirth.setBounds(40, 160, 200, 30);
         lblBirth.setFont(FontsTheme.Plain_Texts);
@@ -156,13 +163,14 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         txtBirth.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtBirth);
         
+        // Gender Label and TextField
         lblGender = new JLabel("Gender : ");
         lblGender.setBounds(40, 200, 200, 30);
         lblGender.setFont(FontsTheme.Plain_Texts);
         lblGender.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblGender);
         
-        //BUTTONS FOR MALE AND FEMALE
+        //Options for Gender 
         cmbGender = new JComboBox<>(new String[]{
         " ", "Male", "Female", "Prefer not to say"
         });
@@ -185,7 +193,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         pnlContent.add(txtNumber);
         
         
-        // LEFT SIDE
+        // LEFT SIDE : Additional info needed
         
         lblMarital = new JLabel("Marital Status : ");
         lblMarital.setBounds(510, 40, 200, 30);
@@ -193,6 +201,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         lblMarital.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblMarital);
         
+        // Options for Marital status
         cmbMarital = new JComboBox<>(new String[]{
         " ", "Single", "Married", "Divorced", "Widowed"
         });
@@ -244,6 +253,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         lblStatus.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblStatus);
 
+        // Options for patient status
         cmbStatus = new JComboBox<>(new String[]{
         " ", "Admitted", "Discharged", "Observation"
         });
@@ -259,6 +269,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         lblRoom.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblRoom);
         
+        // Options for room number
         cmbRoom = new JComboBox<>(new String[]{
         " ", "ER-01", "ER-02", "LAB-01", "LAB-02", "RM-201", "RM-202", "XRAY-01", "ICU-01", "ICU-02", "OR-01"
         });
@@ -272,12 +283,14 @@ public class AddPatientDialog extends JDialog implements ActionListener {
 
     }
 
-    
+    // To show medical history
     public void showMedicalHistory() {
         pnlContent.removeAll();
         pnlContent.repaint();
         pnlContent.revalidate();
         
+        
+        // Chronic Illness and types
         lblChronic = new JLabel("Chronic Illnesses");
         lblChronic.setBounds(70, 10, 200, 30);
         lblChronic.setFont(FontsTheme.Title_Texts);
@@ -428,7 +441,7 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         pnlContent.setLayout(null);
         pnlContent.add(scrollHistory1);
         
-        
+        // To add notes for more details
         lblNote = new JLabel("Additional Note");
         lblNote.setBounds(70, 180, 200, 30);
         lblNote.setFont(FontsTheme.Title_Texts);
@@ -461,9 +474,15 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         else if(e.getSource() == btnHistory) {
             showMedicalHistory();
         }
-        else if(e.getSource() == btnCancel);
+        else if (e.getSource() == btnCancel) {
             dispose();
+        } 
+        
+        else if (e.getSource() == btnAddInfo) {
+            JOptionPane.showMessageDialog(this, "Patient record added successfully!", 
+                    "Patient Record Success", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }
 
+}
