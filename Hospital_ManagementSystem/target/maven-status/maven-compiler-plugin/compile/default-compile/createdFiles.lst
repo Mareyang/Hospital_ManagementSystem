@@ -19,6 +19,7 @@ controls\NurseDashboard.class
 controls\DoctorDashboard$2.class
 panels\ReportsPanel.class
 panels\DoctorDashboardPanel.class
+controls\AdminDashboard.class
 dialogs\NewAppointmentDialog.class
 controls\AdminDashboard$2.class
 dialogs\NewPharmacyDialog.class
@@ -28,6 +29,7 @@ controls\NurseDashboard$1.class
 dialogs\AddPatientDialog.class
 controls\LoginPage.class
 panels\PharmacyPanel.class
+controls\AdminDashboard$1.class
 constants\PanelCard.class
 constants\FontsTheme.class
 dialogs\AddMedicalRecordDialog.class
