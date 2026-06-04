@@ -1,18 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dialogs;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.*;
-/**
- *
- * @author eiros
- */
+
 public class NewReportDialog extends JDialog implements ActionListener {
     
     private JLabel lblTitle, lblSubtitle, lblCateg, lblName, lblNote, lblBy, lblDate, lblID, lblPeriod; 
@@ -23,7 +20,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
     private JTextArea txaNote;
     private JScrollPane scrollNote;
     
-    
+    private static final String[] categs = {" ", "Admissions Summary", "Billing and Revenue", "Pharmacy Dispensation", "Emergency Logs"};
     
     public NewReportDialog() {
         setSize(1050, 550);
@@ -43,7 +40,6 @@ public class NewReportDialog extends JDialog implements ActionListener {
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
         
-        // Buttons for left upper side of panel
         btnReportDetails = new JButton("Report Details");
         btnReportDetails.setBounds(40, 100, 250, 40);
         btnReportDetails.setFont(FontsTheme.Buttons);
@@ -60,15 +56,12 @@ public class NewReportDialog extends JDialog implements ActionListener {
         btnWrite.setFocusPainted(false);
         add(btnWrite);
         
-        
         pnlContent = new JPanel();
         pnlContent.setLayout(null);
         pnlContent.setBounds(40, 140, 950, 300);
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
         
-        
-        // Buttons for right lower side
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(580, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
@@ -84,133 +77,84 @@ public class NewReportDialog extends JDialog implements ActionListener {
         btnConfirm.setBackground(ColorsTheme.Green);
         btnConfirm.setFocusPainted(false);
         add(btnConfirm);
+                
         
-        
-        
-        //ActionListener
         btnReportDetails.addActionListener(this);
         btnWrite.addActionListener(this);
         btnCancel.addActionListener(this);
         btnConfirm.addActionListener(this);
         
         
-        
+        initializeForms();
         showGenerateReport();
-        
         
     }
     
-    // To generate report
-    public void showGenerateReport() {
-        pnlContent.removeAll();
-        pnlContent.repaint();
-        pnlContent.revalidate();
-        
-        
+    
+    
+    
+    private void initializeForms() {
         lblName = new JLabel("Report Title : ");
         lblName.setBounds(40, 60, 200, 30);
         lblName.setFont(FontsTheme.Plain_Texts);
         lblName.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblName);
         
         txtName = new JTextField("");
         txtName.setBounds(220, 60, 230, 30);
         txtName.setFont(FontsTheme.Plain_Texts);
-        txtName.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtName);
-        
         
         lblID = new JLabel("Report ID : ");
         lblID.setBounds(40, 130, 200, 30);
         lblID.setFont(FontsTheme.Plain_Texts);
         lblID.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblID);
         
         txtID = new JTextField("");
         txtID.setBounds(220, 130, 230, 30);
         txtID.setFont(FontsTheme.Plain_Texts);
-        txtID.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtID);
-        
-        
         
         lblBy = new JLabel("Prepared By : ");
         lblBy.setBounds(40, 200, 200, 30);
         lblBy.setFont(FontsTheme.Plain_Texts);
         lblBy.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblBy);
         
         txtBy = new JTextField("");
         txtBy.setBounds(220, 200, 230, 30);
         txtBy.setFont(FontsTheme.Plain_Texts);
-        txtBy.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtBy);
         
-        
-        
-        
-        //Left
-        lblDate = new JLabel("Date of Report  : ");
+        lblDate = new JLabel("Date of Report : ");
         lblDate.setBounds(510, 60, 200, 30);
         lblDate.setFont(FontsTheme.Plain_Texts);
         lblDate.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblDate);
         
         txtDate = new JTextField("");
         txtDate.setBounds(690, 60, 230, 30);
         txtDate.setFont(FontsTheme.Plain_Texts);
-        txtDate.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtDate);
         
         lblPeriod = new JLabel("Reporting Period : ");
         lblPeriod.setBounds(510, 130, 200, 30);
         lblPeriod.setFont(FontsTheme.Plain_Texts);
         lblPeriod.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblPeriod);
         
         txtPeriod = new JTextField("");
         txtPeriod.setBounds(690, 130, 230, 30);
         txtPeriod.setFont(FontsTheme.Plain_Texts);
-        txtPeriod.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtPeriod);
-        
         
         lblCateg = new JLabel("Report Scope : ");
         lblCateg.setBounds(510, 200, 200, 30);
         lblCateg.setFont(FontsTheme.Plain_Texts);
         lblCateg.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblCateg);
         
-        // Report scope options
-        cmbCateg = new JComboBox<>(new String[]{
-        " ", "Admissions Summary", "Billing and Revenue", "Pharmacy Dispensation", "Emergency Logs ",
-        });
+        cmbCateg = new JComboBox<>(categs);
         cmbCateg.setBounds(690, 200, 230, 30);
         cmbCateg.setFont(FontsTheme.Plain_Texts);
-        cmbCateg.setForeground(ColorsTheme.Text_Black);
         cmbCateg.setBackground(ColorsTheme.Main_Card);
-        pnlContent.add(cmbCateg);
         
-        
-        
-        
-    }
-    
-    // To write report and notes.
-    public void showWriteReport() {
-        pnlContent.removeAll();
-        pnlContent.repaint();
-        pnlContent.revalidate();
-            
         lblNote = new JLabel("Executive Summary: ");
         lblNote.setBounds(50, 10, 300, 30);
         lblNote.setFont(FontsTheme.Title_Texts);
         lblNote.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(lblNote);
         
-        txaNote = new JTextArea(" ");
-        txaNote.setText("Write reports here...");
-        txaNote.setEditable(true);
+        txaNote = new JTextArea("Write reports here...");
         txaNote.setFont(FontsTheme.Info_Texts);
         txaNote.setForeground(ColorsTheme.Text_Gray);
         txaNote.setLineWrap(true);
@@ -218,34 +162,82 @@ public class NewReportDialog extends JDialog implements ActionListener {
         
         scrollNote = new JScrollPane(txaNote);
         scrollNote.setBounds(40, 50, 880, 230);
-        pnlContent.setLayout(null);
-        pnlContent.add(scrollNote);
-        
-        
-        
-        
     }
     
+    public void showGenerateReport() {
+        pnlContent.removeAll();
+        pnlContent.add(lblName);
+        pnlContent.add(txtName);
+        pnlContent.add(lblID);
+        pnlContent.add(txtID);
+        pnlContent.add(lblBy);
+        pnlContent.add(txtBy);
+        pnlContent.add(lblDate);
+        pnlContent.add(txtDate);
+        pnlContent.add(lblPeriod);
+        pnlContent.add(txtPeriod);
+        pnlContent.add(lblCateg);
+        pnlContent.add(cmbCateg);
+        pnlContent.repaint();
+        pnlContent.revalidate();
+    }
     
+    public void showWriteReport() {
+        pnlContent.removeAll();
+        pnlContent.add(lblNote);
+        pnlContent.add(scrollNote);
+        pnlContent.repaint();
+        pnlContent.revalidate();
+    }
     
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnReportDetails) {
+        if (e.getSource() == btnReportDetails) {
             showGenerateReport();
-    }
-        else if(e.getSource() == btnWrite) {
+        } else if (e.getSource() == btnWrite) {
             showWriteReport();
-    }
-        else if (e.getSource() == btnCancel) {
+        } else if (e.getSource() == btnCancel) {
             dispose();
-        } 
-        
-        else if (e.getSource() == btnConfirm) {
-            JOptionPane.showMessageDialog(this, "Report generated successfully!", 
-                    "Report Success", JOptionPane.INFORMATION_MESSAGE);
+        } else if (e.getSource() == btnConfirm) {
+            String reportID = txtID.getText().trim();
+            String reportName = txtName.getText().trim();
+            String reportScope = cmbCateg.getSelectedItem().toString();
+            String preparedBy = txtBy.getText().trim();
+            String dateGen = txtDate.getText().trim();
+            String period = txtPeriod.getText().trim();
+            String summary = txaNote.getText().trim();
+            
+            if (summary.equals("Write reports here...")) {
+                summary = "";
+            }
+
+            if (reportID.isEmpty() || reportName.isEmpty() || reportScope.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Report ID, Title, and Scope are required.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String sql = "INSERT INTO hospital_reports (report_id, report_name, report_type, generated_by, date_generated, reporting_period, executive_summary) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+                 PreparedStatement insert = conn.prepareStatement(sql)) {
+                
+                insert.setString(1, reportID);
+                insert.setString(2, reportName);
+                insert.setString(3, reportScope);
+                insert.setString(4, preparedBy);
+                insert.setString(5, dateGen);
+                insert.setString(6, period);
+                insert.setString(7, summary);
+
+                int rows = insert.executeUpdate();
+                if (rows > 0) {
+                    JOptionPane.showMessageDialog(this, "Report generated successfully!", "Report Success", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Database write operation failed:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        
     }
 }
-

@@ -27,7 +27,6 @@ dialogs\NewStaffDialog.class
 controls\NurseDashboard$1.class
 dialogs\AddPatientDialog.class
 controls\LoginPage.class
-panels\PharmacyPanel.class
 constants\PanelCard.class
 constants\FontsTheme.class
 dialogs\AddMedicalRecordDialog.class
