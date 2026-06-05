@@ -1,37 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dialogs;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.*;
 
-/**
- *
- * @author Admin
- */
 public class NewStaffDialog extends JDialog implements ActionListener {
       
     private JPanel pnlForm;
-    private JLabel lblDialogTitle, lblDialogDetails, lblEmpID, lblName, lblBday,lblGen,lblEmail, lblContact, 
-            lblMarital, lblDep, lblRole, lblHired, lblOff, lblStatus, lblPR, lblCName, lblSName,lblLine, lblSRole, lblSRate, lblCS;
+    private JLabel lblDialogTitle, lblDialogDetails, lblEmpID, lblName, lblBday, lblGen, lblEmail, lblContact, 
+            lblMarital, lblDep, lblRole, lblHired, lblOff, lblStatus, lblPR, lblCName, lblSName, lblLine, lblSRole, lblSRate, lblCS;
     private JTextField txtEmpID, txtName, txtContact, txtEmail, txtBday, txtDep, txtRole, txtHired, txtCName, txtSName;
-    private JButton btnStaff, btnPerf, btnSave,btnCancel;
+    private JButton btnStaff, btnPerf, btnSave, btnCancel;
     private JComboBox<String> cmbGen, cmbMarital, cmbStats, cmbOff, cmbSRole, cmbSRate;
     private JTextArea txaComs;
     private JScrollPane scrollComs;
     
+    private static final String[] gender = {" ", "Male", "Female", "Prefer not to say"};
+    private static final String[] days = {" ", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    private static final String[] status = {" ", "Active", "On Leave", "Contract"};
+    private static final String[] marital = {" ", "Single", "Married", "Divorced", "Widowed"};
+    private static final String[] roles = {" ", "Doctor", "Nurse", "Admin"};
+    private static final String[] rates = {" ", "5 - Excellent", "4 - Very Good", "3 - Average", "2 - Below Average", "1- Poor"};
     
     public NewStaffDialog() {
-        setLayout(null);
         setSize(1050, 550);
+        setLayout(null);
         setLocationRelativeTo(null);
+        setModal(true);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
-
         
         lblDialogTitle = new JLabel("Staff Profile Entry");
         lblDialogTitle.setBounds(30, 10, 300, 35);
@@ -61,16 +63,12 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         btnPerf.setFocusPainted(false);
         add(btnPerf);
         
-        
         pnlForm = new JPanel();
         pnlForm.setLayout(null);
         pnlForm.setBounds(40, 140, 950, 300);
         pnlForm.setBackground(ColorsTheme.Main_Card);
         add(pnlForm);
         
-        
-        // OPTIONS BUTTON
-
         btnSave = new JButton("Save Staff Profile");
         btnSave.setBounds(690, 450, 300, 30);
         btnSave.setFont(FontsTheme.Buttons);
@@ -87,265 +85,198 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         btnCancel.setFocusPainted(false);
         add(btnCancel);
         
-        
-        
-        
         btnStaff.addActionListener(this);
         btnPerf.addActionListener(this);
         btnCancel.addActionListener(this);
         btnSave.addActionListener(this);
         
-        
-
+        initializeForms();
         showStaffInfo();
-        
     }
         
-    // To add new employee 
-    public void showStaffInfo() {
-        pnlForm.removeAll();
-        pnlForm.repaint();
-        pnlForm.revalidate();
-
+    private void initializeForms() {
+        // --- STAFF INFORMATION SUB-FIELDS ---
         lblEmpID = new JLabel("Employee ID :");
         lblEmpID.setBounds(40, 40, 170, 30);
         lblEmpID.setFont(FontsTheme.Plain_Texts);
         lblEmpID.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblEmpID);
 
         txtEmpID = new JTextField("");
         txtEmpID.setBounds(220, 40, 230, 30);
         txtEmpID.setFont(FontsTheme.Plain_Texts);
         txtEmpID.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtEmpID);
 
         lblName = new JLabel("Full Name :");
         lblName.setBounds(40, 80, 170, 30);
         lblName.setFont(FontsTheme.Plain_Texts);
         lblName.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblName);
 
         txtName = new JTextField("");
         txtName.setBounds(220, 80, 230, 30);
         txtName.setFont(FontsTheme.Plain_Texts);
         txtName.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtName);
 
         lblBday = new JLabel("Birthday :");
         lblBday.setBounds(40, 120, 170, 30);
         lblBday.setFont(FontsTheme.Plain_Texts);
         lblBday.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblBday);
 
         txtBday = new JTextField("");
         txtBday.setBounds(220, 120, 230, 30);
         txtBday.setFont(FontsTheme.Plain_Texts);
         txtBday.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtBday);
 
         lblGen = new JLabel("Gender :");
         lblGen.setBounds(40, 160, 170, 30);
         lblGen.setFont(FontsTheme.Plain_Texts);
         lblGen.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblGen);
 
-        cmbGen = new JComboBox(new String[]{"", "Female", "Male"});
+        cmbGen = new JComboBox<>(gender);
         cmbGen.setBounds(220, 160, 230, 30);
         cmbGen.setFont(FontsTheme.Plain_Texts);
         cmbGen.setForeground(ColorsTheme.Text_Black);
         cmbGen.setBackground(ColorsTheme.Main_Card);
-        pnlForm.add(cmbGen);
-
         
         lblEmail = new JLabel("Email Address: ");
         lblEmail.setBounds(40, 200, 170, 30);
         lblEmail.setFont(FontsTheme.Plain_Texts);
         lblEmail.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblEmail);
         
         txtEmail = new JTextField("");
         txtEmail.setBounds(220, 200, 230, 30);
         txtEmail.setFont(FontsTheme.Plain_Texts);
         txtEmail.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtEmail);
 
         lblContact = new JLabel("Contact Number :");
         lblContact.setBounds(40, 240, 170, 30);
         lblContact.setFont(FontsTheme.Plain_Texts);
         lblContact.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblContact);
 
         txtContact = new JTextField("");
         txtContact.setBounds(220, 240, 230, 30);
         txtContact.setFont(FontsTheme.Plain_Texts);
         txtContact.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtContact);
         
-        
-        // LEFT SIDE
-
         lblMarital = new JLabel("Marital Status :");
         lblMarital.setBounds(540, 40, 170, 30);
         lblMarital.setFont(FontsTheme.Plain_Texts);
         lblMarital.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblMarital);
 
-        // Options for Marital status
-        cmbMarital = new JComboBox(new String[]{
-        "", "Single", "Married", "Widowed", "Separated"});
+        cmbMarital = new JComboBox<>(marital);
         cmbMarital.setBounds(720, 40, 180, 30);
         cmbMarital.setFont(FontsTheme.Plain_Texts);
         cmbMarital.setForeground(ColorsTheme.Text_Black);
         cmbMarital.setBackground(ColorsTheme.Main_Card);
-        pnlForm.add(cmbMarital);
 
         lblDep = new JLabel("Department :");
         lblDep.setBounds(540, 80, 170, 30);
         lblDep.setFont(FontsTheme.Plain_Texts);
         lblDep.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblDep);
 
         txtDep = new JTextField("");
         txtDep.setBounds(720, 80, 180, 30);
         txtDep.setFont(FontsTheme.Plain_Texts);
         txtDep.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtDep);
 
         lblRole = new JLabel("Role :");
         lblRole.setBounds(540, 120, 170, 30);
         lblRole.setFont(FontsTheme.Plain_Texts);
         lblRole.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblRole);
 
-        txtRole =  new JTextField("");
+        txtRole = new JTextField("");
         txtRole.setBounds(720, 120, 180, 30);
         txtRole.setFont(FontsTheme.Plain_Texts);
         txtRole.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtRole);
 
         lblHired = new JLabel("Hire Date :");
         lblHired.setBounds(540, 160, 170, 30);
         lblHired.setFont(FontsTheme.Plain_Texts);
         lblHired.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblHired);
 
-        txtHired = new JTextField("MM/DD/YYYY");
+        txtHired = new JTextField(" ");
         txtHired.setBounds(720, 160, 180, 30);
         txtHired.setFont(FontsTheme.Plain_Texts);
         txtHired.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtHired);
 
         lblOff = new JLabel("Day Off :");
         lblOff.setBounds(540, 200, 170, 30);
         lblOff.setFont(FontsTheme.Plain_Texts);
         lblOff.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblOff);
 
-        // Option for day off
-        cmbOff = new JComboBox(new String[]{
-        "", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"});
+        cmbOff = new JComboBox<>(days);
         cmbOff.setBounds(720, 200, 180, 30);
         cmbOff.setFont(FontsTheme.Plain_Texts);
         cmbOff.setForeground(ColorsTheme.Text_Black);
         cmbOff.setBackground(ColorsTheme.Main_Card);
-        pnlForm.add(cmbOff);
 
         lblStatus = new JLabel("Status :");
         lblStatus.setBounds(540, 240, 170, 30);
         lblStatus.setFont(FontsTheme.Plain_Texts);
         lblStatus.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblStatus);
 
-        cmbStats = new JComboBox(new String[]{
-        "", "Active", "On Leave", "Contract"});
+        cmbStats = new JComboBox<>(status);
         cmbStats.setBounds(720, 240, 180, 30);
         cmbStats.setFont(FontsTheme.Plain_Texts);
         cmbStats.setForeground(ColorsTheme.Text_Black);
         cmbStats.setBackground(ColorsTheme.Main_Card);
-        pnlForm.add(cmbStats);
-       
-        
-        
-    }
-      // To fill up performance forms to rate staffs
-    public void showPerfRate() {
-        pnlForm.removeAll();
-        pnlForm.repaint();
-        pnlForm.revalidate();
-        
-          
+
+        // --- PERFORMANCE AND EVALUATION SUB-FIELDS ---
         lblPR = new JLabel("Performance Rate");
         lblPR.setBounds(70, 10, 200, 30);
         lblPR.setFont(FontsTheme.Title_Texts);
         lblPR.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblPR);
-        
         
         lblCName = new JLabel("Client Name : ");
         lblCName.setBounds(40, 50, 170, 30);
         lblCName.setFont(FontsTheme.Plain_Texts);
         lblCName.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblCName);
         
         txtCName = new JTextField("");
         txtCName.setBounds(250, 50, 250, 30);
         txtCName.setFont(FontsTheme.Plain_Texts);
         txtCName.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtCName);
           
         lblLine = new JLabel("Staff Details");
         lblLine.setBounds(70, 100, 380, 30);
         lblLine.setFont(FontsTheme.Title_Texts);
         lblLine.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblLine);
         
         lblSName = new JLabel("Employee Name : ");
         lblSName.setBounds(40, 140, 170, 50);
         lblSName.setFont(FontsTheme.Plain_Texts);
         lblSName.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblSName);
         
         txtSName = new JTextField(" ");
         txtSName.setBounds(250, 150, 250, 30);
         txtSName.setFont(FontsTheme.Plain_Texts);
         txtSName.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(txtSName);
         
         lblSRole = new JLabel("Role : ");
         lblSRole.setBounds(40, 180, 170, 50);
         lblSRole.setFont(FontsTheme.Plain_Texts);
         lblSRole.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblSRole);
          
-        cmbSRole = new JComboBox(new String[]{
-        "", "Doctor", "Nurse", "Admin"});
+        cmbSRole = new JComboBox<>(roles);
         cmbSRole.setBounds(250, 190, 250, 30);
         cmbSRole.setFont(FontsTheme.Plain_Texts);
         cmbSRole.setForeground(ColorsTheme.Text_Black);
         cmbSRole.setBackground(ColorsTheme.Main_Card);
-        pnlForm.add(cmbSRole);
-        
         
         lblSRate = new JLabel("Rate (1-5) : ");
         lblSRate.setBounds(40, 220, 170, 50);
         lblSRate.setFont(FontsTheme.Plain_Texts);
         lblSRate.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblSRate);
          
-        cmbSRate = new JComboBox(new String[]{
-        "", "5 - Excellent", "4 - Very Good", "3 - Average", "2 - Below Average", "1- Poor"});
+        cmbSRate = new JComboBox<>(rates);
         cmbSRate.setBounds(250, 230, 250, 30);
         cmbSRate.setFont(FontsTheme.Plain_Texts);
         cmbSRate.setForeground(ColorsTheme.Text_Black);
         cmbSRate.setBackground(ColorsTheme.Main_Card);
-        pnlForm.add(cmbSRate);
-        
         
         lblCS = new JLabel("Comments & Suggestions");
         lblCS.setBounds(540, 10, 550, 30);
         lblCS.setFont(FontsTheme.Title_Texts);
         lblCS.setForeground(ColorsTheme.Text_Black);
-        pnlForm.add(lblCS);
         
         txaComs = new JTextArea(" ");
         txaComs.setText("Write here...");
@@ -357,27 +288,129 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         
         scrollComs = new JScrollPane(txaComs);
         scrollComs.setBounds(550, 50, 350, 200);
-        pnlForm.setLayout(null);
+    }
+    
+    public void showStaffInfo() {
+        pnlForm.removeAll();
+        pnlForm.add(lblEmpID);
+        pnlForm.add(txtEmpID);
+        pnlForm.add(lblName);
+        pnlForm.add(txtName);
+        pnlForm.add(lblBday);
+        pnlForm.add(txtBday);
+        pnlForm.add(lblGen);
+        pnlForm.add(cmbGen);
+        pnlForm.add(lblEmail);
+        pnlForm.add(txtEmail);
+        pnlForm.add(lblContact);
+        pnlForm.add(txtContact);
+        pnlForm.add(lblMarital);
+        pnlForm.add(cmbMarital);
+        pnlForm.add(lblDep);
+        pnlForm.add(txtDep);
+        pnlForm.add(lblRole);
+        pnlForm.add(txtRole);
+        pnlForm.add(lblHired);
+        pnlForm.add(txtHired);
+        pnlForm.add(lblOff);
+        pnlForm.add(cmbOff);
+        pnlForm.add(lblStatus);
+        pnlForm.add(cmbStats);
+        pnlForm.repaint();
+        pnlForm.revalidate();
+    }
+    
+    public void showPerfRate() {
+        pnlForm.removeAll();
+        pnlForm.add(lblPR);
+        pnlForm.add(lblCName);
+        pnlForm.add(txtCName);
+        pnlForm.add(lblLine);
+        pnlForm.add(lblSName);
+        pnlForm.add(txtSName);
+        pnlForm.add(lblSRole);
+        pnlForm.add(cmbSRole);
+        pnlForm.add(lblSRate);
+        pnlForm.add(cmbSRate);
+        pnlForm.add(lblCS);
         pnlForm.add(scrollComs);
-        
-      }
-
+        pnlForm.repaint();
+        pnlForm.revalidate();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnStaff) {
+        if (e.getSource() == btnStaff) {
             showStaffInfo();
-        }
-        else if(e.getSource() == btnPerf) {
+        } else if (e.getSource() == btnPerf) {
             showPerfRate();
-        }
-        else if (e.getSource() == btnCancel) {
+        } else if (e.getSource() == btnCancel) {
             dispose();
-        } 
-        
-        else if (e.getSource() == btnSave) {
-            JOptionPane.showMessageDialog(this, "Staff record added successfully!", 
-                    "Staff Success", JOptionPane.INFORMATION_MESSAGE);
+        } else if (e.getSource() == btnSave) {
+            // Extract core fields
+            String empID = txtEmpID.getText().trim();
+            String fullName = txtName.getText().trim();
+            String birthday = txtBday.getText().trim();
+            String gen = cmbGen.getSelectedItem().toString();
+            String email = txtEmail.getText().trim();
+            String contact = txtContact.getText().trim();
+            String maritalStatus = cmbMarital.getSelectedItem().toString();
+            String department = txtDep.getText().trim();
+            String role = txtRole.getText().trim();
+            String hireDate = txtHired.getText().trim();
+            String dayOff = cmbOff.getSelectedItem().toString();
+            String statusValue = cmbStats.getSelectedItem().toString();
+            
+            // Extract evaluation fields
+            String clientName = txtCName.getText().trim();
+            String evalStaffName = txtSName.getText().trim();
+            String evalRole = cmbSRole.getSelectedItem().toString();
+            String perfRate = cmbSRate.getSelectedItem().toString();
+            String comments = txaComs.getText().trim();
+            
+            if (comments.equals("Write here...")) {
+                comments = "";
+            }
+
+            // Simple validation structure mimicking template
+            if (empID.isEmpty() || fullName.isEmpty() || role.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Employee ID, Full Name, and Role are required.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Database Save Implementation matching template mechanics
+            String sql = "INSERT INTO hospital_staff (employee_id, full_name, birthday, gender, email, contact_number, marital_status, department, role, hire_date, day_off, status, client_name, eval_staff_name, eval_role, performance_rate, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+                 PreparedStatement insert = conn.prepareStatement(sql)) {
+                
+                insert.setString(1, empID);
+                insert.setString(2, fullName);
+                insert.setString(3, birthday);
+                insert.setString(4, gen);
+                insert.setString(5, email);
+                insert.setString(6, contact);
+                insert.setString(7, maritalStatus);
+                insert.setString(8, department);
+                insert.setString(9, role);
+                insert.setString(10, hireDate);
+                insert.setString(11, dayOff);
+                insert.setString(12, statusValue);
+                insert.setString(13, clientName);
+                insert.setString(14, evalStaffName);
+                insert.setString(15, evalRole);
+                insert.setString(16, perfRate);
+                insert.setString(17, comments);
+
+                int rows = insert.executeUpdate();
+                if (rows > 0) {
+                    JOptionPane.showMessageDialog(this, "Staff record added successfully!", "Staff Success", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Database write operation failed:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

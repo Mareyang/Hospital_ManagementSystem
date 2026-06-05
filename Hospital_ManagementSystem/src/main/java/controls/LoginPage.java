@@ -2,10 +2,19 @@ package controls;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import controls.AdminDashboard;
+import controls.DoctorDashboard;
+import controls.NurseDashboard;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LoginPage extends JFrame implements ActionListener {
 
@@ -14,7 +23,7 @@ public class LoginPage extends JFrame implements ActionListener {
             lblTitle, lblUsername,lblPassword, imgIcon;
     private JTextField txtUsername;
     private JPasswordField pxtPassword;
-    private JButton btnLogin;
+    private JButton btnLogin, btnForgot;
     
     public LoginPage() {
         setSize(1000, 600);
@@ -76,80 +85,113 @@ public class LoginPage extends JFrame implements ActionListener {
 
         // Title/RightPanel
         lblTitle = new JLabel("Sign in");
-        lblTitle.setBounds(300, 80, 200, 40);
+        lblTitle.setBounds(300, 60, 200, 40);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         pnlRight.add(lblTitle);
 
         // Username
         lblUsername = new JLabel("Username");
-        lblUsername.setBounds(170, 170, 100, 30);
+        lblUsername.setBounds(170, 150, 100, 30);
         lblUsername.setFont(FontsTheme.Plain);
         pnlRight.add(lblUsername);
 
         txtUsername = new JTextField();
-        txtUsername.setBounds(170, 210, 350, 40);
+        txtUsername.setBounds(170, 190, 350, 40);
         txtUsername.setFont(FontsTheme.Plain_Small);
         pnlRight.add(txtUsername);
 
         // Password
         lblPassword = new JLabel("Password");
-        lblPassword.setBounds(170, 280, 100, 30);
+        lblPassword.setBounds(170, 260, 100, 30);
         lblPassword.setFont(FontsTheme.Plain);
         pnlRight.add(lblPassword);
 
         pxtPassword = new JPasswordField();
-        pxtPassword.setBounds(170, 320, 350, 40);
+        pxtPassword.setBounds(170, 300, 350, 40);
         pxtPassword.setFont(FontsTheme.Plain_Small);
         pnlRight.add(pxtPassword);
 
         // Login Button
         btnLogin = new JButton("Login");
-        btnLogin.setBounds(170, 400, 350, 45);
+        btnLogin.setBounds(170, 380, 350, 45);
         btnLogin.setBackground(ColorsTheme.Search); 
         btnLogin.setForeground(ColorsTheme.Text_White);
         btnLogin.setFont(FontsTheme.Bold);
         btnLogin.addActionListener(this);
         pnlRight.add(btnLogin);
-
+        
+        // Forgot Password
+        btnForgot = new JButton("Forgot Password?");
+        btnForgot.setBounds(170, 440, 350, 30); 
+        btnForgot.setForeground(ColorsTheme.Search); 
+        btnForgot.setFont(FontsTheme.Plain);
+        btnForgot.setContentAreaFilled(false); 
+        btnForgot.setBorderPainted(false);     
+        btnForgot.setFocusPainted(false);     
+        btnForgot.addActionListener(this);
+        pnlRight.add(btnForgot);
+                
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
+        // Handle Forgot Password routing
+        if (e.getSource() == btnForgot) {
+            JOptionPane.showMessageDialog(this, 
+                "Please contact your system Administrator to recover or reset your account password.", 
+                "Account Recovery", 
+                JOptionPane.INFORMATION_MESSAGE);
+            return; 
+        }
 
         String username = txtUsername.getText();
         String password = new String(pxtPassword.getPassword());
 
-        // 1. Check for Admin Role
-        if (username.equals("admin") && password.equals("1234")) {
-            JOptionPane.showMessageDialog(this, "Admin Login Successful!");
-            AdminDashboard admin = new AdminDashboard();
-            admin.setVisible(true);
-            dispose();
-        } 
-        // 2. Check for Doctor Role
-        else if (username.equals("doctor") && password.equals("1234")) {
-            JOptionPane.showMessageDialog(this, "Doctor Login Successful!");
-            DoctorDashboard doctor = new DoctorDashboard();
-            doctor.setVisible(true);
-            dispose();
-        } 
-        // 3. Check for Nurse Role
-        else if (username.equals("nurse") && password.equals("1234")) {
-            JOptionPane.showMessageDialog(this, "Nurse Login Successful!");
-            NurseDashboard nurse = new NurseDashboard();
-            nurse.setVisible(true);
-            dispose();
-        } 
-        // 4. Invalid Credentials
-        else { 
-            JOptionPane.showMessageDialog(this,"Invalid Username or Password", "Login Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+            
+            PreparedStatement select = connection.prepareStatement("SELECT role, firstname, lastname FROM users WHERE username=? AND password=?");
+            select.setString(1, username);
+            select.setString(2, password);
 
-    public static void main(String[] args) {
-            LoginPage login = new LoginPage();
-            login.setVisible(true);
-        
+            ResultSet result = select.executeQuery();
+
+            if (result.next()) {
+                String dbRole = result.getString("role");
+                String firstName = result.getString("firstname");
+                String lastName = result.getString("lastname");
+
+                if (dbRole.equals("Admin")) {
+                    JOptionPane.showMessageDialog(this, "Welcome back, Admin " + firstName + " " + lastName + "!");
+                    AdminDashboard admin = new AdminDashboard();
+                    admin.setVisible(true);
+                } 
+                else if (dbRole.equals("Doctor")) {
+                    JOptionPane.showMessageDialog(this, "Welcome back, Dr. " + lastName + "!");
+                    DoctorDashboard doctor = new DoctorDashboard();
+                    doctor.setVisible(true);
+                } 
+                else if (dbRole.equals("Nurse")) {
+                    JOptionPane.showMessageDialog(this, "Welcome back, Nurse " + firstName + "!");
+                    NurseDashboard nurse = new NurseDashboard();
+                    nurse.setVisible(true);
+                }
+                
+                dispose(); 
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Login Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            result.close();
+            select.close();
+            connection.close();
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database connection error! Is XAMPP running?", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
