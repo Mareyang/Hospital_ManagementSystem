@@ -1,6 +1,7 @@
 panels\PatientsPanel.class
 controls\NurseDashboard$2.class
 dialogs\NewReportDialog.class
+panels\NurseDashboardPanel$1.class
 constants\TablePanel.class
 panels\AdminDashboardPanel.class
 panels\AppointmentsPanel.class
@@ -24,6 +25,7 @@ controls\AdminDashboard$2.class
 dialogs\NewPharmacyDialog.class
 panels\MedicalRecordsPanel.class
 dialogs\NewStaffDialog.class
+panels\NurseDashboardPanel$2.class
 controls\NurseDashboard$1.class
 dialogs\AddPatientDialog.class
 controls\LoginPage.class

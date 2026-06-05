@@ -148,7 +148,7 @@ public class NurseDashboard extends JFrame implements ActionListener {
             pnlTop.requestFocusInWindow();
         });
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();

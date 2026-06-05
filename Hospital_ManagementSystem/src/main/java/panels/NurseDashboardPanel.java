@@ -7,19 +7,23 @@ package panels;
 import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import dialogs.AddMedicalRecordDialog;
+import dialogs.AddPatientDialog;
+import dialogs.NewAppointmentDialog;
+import dialogs.NewPharmacyDialog;
 import java.awt.Color;
-import java.awt.Font;
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.table.DefaultTableModel;
 
 public class NurseDashboardPanel extends JPanel {
     
     private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, pnlMiddle;
-    private JLabel lblGreet, lblDescrip, lblDistributionTitle, lblOverviewTitle;
+    private JLabel lblGreet, lblDescrip, lblPatientMonitoringTitle, lblMedicationSuppliesTitle, lblQuickActionsTitle;
     
-    //Distribution & Progress bars
-    private JPanel pnlDistribution, pnlOverview, pnlImage, pnlMetrics;
-    private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
+    private JPanel pnlPatientMonitoring, pnlMedicationSupplies, pnlQuickActions;
+    private JTable tblPatientMonitoring, tblMedicationSupplies;
+    private JScrollPane spPatientMonitoring, spMedicationSupplies;
     
     
     
@@ -33,7 +37,7 @@ public class NurseDashboardPanel extends JPanel {
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 350, 1500, 500);
-        pnlMiddle.setBackground(ColorsTheme.Main_Card);
+        pnlMiddle.setBackground(ColorsTheme.Middle_Panel);
         add(pnlMiddle);
 
         //Greeting section
@@ -52,126 +56,173 @@ public class NurseDashboardPanel extends JPanel {
         
         //Summary Panel Cards
         pnlPatients = new PanelCard2(
-                "Total Patients",
-                "2,847",
-                "Active Records",
+                "Patients Assigned",
+                "24",
+                "Under your care",
                 ColorsTheme.Yellow);
         pnlPatients.setBounds(70, 150, 350, 140);
         add(pnlPatients);
         
         pnlAppointments = new PanelCard2(
                 "Today's Appointments",
-                "156",
-                "32 remaining",
+                "18",
+                "6 remaining",
                 ColorsTheme.Orange);
         pnlAppointments.setBounds(450, 150, 350, 140);
         add(pnlAppointments);
         
         pnlBeds = new PanelCard2(
-                "Bed Occupancy",
-                "78%",
-                "156 of 200 beds",
+                "Medication Due",
+                "9",
+                "Next round pending",
                 ColorsTheme.Blue);
         pnlBeds.setBounds(830, 150, 350, 140);
         add(pnlBeds);
         
         pnlRevenue = new PanelCard2(
-                "Revenue (MTD)",
-                "₱125K",
-                "Target: $150K",
+                "Critical Alerts",
+                "3",
+                "Needs attention",
                 ColorsTheme.Green);
         pnlRevenue.setBounds(1210, 150, 350, 140);
         add(pnlRevenue);
         
         
         
-        //Department Distribution Panel
-        pnlDistribution = new JPanel();
-        pnlDistribution.setLayout(null);
-        pnlDistribution.setBackground(ColorsTheme.Middle_Panel);
-        pnlDistribution.setBounds(950, 0, 550, 500);
-        pnlMiddle.add(pnlDistribution);
+        // Patient Monitoring List table
+        pnlPatientMonitoring = new JPanel();
+        pnlPatientMonitoring.setLayout(null);
+        pnlPatientMonitoring.setBounds(0, 0, 650, 500);
+        pnlPatientMonitoring.setBackground(ColorsTheme.Main_Card);
+        pnlMiddle.add(pnlPatientMonitoring);
 
-        lblDistributionTitle = new JLabel("Department Distribution");
-        lblDistributionTitle.setFont(FontsTheme.Title_Texts);
-        lblDistributionTitle.setForeground(ColorsTheme.Text_Black);
-        lblDistributionTitle.setBounds(25, 20, 350, 35);
-        pnlDistribution.add(lblDistributionTitle);
-        
-        
-        //Progress Bars
-        barCardiology = createCustomProgressBar(25, 80, 450, 28, 25, ColorsTheme.Cardiology_Color);
-        barOrthopedics = createCustomProgressBar(25, 140, 450, 28, 22, ColorsTheme.Orthophedics_Color);
-        barEmergency = createCustomProgressBar(25, 200, 450, 28, 20, ColorsTheme.Emergency_Color);
-        barNeurology = createCustomProgressBar(25, 260, 450, 28, 18, ColorsTheme.Neurology_Color);
-        barPediatrics = createCustomProgressBar(25, 320, 450, 28, 15, ColorsTheme.Pediatrics_Color);
+        lblPatientMonitoringTitle = new JLabel("Patient Monitoring List");
+        lblPatientMonitoringTitle.setFont(FontsTheme.Title_Texts);
+        lblPatientMonitoringTitle.setForeground(ColorsTheme.Text_Black);
+        lblPatientMonitoringTitle.setBounds(15, 10, 400, 30);
+        pnlPatientMonitoring.add(lblPatientMonitoringTitle);
 
-        pnlDistribution.add(barCardiology);
-        pnlDistribution.add(barOrthopedics);
-        pnlDistribution.add(barEmergency);
-        pnlDistribution.add(barNeurology);
-        pnlDistribution.add(barPediatrics);
-        
-        
-        //Legend Items
-        JPanel leg1 = createLegendItem(30, 390, "Cardiology", ColorsTheme.Cardiology_Color);
-        JPanel leg2 = createLegendItem(250, 390, "Orthopedics", ColorsTheme.Orthophedics_Color);
-        JPanel leg3 = createLegendItem(30, 425, "Emergency", ColorsTheme.Emergency_Color);
-        JPanel leg4 = createLegendItem(250, 425, "Neurology", ColorsTheme.Neurology_Color);
-        JPanel leg5 = createLegendItem(30, 460, "Pediatrics", ColorsTheme.Pediatrics_Color);
+        String[] patientColumns = {"Patient Name", "Room / Bed", "Condition", "Last Updated"};
+        Object[][] patientRows = {
+            {"John Doe", "Ward 3 - Bed 1", "Stable", "08:30 AM"},
+            {"Mery Smith", "Ward 3 - Bed 2", "Stable", "08:45 AM"},
+            {"Robert Brown", "ICU - Bed 4", "Critical", "08:50 AM"},
+            {"Linda White", "Ward 2 - Bed 1", "Serious", "08:40 AM"},
+            {"David Wilson", "Ward 2 - Bed 2", "Stable", "08:35 AM"},
+            {"Sarah Geronimo", "Ward 1 - Bed 4", "Stable", "09:10 AM"},
+            {"Lebron James", "ICU - Bed 2", "Serious", "09:25 AM"},
+            {"Wemby Talo", "Ward 4 - Bed 3", "Stable", "09:40 AM"},
+            {"KAT Bading", "Ward 1 - Bed 1", "Critical", "09:55 AM"}
+        };
 
-        pnlDistribution.add(leg1);
-        pnlDistribution.add(leg2);
-        pnlDistribution.add(leg3);
-        pnlDistribution.add(leg4);
-        pnlDistribution.add(leg5);
-        
-        
-        //Background Image Panel
-        pnlImage = new JPanel();
-        pnlImage.setLayout(null);
-        pnlImage.setBounds(0, 0, 950, 500);
-        pnlImage.setBackground(ColorsTheme.Blue);
-        pnlMiddle.add(pnlImage);
-        
-        JLabel lblIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/hospi.png")));
-        lblIcon.setBounds(0, 0, 950, 500);
-        pnlImage.add(lblIcon);
+        DefaultTableModel patientTableModel = new DefaultTableModel(patientRows, patientColumns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tblPatientMonitoring = createSimpleTable(patientTableModel);
+        tblPatientMonitoring.getColumnModel().getColumn(0).setPreferredWidth(190);
+        tblPatientMonitoring.getColumnModel().getColumn(1).setPreferredWidth(160);
+        tblPatientMonitoring.getColumnModel().getColumn(2).setPreferredWidth(120);
+        tblPatientMonitoring.getColumnModel().getColumn(3).setPreferredWidth(130);
+
+        spPatientMonitoring = new JScrollPane(tblPatientMonitoring);
+        spPatientMonitoring.setBounds(15, 50, 620, 435);
+        spPatientMonitoring.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        pnlPatientMonitoring.add(spPatientMonitoring);
+
+        // Medication Supplies table
+        pnlMedicationSupplies = new JPanel();
+        pnlMedicationSupplies.setLayout(null);
+        pnlMedicationSupplies.setBounds(680, 0, 390, 500);
+        pnlMedicationSupplies.setBackground(ColorsTheme.Main_Card);
+        pnlMiddle.add(pnlMedicationSupplies);
+
+        lblMedicationSuppliesTitle = new JLabel("Medication Supplies");
+        lblMedicationSuppliesTitle.setFont(FontsTheme.Title_Texts);
+        lblMedicationSuppliesTitle.setForeground(ColorsTheme.Text_Black);
+        lblMedicationSuppliesTitle.setBounds(15, 10, 250, 30);
+        pnlMedicationSupplies.add(lblMedicationSuppliesTitle);
+
+        String[] supplyColumns = {"Medication", "Stock", "Status"};
+        Object[][] supplyRows = {
+            {"Paracetamol", "120", "Available"},
+            {"Amoxicillin", "45", "Available"},
+            {"Insulin", "18", "Low Stock"},
+            {"Salbutamol", "0", "Out of Stock"},
+            {"Cetirizine", "80", "Available"},
+            {"Metformin", "12", "Low Stock"},
+            {"Aspirin", "0", "Out of Stock"},
+            {"Ibuprofen", "64", "Available"},
+            {"Losartan", "25", "Available"}
+        };
+
+        DefaultTableModel supplyTableModel = new DefaultTableModel(supplyRows, supplyColumns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tblMedicationSupplies = createSimpleTable(supplyTableModel);
+        tblMedicationSupplies.getColumnModel().getColumn(0).setPreferredWidth(160);
+        tblMedicationSupplies.getColumnModel().getColumn(1).setPreferredWidth(70);
+        tblMedicationSupplies.getColumnModel().getColumn(2).setPreferredWidth(120);
+
+        spMedicationSupplies = new JScrollPane(tblMedicationSupplies);
+        spMedicationSupplies.setBounds(15, 50, 360, 435);
+        spMedicationSupplies.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        pnlMedicationSupplies.add(spMedicationSupplies);
+
+        // Quick Actions panel
+        pnlQuickActions = new JPanel();
+        pnlQuickActions.setLayout(null);
+        pnlQuickActions.setBounds(1100, 0, 380, 500);
+        pnlQuickActions.setBackground(ColorsTheme.Main_Card);
+        pnlMiddle.add(pnlQuickActions);
+
+        lblQuickActionsTitle = new JLabel("Quick Actions");
+        lblQuickActionsTitle.setFont(FontsTheme.Title_Texts);
+        lblQuickActionsTitle.setForeground(ColorsTheme.Text_Black);
+        lblQuickActionsTitle.setBounds(30, 20, 250, 35);
+        pnlQuickActions.add(lblQuickActionsTitle);
+
+        pnlQuickActions.add(createQuickActionButton("Add Patient", () -> new AddPatientDialog().setVisible(true), 60, 80, ColorsTheme.Blue, ColorsTheme.Text_White));
+        pnlQuickActions.add(createQuickActionButton("Appointments", () -> new NewAppointmentDialog().setVisible(true), 60, 155, ColorsTheme.Orange, ColorsTheme.Text_White));
+        pnlQuickActions.add(createQuickActionButton("Medical Records", () -> new AddMedicalRecordDialog().setVisible(true), 60, 230, ColorsTheme.Green, ColorsTheme.Text_White));
+        pnlQuickActions.add(createQuickActionButton("Medication", () -> new NewPharmacyDialog().setVisible(true), 60, 305, ColorsTheme.Top_Line, ColorsTheme.Text_White));
     }
 
-     //Creates a customized progress bar for department distribution.
-    private JProgressBar createCustomProgressBar(int x, int y, int width, int height, int value, Color filledColor) {
-        
-        JProgressBar bar = new JProgressBar(0, 100);
-        bar.setBounds(x, y, width, height);
-        bar.setValue(value);
-        bar.setStringPainted(true);
-        bar.setFont(FontsTheme.Progress_Bar_Font);
-        bar.setForeground(filledColor);
-        bar.setBackground(ColorsTheme.Main_Card);
-        bar.setBorderPainted(false);
-
-        return bar;
+    private JButton createQuickActionButton(String text, Runnable action, int x, int y, Color background, Color foreground) {
+        JButton button = new JButton(text);
+        button.setBounds(x, y, 260, 55);
+        button.setFont(FontsTheme.Plain_Texts);
+        button.setForeground(foreground);
+        button.setBackground(background);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.addActionListener(e -> action.run());
+        return button;
     }
 
-    //Creates a legend item (color box + label) for the distribution chart.
-    private JPanel createLegendItem(int x, int y, String text, Color color) {
-        JPanel item = new JPanel();
-        item.setLayout(null);
-        item.setOpaque(false);
-        item.setBounds(x, y, 300, 28);
-
-        //Color indicator square
-        JPanel cube = new JPanel();
-        cube.setBackground(color);
-        cube.setBounds(0, 6, 16, 16);
-        item.add(cube);
-
-        JLabel label = new JLabel(text);
-        label.setFont(FontsTheme.Info_Texts);
-        label.setBounds(20, 2, 260, 24);
-        item.add(label);
-
-        return item;
+    private JTable createSimpleTable(DefaultTableModel model) {
+        JTable table = new JTable(model);
+        table.setFont(FontsTheme.Info_Texts);
+        table.setForeground(ColorsTheme.Text_Black);
+        table.setBackground(ColorsTheme.Main_Card);
+        table.setRowHeight(35);
+        table.setGridColor(Color.LIGHT_GRAY);
+        table.setShowGrid(true);
+        table.setSelectionBackground(ColorsTheme.Search_fg);
+        table.setSelectionForeground(ColorsTheme.Text_Black);
+        table.getTableHeader().setFont(FontsTheme.Bold);
+        table.getTableHeader().setForeground(ColorsTheme.Text_White);
+        table.getTableHeader().setBackground(ColorsTheme.Header);
+        table.getTableHeader().setReorderingAllowed(false);
+        return table;
     }
+
 }
