@@ -5,6 +5,9 @@ import constants.ColorsTheme;
 import constants.FontsTheme;
 import constants.TablePanel;
 import dialogs.NewStaffDialog;
+import dialogs.EditStaffDialog;
+import dialogs.ViewStaffDialog;
+import dialogs.DeleteStaffDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -24,8 +27,8 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
     private TablePanel tblEmployee;
     private JLabel lblDetails, lblStaff;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd;
-    private static final String[] columns = {"Staff ID", "Name", "Role", "Department", "Status", "Patient", "Actions"};
+    private JButton btnSearch, btnRefresh, btnAdd, btnView, btnEdit, btnDelete;
+    private static final String[] columns = {"Staff ID", "Name", "Role", "Department", "Status", "Patient"};
     
     public StaffManagementPanel() {
         setLayout(null);
@@ -46,13 +49,40 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         //Button for adding new staff
-        btnAdd = new JButton("+  Add Staff");
-        btnAdd.setBounds(1280, 40, 250, 50); 
+        btnAdd = new JButton("+ Add Staff");
+        btnAdd.setBounds(830, 40, 150, 45); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
         add(btnAdd);
+
+        //Button for viewing staff
+        btnView = new JButton("View Staff");
+        btnView.setBounds(995, 40, 150, 45); 
+        btnView.setFont(FontsTheme.Buttons);
+        btnView.setBackground(ColorsTheme.Header);
+        btnView.setForeground(ColorsTheme.Text_White);
+        btnView.setFocusPainted(false);
+        add(btnView);
+
+        //Button for editing staff
+        btnEdit = new JButton("Edit Staff");
+        btnEdit.setBounds(1160, 40, 150, 45); 
+        btnEdit.setFont(FontsTheme.Buttons);
+        btnEdit.setBackground(ColorsTheme.Update_Pending);
+        btnEdit.setForeground(ColorsTheme.Text_Black);
+        btnEdit.setFocusPainted(false);
+        add(btnEdit);
+
+        //Button for deleting staff
+        btnDelete = new JButton("Delete Staff");
+        btnDelete.setBounds(1325, 40, 150, 45); 
+        btnDelete.setFont(FontsTheme.Buttons);
+        btnDelete.setBackground(ColorsTheme.Delete_Urgent);
+        btnDelete.setForeground(ColorsTheme.Text_White);
+        btnDelete.setFocusPainted(false);
+        add(btnDelete);
         
         //Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by staff name or ID...");
@@ -101,6 +131,9 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         
         //ActionListeners
         btnAdd.addActionListener(this);
+        btnView.addActionListener(this);
+        btnEdit.addActionListener(this);
+        btnDelete.addActionListener(this);
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
     }
@@ -119,6 +152,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         pnlMiddle.repaint();
         pnlMiddle.revalidate();
     }
+
 
     private Object[][] fetchStaff(String queryTerm) {
         List<Object[]> rowsList = new ArrayList<>();
@@ -152,14 +186,13 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
                 String dept = result.getString("department");
                 String status = result.getString("status");
                 String patient = "None"; // Assuming this is linked elsewhere
-                String actions = ""; 
 
                 countTotal++;
                 if ("Active".equalsIgnoreCase(status)) countOnDuty++;
                 else if ("Off Duty".equalsIgnoreCase(status)) countOffDuty++;
                 else if ("On Leave".equalsIgnoreCase(status)) countOnLeave++;
 
-                rowsList.add(new Object[]{empID, name, role, dept, status, patient, actions});
+                rowsList.add(new Object[]{empID, name, role, dept, status, patient});
             }
 
         } catch (SQLException ex) {
@@ -203,6 +236,38 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
             NewStaffDialog dialog = new NewStaffDialog();
             dialog.setVisible(true);
             updateTable("Employee Records", ""); 
+        }
+        else if (e.getSource() == btnView) {
+            int selectedRow = tblEmployee.getTable().getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a staff member to view.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String empId = tblEmployee.getTable().getValueAt(selectedRow, 0).toString();
+            ViewStaffDialog viewDialog = new ViewStaffDialog(empId);
+            viewDialog.setVisible(true);
+        }
+        else if (e.getSource() == btnEdit) {
+            int selectedRow = tblEmployee.getTable().getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a staff member to edit.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String empId = tblEmployee.getTable().getValueAt(selectedRow, 0).toString();
+            EditStaffDialog editDialog = new EditStaffDialog(empId);
+            editDialog.setVisible(true);
+            updateTable("Employee Records", txtSearch.getText().trim().equals("Search by staff name or ID...") ? "" : txtSearch.getText().trim());
+        }
+        else if (e.getSource() == btnDelete) {
+            int selectedRow = tblEmployee.getTable().getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a staff member to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String empId = tblEmployee.getTable().getValueAt(selectedRow, 0).toString();
+            DeleteStaffDialog deleteDialog = new DeleteStaffDialog(empId);
+            deleteDialog.setVisible(true);
+            updateTable("Employee Records", txtSearch.getText().trim().equals("Search by staff name or ID...") ? "" : txtSearch.getText().trim());
         }
         else if (e.getSource() == btnSearch) {
             String searchKeyword = txtSearch.getText().trim();

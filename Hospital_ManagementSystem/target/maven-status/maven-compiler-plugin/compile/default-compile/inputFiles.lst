@@ -13,10 +13,13 @@ C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_Managem
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddMedicalRecordDialog.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddPatientDialog.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\AddPrescriptionDialog.java
+C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\DeleteStaffDialog.java
+C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\EditStaffDialog.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewAppointmentDialog.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewPharmacyDialog.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewReportDialog.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\NewStaffDialog.java
+C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\dialogs\ViewStaffDialog.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\AdminDashboardPanel.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\AppointmentsPanel.java
 C:\Carlo\OOP-HospitalManagementSystem\Hospital_ManagementSystem\Hospital_ManagementSystem\src\main\java\panels\DoctorDashboardPanel.java

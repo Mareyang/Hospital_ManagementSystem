@@ -2,9 +2,11 @@ panels\PatientsPanel.class
 controls\NurseDashboard$2.class
 dialogs\NewReportDialog.class
 constants\TablePanel.class
+dialogs\DeleteStaffDialog.class
 panels\AdminDashboardPanel.class
 panels\AppointmentsPanel.class
 constants\ColorsTheme.class
+dialogs\ViewStaffDialog.class
 panels\NurseDashboardPanel.class
 controls\DoctorDashboard$1.class
 dialogs\AddPrescriptionDialog.class
@@ -33,3 +35,4 @@ controls\AdminDashboard$1.class
 constants\PanelCard.class
 constants\FontsTheme.class
 dialogs\AddMedicalRecordDialog.class
+dialogs\EditStaffDialog.class
