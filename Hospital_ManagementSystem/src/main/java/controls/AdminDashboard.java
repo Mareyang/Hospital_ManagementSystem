@@ -25,7 +25,7 @@ import java.awt.*;
  * @author Arabella
  */
 public class AdminDashboard extends JFrame implements ActionListener {
-    
+        
     private JPanel pnlSide, pnlTop, pnlContainer, pnlLogo;
     private CardLayout cardLayout;
     private JButton btnDashboard, btnPatients, btnPharmacy, btnStaff, btnReports, btnSettings, btnLogout;

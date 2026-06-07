@@ -2,9 +2,11 @@ panels\PatientsPanel.class
 controls\NurseDashboard$2.class
 dialogs\NewReportDialog.class
 constants\TablePanel.class
+dialogs\DeleteStaffDialog.class
 panels\AdminDashboardPanel.class
 panels\AppointmentsPanel.class
 constants\ColorsTheme.class
+dialogs\ViewStaffDialog.class
 panels\NurseDashboardPanel.class
 controls\DoctorDashboard$1.class
 dialogs\AddPrescriptionDialog.class
@@ -19,6 +21,7 @@ controls\NurseDashboard.class
 controls\DoctorDashboard$2.class
 panels\ReportsPanel.class
 panels\DoctorDashboardPanel.class
+controls\AdminDashboard.class
 dialogs\NewAppointmentDialog.class
 controls\AdminDashboard$2.class
 dialogs\NewPharmacyDialog.class
@@ -28,6 +31,8 @@ controls\NurseDashboard$1.class
 dialogs\AddPatientDialog.class
 controls\LoginPage.class
 panels\PharmacyPanel.class
+controls\AdminDashboard$1.class
 constants\PanelCard.class
 constants\FontsTheme.class
 dialogs\AddMedicalRecordDialog.class
+dialogs\EditStaffDialog.class
