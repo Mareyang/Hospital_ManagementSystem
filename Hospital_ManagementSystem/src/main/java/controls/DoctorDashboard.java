@@ -117,7 +117,7 @@ public class DoctorDashboard extends JFrame implements ActionListener {
         // Add the different screens (Pages)
         pnlContainer.add(new DoctorDashboardPanel(), "dashboard");
         pnlContainer.add(new PatientsPanel(), "patients");
-        pnlContainer.add(new AppointmentsPanel(), "appointments");
+        pnlContainer.add(new AppointmentsPanel(false), "appointments");
         pnlContainer.add(new MedicalRecordsPanel(), "medicalRecords");
         pnlContainer.add(new PrescriptionsPanel(), "prescriptions");
         
