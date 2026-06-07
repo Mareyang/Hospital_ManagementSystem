@@ -174,13 +174,16 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
             if (hasSearchFilter) {
+                String cleanSearch = queryTerm.replace("EMP-", "").replace("emp-", "");
+                
                 statement.setString(1, "%" + queryTerm + "%");
-                statement.setString(2, "%" + queryTerm + "%");
+                statement.setString(2, "%" + cleanSearch + "%");
             }
 
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                String empID = result.getString("employee_id");
+                int rawId = result.getInt("employee_id");
+                String empID = String.format("EMP-%03d", rawId);
                 String name = result.getString("full_name");
                 String role = result.getString("role");
                 String dept = result.getString("department");

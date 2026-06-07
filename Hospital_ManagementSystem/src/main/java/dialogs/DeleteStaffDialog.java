@@ -317,11 +317,13 @@ public class DeleteStaffDialog extends JDialog implements ActionListener {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setString(1, currentEmpId);
+            String cleanId = currentEmpId.replace("EMP-", "");
+            stmt.setString(1, cleanId);
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
-                txtEmpID.setText(rs.getString("employee_id"));
+                int rawId = rs.getInt("employee_id");
+                txtEmpID.setText(String.format("EMP-%03d", rawId));
                 txtName.setText(rs.getString("full_name"));
                 txtBday.setText(rs.getString("birthday"));
                 
@@ -423,7 +425,8 @@ public class DeleteStaffDialog extends JDialog implements ActionListener {
         } else if (e.getSource() == btnConfirm) {
             try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
                  PreparedStatement stmt = conn.prepareStatement("DELETE FROM hospital_staff WHERE employee_id = ?")) {
-                stmt.setString(1, currentEmpId);
+                String cleanId = currentEmpId.replace("EMP-", "");
+                stmt.setString(1, cleanId);
                 int rows = stmt.executeUpdate();
                 if (rows > 0) {
                     JOptionPane.showMessageDialog(this, "Staff record deleted successfully!", "Staff Deleted", JOptionPane.INFORMATION_MESSAGE);

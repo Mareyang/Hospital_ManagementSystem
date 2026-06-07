@@ -308,11 +308,13 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setString(1, currentEmpId);
+            String cleanId = currentEmpId.replace("EMP-", "");
+            stmt.setString(1, cleanId);
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
-                txtEmpID.setText(rs.getString("employee_id"));
+                int rawId = rs.getInt("employee_id");
+                txtEmpID.setText(String.format("EMP-%03d", rawId));
                 txtName.setText(rs.getString("full_name"));
                 txtBday.setText(rs.getString("birthday"));
                 
