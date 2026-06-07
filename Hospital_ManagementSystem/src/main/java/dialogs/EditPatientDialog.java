@@ -36,7 +36,7 @@ public class EditPatientDialog extends JFrame implements ActionListener{
     private String currentPatientId;
    
     public EditPatientDialog(String patientId) {
-        this.currentPatientId = patientId;
+        this.currentPatientId = patientId.replace("PAT-", "");
         
         setSize(1050, 550);
         setLayout(null);

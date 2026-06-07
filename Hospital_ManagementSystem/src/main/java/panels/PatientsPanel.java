@@ -6,12 +6,11 @@ import constants.FontsTheme;
 import constants.PanelCard;
 import constants.TablePanel;
 import dialogs.DeletePatientDialog;
-import dialogs.DeleteStaffDialog;
 import dialogs.EditPatientDialog;
-import dialogs.EditStaffDialog;
-import dialogs.NewStaffDialog;
+//import dialogs.EditStaffDialog;
+//import dialogs.NewStaffDialog;
 import dialogs.ViewPatientDialog;
-import dialogs.ViewStaffDialog;
+//import dialogs.ViewStaffDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -260,21 +259,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == btnAdd) {
-//            AddPatientDialog patient = new AddPatientDialog();
-//            patient.setVisible(true); 
-//            updateTable("Recent Admissions", ""); 
-//        }
-//        else if (e.getSource() == btnSearch) {
-//            String searchKeyword = txtSearch.getText().trim();
-//            updateTable("Search Results", searchKeyword);
-//        }
-//        else if (e.getSource() == btnRefresh) {
-//            txtSearch.setText("Search by patient name or patient id...");
-//            updateTable("Recent Admissions", "");
-//        }
-
-if (e.getSource() == btnAdd) {
+        if (e.getSource() == btnAdd) {
             AddPatientDialog dialog = new AddPatientDialog();
             dialog.setVisible(true);
             updateTable("Patient Records", ""); 

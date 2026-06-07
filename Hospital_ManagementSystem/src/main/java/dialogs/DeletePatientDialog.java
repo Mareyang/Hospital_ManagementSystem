@@ -42,7 +42,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
     private String currentPatientId;
    
     public DeletePatientDialog(String patientId) {
-        this.currentPatientId = patientId;
+        this.currentPatientId = patientId.replace("PAT-", "");
         
         setSize(1050, 550);
         setLayout(null);
@@ -104,6 +104,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         txtID.setBounds(220, 40, 230, 30); 
         txtID.setFont(FontsTheme.Plain_Texts); 
         txtID.setForeground(ColorsTheme.Text_Black);
+        txtID.setEditable(false);
         pnlContent.add(txtID);
         
         lblFirst = new JLabel("First Name : "); 
@@ -116,6 +117,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         txtFirst.setBounds(220, 80, 230, 30); 
         txtFirst.setFont(FontsTheme.Plain_Texts); 
         txtFirst.setForeground(ColorsTheme.Text_Black);
+        txtFirst.setEditable(false);
         pnlContent.add(txtFirst);
         
         lblLast = new JLabel("Last Name : "); 
@@ -128,6 +130,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         txtLast.setBounds(220, 120, 230, 30);
         txtLast.setFont(FontsTheme.Plain_Texts); 
         txtLast.setForeground(ColorsTheme.Text_Black);
+        txtLast.setEditable(false);
         pnlContent.add(txtLast);
         
         lblAge = new JLabel("Age : "); 
@@ -140,6 +143,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         txtAge.setBounds(220, 160, 230, 30);
         txtAge.setFont(FontsTheme.Plain_Texts); 
         txtAge.setForeground(ColorsTheme.Text_Black);
+        txtAge.setEditable(false);
         pnlContent.add(txtAge);
         
         lblBirth = new JLabel("Birthday : "); 
@@ -152,6 +156,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         txtBirth.setBounds(220, 200, 230, 30);
         txtBirth.setFont(FontsTheme.Plain_Texts); 
         txtBirth.setForeground(ColorsTheme.Text_Black);
+        txtBirth.setEditable(false);
         pnlContent.add(txtBirth);
         
         lblGender = new JLabel("Gender : "); 
@@ -165,12 +170,14 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         cmbGender.setFont(FontsTheme.Plain_Texts); 
         cmbGender.setForeground(ColorsTheme.Text_Black); 
         cmbGender.setBackground(ColorsTheme.Main_Card);
+        cmbGender.setEnabled(false);
         pnlContent.add(cmbGender);
         
         lblNumber = new JLabel("Contact Number : "); 
         lblNumber.setBounds(510, 40, 200, 30); 
         lblNumber.setFont(FontsTheme.Plain_Texts); 
         lblNumber.setForeground(ColorsTheme.Text_Black); 
+        txtNumber.setEditable(false);
         pnlContent.add(lblNumber);
         
         txtNumber = new JTextField(""); 
@@ -189,6 +196,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         txtAddress.setBounds(690, 80, 230, 30); 
         txtAddress.setFont(FontsTheme.Plain_Texts); 
         txtAddress.setForeground(ColorsTheme.Text_Black);
+        txtAddress.setEditable(false);
         pnlContent.add(txtAddress);
         
         lblEmail = new JLabel("Email Address : "); 
@@ -201,6 +209,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         txtEmail.setBounds(690, 120, 230, 30); 
         txtEmail.setFont(FontsTheme.Plain_Texts); 
         txtEmail.setForeground(ColorsTheme.Text_Black);
+        txtEmail.setEditable(false);
         pnlContent.add(txtEmail);
         
         lblMarital = new JLabel("Marital Status : "); 
@@ -214,6 +223,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         cmbMarital.setFont(FontsTheme.Plain_Texts); 
         cmbMarital.setForeground(ColorsTheme.Text_Black); 
         cmbMarital.setBackground(ColorsTheme.Text_White);
+        cmbMarital.setEnabled(false);
         pnlContent.add(cmbMarital);
         
         lblStatus = new JLabel("Patient Status : "); 
@@ -227,6 +237,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         cmbStatus.setFont(FontsTheme.Plain_Texts); 
         cmbStatus.setForeground(ColorsTheme.Text_Black); 
         cmbStatus.setBackground(ColorsTheme.Text_White);
+        cmbStatus.setEnabled(false);
         pnlContent.add(cmbStatus);
         
         lblRoom = new JLabel("Room Number : "); 
@@ -240,6 +251,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
         cmbRoom.setFont(FontsTheme.Plain_Texts); 
         cmbRoom.setForeground(ColorsTheme.Text_Black); 
         cmbRoom.setBackground(ColorsTheme.Text_White);
+        cmbRoom.setEnabled(false);
         pnlContent.add(cmbRoom);
 
         
