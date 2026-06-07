@@ -7,41 +7,46 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
 
-public class NewStaffDialog extends JDialog implements ActionListener {
+public class DeleteStaffDialog extends JDialog implements ActionListener {
       
     private JPanel pnlForm;
     private JLabel lblDialogTitle, lblDialogDetails, lblEmpID, lblName, lblBday, lblGen, lblEmail, lblContact, 
             lblMarital, lblDep, lblRole, lblHired, lblOff, lblStatus, lblPR, lblCName, lblSName, lblLine, lblSRole, lblSRate, lblCS;
     private JTextField txtEmpID, txtName, txtContact, txtEmail, txtBday, txtDep, txtRole, txtHired, txtCName, txtSName;
-    private JButton btnStaff, btnPerf, btnSave, btnCancel;
+    private JButton btnStaff, btnPerf, btnConfirm, btnCancel;
     private JComboBox<String> cmbGen, cmbMarital, cmbStats, cmbOff, cmbSRole, cmbSRate;
     private JTextArea txaComs;
     private JScrollPane scrollComs;
     
     private static final String[] gender = {" ", "Male", "Female", "Prefer not to say"};
     private static final String[] days = {" ", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-    private static final String[] status = {" ", "Active", "On Leave", "Contract"};
+    private static final String[] status = {" ", "Active", "On Leave", "Contract", "Off Duty"};
     private static final String[] marital = {" ", "Single", "Married", "Divorced", "Widowed"};
     private static final String[] roles = {" ", "Doctor", "Nurse", "Admin"};
     private static final String[] rates = {" ", "5 - Excellent", "4 - Very Good", "3 - Average", "2 - Below Average", "1- Poor"};
     
-    public NewStaffDialog() {
+    private String currentEmpId;
+
+    public DeleteStaffDialog(String empId) {
+        this.currentEmpId = empId;
+        
         setSize(1050, 550);
         setLayout(null);
         setLocationRelativeTo(null);
         setModal(true);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
         
-        lblDialogTitle = new JLabel("Staff Profile Entry");
+        lblDialogTitle = new JLabel("Delete Staff Profile");
         lblDialogTitle.setBounds(30, 10, 300, 35);
         lblDialogTitle.setFont(FontsTheme.Bold_Texts);
-        lblDialogTitle.setForeground(ColorsTheme.Text_Black);
+        lblDialogTitle.setForeground(ColorsTheme.Delete_Urgent);
         add(lblDialogTitle);
 
-        lblDialogDetails = new JLabel("Register new hospital personnel and configure departmental assignments.");
+        lblDialogDetails = new JLabel("Review staff information below. Are you sure you want to delete this personnel record?");
         lblDialogDetails.setBounds(30, 40, 650, 30);
         lblDialogDetails.setFont(FontsTheme.Plain_Texts);
         lblDialogDetails.setForeground(ColorsTheme.Text_Gray);
@@ -69,13 +74,13 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         pnlForm.setBackground(ColorsTheme.Main_Card);
         add(pnlForm);
         
-        btnSave = new JButton("Save Staff Profile");
-        btnSave.setBounds(690, 450, 300, 30);
-        btnSave.setFont(FontsTheme.Buttons);
-        btnSave.setForeground(ColorsTheme.Text_White);
-        btnSave.setBackground(ColorsTheme.Green);
-        btnSave.setFocusPainted(false);
-        add(btnSave);
+        btnConfirm = new JButton("Confirm Delete");
+        btnConfirm.setBounds(690, 450, 300, 30);
+        btnConfirm.setFont(FontsTheme.Buttons);
+        btnConfirm.setForeground(ColorsTheme.Text_White);
+        btnConfirm.setBackground(ColorsTheme.Delete_Urgent);
+        btnConfirm.setFocusPainted(false);
+        add(btnConfirm);
 
         btnCancel = new JButton("Cancel");
         btnCancel.setBounds(480, 450, 200, 30);
@@ -87,10 +92,11 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         
         btnStaff.addActionListener(this);
         btnPerf.addActionListener(this);
+        btnConfirm.addActionListener(this);
         btnCancel.addActionListener(this);
-        btnSave.addActionListener(this);
         
         initializeForms();
+        loadStaffData();
         showStaffInfo();
     }
         
@@ -105,6 +111,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtEmpID.setBounds(220, 40, 230, 30);
         txtEmpID.setFont(FontsTheme.Plain_Texts);
         txtEmpID.setForeground(ColorsTheme.Text_Black);
+        txtEmpID.setEditable(false); 
 
         lblName = new JLabel("Full Name :");
         lblName.setBounds(40, 80, 170, 30);
@@ -115,6 +122,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtName.setBounds(220, 80, 230, 30);
         txtName.setFont(FontsTheme.Plain_Texts);
         txtName.setForeground(ColorsTheme.Text_Black);
+        txtName.setEditable(false);
 
         lblBday = new JLabel("Birthday :");
         lblBday.setBounds(40, 120, 170, 30);
@@ -125,6 +133,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtBday.setBounds(220, 120, 230, 30);
         txtBday.setFont(FontsTheme.Plain_Texts);
         txtBday.setForeground(ColorsTheme.Text_Black);
+        txtBday.setEditable(false);
 
         lblGen = new JLabel("Gender :");
         lblGen.setBounds(40, 160, 170, 30);
@@ -136,6 +145,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbGen.setFont(FontsTheme.Plain_Texts);
         cmbGen.setForeground(ColorsTheme.Text_Black);
         cmbGen.setBackground(ColorsTheme.Main_Card);
+        cmbGen.setEnabled(false);
         
         lblEmail = new JLabel("Email Address: ");
         lblEmail.setBounds(40, 200, 170, 30);
@@ -146,6 +156,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtEmail.setBounds(220, 200, 230, 30);
         txtEmail.setFont(FontsTheme.Plain_Texts);
         txtEmail.setForeground(ColorsTheme.Text_Black);
+        txtEmail.setEditable(false);
 
         lblContact = new JLabel("Contact Number :");
         lblContact.setBounds(40, 240, 170, 30);
@@ -156,6 +167,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtContact.setBounds(220, 240, 230, 30);
         txtContact.setFont(FontsTheme.Plain_Texts);
         txtContact.setForeground(ColorsTheme.Text_Black);
+        txtContact.setEditable(false);
         
         lblMarital = new JLabel("Marital Status :");
         lblMarital.setBounds(540, 40, 170, 30);
@@ -167,6 +179,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbMarital.setFont(FontsTheme.Plain_Texts);
         cmbMarital.setForeground(ColorsTheme.Text_Black);
         cmbMarital.setBackground(ColorsTheme.Main_Card);
+        cmbMarital.setEnabled(false);
 
         lblDep = new JLabel("Department :");
         lblDep.setBounds(540, 80, 170, 30);
@@ -177,6 +190,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtDep.setBounds(720, 80, 180, 30);
         txtDep.setFont(FontsTheme.Plain_Texts);
         txtDep.setForeground(ColorsTheme.Text_Black);
+        txtDep.setEditable(false);
 
         lblRole = new JLabel("Role :");
         lblRole.setBounds(540, 120, 170, 30);
@@ -187,6 +201,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtRole.setBounds(720, 120, 180, 30);
         txtRole.setFont(FontsTheme.Plain_Texts);
         txtRole.setForeground(ColorsTheme.Text_Black);
+        txtRole.setEditable(false);
 
         lblHired = new JLabel("Hire Date :");
         lblHired.setBounds(540, 160, 170, 30);
@@ -197,6 +212,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtHired.setBounds(720, 160, 180, 30);
         txtHired.setFont(FontsTheme.Plain_Texts);
         txtHired.setForeground(ColorsTheme.Text_Black);
+        txtHired.setEditable(false);
 
         lblOff = new JLabel("Day Off :");
         lblOff.setBounds(540, 200, 170, 30);
@@ -208,6 +224,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbOff.setFont(FontsTheme.Plain_Texts);
         cmbOff.setForeground(ColorsTheme.Text_Black);
         cmbOff.setBackground(ColorsTheme.Main_Card);
+        cmbOff.setEnabled(false);
 
         lblStatus = new JLabel("Status :");
         lblStatus.setBounds(540, 240, 170, 30);
@@ -219,6 +236,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbStats.setFont(FontsTheme.Plain_Texts);
         cmbStats.setForeground(ColorsTheme.Text_Black);
         cmbStats.setBackground(ColorsTheme.Main_Card);
+        cmbStats.setEnabled(false);
 
         // --- PERFORMANCE AND EVALUATION SUB-FIELDS ---
         lblPR = new JLabel("Performance Rate");
@@ -235,6 +253,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtCName.setBounds(250, 50, 250, 30);
         txtCName.setFont(FontsTheme.Plain_Texts);
         txtCName.setForeground(ColorsTheme.Text_Black);
+        txtCName.setEditable(false);
           
         lblLine = new JLabel("Staff Details");
         lblLine.setBounds(70, 100, 380, 30);
@@ -250,6 +269,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtSName.setBounds(250, 150, 250, 30);
         txtSName.setFont(FontsTheme.Plain_Texts);
         txtSName.setForeground(ColorsTheme.Text_Black);
+        txtSName.setEditable(false);
         
         lblSRole = new JLabel("Role : ");
         lblSRole.setBounds(40, 180, 170, 50);
@@ -261,6 +281,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbSRole.setFont(FontsTheme.Plain_Texts);
         cmbSRole.setForeground(ColorsTheme.Text_Black);
         cmbSRole.setBackground(ColorsTheme.Main_Card);
+        cmbSRole.setEnabled(false);
         
         lblSRate = new JLabel("Rate (1-5) : ");
         lblSRate.setBounds(40, 220, 170, 50);
@@ -272,6 +293,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbSRate.setFont(FontsTheme.Plain_Texts);
         cmbSRate.setForeground(ColorsTheme.Text_Black);
         cmbSRate.setBackground(ColorsTheme.Main_Card);
+        cmbSRate.setEnabled(false);
         
         lblCS = new JLabel("Comments & Suggestions");
         lblCS.setBounds(540, 10, 550, 30);
@@ -280,7 +302,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         
         txaComs = new JTextArea(" ");
         txaComs.setText("Write here...");
-        txaComs.setEditable(true);
+        txaComs.setEditable(false);
         txaComs.setFont(FontsTheme.Dialog_Texts);
         txaComs.setForeground(ColorsTheme.Text_Gray);
         txaComs.setLineWrap(true);
@@ -288,6 +310,60 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         
         scrollComs = new JScrollPane(txaComs);
         scrollComs.setBounds(550, 50, 350, 200);
+    }
+
+    private void loadStaffData() {
+        String sql = "SELECT * FROM hospital_staff WHERE employee_id = ?";
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            String cleanId = currentEmpId.replace("EMP-", "");
+            stmt.setString(1, cleanId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                int rawId = rs.getInt("employee_id");
+                txtEmpID.setText(String.format("EMP-%03d", rawId));
+                txtName.setText(rs.getString("full_name"));
+                txtBday.setText(rs.getString("birthday"));
+                
+                String gen = rs.getString("gender");
+                if (gen != null) cmbGen.setSelectedItem(gen);
+                
+                txtEmail.setText(rs.getString("email"));
+                txtContact.setText(rs.getString("contact_number"));
+                
+                String maritalStats = rs.getString("marital_status");
+                if (maritalStats != null) cmbMarital.setSelectedItem(maritalStats);
+                
+                txtDep.setText(rs.getString("department"));
+                txtRole.setText(rs.getString("role"));
+                txtHired.setText(rs.getString("hire_date"));
+                
+                String off = rs.getString("day_off");
+                if (off != null) cmbOff.setSelectedItem(off);
+                
+                String stats = rs.getString("status");
+                if (stats != null) cmbStats.setSelectedItem(stats);
+                
+                txtCName.setText(rs.getString("client_name"));
+                txtSName.setText(rs.getString("eval_staff_name"));
+                
+                String evalRole = rs.getString("eval_role");
+                if (evalRole != null) cmbSRole.setSelectedItem(evalRole);
+                
+                String perfRate = rs.getString("performance_rate");
+                if (perfRate != null) cmbSRate.setSelectedItem(perfRate);
+                
+                String comments = rs.getString("comments");
+                if (comments != null && !comments.isEmpty()) {
+                    txaComs.setText(comments);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to load staff data:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void showStaffInfo() {
@@ -346,70 +422,19 @@ public class NewStaffDialog extends JDialog implements ActionListener {
             showPerfRate();
         } else if (e.getSource() == btnCancel) {
             dispose();
-        } else if (e.getSource() == btnSave) {
-            // Extract core fields
-            String empID = txtEmpID.getText().trim();
-            String fullName = txtName.getText().trim();
-            String birthday = txtBday.getText().trim();
-            String gen = cmbGen.getSelectedItem().toString();
-            String email = txtEmail.getText().trim();
-            String contact = txtContact.getText().trim();
-            String maritalStatus = cmbMarital.getSelectedItem().toString();
-            String department = txtDep.getText().trim();
-            String role = txtRole.getText().trim();
-            String hireDate = txtHired.getText().trim();
-            String dayOff = cmbOff.getSelectedItem().toString();
-            String statusValue = cmbStats.getSelectedItem().toString();
-            
-            // Extract evaluation fields
-            String clientName = txtCName.getText().trim();
-            String evalStaffName = txtSName.getText().trim();
-            String evalRole = cmbSRole.getSelectedItem().toString();
-            String perfRate = cmbSRate.getSelectedItem().toString();
-            String comments = txaComs.getText().trim();
-            
-            if (comments.equals("Write here...")) {
-                comments = "";
-            }
-
-            // Simple validation structure mimicking template
-            if (empID.isEmpty() || fullName.isEmpty() || role.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Employee ID, Full Name, and Role are required.", "Validation Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            // Database Save Implementation matching template mechanics
-            String sql = "INSERT INTO hospital_staff (employee_id, full_name, birthday, gender, email, contact_number, marital_status, department, role, hire_date, day_off, status, client_name, eval_staff_name, eval_role, performance_rate, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+        } else if (e.getSource() == btnConfirm) {
             try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-                 PreparedStatement insert = conn.prepareStatement(sql)) {
-                
-                insert.setString(1, empID);
-                insert.setString(2, fullName);
-                insert.setString(3, birthday);
-                insert.setString(4, gen);
-                insert.setString(5, email);
-                insert.setString(6, contact);
-                insert.setString(7, maritalStatus);
-                insert.setString(8, department);
-                insert.setString(9, role);
-                insert.setString(10, hireDate);
-                insert.setString(11, dayOff);
-                insert.setString(12, statusValue);
-                insert.setString(13, clientName);
-                insert.setString(14, evalStaffName);
-                insert.setString(15, evalRole);
-                insert.setString(16, perfRate);
-                insert.setString(17, comments);
-
-                int rows = insert.executeUpdate();
+                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM hospital_staff WHERE employee_id = ?")) {
+                String cleanId = currentEmpId.replace("EMP-", "");
+                stmt.setString(1, cleanId);
+                int rows = stmt.executeUpdate();
                 if (rows > 0) {
-                    JOptionPane.showMessageDialog(this, "Staff record added successfully!", "Staff Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Staff record deleted successfully!", "Staff Deleted", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Database write operation failed:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Failed to delete staff:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dialogs;
 
 import constants.ColorsTheme;
@@ -9,11 +5,11 @@ import constants.FontsTheme;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-/**
- *
- * 
- */
 public class NewAppointmentDialog extends JDialog implements ActionListener {
     
     private JLabel lblTitle, lblSubtitle, lblDate, lblTime, lblID, lblName, lblDepart, lblDoc, lblVisit, lblRoom, lblNote;
@@ -24,6 +20,10 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
     private JButton btnAppoint, btnCancel, btnConfirm;
     private JPanel pnlContent;
     
+    private static final String[] departs = {" ", "Emergency(ER)", "Laboratory", "Cardiology", "Pediatrics ", "Surgery", "OB-GYN", "Radiology"};
+    private static final String[] doctors = {" ", "Dr. Juan dela Cruz", "Dr. Maria Santos", "Dr. Ricardo Reyes", "Dr. Elena Garcia", "Dr. Roberto Castro"};
+    private static final String[] visits = {" ", "New Consultation", "Follow-up Visit", "Routine Check-up", "Emergency Visit", "Diagnostic/Lab Test"};
+    private static final String[] rooms = {" ", "ER-01", "ER-02", "LAB-01", "LAB-02", "RM-201", "RM-202", "XRAY-01", "ICU-01", "ICU-02", "OR-01"};
     
     
     public NewAppointmentDialog() {
@@ -52,14 +52,12 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         btnAppoint.setBackground(ColorsTheme.Header);
         btnAppoint.setFocusPainted(false);
         add(btnAppoint);
-       
         
         pnlContent = new JPanel();
         pnlContent.setLayout(null);
         pnlContent.setBounds(40, 140, 950, 300);
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
-        
         
         // Buttons for right lower side 
         btnCancel = new JButton("Cancel");
@@ -80,24 +78,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         
         
         
-        //ActionListener
-        btnAppoint.addActionListener(this);
-        btnCancel.addActionListener(this);
-        btnConfirm.addActionListener(this);
-        
-        showNewAppointment();
-        
-        
-    }
-    
-    // To show new appointment to set for patients
-    public void showNewAppointment() {
-        pnlContent.removeAll();
-        pnlContent.repaint();
-        pnlContent.revalidate();
-        
-        
-        
+        // Appointment Records Form
         lblDate = new JLabel("Appointment Date : ");
         lblDate.setBounds(40, 30, 200, 30);
         lblDate.setFont(FontsTheme.Plain_Texts);
@@ -146,8 +127,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         txtName.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtName);
         
-        
-        // LEFT SIDE
+        // RIGHT SIDE
         lblDepart = new JLabel("Department : ");
         lblDepart.setBounds(510, 30, 200, 30);
         lblDepart.setFont(FontsTheme.Plain_Texts);
@@ -155,26 +135,21 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         pnlContent.add(lblDepart);
         
         // Options for department needed to sched
-        cmbDepart = new JComboBox<>(new String[]{
-        " ", "Emergency(ER)", "Laboratory", "Cardiology", "Pediatrics ", "Surgery", "OB-GYN", "Radiology",
-        });
+        cmbDepart = new JComboBox<>(departs);
         cmbDepart.setBounds(690, 30, 230, 30);
         cmbDepart.setFont(FontsTheme.Plain_Texts);
         cmbDepart.setForeground(ColorsTheme.Text_Black);
         cmbDepart.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbDepart);
         
-       
-        lblDoc = new JLabel("Physician/Doctor : ");
+        lblDoc = new JLabel("Doctor : ");
         lblDoc.setBounds(510, 70, 200, 30);
         lblDoc.setFont(FontsTheme.Plain_Texts);
         lblDoc.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblDoc);
         
         // Options for Doctor's name 
-        cmbDoc = new JComboBox<>(new String[]{
-        " ", "Dr. Juan dela Cruz", "Dr. Maria Santos", "Dr. Ricardo Reyes", "Dr. Elena Garcia", "Dr. Roberto Castro"
-        });
+        cmbDoc = new JComboBox<>(doctors);
         cmbDoc.setBounds(690, 70, 230, 30);
         cmbDoc.setFont(FontsTheme.Plain_Texts);
         cmbDoc.setForeground(ColorsTheme.Text_Black);
@@ -188,9 +163,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         pnlContent.add(lblVisit);
         
         //Options for Visit type and concern
-        cmbVisit = new JComboBox<>(new String[]{
-        " ", "New Consultation", "Follow-up Visit", "Routine Check-up", "Emergency Visit", "Diagnostic/Lab Test"
-        });
+        cmbVisit = new JComboBox<>(visits);
         cmbVisit.setBounds(690, 110, 230, 30);
         cmbVisit.setFont(FontsTheme.Plain_Texts);
         cmbVisit.setForeground(ColorsTheme.Text_Black);
@@ -204,9 +177,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         pnlContent.add(lblRoom);
         
         //Options for room number available
-        cmbRoom = new JComboBox<>(new String[]{
-        " ", "ER-01", "ER-02", "LAB-01", "LAB-02", "RM-201", "RM-202", "XRAY-01", "ICU-01", "ICU-02", "OR-01"
-        });
+        cmbRoom = new JComboBox<>(rooms);
         cmbRoom.setBounds(690, 150, 230, 30);
         cmbRoom.setFont(FontsTheme.Plain_Texts);
         cmbRoom.setForeground(ColorsTheme.Text_Black);
@@ -220,8 +191,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         lblNote.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblNote);
         
-        txaNote = new JTextArea(" ");
-        txaNote.setText("Write here...");
+        txaNote = new JTextArea(""); // Removed the "Write here..." so it's clean for DB insertion
         txaNote.setEditable(true);
         txaNote.setFont(FontsTheme.Dialog_Texts);
         txaNote.setForeground(ColorsTheme.Text_Gray);
@@ -234,25 +204,58 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         pnlContent.add(scrollNote);
         
         
+        //ActionListener
+        btnCancel.addActionListener(this);
+        btnConfirm.addActionListener(this);
         
         
     }
     
-    
-    
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnAppoint) {
-            showNewAppointment();
-        }
-        else if (e.getSource() == btnCancel) {
+        if (e.getSource() == btnCancel) {
             dispose();
         } 
-        
         else if (e.getSource() == btnConfirm) {
-            JOptionPane.showMessageDialog(this, "Appointment scheduled successfully!", 
-                    "Appointment Success", JOptionPane.INFORMATION_MESSAGE);
+            // Validation: Ensure mandatory fields are filled
+            if (txtID.getText().trim().isEmpty() || txtName.getText().trim().isEmpty() || 
+                txtDate.getText().trim().isEmpty() || txtTime.getText().trim().isEmpty()) {
+                
+                JOptionPane.showMessageDialog(this, "Fill all the required information.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String sql = "INSERT INTO appointments (appointment_date, appointment_time, patient_id, patient_name, "
+                       + "department, doctor, visit_type, room_number, notes, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
+
+            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+                 PreparedStatement insert = connection.prepareStatement(sql)) {
+                
+                insert.setString(1, txtDate.getText().trim());
+                insert.setString(2, txtTime.getText().trim());
+                
+                String rawPatientInput = txtID.getText().trim().toUpperCase().replace("PAT-", "");
+                insert.setInt(3, Integer.parseInt(rawPatientInput));
+                
+                insert.setString(4, txtName.getText().trim());
+                insert.setString(5, cmbDepart.getSelectedItem().toString());
+                insert.setString(6, cmbDoc.getSelectedItem().toString());
+                insert.setString(7, cmbVisit.getSelectedItem().toString());
+                insert.setString(8, cmbRoom.getSelectedItem().toString());
+                insert.setString(9, txaNote.getText().trim());
+
+                int rowsAffected = insert.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Appointment scheduled successfully!", 
+                                                  "Appointment Success", JOptionPane.INFORMATION_MESSAGE);
+                    dispose(); 
+                }
+
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Database write operation failed:\n" + sqlException.getMessage(), 
+                                              "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
