@@ -174,7 +174,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
             if (hasSearchFilter) {
-                String cleanSearch = queryTerm.replace("EMP-", "").replace("emp-", "");
+                String cleanSearch = queryTerm.replaceAll("(?i)[A-Z]+-", "");
                 
                 statement.setString(1, "%" + queryTerm + "%");
                 statement.setString(2, "%" + cleanSearch + "%");
@@ -183,9 +183,14 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 int rawId = result.getInt("employee_id");
-                String empID = String.format("EMP-%03d", rawId);
-                String name = result.getString("full_name");
                 String role = result.getString("role");
+                String prefix = "EMP-";
+                if ("Admin".equalsIgnoreCase(role)) prefix = "ADM-";
+                else if ("Doctor".equalsIgnoreCase(role)) prefix = "DOC-";
+                else if ("Nurse".equalsIgnoreCase(role)) prefix = "NUR-";
+                
+                String empID = String.format("%s%03d", prefix, rawId);
+                String name = result.getString("full_name");
                 String dept = result.getString("department");
                 String status = result.getString("status");
                 String patient = "None"; // Assuming this is linked elsewhere

@@ -16,9 +16,9 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
     private JPanel pnlForm;
     private JLabel lblDialogTitle, lblDialogDetails, lblEmpID, lblName, lblBday, lblGen, lblEmail, lblContact, 
             lblMarital, lblDep, lblRole, lblHired, lblOff, lblStatus, lblPR, lblCName, lblSName, lblLine, lblSRole, lblSRate, lblCS;
-    private JTextField txtEmpID, txtName, txtContact, txtEmail, txtBday, txtDep, txtRole, txtHired, txtCName, txtSName;
+    private JTextField txtEmpID, txtName, txtContact, txtEmail, txtBday, txtDep, txtHired, txtCName, txtSName, txtSRole;
     private JButton btnStaff, btnPerf, btnClose;
-    private JComboBox<String> cmbGen, cmbMarital, cmbStats, cmbOff, cmbSRole, cmbSRate;
+    private JComboBox<String> cmbGen, cmbMarital, cmbStats, cmbOff, cmbRole, cmbSRate;
     private JTextArea txaComs;
     private JScrollPane scrollComs;
     
@@ -188,11 +188,12 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
         lblRole.setFont(FontsTheme.Plain_Texts);
         lblRole.setForeground(ColorsTheme.Text_Black);
 
-        txtRole = new JTextField("");
-        txtRole.setBounds(720, 120, 180, 30);
-        txtRole.setFont(FontsTheme.Plain_Texts);
-        txtRole.setForeground(ColorsTheme.Text_Black);
-        txtRole.setEditable(false);
+        cmbRole = new JComboBox<>(roles);
+        cmbRole.setBounds(720, 120, 180, 30);
+        cmbRole.setFont(FontsTheme.Plain_Texts);
+        cmbRole.setForeground(ColorsTheme.Text_Black);
+        cmbRole.setBackground(ColorsTheme.Main_Card);
+        cmbRole.setEnabled(false);
 
         lblHired = new JLabel("Hire Date :");
         lblHired.setBounds(540, 160, 170, 30);
@@ -267,12 +268,11 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
         lblSRole.setFont(FontsTheme.Plain_Texts);
         lblSRole.setForeground(ColorsTheme.Text_Black);
          
-        cmbSRole = new JComboBox<>(roles);
-        cmbSRole.setBounds(250, 190, 250, 30);
-        cmbSRole.setFont(FontsTheme.Plain_Texts);
-        cmbSRole.setForeground(ColorsTheme.Text_Black);
-        cmbSRole.setBackground(ColorsTheme.Main_Card);
-        cmbSRole.setEnabled(false);
+        txtSRole = new JTextField("");
+        txtSRole.setBounds(250, 190, 250, 30);
+        txtSRole.setFont(FontsTheme.Plain_Texts);
+        txtSRole.setForeground(ColorsTheme.Text_Black);
+        txtSRole.setEditable(false);
         
         lblSRate = new JLabel("Rate (1-5) : ");
         lblSRate.setBounds(40, 220, 170, 50);
@@ -308,13 +308,18 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            String cleanId = currentEmpId.replace("EMP-", "");
+            String cleanId = currentEmpId.replaceAll("[A-Z]+-", "");
             stmt.setString(1, cleanId);
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
                 int rawId = rs.getInt("employee_id");
-                txtEmpID.setText(String.format("EMP-%03d", rawId));
+                String role = rs.getString("role");
+                String prefix = "EMP-";
+                if ("Admin".equalsIgnoreCase(role)) prefix = "ADM-";
+                else if ("Doctor".equalsIgnoreCase(role)) prefix = "DOC-";
+                else if ("Nurse".equalsIgnoreCase(role)) prefix = "NUR-";
+                txtEmpID.setText(String.format("%s%03d", prefix, rawId));
                 txtName.setText(rs.getString("full_name"));
                 txtBday.setText(rs.getString("birthday"));
                 
@@ -328,7 +333,7 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
                 if (maritalStats != null) cmbMarital.setSelectedItem(maritalStats);
                 
                 txtDep.setText(rs.getString("department"));
-                txtRole.setText(rs.getString("role"));
+                if (role != null) cmbRole.setSelectedItem(role);
                 txtHired.setText(rs.getString("hire_date"));
                 
                 String off = rs.getString("day_off");
@@ -341,7 +346,7 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
                 txtSName.setText(rs.getString("eval_staff_name"));
                 
                 String evalRole = rs.getString("eval_role");
-                if (evalRole != null) cmbSRole.setSelectedItem(evalRole);
+                if (evalRole != null) txtSRole.setText(evalRole);
                 
                 String perfRate = rs.getString("performance_rate");
                 if (perfRate != null) cmbSRate.setSelectedItem(perfRate);
@@ -376,7 +381,7 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
         pnlForm.add(lblDep);
         pnlForm.add(txtDep);
         pnlForm.add(lblRole);
-        pnlForm.add(txtRole);
+        pnlForm.add(cmbRole);
         pnlForm.add(lblHired);
         pnlForm.add(txtHired);
         pnlForm.add(lblOff);
@@ -396,7 +401,7 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
         pnlForm.add(lblSName);
         pnlForm.add(txtSName);
         pnlForm.add(lblSRole);
-        pnlForm.add(cmbSRole);
+        pnlForm.add(txtSRole);
         pnlForm.add(lblSRate);
         pnlForm.add(cmbSRate);
         pnlForm.add(lblCS);
