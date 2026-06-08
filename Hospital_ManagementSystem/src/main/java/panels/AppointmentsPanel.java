@@ -23,7 +23,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
     private PanelCard pnlTotal, pnlConfirm, pnlPending, pnlUrgent;
     private JLabel lblDetails, lblAppointment, lblNoResults;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd, btnEdit, btnCancel, btnUpcoming, btnRecent, btnCancelled, btnComplete;
+    private JButton btnSearch, btnRefresh, btnAdd, btnEdit, btnCancel, btnDelete, btnUpcoming, btnRecent, btnCancelled, btnComplete;
     private TablePanel tblAppointments;
     private static final String[] columns = {"Appt ID", "Patient Name", "Doctor", "Department", "Date", "Time", "Status"};
     private boolean canManageAppointments;
@@ -72,18 +72,25 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
 
         // Appointment action buttons beside the table title
         btnEdit = new JButton("Edit");
-        btnEdit.setBounds(1250, 10, 100, 40);
+        btnEdit.setBounds(1080, 10, 90, 40);
         btnEdit.setFont(FontsTheme.Buttons);
         btnEdit.setBackground(ColorsTheme.Search);
         btnEdit.setForeground(ColorsTheme.Text_White);
         btnEdit.setFocusPainted(false);
 
         btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(1360, 10, 120, 40);
+        btnCancel.setBounds(1180, 10, 120, 40);
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setBackground(ColorsTheme.Red);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setFocusPainted(false);
+
+        btnDelete = new JButton("Delete");
+        btnDelete.setBounds(1310, 10, 170, 40);
+        btnDelete.setFont(FontsTheme.Buttons);
+        btnDelete.setBackground(ColorsTheme.Delete_Urgent);
+        btnDelete.setForeground(ColorsTheme.Text_White);
+        btnDelete.setFocusPainted(false);
 
         btnUpcoming = createTableHeaderButton("Upcoming", ColorsTheme.Search);
         btnUpcoming.setBounds(300, 10, 130, 40);
@@ -154,6 +161,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         if (canManageAppointments) {
             btnEdit.addActionListener(this);
             btnCancel.addActionListener(this);
+            btnDelete.addActionListener(this);
         }
         if (canCompleteAppointments) {
             btnComplete.addActionListener(this);
@@ -268,6 +276,39 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Failed to complete appointment:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void deleteAppointment() {
+        int id = getSelectedAppointmentId();
+        if (id == -1) return;
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Permanently delete this appointment record?",
+                "Confirm Delete",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) return;
+
+        String sql = "DELETE FROM appointments WHERE appt_id = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            statement.setInt(1, id);
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Appointment record deleted successfully.");
+                updateTable(getCurrentTableTitle(), "");
+            } else {
+                JOptionPane.showMessageDialog(this, "Appointment record not found.", "Delete Failed", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to delete appointment:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
         
@@ -401,6 +442,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         if (canManageAppointments) {
             tblAppointments.add(btnEdit);
             tblAppointments.add(btnCancel);
+            tblAppointments.add(btnDelete);
         }
         if (canCompleteAppointments) {
             tblAppointments.add(btnComplete);
@@ -460,6 +502,9 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         }
         else if (e.getSource() == btnCancel) {
             cancelAppointment();
+        }
+        else if (e.getSource() == btnDelete) {
+            deleteAppointment();
         }
         else if (e.getSource() == btnComplete) {
             completeAppointment();
