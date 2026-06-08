@@ -5,6 +5,12 @@ import constants.ColorsTheme;
 import constants.FontsTheme;
 import constants.PanelCard;
 import constants.TablePanel;
+import dialogs.DeletePatientDialog;
+import dialogs.EditPatientDialog;
+//import dialogs.EditStaffDialog;
+//import dialogs.NewStaffDialog;
+import dialogs.ViewPatientDialog;
+//import dialogs.ViewStaffDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -23,7 +29,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
     private TablePanel tblPatient;
     private JLabel lblPatient, lblDetails;
     private JTextField txtSearch;
-    private JButton btnAdd, btnSearch, btnRefresh;
+    private JButton btnAdd, btnSearch, btnRefresh, btnView, btnEdit, btnDelete;
     private  static final String[] columns = {"Patient ID", "Patient Name" , "Age / Gender", "Contact", "Room", "Status", "Actions"};
     
     public PatientsPanel() {
@@ -37,6 +43,43 @@ public class PatientsPanel extends JPanel implements ActionListener {
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
         
+        
+        //Button for adding new staff
+        btnAdd = new JButton("+ Add Staff");
+        btnAdd.setBounds(830, 40, 150, 45); 
+        btnAdd.setFont(FontsTheme.Buttons);
+        btnAdd.setBackground(ColorsTheme.Add_Confirm);
+        btnAdd.setForeground(ColorsTheme.Text_White);
+        btnAdd.setFocusPainted(false);
+        add(btnAdd);
+
+        //Button for viewing staff
+        btnView = new JButton("View Staff");
+        btnView.setBounds(995, 40, 150, 45); 
+        btnView.setFont(FontsTheme.Buttons);
+        btnView.setBackground(ColorsTheme.Header);
+        btnView.setForeground(ColorsTheme.Text_White);
+        btnView.setFocusPainted(false);
+        add(btnView);
+
+        //Button for editing staff
+        btnEdit = new JButton("Edit Staff");
+        btnEdit.setBounds(1160, 40, 150, 45); 
+        btnEdit.setFont(FontsTheme.Buttons);
+        btnEdit.setBackground(ColorsTheme.Update_Pending);
+        btnEdit.setForeground(ColorsTheme.Text_Black);
+        btnEdit.setFocusPainted(false);
+        add(btnEdit);
+
+        //Button for deleting staff
+        btnDelete = new JButton("Delete Staff");
+        btnDelete.setBounds(1325, 40, 150, 45); 
+        btnDelete.setFont(FontsTheme.Buttons);
+        btnDelete.setBackground(ColorsTheme.Delete_Urgent);
+        btnDelete.setForeground(ColorsTheme.Text_White);
+        btnDelete.setFocusPainted(false);
+        add(btnDelete);
+        
         // Search Panel Container 
         pnlSearch = new JPanel();
         pnlSearch.setLayout(null);
@@ -44,14 +87,14 @@ public class PatientsPanel extends JPanel implements ActionListener {
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
-        // Button for adding new patient
-        btnAdd = new JButton("+  Add Patient");
-        btnAdd.setBounds(1280, 40, 250, 50); 
-        btnAdd.setFont(FontsTheme.Buttons);
-        btnAdd.setBackground(ColorsTheme.Add_Confirm);
-        btnAdd.setForeground(ColorsTheme.Text_White);
-        btnAdd.setFocusPainted(false);
-        add(btnAdd);
+//        // Button for adding new patient
+//        btnAdd = new JButton("+  Add Patient");
+//        btnAdd.setBounds(1280, 40, 250, 50); 
+//        btnAdd.setFont(FontsTheme.Buttons);
+//        btnAdd.setBackground(ColorsTheme.Add_Confirm);
+//        btnAdd.setForeground(ColorsTheme.Text_White);
+//        btnAdd.setFocusPainted(false);
+//        add(btnAdd);
         
         // Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by patient name or patient id...");
@@ -100,6 +143,9 @@ public class PatientsPanel extends JPanel implements ActionListener {
         
         // ActionListener
         btnAdd.addActionListener(this);
+        btnView.addActionListener(this);
+        btnEdit.addActionListener(this);
+        btnDelete.addActionListener(this);
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
     }
@@ -109,7 +155,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
     
     private void updateTable(String sectionTitle, String searchKeyword) {
         Object[][] freshData = fetchPatients(searchKeyword);
-        
+     
         pnlMiddle.remove(tblPatient);
         tblPatient = new TablePanel(sectionTitle, columns, freshData, 440);
         tblPatient.setBounds(0, 0, 1500, 620);
@@ -214,17 +260,49 @@ public class PatientsPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnAdd) {
-            AddPatientDialog patient = new AddPatientDialog();
-            patient.setVisible(true); 
-            updateTable("Recent Admissions", ""); 
+            AddPatientDialog dialog = new AddPatientDialog();
+            dialog.setVisible(true);
+            updateTable("Patient Records", ""); 
+        }
+        else if (e.getSource() == btnView) {
+            int selectedRow = tblPatient.getTable().getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a patient member to view.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String patientId = tblPatient.getTable().getValueAt(selectedRow, 0).toString();
+            ViewPatientDialog viewDialog = new ViewPatientDialog(patientId);
+            viewDialog.setVisible(true);
+        }
+        else if (e.getSource() == btnEdit) {
+            int selectedRow = tblPatient.getTable().getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a patient member to edit.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String patientId = tblPatient.getTable().getValueAt(selectedRow, 0).toString();
+            EditPatientDialog editDialog = new EditPatientDialog(patientId);
+            editDialog.setVisible(true);
+            updateTable("Patient Records", txtSearch.getText().trim().equals("Search by patient name or ID...") ? "" : txtSearch.getText().trim());
+        }
+        else if (e.getSource() == btnDelete) {
+            int selectedRow = tblPatient.getTable().getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a patient member to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String patientId = tblPatient.getTable().getValueAt(selectedRow, 0).toString();
+            DeletePatientDialog deleteDialog = new DeletePatientDialog(patientId);
+            deleteDialog.setVisible(true);
+            updateTable("Patient Records", txtSearch.getText().trim().equals("Search by patient name or ID...") ? "" : txtSearch.getText().trim());
         }
         else if (e.getSource() == btnSearch) {
             String searchKeyword = txtSearch.getText().trim();
             updateTable("Search Results", searchKeyword);
         }
         else if (e.getSource() == btnRefresh) {
-            txtSearch.setText("Search by patient name or patient id...");
-            updateTable("Recent Admissions", "");
+            txtSearch.setText("Search by patient name or ID...");
+            updateTable("Patient Records", "");
         }
     }
 }

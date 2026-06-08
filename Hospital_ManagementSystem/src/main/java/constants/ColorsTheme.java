@@ -23,6 +23,7 @@ public class ColorsTheme {
     public static final Color Search_fg = Color.decode("#C4E2F5");
     public static final Color Search_bg = Color.decode("#4B5694");
     
+ 
     // Text Colors
     public static final Color Text_White = Color.WHITE;
     public static final Color Text_Black = Color.BLACK;
@@ -56,7 +57,6 @@ public class ColorsTheme {
     public static final Color Pediatrics_Color = new Color(241, 196, 15);
 
 
-    
     
     
 }
