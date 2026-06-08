@@ -44,8 +44,8 @@ public class PatientsPanel extends JPanel implements ActionListener {
         add(pnlMiddle);
         
         
-        //Button for adding new staff
-        btnAdd = new JButton("+ Add Staff");
+        //Button for adding new patient
+        btnAdd = new JButton("+ Add Patient");
         btnAdd.setBounds(830, 40, 150, 45); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
@@ -53,8 +53,8 @@ public class PatientsPanel extends JPanel implements ActionListener {
         btnAdd.setFocusPainted(false);
         add(btnAdd);
 
-        //Button for viewing staff
-        btnView = new JButton("View Staff");
+        //Button for viewing patient
+        btnView = new JButton("View Patient");
         btnView.setBounds(995, 40, 150, 45); 
         btnView.setFont(FontsTheme.Buttons);
         btnView.setBackground(ColorsTheme.Header);
@@ -62,8 +62,8 @@ public class PatientsPanel extends JPanel implements ActionListener {
         btnView.setFocusPainted(false);
         add(btnView);
 
-        //Button for editing staff
-        btnEdit = new JButton("Edit Staff");
+        //Button for editing patient
+        btnEdit = new JButton("Edit Patient");
         btnEdit.setBounds(1160, 40, 150, 45); 
         btnEdit.setFont(FontsTheme.Buttons);
         btnEdit.setBackground(ColorsTheme.Update_Pending);
@@ -71,8 +71,8 @@ public class PatientsPanel extends JPanel implements ActionListener {
         btnEdit.setFocusPainted(false);
         add(btnEdit);
 
-        //Button for deleting staff
-        btnDelete = new JButton("Delete Staff");
+        //Button for deleting patient
+        btnDelete = new JButton("Delete Patient");
         btnDelete.setBounds(1325, 40, 150, 45); 
         btnDelete.setFont(FontsTheme.Buttons);
         btnDelete.setBackground(ColorsTheme.Delete_Urgent);
@@ -97,7 +97,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
 //        add(btnAdd);
         
         // Search Bar including search and refresh buttons
-        txtSearch = new JTextField("Search by patient name or patient id...");
+        txtSearch = new JTextField("Search by patient name or ID...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
         txtSearch.setForeground(ColorsTheme.Text_Gray);
@@ -158,7 +158,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
      
         pnlMiddle.remove(tblPatient);
         tblPatient = new TablePanel(sectionTitle, columns, freshData, 440);
-        tblPatient.setBounds(0, 0, 1500, 620);
+        tblPatient.setBounds(0, 0, 1500, 560);
         pnlMiddle.add(tblPatient);
         
         pnlMiddle.repaint();
@@ -169,7 +169,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
         List<Object[]> rowsList = new ArrayList<>();
         String sql = "SELECT * FROM patients";
         
-        boolean hasSearchFilter = !queryTerm.isEmpty() && !queryTerm.equals("Search patients...");
+        boolean hasSearchFilter = !queryTerm.isEmpty() && !queryTerm.equalsIgnoreCase("Search by patient name or ID...");
         
         if (hasSearchFilter) {
             // We search by ID, first name, or last name
@@ -187,8 +187,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
              PreparedStatement statement = conn.prepareStatement(sql)) {
             
             if (hasSearchFilter) {
-                
-                String cleanSearch = queryTerm.replace("PAT-", "").replace("pat-", "");
+                String cleanSearch = queryTerm.replaceAll("(?i)[A-Z]+-", "");
                 
                 statement.setString(1, "%" + cleanSearch + "%");
                 statement.setString(2, "%" + queryTerm + "%");

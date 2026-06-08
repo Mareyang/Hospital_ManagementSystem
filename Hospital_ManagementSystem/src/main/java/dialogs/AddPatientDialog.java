@@ -84,10 +84,11 @@ public class AddPatientDialog extends JDialog implements ActionListener {
         lblID.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblID);
         
-        txtID = new JTextField(""); 
+        txtID = new JTextField("Auto-generated"); 
         txtID.setBounds(220, 40, 230, 30); 
         txtID.setFont(FontsTheme.Plain_Texts); 
         txtID.setForeground(ColorsTheme.Text_Black);
+        txtID.setEditable(false);
         pnlContent.add(txtID);
         
         lblFirst = new JLabel("First Name : "); 

@@ -19,7 +19,7 @@ import javax.swing.*;
  *
  * @author Admin
  */
-public class ViewPatientDialog extends JFrame implements ActionListener{
+public class ViewPatientDialog extends JDialog implements ActionListener{
     private JPanel pnlContent;
     private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblAge, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, 
             lblRoom, lblMarital, lblFirst, lblLast;
@@ -36,12 +36,12 @@ public class ViewPatientDialog extends JFrame implements ActionListener{
     private String currentPatientId;
    
     public ViewPatientDialog(String patientId) {
-        this.currentPatientId = patientId.replace("PAT-", "");
+        this.currentPatientId = patientId.replaceAll("(?i)[A-Z]+-", "");
         
         setSize(1050, 550);
         setLayout(null);
         setLocationRelativeTo(null);
-       // setModal(true);
+        setModal(true);
         
         lblTitle = new JLabel("Patient Information");
         lblTitle.setBounds(30, 10, 500, 40);
@@ -267,7 +267,7 @@ public class ViewPatientDialog extends JFrame implements ActionListener{
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
-                txtID.setText(rs.getString("patient_id"));
+                txtID.setText(String.format("PAT-%03d", rs.getInt("patient_id")));
                 txtFirst.setText(rs.getString("first_name"));
                 txtLast.setText(rs.getString("last_name"));
                 txtAge.setText(rs.getString("age"));
