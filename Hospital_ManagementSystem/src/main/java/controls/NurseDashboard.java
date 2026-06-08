@@ -115,10 +115,10 @@ public class NurseDashboard extends JFrame implements ActionListener {
 
         // Add the different screens (Pages)
         pnlContainer.add(new NurseDashboardPanel(), "dashboard");
-        pnlContainer.add(new PatientsPanel(), "patients");
-        pnlContainer.add(new AppointmentsPanel(true), "appointments");
+        pnlContainer.add(new PatientsPanel(true), "patients");
+        pnlContainer.add(new AppointmentsPanel(true, false), "appointments");
         pnlContainer.add(new MedicalRecordsPanel(), "medicalRecords");
-        pnlContainer.add(new PharmacyPanel(), "pharmacy");
+        pnlContainer.add(new PharmacyPanel(true), "pharmacy");
         
         // Add navigation buttons to the side panel
         btnDashboard      = ButtonStyles.createButton("Dashboard", "/icons/home.png", 30, pnlSide);        

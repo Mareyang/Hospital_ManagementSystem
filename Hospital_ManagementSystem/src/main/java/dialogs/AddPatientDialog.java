@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AddPatientDialog extends JDialog implements ActionListener {
@@ -19,6 +20,9 @@ public class AddPatientDialog extends JDialog implements ActionListener {
     private JTextField txtID, txtAge, txtNumber, txtEmail, txtAddress, txtBirth, txtFirst, txtLast;
     private JButton btnPersonal, btnAddInfo, btnCancel;
     private JComboBox<String> cmbStatus, cmbGender, cmbMarital, cmbRoom;
+    private int patientId = -1;
+    private boolean editMode = false;
+    private boolean viewMode = false;
     
     private static final String[] gender = {" ", "Male", "Female", "Prefer not to say"};
     private static final String[] status = {" ", "Admitted", "Discharged", "Observation"};
@@ -235,6 +239,75 @@ public class AddPatientDialog extends JDialog implements ActionListener {
 
         
     }
+
+    public AddPatientDialog(int patientId, boolean viewOnly) {
+        this();
+        this.patientId = patientId;
+        this.editMode = !viewOnly;
+        this.viewMode = viewOnly;
+
+        lblTitle.setText(viewOnly ? "View Patient Record" : "Edit Patient Record");
+        lblSubtitle.setText(viewOnly ? "Review patient information." : "Update patient record information.");
+        btnAddInfo.setText(viewOnly ? "Close" : "Update Information");
+        txtID.setEditable(false);
+
+        loadPatient();
+
+        if (viewOnly) {
+            setFieldsEditable(false);
+            btnCancel.setVisible(false);
+            btnAddInfo.setBounds(790, 450, 200, 30);
+        }
+    }
+
+    private void loadPatient() {
+        String sql = "SELECT * FROM patients WHERE patient_id = ?";
+
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement select = connection.prepareStatement(sql)) {
+
+            select.setInt(1, patientId);
+
+            try (ResultSet result = select.executeQuery()) {
+                if (result.next()) {
+                    txtID.setText(String.format("PAT-%03d", result.getInt("patient_id")));
+                    txtFirst.setText(result.getString("first_name"));
+                    txtLast.setText(result.getString("last_name"));
+                    txtAge.setText(String.valueOf(result.getInt("age")));
+                    txtBirth.setText(result.getString("birthday"));
+                    cmbGender.setSelectedItem(result.getString("gender"));
+                    txtNumber.setText(result.getString("contact_number"));
+                    txtAddress.setText(result.getString("address"));
+                    txtEmail.setText(result.getString("email"));
+                    cmbMarital.setSelectedItem(result.getString("marital_status"));
+                    cmbStatus.setSelectedItem(result.getString("status"));
+                    cmbRoom.setSelectedItem(result.getString("room_number"));
+                } else {
+                    JOptionPane.showMessageDialog(this, "Patient record not found.", "Not Found", JOptionPane.WARNING_MESSAGE);
+                    dispose();
+                }
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to load patient:\n" + sqlException.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
+
+    private void setFieldsEditable(boolean editable) {
+        txtFirst.setEditable(editable);
+        txtLast.setEditable(editable);
+        txtAge.setEditable(editable);
+        txtBirth.setEditable(editable);
+        txtNumber.setEditable(editable);
+        txtAddress.setEditable(editable);
+        txtEmail.setEditable(editable);
+        cmbGender.setEnabled(editable);
+        cmbMarital.setEnabled(editable);
+        cmbStatus.setEnabled(editable);
+        cmbRoom.setEnabled(editable);
+    }
         
     
 
@@ -246,34 +319,50 @@ public class AddPatientDialog extends JDialog implements ActionListener {
             dispose();
         } 
         else if (e.getSource() == btnAddInfo) {
+            if (viewMode) {
+                dispose();
+                return;
+            }
+
             if (txtFirst.getText().trim().isEmpty() || txtLast.getText().trim().isEmpty() || txtAge.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Fill all the required information.", "Validation Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            String sql = "INSERT INTO patients (first_name, last_name, age, birthday, gender, "
-                       + "contact_number, address, email, marital_status, status, room_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql;
+            if (editMode) {
+                sql = "UPDATE patients SET first_name = ?, last_name = ?, age = ?, birthday = ?, gender = ?, "
+                        + "contact_number = ?, address = ?, email = ?, marital_status = ?, status = ?, room_number = ? "
+                        + "WHERE patient_id = ?";
+            } else {
+                sql = "INSERT INTO patients (first_name, last_name, age, birthday, gender, "
+                        + "contact_number, address, email, marital_status, status, room_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            }
 
             try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-                 PreparedStatement insert = connection.prepareStatement(sql)) {
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
                 
-                insert.setString(1, txtFirst.getText().trim());
-                insert.setString(2, txtLast.getText().trim());
+                statement.setString(1, txtFirst.getText().trim());
+                statement.setString(2, txtLast.getText().trim());
                 
-                insert.setInt(3, Integer.parseInt(txtAge.getText().trim()));
-                insert.setString(4, txtBirth.getText().trim());
+                statement.setInt(3, Integer.parseInt(txtAge.getText().trim()));
+                statement.setString(4, txtBirth.getText().trim());
                 
-                insert.setString(5, cmbGender.getSelectedItem().toString());
-                insert.setString(6, txtNumber.getText().trim());
-                insert.setString(7, txtAddress.getText().trim());
-                insert.setString(8, txtEmail.getText().trim());
-                insert.setString(9, cmbMarital.getSelectedItem().toString());
-                insert.setString(10, cmbStatus.getSelectedItem().toString());
-                insert.setString(11, cmbRoom.getSelectedItem().toString());
+                statement.setString(5, cmbGender.getSelectedItem().toString());
+                statement.setString(6, txtNumber.getText().trim());
+                statement.setString(7, txtAddress.getText().trim());
+                statement.setString(8, txtEmail.getText().trim());
+                statement.setString(9, cmbMarital.getSelectedItem().toString());
+                statement.setString(10, cmbStatus.getSelectedItem().toString());
+                statement.setString(11, cmbRoom.getSelectedItem().toString());
+                if (editMode) {
+                    statement.setInt(12, patientId);
+                }
 
-                int rowsAffected = insert.executeUpdate();
+                int rowsAffected = statement.executeUpdate();
                 if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Patient record saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    String message = editMode ? "Patient record updated successfully!" : "Patient record saved successfully!";
+                    JOptionPane.showMessageDialog(this, message, "Success", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 }
 
