@@ -58,7 +58,7 @@ public class AdminDashboard extends JFrame implements ActionListener {
         
         cardLayout = new CardLayout();
         pnlContainer = new JPanel(cardLayout);
-        pnlContainer.setBounds(270, 100, 1650, 980);
+        pnlContainer.setBounds(270, 100, 1650, 980);    
         pnlContainer.setBackground(ColorsTheme.Middle_Panel);
         add(pnlContainer);
 
@@ -206,4 +206,4 @@ public class AdminDashboard extends JFrame implements ActionListener {
             admin.setVisible(true);
         
     }
-}
+}   
