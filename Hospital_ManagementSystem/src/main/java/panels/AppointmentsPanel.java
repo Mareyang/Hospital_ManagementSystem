@@ -72,7 +72,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
 
         // Appointment action buttons beside the table title
         btnEdit = new JButton("Edit");
-        btnEdit.setBounds(1080, 10, 90, 40);
+        btnEdit.setBounds(1050, 10, 120, 40);
         btnEdit.setFont(FontsTheme.Buttons);
         btnEdit.setBackground(ColorsTheme.Search);
         btnEdit.setForeground(ColorsTheme.Text_White);

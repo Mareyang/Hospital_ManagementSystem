@@ -3,6 +3,8 @@ controls\NurseDashboard$2.class
 dialogs\NewReportDialog.class
 panels\NurseDashboardPanel$1.class
 constants\TablePanel.class
+dialogs\DeleteReportDialog.class
+dialogs\ViewPatientDialog.class
 dialogs\DeleteStaffDialog.class
 panels\AdminDashboardPanel.class
 panels\AppointmentsPanel.class
@@ -28,13 +30,17 @@ controls\AdminDashboard$2.class
 dialogs\NewPharmacyDialog.class
 panels\MedicalRecordsPanel.class
 dialogs\NewStaffDialog.class
+dialogs\EditPatientDialog.class
 panels\NurseDashboardPanel$2.class
+dialogs\EditReportDialog.class
 controls\NurseDashboard$1.class
 dialogs\AddPatientDialog.class
 controls\LoginPage.class
+dialogs\ViewReportDialog.class
 panels\PharmacyPanel.class
 controls\AdminDashboard$1.class
 constants\PanelCard.class
+dialogs\DeletePatientDialog.class
 constants\FontsTheme.class
 dialogs\AddMedicalRecordDialog.class
 dialogs\EditStaffDialog.class
