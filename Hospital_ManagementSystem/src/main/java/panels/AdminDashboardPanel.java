@@ -189,7 +189,7 @@ public class AdminDashboardPanel extends JPanel {
         }
         
         JScrollPane logScrollPane = new JScrollPane(tblLogs);
-        logScrollPane.setBounds(15, 60, 890, 320);
+        logScrollPane.setBounds(0, 60, 920, 320);
         logScrollPane.getViewport().setBackground(ColorsTheme.Main_Card);
         logScrollPane.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY, 1)); 
         pnlOverview.add(logScrollPane);
