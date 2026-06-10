@@ -25,6 +25,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
     public NewReportDialog() {
         setSize(1050, 550);
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
         setModal(true);
         

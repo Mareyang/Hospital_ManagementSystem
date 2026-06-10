@@ -30,6 +30,8 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
     private JButton btnSearch, btnRefresh, btnAdd, btnView, btnEdit, btnDelete;
     private static final String[] columns = {"Staff ID", "Name", "Role", "Department", "Status", "Patient"};
     
+    
+    
     public StaffManagementPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
@@ -49,7 +51,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         //Button for adding new staff
-        btnAdd = new JButton("+ Add Staff");
+        btnAdd = new JButton("+ Add");
         btnAdd.setBounds(830, 40, 150, 45); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
@@ -58,7 +60,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         add(btnAdd);
 
         //Button for viewing staff
-        btnView = new JButton("View Staff");
+        btnView = new JButton("View");
         btnView.setBounds(995, 40, 150, 45); 
         btnView.setFont(FontsTheme.Buttons);
         btnView.setBackground(ColorsTheme.Header);
@@ -67,7 +69,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         add(btnView);
 
         //Button for editing staff
-        btnEdit = new JButton("Edit Staff");
+        btnEdit = new JButton("Edit");
         btnEdit.setBounds(1160, 40, 150, 45); 
         btnEdit.setFont(FontsTheme.Buttons);
         btnEdit.setBackground(ColorsTheme.Update_Pending);
@@ -76,7 +78,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         add(btnEdit);
 
         //Button for deleting staff
-        btnDelete = new JButton("Delete Staff");
+        btnDelete = new JButton("Delete");
         btnDelete.setBounds(1325, 40, 150, 45); 
         btnDelete.setFont(FontsTheme.Buttons);
         btnDelete.setBackground(ColorsTheme.Delete_Urgent);

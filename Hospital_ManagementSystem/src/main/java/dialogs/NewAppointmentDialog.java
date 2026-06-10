@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class NewAppointmentDialog extends JDialog implements ActionListener {
@@ -19,6 +20,8 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
     private JComboBox<String> cmbDepart, cmbDoc, cmbVisit, cmbRoom;
     private JButton btnAppoint, btnCancel, btnConfirm;
     private JPanel pnlContent;
+    private int appointmentId = -1;
+    private boolean editMode = false;
     
     private static final String[] departs = {" ", "Emergency(ER)", "Laboratory", "Cardiology", "Pediatrics ", "Surgery", "OB-GYN", "Radiology"};
     private static final String[] doctors = {" ", "Dr. Juan dela Cruz", "Dr. Maria Santos", "Dr. Ricardo Reyes", "Dr. Elena Garcia", "Dr. Roberto Castro"};
@@ -29,6 +32,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
     public NewAppointmentDialog() {
         setSize(1050, 550);
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
         setModal(true);
         
@@ -210,6 +214,51 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         
         
     }
+
+    public NewAppointmentDialog(int appointmentId) {
+        this();
+        this.appointmentId = appointmentId;
+        this.editMode = true;
+
+        lblTitle.setText("Edit Appointment");
+        lblSubtitle.setText("Update healthcare consultation and visit details.");
+        btnAppoint.setText("Edit Appointment");
+        btnConfirm.setText("Update Appointment");
+
+        loadAppointment();
+    }
+
+    private void loadAppointment() {
+        String sql = "SELECT * FROM appointments WHERE appt_id = ?";
+
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement select = connection.prepareStatement(sql)) {
+
+            select.setInt(1, appointmentId);
+
+            try (ResultSet result = select.executeQuery()) {
+                if (result.next()) {
+                    txtDate.setText(result.getString("appointment_date"));
+                    txtTime.setText(result.getString("appointment_time"));
+                    txtID.setText(String.format("PAT-%03d", result.getInt("patient_id")));
+                    txtName.setText(result.getString("patient_name"));
+                    cmbDepart.setSelectedItem(result.getString("department"));
+                    cmbDoc.setSelectedItem(result.getString("doctor"));
+                    cmbVisit.setSelectedItem(result.getString("visit_type"));
+                    cmbRoom.setSelectedItem(result.getString("room_number"));
+                    txaNote.setText(result.getString("notes"));
+                } else {
+                    JOptionPane.showMessageDialog(this, "Appointment record not found.", "Not Found", JOptionPane.WARNING_MESSAGE);
+                    dispose();
+                }
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to load appointment:\n" + sqlException.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -225,28 +274,39 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
                 return;
             }
 
-            String sql = "INSERT INTO appointments (appointment_date, appointment_time, patient_id, patient_name, "
-                       + "department, doctor, visit_type, room_number, notes, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
+            String sql;
+            if (editMode) {
+                sql = "UPDATE appointments SET appointment_date = ?, appointment_time = ?, patient_id = ?, "
+                        + "patient_name = ?, department = ?, doctor = ?, visit_type = ?, room_number = ?, notes = ? "
+                        + "WHERE appt_id = ?";
+            } else {
+                sql = "INSERT INTO appointments (appointment_date, appointment_time, patient_id, patient_name, "
+                        + "department, doctor, visit_type, room_number, notes, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
+            }
 
             try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-                 PreparedStatement insert = connection.prepareStatement(sql)) {
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
                 
-                insert.setString(1, txtDate.getText().trim());
-                insert.setString(2, txtTime.getText().trim());
+                statement.setString(1, txtDate.getText().trim());
+                statement.setString(2, txtTime.getText().trim());
                 
                 String rawPatientInput = txtID.getText().trim().toUpperCase().replace("PAT-", "");
-                insert.setInt(3, Integer.parseInt(rawPatientInput));
+                statement.setInt(3, Integer.parseInt(rawPatientInput));
                 
-                insert.setString(4, txtName.getText().trim());
-                insert.setString(5, cmbDepart.getSelectedItem().toString());
-                insert.setString(6, cmbDoc.getSelectedItem().toString());
-                insert.setString(7, cmbVisit.getSelectedItem().toString());
-                insert.setString(8, cmbRoom.getSelectedItem().toString());
-                insert.setString(9, txaNote.getText().trim());
+                statement.setString(4, txtName.getText().trim());
+                statement.setString(5, cmbDepart.getSelectedItem().toString());
+                statement.setString(6, cmbDoc.getSelectedItem().toString());
+                statement.setString(7, cmbVisit.getSelectedItem().toString());
+                statement.setString(8, cmbRoom.getSelectedItem().toString());
+                statement.setString(9, txaNote.getText().trim());
+                if (editMode) {
+                    statement.setInt(10, appointmentId);
+                }
 
-                int rowsAffected = insert.executeUpdate();
+                int rowsAffected = statement.executeUpdate();
                 if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Appointment scheduled successfully!", 
+                    String message = editMode ? "Appointment updated successfully!" : "Appointment scheduled successfully!";
+                    JOptionPane.showMessageDialog(this, message, 
                                                   "Appointment Success", JOptionPane.INFORMATION_MESSAGE);
                     dispose(); 
                 }

@@ -115,10 +115,10 @@ public class NurseDashboard extends JFrame implements ActionListener {
 
         // Add the different screens (Pages)
         pnlContainer.add(new NurseDashboardPanel(), "dashboard");
-        pnlContainer.add(new PatientsPanel(), "patients");
-        pnlContainer.add(new AppointmentsPanel(), "appointments");
-        pnlContainer.add(new MedicalRecordsPanel(), "medicalRecords");
-        pnlContainer.add(new PharmacyPanel(), "pharmacy");
+        pnlContainer.add(new PatientsPanel(true), "patients");
+        pnlContainer.add(new AppointmentsPanel(true, false), "appointments");
+        pnlContainer.add(new MedicalRecordsPanel(false), "medicalRecords");
+        pnlContainer.add(new PharmacyPanel(true), "pharmacy");
         
         // Add navigation buttons to the side panel
         btnDashboard      = ButtonStyles.createButton("Dashboard", "/icons/home.png", 30, pnlSide);        
@@ -148,7 +148,7 @@ public class NurseDashboard extends JFrame implements ActionListener {
             pnlTop.requestFocusInWindow();
         });
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();
@@ -195,8 +195,9 @@ public class NurseDashboard extends JFrame implements ActionListener {
     
     // Run the dashboard to test the screen
     public static void main(String[] args) {
-            NurseDashboard nurse = new NurseDashboard();
-            nurse.setVisible(true);
+        constants.SystemSettings.loadSettings();
+        NurseDashboard nurse = new NurseDashboard();
+        nurse.setVisible(true);
         
     }
 }

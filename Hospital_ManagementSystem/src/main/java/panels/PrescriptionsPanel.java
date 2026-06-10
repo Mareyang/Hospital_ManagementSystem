@@ -27,6 +27,8 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
     private TablePanel tblPrescription;
     private static final String[] columns = {"Rx ID", "Patient Name", "Doctor", "Date", "Medications", "Status", "Actions"};
     
+    
+    
     public PrescriptionsPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
@@ -46,8 +48,8 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new prescription
-        btnAdd = new JButton("+  New Prescription");
-        btnAdd.setBounds(1280, 40, 250, 50); 
+        btnAdd = new JButton("+ Add");
+        btnAdd.setBounds(1325, 40, 150, 45); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);

@@ -19,7 +19,7 @@ import javax.swing.*;
  *
  * @author Admin
  */
-public class EditPatientDialog extends JFrame implements ActionListener{
+public class EditPatientDialog extends JDialog implements ActionListener{
     private JPanel pnlContent;
     private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblAge, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, 
             lblRoom, lblMarital, lblFirst, lblLast;
@@ -36,12 +36,13 @@ public class EditPatientDialog extends JFrame implements ActionListener{
     private String currentPatientId;
    
     public EditPatientDialog(String patientId) {
-        this.currentPatientId = patientId.replace("PAT-", "");
+        this.currentPatientId = patientId.replaceAll("(?i)[A-Z]+-", "");
         
         setSize(1050, 550);
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
-       // setModal(true);
+        setModal(true);
         
         lblTitle = new JLabel("Patient Information");
         lblTitle.setBounds(30, 10, 500, 40);
@@ -98,6 +99,7 @@ public class EditPatientDialog extends JFrame implements ActionListener{
         txtID.setBounds(220, 40, 230, 30); 
         txtID.setFont(FontsTheme.Plain_Texts); 
         txtID.setForeground(ColorsTheme.Text_Black);
+        txtID.setEditable(false);
         pnlContent.add(txtID);
         
         lblFirst = new JLabel("First Name : "); 
@@ -255,7 +257,7 @@ public class EditPatientDialog extends JFrame implements ActionListener{
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
-                txtID.setText(rs.getString("patient_id"));
+                txtID.setText(String.format("PAT-%03d", rs.getInt("patient_id")));
                 txtFirst.setText(rs.getString("first_name"));
                 txtLast.setText(rs.getString("last_name"));
                 txtAge.setText(rs.getString("age"));
@@ -281,7 +283,7 @@ public class EditPatientDialog extends JFrame implements ActionListener{
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to load staff data:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to load patient data:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
 }
         public void showPatientInfo() {
@@ -342,14 +344,14 @@ if (e.getSource() == btnPersonal) {
 //            }
 
             // Database Update Implementation
-            String sql = "UPDATE patients SET first_name=?, last_name=? birthday=?, gender=?, contact_number=?, address=?, email=?, marital_status=?, status=?, room_number=? WHERE patient_id=?";
+            String sql = "UPDATE patients SET first_name=?, last_name=?, age=?, birthday=?, gender=?, contact_number=?, address=?, email=?, marital_status=?, status=?, room_number=? WHERE patient_id=?";
 
             try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
                  PreparedStatement update = conn.prepareStatement(sql)) {
                 
                 update.setString(1, fist_name);
                 update.setString(2, last_name);
-                update.setString(3, age);
+                update.setInt(3, Integer.parseInt(age));
                 update.setString(4, birthday);
                 update.setString(5, gender);
                 update.setString(6, contact_number);
@@ -359,7 +361,7 @@ if (e.getSource() == btnPersonal) {
                 update.setString(10, status);
                 update.setString(11, room_number);
  
-                update.setString(17, currentPatientId);
+                update.setString(12, currentPatientId);
 
                 int rows = update.executeUpdate();
                 if (rows > 0) {

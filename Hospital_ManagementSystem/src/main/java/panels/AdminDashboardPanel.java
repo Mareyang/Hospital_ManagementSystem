@@ -3,28 +3,55 @@ package panels;
 import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.SystemSettings;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import dialogs.NewStaffDialog;
 import dialogs.NewPharmacyDialog;
 import dialogs.NewReportDialog;
 
 public class AdminDashboardPanel extends JPanel {
     
-    private JPanel pnlPatients, pnlDoctors, pnlNurses, pnlAppointments, pnlSupplies, pnlRevenue, pnlMiddle;
-    private JLabel lblGreet, lblDescrip, lblDistributionTitle, lblOverviewTitle;
+    private JPanel pnlPatients, pnlDoctors, pnlNurses, pnlAppointments, pnlSupplies, pnlRevenue, pnlMiddle, 
+            pnlOverview, pnlQuickActions;
+    private JLabel lblGreet, lblDescrip, lblOverviewTitle, lblQuickTitle;
+    private JButton btnRegisterStaff, btnAddMedication, btnGenReports;
+    private JTable tblLogs;
+    private JScrollPane logScrollPane;
+
     
-    // Distribution & Progress bars
-    private JPanel pnlDistribution, pnlOverview;
-    private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
     
+    // Unified database configuration pointing to your active MySQL server port
+    private final String DB_URL = "jdbc:mysql://localhost:3306/hospital_management";
+    private final String DB_USER = "root";
+    private final String DB_PASSWORD = ""; 
     
     public AdminDashboardPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
+        // Fetch real-time live metrics directly using matching database logic
+        String totalPatients = String.valueOf(getTableRowCount("patients", ""));
+        String totalDoctors = String.valueOf(getTableRowCount("hospital_staff", "WHERE LOWER(role) = 'doctor'"));
+        String totalNurses = String.valueOf(getTableRowCount("hospital_staff", "WHERE LOWER(role) = 'nurse'"));
+        String totalAppointments = String.valueOf(getTableRowCount("appointments", "")); 
+        String totalSupplies = String.valueOf(getTableRowCount("pharmacy", ""));
+        
+        // Match the Low Stock criteria present in your pharmacy schema
+        int lowStock = getTableRowCount("pharmacy", "WHERE LOWER(status) = 'low stock'");
+        String lowStockText = lowStock + " Items Low Stock";
+
+        // Calculate cumulative asset revenue cleanly
+        String totalRevenue = getInventoryAssetRevenue();
+
         // Middle Panel Container 
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
@@ -46,83 +73,47 @@ public class AdminDashboardPanel extends JPanel {
         add(lblDescrip);
         
         // Summary Panel Cards Row 1
-        pnlPatients = new PanelCard2("Total Patients", "2,847", "Active Records", ColorsTheme.Yellow);
-        pnlPatients.setBounds(70, 160, 460, 140);
+        pnlPatients = new PanelCard2("Total Patients", totalPatients, "Active Records", ColorsTheme.Yellow);
+        pnlPatients.setBounds(200, 140, 350, 140);
         add(pnlPatients);
         
-        pnlDoctors = new PanelCard2("Total Doctors", "45", "Active Specialists", ColorsTheme.Blue);
-        pnlDoctors.setBounds(580, 160, 460, 140);
+        pnlDoctors = new PanelCard2("Total Doctors", totalDoctors, "Active Specialists", ColorsTheme.Blue);
+        pnlDoctors.setBounds(630, 140, 350, 140);
         add(pnlDoctors);
         
-        pnlNurses = new PanelCard2("Total Nurses", "120", "Active Staff", ColorsTheme.Orange);
-        pnlNurses.setBounds(1090, 160, 460, 140);
+        pnlNurses = new PanelCard2("Total Nurses", totalNurses, "Active Staff", ColorsTheme.Orange);
+        pnlNurses.setBounds(1060, 140, 350, 140);
         add(pnlNurses);
         
         // Summary Panel Cards Row 2
-        pnlAppointments = new PanelCard2("Today's Appointments", "156", "Scheduled Today", ColorsTheme.Green);
-        pnlAppointments.setBounds(70, 310, 460, 140);
+        pnlAppointments = new PanelCard2("Today's Appointments", totalAppointments, "Scheduled Total", ColorsTheme.Green);
+        pnlAppointments.setBounds(200, 300, 350, 140);
         add(pnlAppointments);
         
-        pnlSupplies = new PanelCard2("Medical Supplies", "1,245", "65 Items Low Stock", ColorsTheme.Red);
-        pnlSupplies.setBounds(580, 310, 460, 140);
+        pnlSupplies = new PanelCard2("Medical Supplies", totalSupplies, lowStockText, ColorsTheme.Red);
+        pnlSupplies.setBounds(630, 300, 350, 140);
         add(pnlSupplies);
         
-        pnlRevenue = new PanelCard2("Today's Revenue", "₱45K", "Target: ₱50K", ColorsTheme.Top_Line);
-        pnlRevenue.setBounds(1090, 310, 460, 140);
+        pnlRevenue = new PanelCard2("Total Stock Value", SystemSettings.getCurrencySymbol() + totalRevenue, "Inventory Valuation", ColorsTheme.Top_Line);
+        pnlRevenue.setBounds(1060, 300, 350, 140);
         add(pnlRevenue);
         
-        
-        
-        /* --- Department Distribution ---
-        pnlDistribution = new JPanel();
-        pnlDistribution.setLayout(null);
-        pnlDistribution.setBackground(ColorsTheme.Main_Card); 
-        pnlDistribution.setBounds(960, 0, 520, 400); 
-        pnlMiddle.add(pnlDistribution);
-
-        lblDistributionTitle = new JLabel("Department Distribution");
-        lblDistributionTitle.setFont(FontsTheme.Title_Texts);
-        lblDistributionTitle.setForeground(ColorsTheme.Text_Black);
-        lblDistributionTitle.setBounds(32, 20, 350, 35);
-        pnlDistribution.add(lblDistributionTitle);
-        
-        // Progress Bars
-        barCardiology = createCustomProgressBar(32, 70, 450, 28, 25, ColorsTheme.Cardiology_Color);
-        barOrthopedics = createCustomProgressBar(32, 110, 450, 28, 22, ColorsTheme.Orthophedics_Color);
-        barEmergency = createCustomProgressBar(32, 150, 450, 28, 20, ColorsTheme.Emergency_Color);
-        barNeurology = createCustomProgressBar(32, 190, 450, 28, 18, ColorsTheme.Neurology_Color);
-        barPediatrics = createCustomProgressBar(32, 230, 450, 28, 15, ColorsTheme.Pediatrics_Color);
-
-        pnlDistribution.add(barCardiology);
-        pnlDistribution.add(barOrthopedics);
-        pnlDistribution.add(barEmergency);
-        pnlDistribution.add(barNeurology);
-        pnlDistribution.add(barPediatrics);
-        
-        // Legend Items (now relative to pnlDistribution)
-        pnlDistribution.add(createLegendItem(100, 280, "Cardiology", ColorsTheme.Cardiology_Color));
-        pnlDistribution.add(createLegendItem(290, 280, "Orthopedics", ColorsTheme.Orthophedics_Color));
-        pnlDistribution.add(createLegendItem(100, 320, "Emergency", ColorsTheme.Emergency_Color));
-        pnlDistribution.add(createLegendItem(290, 320, "Neurology", ColorsTheme.Neurology_Color));
-        pnlDistribution.add(createLegendItem(100, 360, "Pediatrics", ColorsTheme.Pediatrics_Color));
-        */
-        
         // --- Quick Actions Panel ---
-        JPanel pnlQuickActions = new JPanel();
+        pnlQuickActions = new JPanel();
         pnlQuickActions.setLayout(null);
         pnlQuickActions.setBackground(ColorsTheme.Main_Card); 
         pnlQuickActions.setBounds(960, 0, 520, 400); 
         pnlMiddle.add(pnlQuickActions);
 
-        JLabel lblQuickTitle = new JLabel("Quick Actions");
+        lblQuickTitle = new JLabel("Quick Actions");
         lblQuickTitle.setFont(FontsTheme.Title_Texts);
         lblQuickTitle.setForeground(ColorsTheme.Text_Black);
         lblQuickTitle.setBounds(32, 20, 350, 35);
         pnlQuickActions.add(lblQuickTitle);
         
-        // Line 1
-        JButton btnRegisterStaff = new JButton("Register Staff");
-        btnRegisterStaff.setBounds(40, 80, 200, 70);
+        // Vertical layout for buttons
+        btnRegisterStaff = new JButton("Register Staff");
+        btnRegisterStaff.setBounds(110, 70, 300, 70);
         btnRegisterStaff.setBackground(ColorsTheme.Green);
         btnRegisterStaff.setForeground(Color.WHITE);
         btnRegisterStaff.setFont(FontsTheme.Info_Texts);
@@ -130,8 +121,8 @@ public class AdminDashboardPanel extends JPanel {
         btnRegisterStaff.addActionListener(e -> new NewStaffDialog().setVisible(true));
         pnlQuickActions.add(btnRegisterStaff);
         
-        JButton btnAddMedication = new JButton("Add Medication");
-        btnAddMedication.setBounds(280, 80, 200, 70);
+        btnAddMedication = new JButton("Add Medication");
+        btnAddMedication.setBounds(110, 160, 300, 70);
         btnAddMedication.setBackground(ColorsTheme.Yellow);
         btnAddMedication.setForeground(Color.BLACK);
         btnAddMedication.setFont(FontsTheme.Info_Texts);
@@ -139,16 +130,14 @@ public class AdminDashboardPanel extends JPanel {
         btnAddMedication.addActionListener(e -> new NewPharmacyDialog().setVisible(true));
         pnlQuickActions.add(btnAddMedication);
         
-        // Line 2
-        JButton btnGenReports = new JButton("Generate Reports");
-        btnGenReports.setBounds(160, 180, 200, 70);
+        btnGenReports = new JButton("Generate Reports");
+        btnGenReports.setBounds(110, 250, 300, 70);
         btnGenReports.setBackground(ColorsTheme.Top_Line);
         btnGenReports.setForeground(Color.WHITE);
         btnGenReports.setFont(FontsTheme.Info_Texts);
         btnGenReports.setFocusPainted(false);
         btnGenReports.addActionListener(e -> new NewReportDialog().setVisible(true));
         pnlQuickActions.add(btnGenReports);
-       
         
         pnlOverview = new JPanel();
         pnlOverview.setLayout(null);
@@ -156,73 +145,136 @@ public class AdminDashboardPanel extends JPanel {
         pnlOverview.setBackground(ColorsTheme.Main_Card); 
         pnlMiddle.add(pnlOverview);
         
-        lblOverviewTitle = new JLabel("Recent Appointments & Admissions");
+        lblOverviewTitle = new JLabel("Recent Appointments");
         lblOverviewTitle.setFont(FontsTheme.Title_Texts);
         lblOverviewTitle.setForeground(ColorsTheme.Text_Black);
         lblOverviewTitle.setBounds(30, 20, 500, 35);
         pnlOverview.add(lblOverviewTitle);
         
-        // Recents table
+        // Dynamic Recents table setup
         String[] logColumns = {"ID", "Patient", "Department", "Date", "Status"};
-        Object[][] logData = {
-            {"#1024", "Lebron James", "Cardiology", "12-10-2026", "Admitted"},
-            {"#1025", "Wemby Talo", "Orthopedics", "12-10-2026", "Scheduled"},
-            {"#1026", "KAT Bading", "Emergency", "12-10-2026", "Discharged"},
-            {"#1027", "John Carlo Nayan", "Neurology", "12-10-2026", "Admitted"},
-            {"#1028", "Hello Johnson", "Pediatrics", "12-10-2026", "Admitted"},
-            {"#1029", "Sarah Geronimo", "Cardiology", "12-10-2026", "Scheduled"}
+        DefaultTableModel tableModel = new DefaultTableModel(logColumns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Prevent cells from being edited directly
+            }
         };
         
-        JTable tblLogs = new JTable(logData, logColumns);
-        tblLogs.setRowHeight(50);
+        tblLogs = new JTable(tableModel);
+        tblLogs.setRowHeight(SystemSettings.tableRowHeight);
         tblLogs.setFont(FontsTheme.Info_Texts);
-        tblLogs.setDefaultEditor(Object.class, null);
+        tblLogs.setBackground(ColorsTheme.Main_Card);
+        tblLogs.setForeground(ColorsTheme.Text_Black);
+        tblLogs.setGridColor(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY);
+        tblLogs.setSelectionBackground(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.decode("#E2E8F0"));
+        tblLogs.setSelectionForeground(ColorsTheme.Text_Black);
         tblLogs.getTableHeader().setReorderingAllowed(false);
         tblLogs.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblLogs.getTableHeader().setBackground(ColorsTheme.Header);
+        tblLogs.getTableHeader().setBackground(ColorsTheme.isDarkMode ? Color.decode("#2E2E38") : ColorsTheme.Header);
         tblLogs.getTableHeader().setForeground(ColorsTheme.Text_White);
 
-        // Center the text so it doesn't hug the left borders
-        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        // Center the text and guarantee cell colors apply correctly
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                java.awt.Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(table.getBackground());
+                    c.setForeground(table.getForeground());
+                }
+                return c;
+            }
+        };
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < tblLogs.getColumnCount(); i++) {
             tblLogs.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         
-        JScrollPane logScrollPane = new JScrollPane(tblLogs);
-        logScrollPane.setBounds(15, 60, 920, 320);
-        logScrollPane.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); 
+        logScrollPane = new JScrollPane(tblLogs);
+        logScrollPane.setBounds(0, 60, 920, 320);
+        logScrollPane.getViewport().setBackground(ColorsTheme.Main_Card);
+        logScrollPane.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY, 1)); 
         pnlOverview.add(logScrollPane);
+
+        // Populate table from the database
+        FetchReports(tableModel);
+    }
+
+    // --- DATABASE EXTRACTION OPERATIONS ---
+    
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+    }
+
+    private void FetchReports(DefaultTableModel model) {
+        // Clear existing data before loading new records
+        model.setRowCount(0); 
         
+        // Query fetching recent appointments. 
+        // We order by appt_id DESC to get the most recent entries and limit it to 50 for performance on the dashboard.
+        String sql = "SELECT appt_id, patient_name, department, appointment_date, status FROM appointments ORDER BY appt_id DESC LIMIT " + SystemSettings.dashboardRecordLimit;
+        
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                String id = "#" + rs.getInt("appt_id");
+                String patient = rs.getString("patient_name");
+                String department = rs.getString("department");
+                String date = rs.getString("appointment_date");
+                String status = rs.getString("status");
+                
+                // Add the row to our model
+                model.addRow(new Object[]{id, patient, department, date, status});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Fallback empty row if connection fails to let user know something is wrong
+            model.addRow(new Object[]{"ERR", "Database connection failed", "N/A", "N/A", "Error"});
+        }
     }
 
-    private JProgressBar createCustomProgressBar(int x, int y, int width, int height, int value, Color filledColor) {
-        JProgressBar bar = new JProgressBar(0, 100);
-        bar.setBounds(x, y, width, height);
-        bar.setValue(value);
-        bar.setStringPainted(true);
-        bar.setFont(FontsTheme.Progress_Bar_Font);
-        bar.setForeground(filledColor);
-        bar.setBackground(ColorsTheme.Middle_Panel); 
-        bar.setBorderPainted(false);
-        return bar;
+    private int getTableRowCount(String tableName, String queryFilters) {
+        int rowsCount = 0;
+        String sql = "SELECT COUNT(*) FROM `" + tableName + "` " + queryFilters;
+        
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            if (rs.next()) {
+                rowsCount = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsCount;
     }
 
-    private JPanel createLegendItem(int x, int y, String text, Color color) {
-        JPanel item = new JPanel();
-        item.setLayout(null);
-        item.setOpaque(false);
-        item.setBounds(x, y, 300, 28);
-
-        JPanel cube = new JPanel();
-        cube.setBackground(color);
-        cube.setBounds(0, 6, 16, 16);
-        item.add(cube);
-
-        JLabel label = new JLabel(text);
-        label.setFont(FontsTheme.Info_Texts);
-        label.setBounds(20, 2, 260, 24);
-        item.add(label);
-        return item;
+    private String getInventoryAssetRevenue() {
+        double calculatedAssetWorth = 0.0;
+        String sql = "SELECT SUM(current_stock * unit_price) FROM pharmacy";
+        
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            if (rs.next()) {
+                calculatedAssetWorth = rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        double displayValue = calculatedAssetWorth;
+        if ("USD".equals(SystemSettings.currency)) {
+            displayValue = calculatedAssetWorth / 58.0; // Conversion rate: 1 USD = 58 PHP
+        }
+        
+        if (displayValue >= 1000) {
+            return String.format("%.1fK", displayValue / 1000);
+        }
+        return String.valueOf((int) displayValue);
     }
 }

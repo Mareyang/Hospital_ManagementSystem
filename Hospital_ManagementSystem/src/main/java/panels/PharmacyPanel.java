@@ -19,14 +19,22 @@ import dialogs.NewPharmacyDialog;
 public class PharmacyPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch;
-    private PanelCard pnlTotal, pnlIn, pnlLow, pnlCrit; // Changed from JPanel to PanelCard
+    private PanelCard pnlTotal, pnlIn, pnlLow, pnlCrit; 
     private JLabel lblDetails, lblPharmacy;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd;
+    private JButton btnSearch, btnRefresh, btnAdd,btnUseStock,btnRemove;
     private TablePanel tblPharmacy;
-    private static final String[] columns = {"Item Code", "Medication", "Category", "Stock", "Reorder Level", "Status", "Actions"};
+    private static final String[] columns = {"Item Code", "Medication", "Category", "Stock", "Reorder Level", "Status"};
+    private boolean stockButtonsInTable;
+    
     
     public PharmacyPanel() {
+        this(false);
+    }
+
+    public PharmacyPanel(boolean stockButtonsInTable) {
+        this.stockButtonsInTable = stockButtonsInTable;
+
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
@@ -45,13 +53,11 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new medication
-        btnAdd = new JButton("+  Add Medication");
-        btnAdd.setBounds(1280, 40, 250, 50); 
+        btnAdd = new JButton("+ Add");
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
-        add(btnAdd);
         
         // Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search medication name, item code, or category...");
@@ -75,6 +81,33 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         btnRefresh.setForeground(ColorsTheme.Text_White);
         btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
+ 
+        btnUseStock = new JButton("Update");
+        btnUseStock.setFont(FontsTheme.Buttons);
+        btnUseStock.setFocusPainted(false);
+        btnUseStock.setBackground(ColorsTheme.Update_Pending); 
+        btnUseStock.setForeground(ColorsTheme.Text_Black);
+        
+        btnRemove = new JButton("Remove");
+        btnRemove.setFont(FontsTheme.Buttons);  
+        btnRemove.setForeground(ColorsTheme.Text_White);
+        btnRemove.setFocusPainted(false);
+        btnRemove.setBackground(ColorsTheme.Delete_Urgent); 
+
+        // Dynamically align visible outer-panel buttons to the right-hand side
+        java.util.List<JButton> visibleButtons = new java.util.ArrayList<>();
+        visibleButtons.add(btnAdd);
+        visibleButtons.add(btnUseStock);
+        visibleButtons.add(btnRemove);
+
+        int[] slots = {830, 995, 1160, 1325};
+        int startSlotIndex = slots.length - visibleButtons.size();
+        for (int i = 0; i < visibleButtons.size(); i++) {
+            visibleButtons.get(i).setBounds(slots[startSlotIndex + i], 40, 150, 45);
+            add(visibleButtons.get(i));
+        }
+
+        
         
         // Title and subtitle label for pharmacy section
         lblPharmacy = new JLabel("Pharmacy");
@@ -96,6 +129,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         tblPharmacy = new TablePanel("Medication Inventory", columns, data, 560);
         tblPharmacy.setBounds(0, 0, 1500, 560);
         pnlMiddle.add(tblPharmacy);
+        configurePharmacyTable();
         
         
         
@@ -103,6 +137,8 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         btnAdd.addActionListener(this);
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
+        btnUseStock.addActionListener(this);
+        btnRemove.addActionListener(this);
     }
     
     
@@ -115,6 +151,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         tblPharmacy = new TablePanel(sectionTitle, columns, freshData, 560);
         tblPharmacy.setBounds(0, 0, 1500, 560);
         pnlMiddle.add(tblPharmacy);
+        configurePharmacyTable();
         
         pnlMiddle.repaint();
         pnlMiddle.revalidate();
@@ -157,8 +194,6 @@ public class PharmacyPanel extends JPanel implements ActionListener {
                 int stock = result.getInt("current_stock");
                 int reorder = result.getInt("reorder_level");
                 String status = result.getString("status");
-                String actions = ""; 
-
                 String fullMedName = brandName + " (" + genericName + ") " + strength;
 
                 // Tally stats dynamically based on database state
@@ -167,7 +202,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
                 else if ("Low Stock".equalsIgnoreCase(status)) countLowStock++;
                 else countInStock++;
 
-                rowsList.add(new Object[]{itemCode, fullMedName, category, stock, reorder, status, actions});
+                rowsList.add(new Object[]{itemCode, fullMedName, category, stock, reorder, status});
             }
             
         } catch (SQLException ex) {
@@ -206,6 +241,57 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         revalidate();
     }
 
+    private void configurePharmacyTable() {
+        JTable table = tblPharmacy.getTable();
+        table.setRowHeight(50);
+    }
+        private void updateMedicationStockInDatabase(String itemCode, int newStock) {
+  
+    String sql = "UPDATE pharmacy SET current_stock = ?, status = CASE WHEN ? = 0 THEN 'Critical' ELSE status END WHERE item_code = ?";
+
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+         PreparedStatement statement = conn.prepareStatement(sql)) {
+
+       
+        statement.setInt(1, newStock);
+        statement.setInt(2, newStock);
+        statement.setString(3, itemCode);
+        
+     
+        int rowsUpdated = statement.executeUpdate();
+
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(this, "Stock updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Medication record not found.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Failed to update stock in database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+        
+            private void removeMedicationFromDatabase(String itemCode) {
+        String sql = "DELETE FROM pharmacy WHERE item_code = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            statement.setString(1, itemCode);
+            int rowsDeleted = statement.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(this, "Medication removed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Medication could not be found in database.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to remove medication from database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnAdd) {
@@ -221,5 +307,98 @@ public class PharmacyPanel extends JPanel implements ActionListener {
             txtSearch.setText("Search medication name, item code, or category...");
             updateTable("Medication Inventory", "");
         }
+        else if (e.getSource() == btnUseStock) {
+        JTable actualTable = tblPharmacy.getTable(); 
+        int selectedRow = actualTable.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a medication from the table first.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+
+        String itemCode = actualTable.getValueAt(selectedRow, 0).toString();
+        String medName = actualTable.getValueAt(selectedRow, 1).toString();
+        int currentStock = Integer.parseInt(actualTable.getValueAt(selectedRow, 3).toString());
+
+
+        String input = JOptionPane.showInputDialog(
+            this, 
+            "Current Stock: " + currentStock + "\nHow many units of " + medName + " did you use?", 
+            "Use Stock Quantity", 
+            JOptionPane.QUESTION_MESSAGE
+        );
+
+
+        if (input == null || input.trim().isEmpty()) {
+            return; 
+        }
+
+        try {
+
+            int quantityUsed = Integer.parseInt(input.trim());
+
+            if (quantityUsed <= 0) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid number greater than 0.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (quantityUsed > currentStock) {
+                JOptionPane.showMessageDialog(this, "Not enough stock available! You only have " + currentStock + " units left.", "Insufficient Stock", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+
+            int newStock = currentStock - quantityUsed;
+
+
+            updateMedicationStockInDatabase(itemCode, newStock);
+
+
+            String currentSearch = txtSearch.getText().trim();
+            if (currentSearch.equals("Search medication name, item code, or category...")) {
+                updateTable("Medication Inventory", "");
+            } else {
+                updateTable("Search Results", currentSearch);
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid whole number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+             }
+        }
+        else if (e.getSource() == btnRemove) {
+        JTable actualTable = tblPharmacy.getTable(); 
+        int selectedRow = actualTable.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a medication from the table first.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+   
+        String itemCode = actualTable.getValueAt(selectedRow, 0).toString();
+        String medName = actualTable.getValueAt(selectedRow, 1).toString();
+
+    
+        int confirm = JOptionPane.showConfirmDialog(
+            this, 
+            "Are you sure you want to remove " + medName + " from inventory?", 
+            "Confirm Use Stock", 
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            removeMedicationFromDatabase(itemCode);
+            
+       
+            String currentSearch = txtSearch.getText().trim();
+            if (currentSearch.equals("Search medication name, item code, or category...")) {
+                updateTable("Medication Inventory", "");
+            } else {
+                updateTable("Search Results", currentSearch);
+            }
+        }
+
     }
+}
 }

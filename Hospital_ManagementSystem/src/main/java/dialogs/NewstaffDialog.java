@@ -41,10 +41,10 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         lblDialogTitle.setForeground(ColorsTheme.Text_Black);
         add(lblDialogTitle);
 
-        lblDialogDetails = new JLabel("Complete all the required fields to add a record.");
-        lblDialogDetails.setBounds(40, 60, 520, 30);
-        lblDialogDetails.setFont(FontsTheme.Info_Texts);
-        lblDialogDetails.setForeground(ColorsTheme.Text_Black);
+        lblDialogDetails = new JLabel("Register new hospital personnel and configure departmental assignments.");
+        lblDialogDetails.setBounds(30, 40, 650, 30);
+        lblDialogDetails.setFont(FontsTheme.Plain_Texts);
+        lblDialogDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDialogDetails);
 
         btnStaff = new JButton("Staff Information");
@@ -107,27 +107,27 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtEmpID.setForeground(ColorsTheme.Text_Black);
         txtEmpID.setEditable(false);
 
-        JLabel lblName = new JLabel("Full Name :");
+        lblName = new JLabel("Full Name :");
         lblName.setBounds(40, 80, 170, 30);
         lblName.setFont(FontsTheme.Plain_Texts);
         lblName.setForeground(ColorsTheme.Text_Black);
 
-        JTextField txtName = new JTextField("");
+        txtName = new JTextField("");
         txtName.setBounds(220, 80, 230, 30);
         txtName.setFont(FontsTheme.Plain_Texts);
         txtName.setForeground(ColorsTheme.Text_Black);
 
-        JLabel lblBday = new JLabel("Birthday :");
+        lblBday = new JLabel("Birthday :");
         lblBday.setBounds(40, 120, 170, 30);
         lblBday.setFont(FontsTheme.Plain_Texts);
         lblBday.setForeground(ColorsTheme.Text_Black);
 
-        JTextField txtBday = new JTextField("");
+        txtBday = new JTextField("");
         txtBday.setBounds(220, 120, 230, 30);
         txtBday.setFont(FontsTheme.Plain_Texts);
         txtBday.setForeground(ColorsTheme.Text_Black);
 
-        JLabel lblGen = new JLabel("Gender :");
+        lblGen = new JLabel("Gender :");
         lblGen.setBounds(40, 160, 170, 30);
         lblGen.setFont(FontsTheme.Plain_Texts);
         lblGen.setForeground(ColorsTheme.Text_Black);
@@ -138,22 +138,22 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbGen.setForeground(ColorsTheme.Text_Black);
         cmbGen.setBackground(ColorsTheme.Main_Card);
         
-        JLabel lblEmail = new JLabel("Email Address: ");
+        lblEmail = new JLabel("Email Address: ");
         lblEmail.setBounds(40, 200, 170, 30);
         lblEmail.setFont(FontsTheme.Plain_Texts);
         lblEmail.setForeground(ColorsTheme.Text_Black);
         
-        JTextField txtEmail = new JTextField("");
+        txtEmail = new JTextField("");
         txtEmail.setBounds(220, 200, 230, 30);
         txtEmail.setFont(FontsTheme.Plain_Texts);
         txtEmail.setForeground(ColorsTheme.Text_Black);
 
-        JLabel lblContact = new JLabel("Contact Number :");
+        lblContact = new JLabel("Contact Number :");
         lblContact.setBounds(40, 240, 170, 30);
         lblContact.setFont(FontsTheme.Plain_Texts);
         lblContact.setForeground(ColorsTheme.Text_Black);
 
-        JTextField txtContact = new JTextField("");
+        txtContact = new JTextField("");
         txtContact.setBounds(220, 240, 230, 30);
         txtContact.setFont(FontsTheme.Plain_Texts);
         txtContact.setForeground(ColorsTheme.Text_Black);
@@ -169,17 +169,17 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbMarital.setForeground(ColorsTheme.Text_Black);
         cmbMarital.setBackground(ColorsTheme.Main_Card);
 
-        JLabel lblDep = new JLabel("Department :");
+        lblDep = new JLabel("Department :");
         lblDep.setBounds(540, 80, 170, 30);
         lblDep.setFont(FontsTheme.Plain_Texts);
         lblDep.setForeground(ColorsTheme.Text_Black);
 
-        JTextField txtDep = new JTextField("");
+        txtDep = new JTextField("");
         txtDep.setBounds(720, 80, 180, 30);
         txtDep.setFont(FontsTheme.Plain_Texts);
         txtDep.setForeground(ColorsTheme.Text_Black);
 
-        JLabel lblRole = new JLabel("Role :");
+        lblRole = new JLabel("Role :");
         lblRole.setBounds(540, 120, 170, 30);
         lblRole.setFont(FontsTheme.Plain_Texts);
         lblRole.setForeground(ColorsTheme.Text_Black);
@@ -190,7 +190,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbRole.setForeground(ColorsTheme.Text_Black);
         cmbRole.setBackground(ColorsTheme.Main_Card);
 
-        JLabel lblHired = new JLabel("Hire Date :");
+        lblHired = new JLabel("Hire Date :");
         lblHired.setBounds(540, 160, 170, 30);
         lblHired.setFont(FontsTheme.Plain_Texts);
         lblHired.setForeground(ColorsTheme.Text_Black);
@@ -200,7 +200,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         txtHired.setFont(FontsTheme.Plain_Texts);
         txtHired.setForeground(ColorsTheme.Text_Black);
 
-        JLabel lblOff = new JLabel("Day Off :");
+        lblOff = new JLabel("Day Off :");
         lblOff.setBounds(540, 200, 170, 30);
         lblOff.setFont(FontsTheme.Plain_Texts);
         lblOff.setForeground(ColorsTheme.Text_Black);
@@ -211,7 +211,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         cmbOff.setForeground(ColorsTheme.Text_Black);
         cmbOff.setBackground(ColorsTheme.Main_Card);
 
-        JLabel lblStatus = new JLabel("Status :");
+        lblStatus = new JLabel("Status :");
         lblStatus.setBounds(540, 240, 170, 30);
         lblStatus.setFont(FontsTheme.Plain_Texts);
         lblStatus.setForeground(ColorsTheme.Text_Black);
@@ -414,4 +414,3 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         }
     }
 }
-

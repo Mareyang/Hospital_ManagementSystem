@@ -30,6 +30,7 @@ public class EditReportDialog extends JDialog implements ActionListener {
         
         setSize(1050, 550);
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
         setModal(true);
         

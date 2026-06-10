@@ -14,6 +14,7 @@ public class HospitalManagementSystem {
     
     public static void main(String[] args) {
         
+        constants.SystemSettings.loadSettings();
         LoginPage login = new LoginPage();
         login.setVisible(true);
     }

@@ -8,12 +8,14 @@ import controls.LoginPage;
 import constants.ButtonStyles;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.SystemSettings;
 import panels.ReportsPanel;
 import panels.PharmacyPanel;
 import panels.AdminDashboardPanel;
 import panels.PatientsPanel;
 import panels.StaffManagementPanel;
 import panels.SettingsPanel;
+import panels.AccountManagementPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -28,7 +30,7 @@ public class AdminDashboard extends JFrame implements ActionListener {
         
     private JPanel pnlSide, pnlTop, pnlContainer, pnlLogo;
     private CardLayout cardLayout;
-    private JButton btnDashboard, btnPatients, btnPharmacy, btnStaff, btnReports, btnSettings, btnLogout;
+    private JButton btnDashboard, btnPatients, btnPharmacy, btnStaff, btnReports, btnSettings, btnAccounts, btnLogout;
     private JLabel lblSystemName, lblLogo;
     private JTextField txtSearchField;
     private ImageIcon logoIcon;
@@ -58,7 +60,7 @@ public class AdminDashboard extends JFrame implements ActionListener {
         
         cardLayout = new CardLayout();
         pnlContainer = new JPanel(cardLayout);
-        pnlContainer.setBounds(270, 100, 1650, 980);
+        pnlContainer.setBounds(270, 100, 1650, 980);    
         pnlContainer.setBackground(ColorsTheme.Middle_Panel);
         add(pnlContainer);
 
@@ -114,13 +116,13 @@ public class AdminDashboard extends JFrame implements ActionListener {
         });
         pnlTop.add(txtSearchField);
 
-        // Add the different screens (Pages)
         pnlContainer.add(new AdminDashboardPanel(), "dashboard");
         pnlContainer.add(new PatientsPanel(), "patients");
         pnlContainer.add(new PharmacyPanel(), "pharmacy");
         pnlContainer.add(new StaffManagementPanel(), "staffManagement");
         pnlContainer.add(new ReportsPanel(), "reports");
         pnlContainer.add(new SettingsPanel(), "settings");
+        pnlContainer.add(new AccountManagementPanel(), "accounts");
         
         // Add navigation buttons to the side panel
         btnDashboard = ButtonStyles.createButton("Dashboard", "/icons/home.png", 30, pnlSide);        
@@ -128,7 +130,8 @@ public class AdminDashboard extends JFrame implements ActionListener {
         btnPharmacy  = ButtonStyles.createButton("Pharmacy", "/icons/pharmacy2.png", 130, pnlSide);
         btnStaff     = ButtonStyles.createButton("Staff", "/icons/staff.png", 180, pnlSide);
         btnReports   = ButtonStyles.createButton("Reports", "/icons/report.png", 230, pnlSide);
-        btnSettings  = ButtonStyles.createButton("Settings", "/icons/setting.png", 280, pnlSide);
+        btnAccounts  = ButtonStyles.createButton("Accounts", "/icons/staff.png", 280, pnlSide);
+        btnSettings  = ButtonStyles.createButton("Settings", "/icons/setting.png", 330, pnlSide);
         btnLogout    = ButtonStyles.createButton("Logout", "/icons/logout.png", 850, pnlSide);
 
         // Make the buttons clickable
@@ -138,7 +141,11 @@ public class AdminDashboard extends JFrame implements ActionListener {
         btnStaff.addActionListener(this);
         btnReports.addActionListener(this);
         btnSettings.addActionListener(this);
+        btnAccounts.addActionListener(this);
         btnLogout.addActionListener(this);
+
+        // Display the landing screen based on preferences
+        cardLayout.show(pnlContainer, SystemSettings.defaultLandingTab);
 
         // Stop the search bar from blinking immediately when the app opens
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -193,6 +200,9 @@ public class AdminDashboard extends JFrame implements ActionListener {
         else if (e.getSource() == btnSettings) {
             cardLayout.show(pnlContainer, "settings");
         }
+        else if (e.getSource() == btnAccounts) {
+            cardLayout.show(pnlContainer, "accounts");
+        }
         else if (e.getSource() == btnLogout) {
             dispose(); // Close this window
             LoginPage lp = new LoginPage();
@@ -202,8 +212,9 @@ public class AdminDashboard extends JFrame implements ActionListener {
     
     // Run the dashboard to test the screen
     public static void main(String[] args) {
-            AdminDashboard admin = new AdminDashboard();
-            admin.setVisible(true);
+        SystemSettings.loadSettings();
+        AdminDashboard admin = new AdminDashboard();
+        admin.setVisible(true);
         
     }
-}
+}   

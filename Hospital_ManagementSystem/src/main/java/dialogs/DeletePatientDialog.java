@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,7 +25,7 @@ import javax.swing.JTextField;
  *
  * @author Admin
  */
-public class DeletePatientDialog extends JFrame implements ActionListener {
+public class DeletePatientDialog extends JDialog implements ActionListener {
     private JPanel pnlContent;
     private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblAge, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, 
             lblRoom, lblMarital, lblFirst, lblLast;
@@ -42,12 +42,13 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
     private String currentPatientId;
    
     public DeletePatientDialog(String patientId) {
-        this.currentPatientId = patientId.replace("PAT-", "");
+        this.currentPatientId = patientId.replaceAll("(?i)[A-Z]+-", "");
         
         setSize(1050, 550);
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
-       // setModal(true);
+        setModal(true);
         
         lblTitle = new JLabel("Delete Patient Profile");
         lblTitle.setBounds(30, 10, 500, 40);
@@ -272,7 +273,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
-                txtID.setText(rs.getString("patient_id"));
+                txtID.setText(String.format("PAT-%03d", rs.getInt("patient_id")));
                 txtFirst.setText(rs.getString("first_name"));
                 txtLast.setText(rs.getString("last_name"));
                 txtAge.setText(rs.getString("age"));
@@ -347,7 +348,7 @@ public class DeletePatientDialog extends JFrame implements ActionListener {
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Failed to delete staff:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Failed to delete patient record:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         }    }
     

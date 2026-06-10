@@ -117,8 +117,8 @@ public class DoctorDashboard extends JFrame implements ActionListener {
         // Add the different screens (Pages)
         pnlContainer.add(new DoctorDashboardPanel(), "dashboard");
         pnlContainer.add(new PatientsPanel(), "patients");
-        pnlContainer.add(new AppointmentsPanel(), "appointments");
-        pnlContainer.add(new MedicalRecordsPanel(), "medicalRecords");
+        pnlContainer.add(new AppointmentsPanel(false, true), "appointments");
+        pnlContainer.add(new MedicalRecordsPanel(true), "medicalRecords");
         pnlContainer.add(new PrescriptionsPanel(), "prescriptions");
         
         // Add navigation buttons to the side panel
@@ -196,8 +196,9 @@ public class DoctorDashboard extends JFrame implements ActionListener {
     
     // Run the dashboard to test the screen
     public static void main(String[] args) {
-            DoctorDashboard doctor = new DoctorDashboard();
-            doctor.setVisible(true);
+        constants.SystemSettings.loadSettings();
+        DoctorDashboard doctor = new DoctorDashboard();
+        doctor.setVisible(true);
        
     }
 }

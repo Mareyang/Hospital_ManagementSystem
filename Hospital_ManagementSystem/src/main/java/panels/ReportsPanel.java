@@ -49,7 +49,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new report
-        btnAdd = new JButton("+ Generate");
+        btnAdd = new JButton("+ Add");
         btnAdd.setBounds(830, 40, 150, 45); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
@@ -58,7 +58,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
         add(btnAdd);
 
         // Button for viewing report
-        btnView = new JButton("View Report");
+        btnView = new JButton("View");
         btnView.setBounds(995, 40, 150, 45); 
         btnView.setFont(FontsTheme.Buttons);
         btnView.setBackground(ColorsTheme.Header);
@@ -67,7 +67,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
         add(btnView);
 
         // Button for editing report
-        btnEdit = new JButton("Edit Report");
+        btnEdit = new JButton("Edit");
         btnEdit.setBounds(1160, 40, 150, 45); 
         btnEdit.setFont(FontsTheme.Buttons);
         btnEdit.setBackground(ColorsTheme.Update_Pending);
@@ -76,7 +76,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
         add(btnEdit);
 
         // Button for deleting report
-        btnDelete = new JButton("Delete Report");
+        btnDelete = new JButton("Delete");
         btnDelete.setBounds(1325, 40, 150, 45); 
         btnDelete.setFont(FontsTheme.Buttons);
         btnDelete.setBackground(ColorsTheme.Delete_Urgent);
