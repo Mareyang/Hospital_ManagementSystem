@@ -7,6 +7,7 @@ package panels;
 import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.SystemSettings;
 import dialogs.AddMedicalRecordDialog;
 import dialogs.AddPatientDialog;
 import dialogs.NewAppointmentDialog;
@@ -215,7 +216,7 @@ public class NurseDashboardPanel extends JPanel {
         table.setFont(FontsTheme.Info_Texts);
         table.setForeground(ColorsTheme.Text_Black);
         table.setBackground(ColorsTheme.Main_Card);
-        table.setRowHeight(35);
+        table.setRowHeight(SystemSettings.tableRowHeight);
         table.setGridColor(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY);
         table.setShowGrid(true);
         table.setSelectionBackground(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.decode("#E2E8F0"));

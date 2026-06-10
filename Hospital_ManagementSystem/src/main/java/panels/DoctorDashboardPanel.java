@@ -7,6 +7,7 @@ package panels;
 import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.SystemSettings;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
@@ -261,7 +262,7 @@ public class DoctorDashboardPanel extends JPanel {
         
         
         JTable tblLogs = new JTable(logData, logColumns);
-        tblLogs.setRowHeight(50);
+        tblLogs.setRowHeight(SystemSettings.tableRowHeight);
         tblLogs.setFont(FontsTheme.Info_Texts);
         tblLogs.setDefaultEditor(Object.class, null);
         tblLogs.setBackground(ColorsTheme.Main_Card);

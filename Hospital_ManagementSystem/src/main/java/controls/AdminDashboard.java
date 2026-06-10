@@ -8,6 +8,7 @@ import controls.LoginPage;
 import constants.ButtonStyles;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.SystemSettings;
 import panels.ReportsPanel;
 import panels.PharmacyPanel;
 import panels.AdminDashboardPanel;
@@ -142,6 +143,9 @@ public class AdminDashboard extends JFrame implements ActionListener {
         btnSettings.addActionListener(this);
         btnAccounts.addActionListener(this);
         btnLogout.addActionListener(this);
+
+        // Display the landing screen based on preferences
+        cardLayout.show(pnlContainer, SystemSettings.defaultLandingTab);
 
         // Stop the search bar from blinking immediately when the app opens
         this.addWindowListener(new java.awt.event.WindowAdapter() {

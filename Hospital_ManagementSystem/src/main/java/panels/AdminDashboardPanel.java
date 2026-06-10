@@ -3,6 +3,7 @@ package panels;
 import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
+import constants.SystemSettings;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
@@ -159,7 +160,7 @@ public class AdminDashboardPanel extends JPanel {
         };
         
         JTable tblLogs = new JTable(tableModel);
-        tblLogs.setRowHeight(50);
+        tblLogs.setRowHeight(SystemSettings.tableRowHeight);
         tblLogs.setFont(FontsTheme.Info_Texts);
         tblLogs.setBackground(ColorsTheme.Main_Card);
         tblLogs.setForeground(ColorsTheme.Text_Black);
@@ -210,7 +211,7 @@ public class AdminDashboardPanel extends JPanel {
         
         // Query fetching recent appointments. 
         // We order by appt_id DESC to get the most recent entries and limit it to 50 for performance on the dashboard.
-        String sql = "SELECT appt_id, patient_name, department, appointment_date, status FROM appointments ORDER BY appt_id DESC LIMIT 50";
+        String sql = "SELECT appt_id, patient_name, department, appointment_date, status FROM appointments ORDER BY appt_id DESC LIMIT " + SystemSettings.dashboardRecordLimit;
         
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);

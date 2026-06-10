@@ -34,7 +34,7 @@ public class TablePanel extends JPanel {
 
         
         //Table design and settings
-        tblTable.setRowHeight(50);
+        tblTable.setRowHeight(SystemSettings.tableRowHeight);
         tblTable.setFont(FontsTheme.Info_Texts);
         tblTable.setDefaultEditor(Object.class, null);
         tblTable.getTableHeader().setReorderingAllowed(false);

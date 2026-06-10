@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import controls.AdminDashboard;
+import constants.SystemSettings;
 
 
 /**
@@ -20,12 +21,12 @@ import controls.AdminDashboard;
  */
 public class SettingsPanel extends JPanel implements ActionListener{
     
-    private JPanel pnlGeneral, pnlAppearance, TopPanel, cardPanel;
-    private JLabel lblSettings, lblLine, lblSettingsDesc, lblTitle, lblValue, lblCurrency, lblDarkMode;
+    private JPanel pnlGeneral, pnlAppearance, pnlSystem, TopPanel, cardPanel;
+    private JLabel lblSettings, lblLine, lblSettingsDesc, lblTitle, lblValue, lblCurrency, lblDarkMode, lblDensity, lblLimit, lblLanding;
     private JTextField txtSearch;
     private JButton btnEnableDarkMode, btnSearch, btnRefresh, btnAdd, btnReset, btnSave;
     private JTable table;
-    private JComboBox cmbDarkMode, cmbCurrency;
+    private JComboBox cmbDarkMode, cmbCurrency, cmbDensity, cmbLimit, cmbLanding;
     private JScrollPane scrollPane;
     
     
@@ -134,12 +135,88 @@ public class SettingsPanel extends JPanel implements ActionListener{
 //        lblHospitalAddress.setForeground(ColorsTheme.Text_Black);
 //        lblHospitalAddress.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(0, 10, 0, 0)));
 //        pnlAppearance.add(lblHospitalAddress);
-        
+                // System Preferences
+        pnlSystem = createCard("System Preferences");
+        pnlSystem.setBounds(70, 430, 1500, 210);
+        add(pnlSystem);
+        TopPanel.setBackground(ColorsTheme.Header);
+        TopPanel.setBounds(0, 0, 1500, 10);
+        pnlSystem.setLayout(null);
+
+        lblLine = new JLabel("_______________________________________________________________________________________________________________________________________________________________________________________________________________________");
+        lblLine.setBounds(0, 35, 1550, 40);
+        lblLine.setForeground(Color.LIGHT_GRAY);
+        pnlSystem.add(lblLine);
+
+        // 1. Table Density / Row Height
+        lblDensity = new JLabel("Table Density / Row Height");
+        lblDensity.setBounds(30, 80, 250, 30);
+        lblDensity.setFont(FontsTheme.Plain_Texts);
+        lblDensity.setForeground(ColorsTheme.Text_Black);
+        pnlSystem.add(lblDensity);
+
+        cmbDensity = new JComboBox<>(new String[]{
+            "Compact (35px)", "Standard (45px)", "Spacious (50px)"
+        });
+        cmbDensity.setBounds(320, 80, 200, 30);
+        cmbDensity.setFont(FontsTheme.Info_Texts);
+        cmbDensity.setForeground(ColorsTheme.Text_Black);
+        cmbDensity.setBackground(ColorsTheme.Text_White);
+        if (SystemSettings.tableRowHeight == 35) {
+            cmbDensity.setSelectedItem("Compact (35px)");
+        } else if (SystemSettings.tableRowHeight == 45) {
+            cmbDensity.setSelectedItem("Standard (45px)");
+        } else {
+            cmbDensity.setSelectedItem("Spacious (50px)");
+        }
+        pnlSystem.add(cmbDensity);
+
+        // 2. Dashboard Log Limit
+        lblLimit = new JLabel("Dashboard Table Record Limit");
+        lblLimit.setBounds(30, 120, 250, 30);
+        lblLimit.setFont(FontsTheme.Plain_Texts);
+        lblLimit.setForeground(ColorsTheme.Text_Black);
+        pnlSystem.add(lblLimit);
+
+        cmbLimit = new JComboBox<>(new Integer[]{10, 25, 50, 100});
+        cmbLimit.setBounds(320, 120, 200, 30);
+        cmbLimit.setFont(FontsTheme.Info_Texts);
+        cmbLimit.setForeground(ColorsTheme.Text_Black);
+        cmbLimit.setBackground(ColorsTheme.Text_White);
+        cmbLimit.setSelectedItem(SystemSettings.dashboardRecordLimit);
+        pnlSystem.add(cmbLimit);
+
+        // 3. Default Landing Screen
+        lblLanding = new JLabel("Default Landing Page");
+        lblLanding.setBounds(30, 160, 250, 30);
+        lblLanding.setFont(FontsTheme.Plain_Texts);
+        lblLanding.setForeground(ColorsTheme.Text_Black);
+        pnlSystem.add(lblLanding);
+
+        cmbLanding = new JComboBox<>(new String[]{
+            "Dashboard", "Patients", "Pharmacy", "Staff", "Reports"
+        });
+        cmbLanding.setBounds(320, 160, 200, 30);
+        cmbLanding.setFont(FontsTheme.Info_Texts);
+        cmbLanding.setForeground(ColorsTheme.Text_Black);
+        cmbLanding.setBackground(ColorsTheme.Text_White);
+        if ("patients".equals(SystemSettings.defaultLandingTab)) {
+            cmbLanding.setSelectedItem("Patients");
+        } else if ("pharmacy".equals(SystemSettings.defaultLandingTab)) {
+            cmbLanding.setSelectedItem("Pharmacy");
+        } else if ("staffManagement".equals(SystemSettings.defaultLandingTab)) {
+            cmbLanding.setSelectedItem("Staff");
+        } else if ("reports".equals(SystemSettings.defaultLandingTab)) {
+            cmbLanding.setSelectedItem("Reports");
+        } else {
+            cmbLanding.setSelectedItem("Dashboard");
+        }
+        pnlSystem.add(cmbLanding);
 
 
         //Buttons
         btnReset = new JButton("Reset");
-        btnReset.setBounds(1250  , 450, 130, 40); 
+        btnReset.setBounds(1250  , 660, 130, 40); 
         btnReset.setFont(FontsTheme.Buttons);
         btnReset.setBackground(ColorsTheme.Text_Gray);
         btnReset.setForeground(ColorsTheme.Text_White);
@@ -147,7 +224,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         add(btnReset);
         
         btnSave = new JButton("Save");
-        btnSave.setBounds(1400, 450, 130, 40); 
+        btnSave.setBounds(1400, 660, 130, 40); 
         btnSave.setFont(FontsTheme.Buttons);
         btnSave.setBackground(ColorsTheme.Add_Confirm);
         btnSave.setForeground(ColorsTheme.Text_White);
@@ -158,8 +235,6 @@ public class SettingsPanel extends JPanel implements ActionListener{
         //ActionListener
         btnReset.addActionListener(this);
         btnSave.addActionListener(this);
-                
-                
     }
 
     
@@ -183,31 +258,55 @@ public class SettingsPanel extends JPanel implements ActionListener{
         cardPanel.add(lblTitle);
 
         return cardPanel;
-        
-            }
+    }
 
-    
-    
-    
-    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnReset) {
             cmbDarkMode.setSelectedItem("Disable");
+            cmbDensity.setSelectedItem("Spacious (50px)");
+            cmbLimit.setSelectedItem(50);
+            cmbLanding.setSelectedItem("Dashboard");
         } 
         else if (e.getSource() == btnSave) {
             String selectedDarkMode = cmbDarkMode.getSelectedItem().toString().trim();
 
-            boolean darkModeEnabled = ColorsTheme.isDarkMode;
+            boolean darkModeEnabled = SystemSettings.isDarkMode;
             if (selectedDarkMode.equals("Enable")) {
                 darkModeEnabled = true;
             } else if (selectedDarkMode.equals("Disable")) {
                 darkModeEnabled = false;
             }
 
-            ColorsTheme.applyTheme(darkModeEnabled);
+            // Get Density / Row Height
+            int rowHeight = 50;
+            String selectedDensity = cmbDensity.getSelectedItem().toString();
+            if (selectedDensity.startsWith("Compact")) {
+                rowHeight = 35;
+            } else if (selectedDensity.startsWith("Standard")) {
+                rowHeight = 45;
+            }
 
-            JOptionPane.showMessageDialog(this, "Appearance settings saved successfully! Reloading dashboard...", "Success", JOptionPane.INFORMATION_MESSAGE);
+            // Get Dashboard Record Limit
+            int recordLimit = (Integer) cmbLimit.getSelectedItem();
+
+            // Get Default Landing Screen
+            String landingTab = "dashboard";
+            String selectedLanding = cmbLanding.getSelectedItem().toString();
+            if ("Patients".equals(selectedLanding)) {
+                landingTab = "patients";
+            } else if ("Pharmacy".equals(selectedLanding)) {
+                landingTab = "pharmacy";
+            } else if ("Staff".equals(selectedLanding)) {
+                landingTab = "staffManagement";
+            } else if ("Reports".equals(selectedLanding)) {
+                landingTab = "reports";
+            }
+
+            // Save settings persistently
+            SystemSettings.saveSettings(darkModeEnabled, rowHeight, recordLimit, landingTab);
+
+            JOptionPane.showMessageDialog(this, "Settings saved successfully! Reloading dashboard...", "Success", JOptionPane.INFORMATION_MESSAGE);
 
             // Reload AdminDashboard
             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
