@@ -259,6 +259,11 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
     }
     
     private void loadPatientData() {
+        
+        if (currentPatientId == null || currentPatientId.trim().isEmpty()) {
+        txtID.setText("PAT-000"); // Placeholder
+        return; 
+        }
         String sql = "SELECT * FROM patients WHERE patient_id = ?";
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
              PreparedStatement stmt = conn.prepareStatement(sql)) {

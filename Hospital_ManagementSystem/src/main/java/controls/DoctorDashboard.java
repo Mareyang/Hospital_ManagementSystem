@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.CardLayout;
 import java.awt.*;
-
+    
 /**
  *
  * @author Arabella
@@ -27,7 +27,7 @@ public class DoctorDashboard extends JFrame implements ActionListener {
     
     private JPanel pnlSide, pnlTop, pnlContainer, pnlLogo;
     private CardLayout cardLayout;
-    private JButton btnDashboard, btnPatients, btnAppointments, btnMedicalRecords, btnPrescriptions, btnLogout;
+    public JButton btnDashboard, btnPatients, btnAppointments, btnMedicalRecords, btnPrescriptions, btnLogout;
     private JLabel lblSystemName, lblLogo;
     private JTextField txtSearchField;
     private ImageIcon logoIcon;
@@ -149,7 +149,21 @@ public class DoctorDashboard extends JFrame implements ActionListener {
             pnlTop.requestFocusInWindow();
         });
     }
-    
+        public void switchView(String cardName, JButton sidebarButtonTarget) {
+
+        cardLayout.show(pnlContainer, cardName);
+
+
+        if (sidebarButtonTarget != null && sidebarButtonTarget != btnLogout) {
+            if (activeBtn != null) {
+                activeBtn.setBackground(ColorsTheme.Side_Panel);
+                activeBtn.getParent().setBackground(ColorsTheme.Side_Panel);
+            }
+            sidebarButtonTarget.setBackground(ColorsTheme.Active_Button);
+            sidebarButtonTarget.getParent().setBackground(ColorsTheme.Active_Button);
+            activeBtn = sidebarButtonTarget;
+        }
+}
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();

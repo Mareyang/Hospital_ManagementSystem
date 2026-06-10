@@ -1,4 +1,4 @@
-package dialogs;
+    package dialogs;
 
 import constants.ColorsTheme;
 import constants.FontsTheme;
