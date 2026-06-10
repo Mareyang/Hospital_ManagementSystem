@@ -204,7 +204,7 @@ public class NurseDashboardPanel extends JPanel {
                 + "ORDER BY mr.record_id DESC LIMIT 1) AS last_updated "
                 + "FROM patients p "
                 + "WHERE p.status <> 'Discharged' "
-                + "ORDER BY p.patient_id ASC";
+                + "ORDER BY p.patient_id ASC LIMIT " + SystemSettings.dashboardRecordLimit;
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);

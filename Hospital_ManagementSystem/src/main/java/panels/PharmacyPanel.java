@@ -243,7 +243,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
 
     private void configurePharmacyTable() {
         JTable table = tblPharmacy.getTable();
-        table.setRowHeight(50);
+        // table.setRowHeight(50); // Inherits from SystemSettings dynamically via TablePanel
     }
         private void updateMedicationStockInDatabase(String itemCode, int newStock) {
   

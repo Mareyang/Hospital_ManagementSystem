@@ -286,7 +286,7 @@ public class DoctorDashboardPanel extends JPanel {
        tableModel.setRowCount(0);
     
     
-    String sql = "SELECT appointment_time, patient_name, visit_type, status FROM appointments ORDER BY appt_id ASC";
+    String sql = "SELECT appointment_time, patient_name, visit_type, status FROM appointments ORDER BY appt_id ASC LIMIT " + SystemSettings.dashboardRecordLimit;
     
     try (Connection conn = getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql);

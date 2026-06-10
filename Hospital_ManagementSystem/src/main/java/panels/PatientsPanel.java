@@ -258,7 +258,7 @@ public class PatientsPanel extends JPanel implements ActionListener {
 
     private void configurePatientTable() {
         JTable table = tblPatient.getTable();
-        table.setRowHeight(50);
+        // table.setRowHeight(50); // Inherits from SystemSettings dynamically via TablePanel
     }
 
     private int getSelectedPatientId() {

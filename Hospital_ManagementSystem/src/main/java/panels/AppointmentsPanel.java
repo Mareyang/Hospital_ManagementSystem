@@ -468,7 +468,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
 
     private void configureAppointmentTable() {
         JTable table = tblAppointments.getTable();
-        table.setRowHeight(50);
+        // table.setRowHeight(50); // Inherits from SystemSettings dynamically via TablePanel
 
         if (canManageAppointments) {
             tblAppointments.add(btnUpcoming);
