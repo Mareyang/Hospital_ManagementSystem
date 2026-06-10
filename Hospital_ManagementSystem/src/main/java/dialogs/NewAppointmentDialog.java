@@ -311,6 +311,9 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
                     dispose(); 
                 }
 
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Patient ID must be a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                
             } catch (SQLException sqlException) {
                 sqlException.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Database write operation failed:\n" + sqlException.getMessage(), 
