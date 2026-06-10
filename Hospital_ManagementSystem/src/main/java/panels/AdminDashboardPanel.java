@@ -20,12 +20,14 @@ import dialogs.NewReportDialog;
 
 public class AdminDashboardPanel extends JPanel {
     
-    private JPanel pnlPatients, pnlDoctors, pnlNurses, pnlAppointments, pnlSupplies, pnlRevenue, pnlMiddle;
-    private JLabel lblGreet, lblDescrip, lblDistributionTitle, lblOverviewTitle;
+    private JPanel pnlPatients, pnlDoctors, pnlNurses, pnlAppointments, pnlSupplies, pnlRevenue, pnlMiddle, 
+            pnlOverview, pnlQuickActions;
+    private JLabel lblGreet, lblDescrip, lblOverviewTitle, lblQuickTitle;
+    private JButton btnRegisterStaff, btnAddMedication, btnGenReports;
+    private JTable tblLogs;
+    private JScrollPane logScrollPane;
+
     
-    // Distribution & Progress bars
-    private JPanel pnlDistribution, pnlOverview;
-    private JProgressBar barCardiology, barOrthopedics, barEmergency, barNeurology, barPediatrics;
     
     // Unified database configuration pointing to your active MySQL server port
     private final String DB_URL = "jdbc:mysql://localhost:3306/hospital_management";
@@ -72,45 +74,45 @@ public class AdminDashboardPanel extends JPanel {
         
         // Summary Panel Cards Row 1
         pnlPatients = new PanelCard2("Total Patients", totalPatients, "Active Records", ColorsTheme.Yellow);
-        pnlPatients.setBounds(70, 160, 460, 140);
+        pnlPatients.setBounds(200, 140, 350, 140);
         add(pnlPatients);
         
         pnlDoctors = new PanelCard2("Total Doctors", totalDoctors, "Active Specialists", ColorsTheme.Blue);
-        pnlDoctors.setBounds(580, 160, 460, 140);
+        pnlDoctors.setBounds(630, 140, 350, 140);
         add(pnlDoctors);
         
         pnlNurses = new PanelCard2("Total Nurses", totalNurses, "Active Staff", ColorsTheme.Orange);
-        pnlNurses.setBounds(1090, 160, 460, 140);
+        pnlNurses.setBounds(1060, 140, 350, 140);
         add(pnlNurses);
         
         // Summary Panel Cards Row 2
         pnlAppointments = new PanelCard2("Today's Appointments", totalAppointments, "Scheduled Total", ColorsTheme.Green);
-        pnlAppointments.setBounds(70, 310, 460, 140);
+        pnlAppointments.setBounds(200, 300, 350, 140);
         add(pnlAppointments);
         
         pnlSupplies = new PanelCard2("Medical Supplies", totalSupplies, lowStockText, ColorsTheme.Red);
-        pnlSupplies.setBounds(580, 310, 460, 140);
+        pnlSupplies.setBounds(630, 300, 350, 140);
         add(pnlSupplies);
         
         pnlRevenue = new PanelCard2("Total Stock Value", SystemSettings.getCurrencySymbol() + totalRevenue, "Inventory Valuation", ColorsTheme.Top_Line);
-        pnlRevenue.setBounds(1090, 310, 460, 140);
+        pnlRevenue.setBounds(1060, 300, 350, 140);
         add(pnlRevenue);
         
         // --- Quick Actions Panel ---
-        JPanel pnlQuickActions = new JPanel();
+        pnlQuickActions = new JPanel();
         pnlQuickActions.setLayout(null);
         pnlQuickActions.setBackground(ColorsTheme.Main_Card); 
         pnlQuickActions.setBounds(960, 0, 520, 400); 
         pnlMiddle.add(pnlQuickActions);
 
-        JLabel lblQuickTitle = new JLabel("Quick Actions");
+        lblQuickTitle = new JLabel("Quick Actions");
         lblQuickTitle.setFont(FontsTheme.Title_Texts);
         lblQuickTitle.setForeground(ColorsTheme.Text_Black);
         lblQuickTitle.setBounds(32, 20, 350, 35);
         pnlQuickActions.add(lblQuickTitle);
         
         // Line 1
-        JButton btnRegisterStaff = new JButton("Register Staff");
+        btnRegisterStaff = new JButton("Register Staff");
         btnRegisterStaff.setBounds(40, 80, 200, 70);
         btnRegisterStaff.setBackground(ColorsTheme.Green);
         btnRegisterStaff.setForeground(Color.WHITE);
@@ -119,7 +121,7 @@ public class AdminDashboardPanel extends JPanel {
         btnRegisterStaff.addActionListener(e -> new NewStaffDialog().setVisible(true));
         pnlQuickActions.add(btnRegisterStaff);
         
-        JButton btnAddMedication = new JButton("Add Medication");
+        btnAddMedication = new JButton("Add Medication");
         btnAddMedication.setBounds(280, 80, 200, 70);
         btnAddMedication.setBackground(ColorsTheme.Yellow);
         btnAddMedication.setForeground(Color.BLACK);
@@ -129,7 +131,7 @@ public class AdminDashboardPanel extends JPanel {
         pnlQuickActions.add(btnAddMedication);
         
         // Line 2
-        JButton btnGenReports = new JButton("Generate Reports");
+        btnGenReports = new JButton("Generate Reports");
         btnGenReports.setBounds(160, 180, 200, 70);
         btnGenReports.setBackground(ColorsTheme.Top_Line);
         btnGenReports.setForeground(Color.WHITE);
@@ -159,7 +161,7 @@ public class AdminDashboardPanel extends JPanel {
             }
         };
         
-        JTable tblLogs = new JTable(tableModel);
+        tblLogs = new JTable(tableModel);
         tblLogs.setRowHeight(SystemSettings.tableRowHeight);
         tblLogs.setFont(FontsTheme.Info_Texts);
         tblLogs.setBackground(ColorsTheme.Main_Card);
@@ -189,7 +191,7 @@ public class AdminDashboardPanel extends JPanel {
             tblLogs.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         
-        JScrollPane logScrollPane = new JScrollPane(tblLogs);
+        logScrollPane = new JScrollPane(tblLogs);
         logScrollPane.setBounds(0, 60, 920, 320);
         logScrollPane.getViewport().setBackground(ColorsTheme.Main_Card);
         logScrollPane.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY, 1)); 

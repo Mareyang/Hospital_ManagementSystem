@@ -19,13 +19,14 @@ import dialogs.NewPharmacyDialog;
 public class PharmacyPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch;
-    private PanelCard pnlTotal, pnlIn, pnlLow, pnlCrit; // Changed from JPanel to PanelCard
+    private PanelCard pnlTotal, pnlIn, pnlLow, pnlCrit; 
     private JLabel lblDetails, lblPharmacy;
     private JTextField txtSearch;
     private JButton btnSearch, btnRefresh, btnAdd,btnUseStock,btnRemove;
     private TablePanel tblPharmacy;
     private static final String[] columns = {"Item Code", "Medication", "Category", "Stock", "Reorder Level", "Status"};
     private boolean stockButtonsInTable;
+    
     
     public PharmacyPanel() {
         this(false);

@@ -114,33 +114,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         pnlAppearance.add(cmbDarkMode);
         
         
-        
-//        lblName = new JLabel("Hospital Name");
-//        lblName.setBounds(30, 80, 500, 30);
-//        lblName.setFont(FontsTheme.Plain_Texts);
-//        lblName.setForeground(ColorsTheme.Text_Black);
-//        pnlAppearance.add(lblName);
-//        
-//        lblHospital = new JLabel("Put hospital name here");
-//        lblHospital.setBounds(190, 80, 500, 30);
-//        lblHospital.setFont(FontsTheme.Plain_Texts);
-//        lblHospital.setForeground(ColorsTheme.Text_Black);
-//        lblHospital.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(0, 10, 0, 0)));
-//        pnlAppearance.add(lblHospital);
-//        
-//        lblAddress = new JLabel("Address");
-//        lblAddress.setBounds(30, 120, 100, 30);
-//        lblAddress.setFont(FontsTheme.Plain_Texts);
-//        lblAddress.setForeground(ColorsTheme.Text_Black);
-//        pnlAppearance.add(lblAddress);
-//        
-//        lblHospitalAddress = new JLabel("Put hospital address here");
-//        lblHospitalAddress.setBounds(190, 120, 500, 30);
-//        lblHospitalAddress.setFont(FontsTheme.Plain_Texts);
-//        lblHospitalAddress.setForeground(ColorsTheme.Text_Black);
-//        lblHospitalAddress.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(0, 10, 0, 0)));
-//        pnlAppearance.add(lblHospitalAddress);
-                // System Preferences
+        // System Preferences
         pnlSystem = createCard("System Preferences");
         pnlSystem.setBounds(70, 430, 1500, 210);
         add(pnlSystem);

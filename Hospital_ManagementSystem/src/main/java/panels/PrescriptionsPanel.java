@@ -27,6 +27,8 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
     private TablePanel tblPrescription;
     private static final String[] columns = {"Rx ID", "Patient Name", "Doctor", "Date", "Medications", "Status", "Actions"};
     
+    
+    
     public PrescriptionsPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);

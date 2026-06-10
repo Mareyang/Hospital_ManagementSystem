@@ -30,6 +30,8 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
     private JButton btnSearch, btnRefresh, btnAdd, btnView, btnEdit, btnDelete;
     private static final String[] columns = {"Staff ID", "Name", "Role", "Department", "Status", "Patient"};
     
+    
+    
     public StaffManagementPanel() {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
