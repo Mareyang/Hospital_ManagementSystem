@@ -266,9 +266,14 @@ public class AdminDashboardPanel extends JPanel {
             e.printStackTrace();
         }
         
-        if (calculatedAssetWorth >= 1000) {
-            return String.format("%.1fK", calculatedAssetWorth / 1000);
+        double displayValue = calculatedAssetWorth;
+        if ("USD".equals(SystemSettings.currency)) {
+            displayValue = calculatedAssetWorth / 58.0; // Conversion rate: 1 USD = 58 PHP
         }
-        return String.valueOf((int) calculatedAssetWorth);
+        
+        if (displayValue >= 1000) {
+            return String.format("%.1fK", displayValue / 1000);
+        }
+        return String.valueOf((int) displayValue);
     }
 }
