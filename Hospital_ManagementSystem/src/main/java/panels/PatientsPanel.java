@@ -52,36 +52,47 @@ public class PatientsPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new patient
-        btnAdd = new JButton("+  Add Patient");
-        btnAdd.setBounds(1280, 40, 250, 50); 
+        btnAdd = new JButton("+ Add Patient");
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
-        if (canManagePatients) {
-            add(btnAdd);
-        }
 
-        btnView = new JButton("View");
-        btnView.setBounds(canManagePatients ? 1110 : 1280, 10, 100, 40);
+        btnView = new JButton("View Patient");
         btnView.setFont(FontsTheme.Buttons);
-        btnView.setBackground(ColorsTheme.Search);
+        btnView.setBackground(ColorsTheme.Header);
         btnView.setForeground(ColorsTheme.Text_White);
         btnView.setFocusPainted(false);
 
-        btnEdit = new JButton("Edit");
-        btnEdit.setBounds(1220, 10, 100, 40);
+        btnEdit = new JButton("Edit Patient");
         btnEdit.setFont(FontsTheme.Buttons);
-        btnEdit.setBackground(ColorsTheme.Green);
-        btnEdit.setForeground(ColorsTheme.Text_White);
+        btnEdit.setBackground(ColorsTheme.Update_Pending);
+        btnEdit.setForeground(ColorsTheme.Text_Black);
         btnEdit.setFocusPainted(false);
 
-        btnDelete = new JButton("Delete");
-        btnDelete.setBounds(1330, 10, 120, 40);
+        btnDelete = new JButton("Delete Patient");
         btnDelete.setFont(FontsTheme.Buttons);
         btnDelete.setBackground(ColorsTheme.Delete_Urgent);
         btnDelete.setForeground(ColorsTheme.Text_White);
         btnDelete.setFocusPainted(false);
+        
+        // Dynamically align visible buttons to the right-hand side
+        java.util.List<JButton> visibleButtons = new java.util.ArrayList<>();
+        if (canManagePatients) {
+            visibleButtons.add(btnAdd);
+        }
+        visibleButtons.add(btnView);
+        if (canManagePatients) {
+            visibleButtons.add(btnEdit);
+            visibleButtons.add(btnDelete);
+        }
+
+        int[] slots = {830, 995, 1160, 1325};
+        int startSlotIndex = slots.length - visibleButtons.size();
+        for (int i = 0; i < visibleButtons.size(); i++) {
+            visibleButtons.get(i).setBounds(slots[startSlotIndex + i], 40, 150, 45);
+            add(visibleButtons.get(i));
+        }
         
         // Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by patient name or patient id...");
@@ -248,12 +259,6 @@ public class PatientsPanel extends JPanel implements ActionListener {
     private void configurePatientTable() {
         JTable table = tblPatient.getTable();
         table.setRowHeight(50);
-        tblPatient.add(btnView);
-
-        if (canManagePatients) {
-            tblPatient.add(btnEdit);
-            tblPatient.add(btnDelete);
-        }
     }
 
     private int getSelectedPatientId() {

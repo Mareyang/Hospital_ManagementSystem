@@ -52,13 +52,11 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new medication
-        btnAdd = new JButton("+  Add Medication");
-        btnAdd.setBounds(1280, 40, 250, 50); 
+        btnAdd = new JButton("+ Add Med");
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
-        add(btnAdd);
         
         // Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search medication name, item code, or category...");
@@ -84,31 +82,41 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         pnlSearch.add(btnRefresh);
  
         btnUseStock = new JButton("Update Stock");
+        btnUseStock.setFont(FontsTheme.Buttons);
+        btnUseStock.setFocusPainted(false);
         if (stockButtonsInTable) {
             btnUseStock.setBounds(1100, 10, 180, 40);
+            btnUseStock.setBackground(Color.blue); 
+            btnUseStock.setForeground(ColorsTheme.Text_White);
         } else {
-            btnUseStock.setBounds(1010, 40, 250, 50);
-        }
-        btnUseStock.setFont(FontsTheme.Buttons);
-        btnUseStock.setBackground(Color.blue); 
-        btnUseStock.setForeground(ColorsTheme.Text_White);
-        btnUseStock.setFocusPainted(false);
-        if (!stockButtonsInTable) {
-            add(btnUseStock);
+            btnUseStock.setBackground(ColorsTheme.Update_Pending); 
+            btnUseStock.setForeground(ColorsTheme.Text_Black);
         }
         
         btnRemove = new JButton("Remove Stock");
-        if (stockButtonsInTable) {
-            btnRemove.setBounds(1290, 10, 190, 40);
-        } else {
-            btnRemove.setBounds(740, 40, 250, 50);
-        }
         btnRemove.setFont(FontsTheme.Buttons);  
-        btnRemove.setBackground(ColorsTheme.Red); 
         btnRemove.setForeground(ColorsTheme.Text_White);
         btnRemove.setFocusPainted(false);
+        if (stockButtonsInTable) {
+            btnRemove.setBounds(1290, 10, 190, 40);
+            btnRemove.setBackground(ColorsTheme.Red); 
+        } else {
+            btnRemove.setBackground(ColorsTheme.Delete_Urgent); 
+        }
+
+        // Dynamically align visible outer-panel buttons to the right-hand side
+        java.util.List<JButton> visibleButtons = new java.util.ArrayList<>();
+        visibleButtons.add(btnAdd);
         if (!stockButtonsInTable) {
-            add(btnRemove);
+            visibleButtons.add(btnUseStock);
+            visibleButtons.add(btnRemove);
+        }
+
+        int[] slots = {830, 995, 1160, 1325};
+        int startSlotIndex = slots.length - visibleButtons.size();
+        for (int i = 0; i < visibleButtons.size(); i++) {
+            visibleButtons.get(i).setBounds(slots[startSlotIndex + i], 40, 150, 45);
+            add(visibleButtons.get(i));
         }
 
         
