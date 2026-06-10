@@ -7,6 +7,9 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.*;
+import dialogs.NewStaffDialog;
+import dialogs.NewPharmacyDialog;
+import dialogs.NewReportDialog;
 
 public class AdminDashboardPanel extends JPanel {
     
@@ -118,46 +121,32 @@ public class AdminDashboardPanel extends JPanel {
         pnlQuickActions.add(lblQuickTitle);
         
         // Line 1
-        JButton btnAddPatient = new JButton("Add New Patient");
-        btnAddPatient.setBounds(40, 80, 200, 70);
-        btnAddPatient.setBackground(ColorsTheme.Blue); 
-        btnAddPatient.setForeground(Color.WHITE);
-        btnAddPatient.setFont(FontsTheme.Info_Texts);
-        btnAddPatient.setFocusPainted(false);
-        pnlQuickActions.add(btnAddPatient);
-        
         JButton btnRegisterStaff = new JButton("Register Staff");
-        btnRegisterStaff.setBounds(280, 80, 200, 70);
+        btnRegisterStaff.setBounds(40, 80, 200, 70);
         btnRegisterStaff.setBackground(ColorsTheme.Green);
         btnRegisterStaff.setForeground(Color.WHITE);
         btnRegisterStaff.setFont(FontsTheme.Info_Texts);
         btnRegisterStaff.setFocusPainted(false);
+        btnRegisterStaff.addActionListener(e -> new NewStaffDialog().setVisible(true));
         pnlQuickActions.add(btnRegisterStaff);
         
+        JButton btnAddMedication = new JButton("Add Medication");
+        btnAddMedication.setBounds(280, 80, 200, 70);
+        btnAddMedication.setBackground(ColorsTheme.Yellow);
+        btnAddMedication.setForeground(Color.BLACK);
+        btnAddMedication.setFont(FontsTheme.Info_Texts);
+        btnAddMedication.setFocusPainted(false);
+        btnAddMedication.addActionListener(e -> new NewPharmacyDialog().setVisible(true));
+        pnlQuickActions.add(btnAddMedication);
+        
         // Line 2
-        JButton btnManageDepts = new JButton("Manage Departments");
-        btnManageDepts.setBounds(40, 180, 200, 70);
-        btnManageDepts.setBackground(ColorsTheme.Orange);
-        btnManageDepts.setForeground(Color.WHITE);
-        btnManageDepts.setFont(FontsTheme.Info_Texts);
-        btnManageDepts.setFocusPainted(false);
-        pnlQuickActions.add(btnManageDepts);
-        
-        JButton btnManageRooms = new JButton("Manage Rooms");
-        btnManageRooms.setBounds(280, 180, 200, 70);
-        btnManageRooms.setBackground(ColorsTheme.Yellow);
-        btnManageRooms.setForeground(Color.BLACK);
-        btnManageRooms.setFont(FontsTheme.Info_Texts);
-        btnManageRooms.setFocusPainted(false);
-        pnlQuickActions.add(btnManageRooms);
-        
-        // Line 3
         JButton btnGenReports = new JButton("Generate Reports");
-        btnGenReports.setBounds(160, 280, 200, 70);
+        btnGenReports.setBounds(160, 180, 200, 70);
         btnGenReports.setBackground(ColorsTheme.Top_Line);
         btnGenReports.setForeground(Color.WHITE);
         btnGenReports.setFont(FontsTheme.Info_Texts);
         btnGenReports.setFocusPainted(false);
+        btnGenReports.addActionListener(e -> new NewReportDialog().setVisible(true));
         pnlQuickActions.add(btnGenReports);
        
         

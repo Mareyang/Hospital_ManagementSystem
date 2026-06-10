@@ -7,10 +7,11 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
 
-public class NewReportDialog extends JDialog implements ActionListener {
+public class EditReportDialog extends JDialog implements ActionListener {
     
     private JLabel lblTitle, lblSubtitle, lblCateg, lblName, lblNote, lblBy, lblDate, lblID, lblPeriod; 
     private JButton btnReportDetails, btnWrite, btnCancel, btnConfirm;
@@ -22,19 +23,23 @@ public class NewReportDialog extends JDialog implements ActionListener {
     
     private static final String[] categs = {" ", "Admissions Summary", "Billing and Revenue", "Pharmacy Dispensation", "Emergency Logs"};
     
-    public NewReportDialog() {
+    private String currentReportId;
+    
+    public EditReportDialog(String reportId) {
+        this.currentReportId = reportId;
+        
         setSize(1050, 550);
         setLayout(null);
         setLocationRelativeTo(null);
         setModal(true);
         
-        lblTitle = new JLabel("Report Generator");
+        lblTitle = new JLabel("Edit Report Details");
         lblTitle.setBounds(30, 10, 500, 40);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         add(lblTitle);
         
-        lblSubtitle = new JLabel("Select parameters and date ranges to compile your data.");
+        lblSubtitle = new JLabel("Modify existing report information.");
         lblSubtitle.setBounds(30, 40, 700, 40);
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
@@ -48,7 +53,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
         btnReportDetails.setFocusPainted(false);
         add(btnReportDetails);
        
-        btnWrite = new JButton("Write Report");
+        btnWrite = new JButton("Executive Summary");
         btnWrite.setBounds(290, 100, 250, 40);
         btnWrite.setFont(FontsTheme.Buttons);
         btnWrite.setForeground(ColorsTheme.Text_White);
@@ -70,7 +75,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
         btnCancel.setFocusPainted(false);
         add(btnCancel);
         
-        btnConfirm = new JButton("Save Report");
+        btnConfirm = new JButton("Update Report");
         btnConfirm.setBounds(790, 450, 200, 30);
         btnConfirm.setFont(FontsTheme.Buttons);
         btnConfirm.setForeground(ColorsTheme.Text_White);
@@ -78,20 +83,15 @@ public class NewReportDialog extends JDialog implements ActionListener {
         btnConfirm.setFocusPainted(false);
         add(btnConfirm);
                 
-        
         btnReportDetails.addActionListener(this);
         btnWrite.addActionListener(this);
         btnCancel.addActionListener(this);
         btnConfirm.addActionListener(this);
         
-        
         initializeForms();
+        loadReportData();
         showGenerateReport();
-        
     }
-    
-    
-    
     
     private void initializeForms() {
         lblName = new JLabel("Report Title : ");
@@ -108,7 +108,7 @@ public class NewReportDialog extends JDialog implements ActionListener {
         lblID.setFont(FontsTheme.Plain_Texts);
         lblID.setForeground(ColorsTheme.Text_Black);
         
-        txtID = new JTextField("Auto-generated");
+        txtID = new JTextField("");
         txtID.setBounds(220, 130, 230, 30);
         txtID.setFont(FontsTheme.Plain_Texts);
         txtID.setEditable(false);
@@ -165,6 +165,38 @@ public class NewReportDialog extends JDialog implements ActionListener {
         scrollNote.setBounds(40, 50, 880, 230);
     }
     
+    private void loadReportData() {
+        String sql = "SELECT * FROM hospital_reports WHERE report_id = ?";
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            String cleanId = currentReportId.toUpperCase().replace("RPT-", "");
+            stmt.setString(1, cleanId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                int rawId = rs.getInt("report_id");
+                txtID.setText(String.format("RPT-%03d", rawId));
+                txtName.setText(rs.getString("report_name"));
+                
+                String scope = rs.getString("report_type");
+                if (scope != null) cmbCateg.setSelectedItem(scope);
+                
+                txtBy.setText(rs.getString("generated_by"));
+                txtDate.setText(rs.getString("date_generated"));
+                txtPeriod.setText(rs.getString("reporting_period"));
+                
+                String summary = rs.getString("executive_summary");
+                if (summary != null && !summary.isEmpty()) {
+                    txaNote.setText(summary);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to load report data:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     public void showGenerateReport() {
         pnlContent.removeAll();
         pnlContent.add(lblName);
@@ -200,7 +232,6 @@ public class NewReportDialog extends JDialog implements ActionListener {
         } else if (e.getSource() == btnCancel) {
             dispose();
         } else if (e.getSource() == btnConfirm) {
-            String reportID = txtID.getText().trim();
             String reportName = txtName.getText().trim();
             String reportScope = cmbCateg.getSelectedItem().toString();
             String preparedBy = txtBy.getText().trim();
@@ -217,26 +248,28 @@ public class NewReportDialog extends JDialog implements ActionListener {
                 return;
             }
 
-            String sql = "INSERT INTO hospital_reports (report_name, report_type, generated_by, date_generated, reporting_period, executive_summary) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "UPDATE hospital_reports SET report_name=?, report_type=?, generated_by=?, date_generated=?, reporting_period=?, executive_summary=? WHERE report_id=?";
 
             try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-                 PreparedStatement insert = conn.prepareStatement(sql)) {
+                 PreparedStatement update = conn.prepareStatement(sql)) {
                 
-                insert.setString(1, reportName);
-                insert.setString(2, reportScope);
-                insert.setString(3, preparedBy);
-                insert.setString(4, dateGen);
-                insert.setString(5, period);
-                insert.setString(6, summary);
+                update.setString(1, reportName);
+                update.setString(2, reportScope);
+                update.setString(3, preparedBy);
+                update.setString(4, dateGen);
+                update.setString(5, period);
+                update.setString(6, summary);
+                String cleanId = currentReportId.toUpperCase().replace("RPT-", "");
+                update.setString(7, cleanId);
 
-                int rows = insert.executeUpdate();
+                int rows = update.executeUpdate();
                 if (rows > 0) {
-                    JOptionPane.showMessageDialog(this, "Report generated successfully!", "Report Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Report updated successfully!", "Report Success", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Database write operation failed:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Database update operation failed:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
