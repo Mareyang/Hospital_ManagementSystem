@@ -146,7 +146,7 @@ public class AdminDashboardPanel extends JPanel {
         pnlOverview.setBackground(ColorsTheme.Main_Card); 
         pnlMiddle.add(pnlOverview);
         
-        lblOverviewTitle = new JLabel("Recent Appointments & Admissions");
+        lblOverviewTitle = new JLabel("Recent Appointments");
         lblOverviewTitle.setFont(FontsTheme.Title_Texts);
         lblOverviewTitle.setForeground(ColorsTheme.Text_Black);
         lblOverviewTitle.setBounds(30, 20, 500, 35);

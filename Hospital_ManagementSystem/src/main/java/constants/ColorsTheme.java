@@ -61,5 +61,15 @@ public class ColorsTheme {
             Main_Card = Color.WHITE; // white card
             Text_Black = Color.BLACK;
         }
+        
+        // Ensure UI components use the correct theme colors globally
+        javax.swing.UIManager.put("TextField.background", Main_Card);
+        javax.swing.UIManager.put("TextField.foreground", Text_Black);
+        javax.swing.UIManager.put("TextArea.background", Main_Card);
+        javax.swing.UIManager.put("TextArea.foreground", Text_Black);
+        javax.swing.UIManager.put("ComboBox.background", Main_Card);
+        javax.swing.UIManager.put("ComboBox.foreground", Text_Black);
+        javax.swing.UIManager.put("ComboBox.selectionBackground", isDarkMode ? Color.decode("#334155") : Color.decode("#E2E8F0"));
+        javax.swing.UIManager.put("ComboBox.selectionForeground", Text_Black);
     }
 }
