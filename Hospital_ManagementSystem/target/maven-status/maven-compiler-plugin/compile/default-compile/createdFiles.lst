@@ -8,6 +8,7 @@ controls/DoctorDashboard$1.class
 controls/AdminDashboard$2.class
 dialogs/ViewPatientDialog.class
 panels/StaffManagementPanel.class
+panels/AccountManagementPanel.class
 controls/AdminDashboard.class
 dialogs/ViewReportDialog.class
 panels/DoctorDashboardPanel.class
@@ -18,7 +19,9 @@ panels/PharmacyPanel.class
 dialogs/ViewStaffDialog.class
 dialogs/NewStaffDialog.class
 controls/DoctorDashboard$2.class
+dialogs/EditAccountDialog.class
 dialogs/AddPatientDialog.class
+dialogs/ViewAccountDialog.class
 dialogs/AddMedicalRecordDialog.class
 dialogs/EditReportDialog.class
 dialogs/DeleteStaffDialog.class
@@ -44,5 +47,6 @@ constants/PanelCard.class
 constants/FontsTheme.class
 panels/NurseDashboardPanel$2.class
 dialogs/NewPharmacyDialog.class
+dialogs/NewAccountDialog.class
 controls/NurseDashboard$2.class
 constants/ColorsTheme.class
