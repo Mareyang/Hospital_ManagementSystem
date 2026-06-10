@@ -163,7 +163,7 @@ public class LoginPage extends JFrame implements ActionListener {
                 String lastName = result.getString("lastname");
 
                 if (dbRole.equals("Admin")) {
-                    JOptionPane.showMessageDialog(this, "Welcome back, Admin " + firstName + " " + lastName + "!");
+                    JOptionPane.showMessageDialog(this, "Welcome back, Admin " +lastName + "!");
                     AdminDashboard admin = new AdminDashboard();
                     admin.setVisible(true);
                 } 
@@ -173,7 +173,7 @@ public class LoginPage extends JFrame implements ActionListener {
                     doctor.setVisible(true);
                 } 
                 else if (dbRole.equals("Nurse")) {
-                    JOptionPane.showMessageDialog(this, "Welcome back, Nurse " + firstName + "!");
+                    JOptionPane.showMessageDialog(this, "Welcome back, Nurse " + lastName + "!");
                     NurseDashboard nurse = new NurseDashboard();
                     nurse.setVisible(true);
                 }
