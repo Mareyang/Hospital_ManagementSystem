@@ -30,6 +30,7 @@ public class AddPrescriptionDialog extends JDialog implements ActionListener {
     public AddPrescriptionDialog() {
         setSize(1050, 600); // Expanded slightly for the new fields
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
         setModal(true);
         

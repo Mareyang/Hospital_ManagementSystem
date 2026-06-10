@@ -30,6 +30,7 @@ public class EditAccountDialog extends JDialog implements ActionListener {
         setTitle("Edit Account");
         setSize(600, 500);
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
         setModal(true);
 

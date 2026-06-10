@@ -23,6 +23,7 @@ public class ForgotPasswordDialog extends JDialog implements ActionListener {
         super(parent, "Forgot Password", true);
         setSize(550, 480);
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(parent);
 
         lblTitle = new JLabel("Reset Password");

@@ -74,8 +74,14 @@ public class SettingsPanel extends JPanel implements ActionListener{
         });
         cmbCurrency.setBounds(190, 80, 200, 30);
         cmbCurrency.setFont(FontsTheme.Info_Texts);
-        cmbCurrency.setForeground(ColorsTheme.Text_Black);
-        cmbCurrency.setBackground(ColorsTheme.Text_White);
+        styleComboBox(cmbCurrency);
+        if ("USD".equals(SystemSettings.currency)) {
+            cmbCurrency.setSelectedItem("USD - US Dollar");
+        } else if ("PHP".equals(SystemSettings.currency)) {
+            cmbCurrency.setSelectedItem("PHP - Philippine Peso");
+        } else {
+            cmbCurrency.setSelectedItem(" ");
+        }
         pnlGeneral.add(cmbCurrency);
         
         
@@ -103,9 +109,8 @@ public class SettingsPanel extends JPanel implements ActionListener{
         });
         cmbDarkMode.setBounds(190, 80, 130, 30);
         cmbDarkMode.setFont(FontsTheme.Info_Texts);
-        cmbDarkMode.setForeground(ColorsTheme.Text_Black);
-        cmbDarkMode.setBackground(ColorsTheme.Text_White);
-        cmbDarkMode.setSelectedItem(ColorsTheme.isDarkMode ? "Enable" : "Disable");
+        styleComboBox(cmbDarkMode);
+        cmbDarkMode.setSelectedItem(SystemSettings.isDarkMode ? "Enable" : "Disable");
         pnlAppearance.add(cmbDarkMode);
         
         
@@ -160,8 +165,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         });
         cmbDensity.setBounds(320, 80, 200, 30);
         cmbDensity.setFont(FontsTheme.Info_Texts);
-        cmbDensity.setForeground(ColorsTheme.Text_Black);
-        cmbDensity.setBackground(ColorsTheme.Text_White);
+        styleComboBox(cmbDensity);
         if (SystemSettings.tableRowHeight == 35) {
             cmbDensity.setSelectedItem("Compact (35px)");
         } else if (SystemSettings.tableRowHeight == 45) {
@@ -181,8 +185,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         cmbLimit = new JComboBox<>(new Integer[]{10, 25, 50, 100});
         cmbLimit.setBounds(320, 120, 200, 30);
         cmbLimit.setFont(FontsTheme.Info_Texts);
-        cmbLimit.setForeground(ColorsTheme.Text_Black);
-        cmbLimit.setBackground(ColorsTheme.Text_White);
+        styleComboBox(cmbLimit);
         cmbLimit.setSelectedItem(SystemSettings.dashboardRecordLimit);
         pnlSystem.add(cmbLimit);
 
@@ -198,8 +201,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         });
         cmbLanding.setBounds(320, 160, 200, 30);
         cmbLanding.setFont(FontsTheme.Info_Texts);
-        cmbLanding.setForeground(ColorsTheme.Text_Black);
-        cmbLanding.setBackground(ColorsTheme.Text_White);
+        styleComboBox(cmbLanding);
         if ("patients".equals(SystemSettings.defaultLandingTab)) {
             cmbLanding.setSelectedItem("Patients");
         } else if ("pharmacy".equals(SystemSettings.defaultLandingTab)) {
@@ -260,10 +262,31 @@ public class SettingsPanel extends JPanel implements ActionListener{
         return cardPanel;
     }
 
+    // Helper method to style combo boxes to render correctly in Dark Mode
+    private void styleComboBox(JComboBox<?> cmb) {
+        cmb.setForeground(ColorsTheme.Text_Black);
+        cmb.setBackground(ColorsTheme.Main_Card);
+        cmb.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                java.awt.Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (isSelected) {
+                    c.setBackground(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.decode("#E2E8F0"));
+                    c.setForeground(ColorsTheme.Text_Black);
+                } else {
+                    c.setBackground(ColorsTheme.Main_Card);
+                    c.setForeground(ColorsTheme.Text_Black);
+                }
+                return c;
+            }
+        });
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnReset) {
             cmbDarkMode.setSelectedItem("Disable");
+            cmbCurrency.setSelectedItem("PHP - Philippine Peso");
             cmbDensity.setSelectedItem("Spacious (50px)");
             cmbLimit.setSelectedItem(50);
             cmbLanding.setSelectedItem("Dashboard");
@@ -303,8 +326,15 @@ public class SettingsPanel extends JPanel implements ActionListener{
                 landingTab = "reports";
             }
 
+            // Get Currency
+            String selectedCurrency = "PHP";
+            String currencyString = cmbCurrency.getSelectedItem().toString();
+            if (currencyString.startsWith("USD")) {
+                selectedCurrency = "USD";
+            }
+
             // Save settings persistently
-            SystemSettings.saveSettings(darkModeEnabled, rowHeight, recordLimit, landingTab);
+            SystemSettings.saveSettings(darkModeEnabled, rowHeight, recordLimit, landingTab, selectedCurrency);
 
             JOptionPane.showMessageDialog(this, "Settings saved successfully! Reloading dashboard...", "Success", JOptionPane.INFORMATION_MESSAGE);
 

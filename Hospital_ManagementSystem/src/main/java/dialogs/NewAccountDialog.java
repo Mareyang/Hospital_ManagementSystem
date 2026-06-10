@@ -25,6 +25,7 @@ public class NewAccountDialog extends JDialog implements ActionListener {
         setTitle("Register Account");
         setSize(600, 500);
         setLayout(null);
+        getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
         setModal(true);
 

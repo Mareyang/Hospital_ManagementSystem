@@ -212,8 +212,9 @@ public class AdminDashboard extends JFrame implements ActionListener {
     
     // Run the dashboard to test the screen
     public static void main(String[] args) {
-            AdminDashboard admin = new AdminDashboard();
-            admin.setVisible(true);
+        SystemSettings.loadSettings();
+        AdminDashboard admin = new AdminDashboard();
+        admin.setVisible(true);
         
     }
 }   

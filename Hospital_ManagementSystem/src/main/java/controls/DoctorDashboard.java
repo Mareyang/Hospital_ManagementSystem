@@ -196,8 +196,9 @@ public class DoctorDashboard extends JFrame implements ActionListener {
     
     // Run the dashboard to test the screen
     public static void main(String[] args) {
-            DoctorDashboard doctor = new DoctorDashboard();
-            doctor.setVisible(true);
+        constants.SystemSettings.loadSettings();
+        DoctorDashboard doctor = new DoctorDashboard();
+        doctor.setVisible(true);
        
     }
 }

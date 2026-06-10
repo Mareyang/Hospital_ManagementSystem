@@ -92,7 +92,7 @@ public class AdminDashboardPanel extends JPanel {
         pnlSupplies.setBounds(580, 310, 460, 140);
         add(pnlSupplies);
         
-        pnlRevenue = new PanelCard2("Total Stock Value", "₱" + totalRevenue, "Inventory Valuation", ColorsTheme.Top_Line);
+        pnlRevenue = new PanelCard2("Total Stock Value", SystemSettings.getCurrencySymbol() + totalRevenue, "Inventory Valuation", ColorsTheme.Top_Line);
         pnlRevenue.setBounds(1090, 310, 460, 140);
         add(pnlRevenue);
         

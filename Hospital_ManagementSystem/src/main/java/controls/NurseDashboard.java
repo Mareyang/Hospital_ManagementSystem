@@ -195,8 +195,9 @@ public class NurseDashboard extends JFrame implements ActionListener {
     
     // Run the dashboard to test the screen
     public static void main(String[] args) {
-            NurseDashboard nurse = new NurseDashboard();
-            nurse.setVisible(true);
+        constants.SystemSettings.loadSettings();
+        NurseDashboard nurse = new NurseDashboard();
+        nurse.setVisible(true);
         
     }
 }
