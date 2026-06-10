@@ -5,7 +5,9 @@ import java.util.prefs.Preferences;
 public class SystemSettings {
 
     // Persistent User Preferences
+    public static boolean isDarkMode = false;
     public static int tableRowHeight = 50;
+    public static int dashboardRecordLimit = 50;
     public static String defaultLandingTab = "dashboard";
 
     static {
