@@ -15,16 +15,28 @@ import dialogs.NewPharmacyDialog;
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 
 public class NurseDashboardPanel extends JPanel {
+    // Unified database configuration pointing to your active MySQL server port
+    private final String DB_URL = "jdbc:mysql://localhost:3306/hospital_management";
+    private final String DB_USER = "root";
+    private final String DB_PASSWORD = "";
     
     private JPanel pnlPatients, pnlAppointments, pnlBeds, pnlRevenue, pnlMiddle;
-    private JLabel lblGreet, lblDescrip, lblPatientMonitoringTitle, lblMedicationSuppliesTitle, lblQuickActionsTitle;
+    private JLabel lblGreet, lblDescrip, lblPatientMonitoringTitle, lblQuickActionsTitle;
     
-    private JPanel pnlPatientMonitoring, pnlMedicationSupplies, pnlQuickActions;
-    private JTable tblPatientMonitoring, tblMedicationSupplies;
-    private JScrollPane spPatientMonitoring, spMedicationSupplies;
+    private JPanel pnlPatientMonitoring, pnlQuickActions;
+    private JTable tblPatientMonitoring;
+    private JScrollPane spPatientMonitoring;
+    private DefaultTableModel patientTableModel;
     
     
     
@@ -54,46 +66,14 @@ public class NurseDashboardPanel extends JPanel {
         lblDescrip.setFont(FontsTheme.Plain_Texts);
         add(lblDescrip);
         
-        
-        //Summary Panel Cards
-        pnlPatients = new PanelCard2(
-                "Patients Assigned",
-                "24",
-                "Under your care",
-                ColorsTheme.Yellow);
-        pnlPatients.setBounds(70, 150, 350, 140);
-        add(pnlPatients);
-        
-        pnlAppointments = new PanelCard2(
-                "Today's Appointments",
-                "18",
-                "6 remaining",
-                ColorsTheme.Orange);
-        pnlAppointments.setBounds(450, 150, 350, 140);
-        add(pnlAppointments);
-        
-        pnlBeds = new PanelCard2(
-                "Medication Due",
-                "9",
-                "Next round pending",
-                ColorsTheme.Blue);
-        pnlBeds.setBounds(830, 150, 350, 140);
-        add(pnlBeds);
-        
-        pnlRevenue = new PanelCard2(
-                "Critical Alerts",
-                "3",
-                "Needs attention",
-                ColorsTheme.Green);
-        pnlRevenue.setBounds(1210, 150, 350, 140);
-        add(pnlRevenue);
+        refreshSummaryCards();
         
         
         
         // Patient Monitoring List table
         pnlPatientMonitoring = new JPanel();
         pnlPatientMonitoring.setLayout(null);
-        pnlPatientMonitoring.setBounds(0, 0, 650, 500);
+        pnlPatientMonitoring.setBounds(0, 0, 1070, 500);
         pnlPatientMonitoring.setBackground(ColorsTheme.Main_Card);
         pnlMiddle.add(pnlPatientMonitoring);
 
@@ -104,19 +84,7 @@ public class NurseDashboardPanel extends JPanel {
         pnlPatientMonitoring.add(lblPatientMonitoringTitle);
 
         String[] patientColumns = {"Patient Name", "Room / Bed", "Condition", "Last Updated"};
-        Object[][] patientRows = {
-            {"John Doe", "Ward 3 - Bed 1", "Stable", "08:30 AM"},
-            {"Mery Smith", "Ward 3 - Bed 2", "Stable", "08:45 AM"},
-            {"Robert Brown", "ICU - Bed 4", "Critical", "08:50 AM"},
-            {"Linda White", "Ward 2 - Bed 1", "Serious", "08:40 AM"},
-            {"David Wilson", "Ward 2 - Bed 2", "Stable", "08:35 AM"},
-            {"Sarah Geronimo", "Ward 1 - Bed 4", "Stable", "09:10 AM"},
-            {"Lebron James", "ICU - Bed 2", "Serious", "09:25 AM"},
-            {"Wemby Talo", "Ward 4 - Bed 3", "Stable", "09:40 AM"},
-            {"KAT Bading", "Ward 1 - Bed 1", "Critical", "09:55 AM"}
-        };
-
-        DefaultTableModel patientTableModel = new DefaultTableModel(patientRows, patientColumns) {
+        patientTableModel = new DefaultTableModel(patientColumns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -124,60 +92,19 @@ public class NurseDashboardPanel extends JPanel {
         };
 
         tblPatientMonitoring = createSimpleTable(patientTableModel);
-        tblPatientMonitoring.getColumnModel().getColumn(0).setPreferredWidth(190);
-        tblPatientMonitoring.getColumnModel().getColumn(1).setPreferredWidth(160);
-        tblPatientMonitoring.getColumnModel().getColumn(2).setPreferredWidth(120);
-        tblPatientMonitoring.getColumnModel().getColumn(3).setPreferredWidth(130);
+        tblPatientMonitoring.getColumnModel().getColumn(0).setPreferredWidth(320);
+        tblPatientMonitoring.getColumnModel().getColumn(1).setPreferredWidth(220);
+        tblPatientMonitoring.getColumnModel().getColumn(2).setPreferredWidth(180);
+        tblPatientMonitoring.getColumnModel().getColumn(3).setPreferredWidth(260);
 
         spPatientMonitoring = new JScrollPane(tblPatientMonitoring);
-        spPatientMonitoring.setBounds(15, 50, 620, 435);
+        spPatientMonitoring.setBounds(15, 50, 1040, 435);
         spPatientMonitoring.getViewport().setBackground(ColorsTheme.Main_Card);
         spPatientMonitoring.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY));
         pnlPatientMonitoring.add(spPatientMonitoring);
-
-        // Medication Supplies table
-        pnlMedicationSupplies = new JPanel();
-        pnlMedicationSupplies.setLayout(null);
-        pnlMedicationSupplies.setBounds(680, 0, 390, 500);
-        pnlMedicationSupplies.setBackground(ColorsTheme.Main_Card);
-        pnlMiddle.add(pnlMedicationSupplies);
-
-        lblMedicationSuppliesTitle = new JLabel("Medication Supplies");
-        lblMedicationSuppliesTitle.setFont(FontsTheme.Title_Texts);
-        lblMedicationSuppliesTitle.setForeground(ColorsTheme.Text_Black);
-        lblMedicationSuppliesTitle.setBounds(15, 10, 250, 30);
-        pnlMedicationSupplies.add(lblMedicationSuppliesTitle);
-
-        String[] supplyColumns = {"Medication", "Stock", "Status"};
-        Object[][] supplyRows = {
-            {"Paracetamol", "120", "Available"},
-            {"Amoxicillin", "45", "Available"},
-            {"Insulin", "18", "Low Stock"},
-            {"Salbutamol", "0", "Out of Stock"},
-            {"Cetirizine", "80", "Available"},
-            {"Metformin", "12", "Low Stock"},
-            {"Aspirin", "0", "Out of Stock"},
-            {"Ibuprofen", "64", "Available"},
-            {"Losartan", "25", "Available"}
-        };
-
-        DefaultTableModel supplyTableModel = new DefaultTableModel(supplyRows, supplyColumns) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        tblMedicationSupplies = createSimpleTable(supplyTableModel);
-        tblMedicationSupplies.getColumnModel().getColumn(0).setPreferredWidth(160);
-        tblMedicationSupplies.getColumnModel().getColumn(1).setPreferredWidth(70);
-        tblMedicationSupplies.getColumnModel().getColumn(2).setPreferredWidth(120);
-
-        spMedicationSupplies = new JScrollPane(tblMedicationSupplies);
-        spMedicationSupplies.setBounds(15, 50, 360, 435);
-        spMedicationSupplies.getViewport().setBackground(ColorsTheme.Main_Card);
-        spMedicationSupplies.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY));
-        pnlMedicationSupplies.add(spMedicationSupplies);
+        
+        // Populate patient monitoring table from the database
+        FetchPatientMonitoring(patientTableModel);
 
         // Quick Actions panel
         pnlQuickActions = new JPanel();
@@ -196,6 +123,13 @@ public class NurseDashboardPanel extends JPanel {
         pnlQuickActions.add(createQuickActionButton("Appointments", () -> new NewAppointmentDialog().setVisible(true), 60, 155, ColorsTheme.Orange, ColorsTheme.Text_White));
         pnlQuickActions.add(createQuickActionButton("Medical Records", () -> new AddMedicalRecordDialog().setVisible(true), 60, 230, ColorsTheme.Green, ColorsTheme.Text_White));
         pnlQuickActions.add(createQuickActionButton("Medication", () -> new NewPharmacyDialog().setVisible(true), 60, 305, ColorsTheme.Top_Line, ColorsTheme.Text_White));
+        
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                refreshDashboardData();
+            }
+        });
     }
 
     private JButton createQuickActionButton(String text, Runnable action, int x, int y, Color background, Color foreground) {
@@ -207,8 +141,109 @@ public class NurseDashboardPanel extends JPanel {
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.addActionListener(e -> action.run());
+        button.addActionListener(e -> {
+            action.run();
+            refreshDashboardData();
+        });
         return button;
+    }
+
+    // --- DATABASE EXTRACTION OPERATIONS ---
+    
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+    }
+    
+    private void refreshDashboardData() {
+        refreshSummaryCards();
+        if (patientTableModel != null) {
+            FetchPatientMonitoring(patientTableModel);
+        }
+    }
+    
+    private void refreshSummaryCards() {
+        if (pnlPatients != null) remove(pnlPatients);
+        if (pnlAppointments != null) remove(pnlAppointments);
+        if (pnlBeds != null) remove(pnlBeds);
+        if (pnlRevenue != null) remove(pnlRevenue);
+        
+        // Fetch real-time live metrics directly using matching database logic
+        String patientsAssigned = String.valueOf(getTableRowCount("patients", "WHERE status <> 'Discharged'"));
+        String todaysAppointments = String.valueOf(getTableRowCount("appointments", ""));
+        String medicationDue = String.valueOf(getTableRowCount("prescriptions", "WHERE LOWER(status) = 'pending'"));
+        String criticalAlerts = String.valueOf(getTableRowCount("patients", "WHERE LOWER(status) IN ('critical', 'emergency', 'serious')"));
+        
+        pnlPatients = new PanelCard2("Patients Assigned", patientsAssigned, "Under your care", ColorsTheme.Yellow);
+        pnlPatients.setBounds(70, 150, 350, 140);
+        add(pnlPatients);
+        
+        pnlAppointments = new PanelCard2("Today's Appointments", todaysAppointments, "Scheduled today", ColorsTheme.Orange);
+        pnlAppointments.setBounds(450, 150, 350, 140);
+        add(pnlAppointments);
+        
+        pnlBeds = new PanelCard2("Medication Due", medicationDue, "Pending prescriptions", ColorsTheme.Blue);
+        pnlBeds.setBounds(830, 150, 350, 140);
+        add(pnlBeds);
+        
+        pnlRevenue = new PanelCard2("Critical Alerts", criticalAlerts, "Needs attention", ColorsTheme.Green);
+        pnlRevenue.setBounds(1210, 150, 350, 140);
+        add(pnlRevenue);
+        
+        repaint();
+        revalidate();
+    }
+
+    private void FetchPatientMonitoring(DefaultTableModel model) {
+        // Clear existing data before loading new records
+        model.setRowCount(0);
+        
+        String sql = "SELECT p.first_name, p.last_name, p.room_number, p.status, "
+                + "(SELECT CONCAT(mr.record_date, ' ', mr.record_time) "
+                + "FROM medical_records mr "
+                + "WHERE mr.patient_id = p.patient_id "
+                + "ORDER BY mr.record_id DESC LIMIT 1) AS last_updated "
+                + "FROM patients p "
+                + "WHERE p.status <> 'Discharged' "
+                + "ORDER BY p.patient_id ASC";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String fullName = rs.getString("first_name") + " " + rs.getString("last_name");
+                String room = rs.getString("room_number");
+                String status = rs.getString("status");
+                String lastUpdated = rs.getString("last_updated");
+
+                model.addRow(new Object[]{
+                    fullName,
+                    room == null || room.trim().isEmpty() ? "Unassigned" : room,
+                    status == null || status.trim().isEmpty() ? "No status" : status,
+                    lastUpdated == null || lastUpdated.trim().isEmpty() ? "No record" : lastUpdated
+                });
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            model.addRow(new Object[]{"ERR", "Database", "Error", "Connection failed"});
+        }
+    }
+    
+    private int getTableRowCount(String tableName, String queryFilters) {
+        int rowsCount = 0;
+        String sql = "SELECT COUNT(*) FROM `" + tableName + "` " + queryFilters;
+        
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            if (rs.next()) {
+                rowsCount = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsCount;
     }
 
     private JTable createSimpleTable(DefaultTableModel model) {
