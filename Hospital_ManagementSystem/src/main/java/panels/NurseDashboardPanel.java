@@ -130,7 +130,8 @@ public class NurseDashboardPanel extends JPanel {
 
         spPatientMonitoring = new JScrollPane(tblPatientMonitoring);
         spPatientMonitoring.setBounds(15, 50, 620, 435);
-        spPatientMonitoring.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        spPatientMonitoring.getViewport().setBackground(ColorsTheme.Main_Card);
+        spPatientMonitoring.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY));
         pnlPatientMonitoring.add(spPatientMonitoring);
 
         // Medication Supplies table
@@ -173,7 +174,8 @@ public class NurseDashboardPanel extends JPanel {
 
         spMedicationSupplies = new JScrollPane(tblMedicationSupplies);
         spMedicationSupplies.setBounds(15, 50, 360, 435);
-        spMedicationSupplies.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        spMedicationSupplies.getViewport().setBackground(ColorsTheme.Main_Card);
+        spMedicationSupplies.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY));
         pnlMedicationSupplies.add(spMedicationSupplies);
 
         // Quick Actions panel
@@ -214,14 +216,31 @@ public class NurseDashboardPanel extends JPanel {
         table.setForeground(ColorsTheme.Text_Black);
         table.setBackground(ColorsTheme.Main_Card);
         table.setRowHeight(35);
-        table.setGridColor(Color.LIGHT_GRAY);
+        table.setGridColor(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY);
         table.setShowGrid(true);
-        table.setSelectionBackground(ColorsTheme.Search_fg);
+        table.setSelectionBackground(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.decode("#E2E8F0"));
         table.setSelectionForeground(ColorsTheme.Text_Black);
         table.getTableHeader().setFont(FontsTheme.Bold);
         table.getTableHeader().setForeground(ColorsTheme.Text_White);
-        table.getTableHeader().setBackground(ColorsTheme.Header);
+        table.getTableHeader().setBackground(ColorsTheme.isDarkMode ? Color.decode("#2E2E38") : ColorsTheme.Header);
         table.getTableHeader().setReorderingAllowed(false);
+
+        // Guarantee cell renderer foreground and background colors
+        javax.swing.table.DefaultTableCellRenderer cellRenderer = new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                java.awt.Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(table.getBackground());
+                    c.setForeground(table.getForeground());
+                }
+                return c;
+            }
+        };
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+
         return table;
     }
 

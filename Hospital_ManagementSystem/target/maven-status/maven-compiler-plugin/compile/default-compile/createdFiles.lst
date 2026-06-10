@@ -20,6 +20,7 @@ panels/PharmacyPanel.class
 dialogs/ViewStaffDialog.class
 dialogs/NewStaffDialog.class
 controls/DoctorDashboard$2.class
+panels/AdminDashboardPanel$2.class
 dialogs/EditAccountDialog.class
 dialogs/AddPatientDialog.class
 dialogs/ViewAccountDialog.class
@@ -29,14 +30,17 @@ dialogs/DeleteStaffDialog.class
 panels/AdminDashboardPanel.class
 dialogs/NewReportDialog.class
 controls/LoginPage.class
+constants/TablePanel$1.class
 constants/PanelCard2.class
 panels/BedManagementPanel.class
 panels/PatientsPanel.class
 dialogs/EditStaffDialog.class
 com/mycompany/hospitalmanage/HospitalManagementSystem.class
 constants/TablePanel.class
+panels/NurseDashboardPanel$3.class
 panels/NurseDashboardPanel.class
 panels/ReportsPanel.class
+panels/DoctorDashboardPanel$1.class
 dialogs/DeletePatientDialog.class
 dialogs/AddPrescriptionDialog.class
 panels/SettingsPanel.class

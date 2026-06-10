@@ -129,8 +129,8 @@ public class AdminDashboard extends JFrame implements ActionListener {
         btnPharmacy  = ButtonStyles.createButton("Pharmacy", "/icons/pharmacy2.png", 130, pnlSide);
         btnStaff     = ButtonStyles.createButton("Staff", "/icons/staff.png", 180, pnlSide);
         btnReports   = ButtonStyles.createButton("Reports", "/icons/report.png", 230, pnlSide);
-        btnSettings  = ButtonStyles.createButton("Settings", "/icons/setting.png", 280, pnlSide);
-        btnAccounts  = ButtonStyles.createButton("Accounts", "/icons/staff.png", 330, pnlSide);
+        btnAccounts  = ButtonStyles.createButton("Accounts", "/icons/staff.png", 280, pnlSide);
+        btnSettings  = ButtonStyles.createButton("Settings", "/icons/setting.png", 330, pnlSide);
         btnLogout    = ButtonStyles.createButton("Logout", "/icons/logout.png", 850, pnlSide);
 
         // Make the buttons clickable

@@ -161,13 +161,28 @@ public class AdminDashboardPanel extends JPanel {
         JTable tblLogs = new JTable(tableModel);
         tblLogs.setRowHeight(50);
         tblLogs.setFont(FontsTheme.Info_Texts);
+        tblLogs.setBackground(ColorsTheme.Main_Card);
+        tblLogs.setForeground(ColorsTheme.Text_Black);
+        tblLogs.setGridColor(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY);
+        tblLogs.setSelectionBackground(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.decode("#E2E8F0"));
+        tblLogs.setSelectionForeground(ColorsTheme.Text_Black);
         tblLogs.getTableHeader().setReorderingAllowed(false);
         tblLogs.getTableHeader().setFont(FontsTheme.Title_Texts);
-        tblLogs.getTableHeader().setBackground(ColorsTheme.Header);
+        tblLogs.getTableHeader().setBackground(ColorsTheme.isDarkMode ? Color.decode("#2E2E38") : ColorsTheme.Header);
         tblLogs.getTableHeader().setForeground(ColorsTheme.Text_White);
 
-        // Center the text
-        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        // Center the text and guarantee cell colors apply correctly
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                java.awt.Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(table.getBackground());
+                    c.setForeground(table.getForeground());
+                }
+                return c;
+            }
+        };
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < tblLogs.getColumnCount(); i++) {
             tblLogs.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
@@ -175,7 +190,8 @@ public class AdminDashboardPanel extends JPanel {
         
         JScrollPane logScrollPane = new JScrollPane(tblLogs);
         logScrollPane.setBounds(15, 60, 920, 320);
-        logScrollPane.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); 
+        logScrollPane.getViewport().setBackground(ColorsTheme.Main_Card);
+        logScrollPane.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY, 1)); 
         pnlOverview.add(logScrollPane);
 
         // Populate table from the database

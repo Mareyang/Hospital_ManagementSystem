@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import controls.AdminDashboard;
 
 
 /**
@@ -20,11 +21,11 @@ import javax.swing.*;
 public class SettingsPanel extends JPanel implements ActionListener{
     
     private JPanel pnlGeneral, pnlAppearance, pnlSystem, TopPanel, cardPanel;
-    private JLabel lblSettings, lblLine, lblHospital, lblHospitalAddress, lblHospitalPhone, lblHospitalEmail, lblSettingsDesc, lblTitle, lblValue, lblName, lblAddress, lblPhoneNumber, lblEmail, lblCurrency, lblDateFormat, lblTimeFormat, lblTheme, lblDarkMode, lblShowStats, lblAutoLogout, lblLogoutTime ;
+    private JLabel lblSettings, lblLine, lblHospital, lblHospitalAddress, lblHospitalPhone, lblHospitalEmail, lblSettingsDesc, lblTitle, lblValue, lblName, lblAddress, lblPhoneNumber, lblEmail, lblCurrency, lblDateFormat, lblTimeFormat, lblDarkMode, lblShowStats, lblAutoLogout, lblLogoutTime ;
     private JTextField txtSearch;
     private JButton btnEnableDarkMode, btnSearch, btnRefresh, btnAdd, btnReset, btnSave;
     private JTable table;
-    private JComboBox cmbTheme, cmbDarkMode, cmbCurrency, cmbDateFormat, cmbTimeFormat, cmbStats, cmbAutoLogout, cmbAutoLogoutTime;
+    private JComboBox cmbDarkMode, cmbCurrency, cmbDateFormat, cmbTimeFormat, cmbStats, cmbAutoLogout, cmbAutoLogoutTime;
     private JScrollPane scrollPane;
     
     
@@ -165,7 +166,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
         
         //Appearance
         pnlAppearance = createCard("Appearance");
-        pnlAppearance.setBounds(70, 400, 1500, 170);
+        pnlAppearance.setBounds(70, 400, 1500, 130);
         add(pnlAppearance);
         TopPanel.setBackground(ColorsTheme.Header);
         TopPanel.setBounds(0,0,1500,10);
@@ -176,37 +177,20 @@ public class SettingsPanel extends JPanel implements ActionListener{
         lblLine.setForeground(Color.LIGHT_GRAY);
         pnlAppearance.add(lblLine);
         
-        lblTheme = new JLabel("Theme Color");
-        lblTheme.setBounds(30, 80, 200, 30);
-        lblTheme.setFont(FontsTheme.Plain_Texts);
-        lblTheme.setForeground(ColorsTheme.Text_Black);
-        pnlAppearance.add(lblTheme);
-        
-
-        cmbTheme = new JComboBox<>(new String[]{
-        " ", "Blue", "Red", "Green",
-        });
-        cmbTheme.setBounds(190, 80, 130, 30);
-        cmbTheme.setFont(FontsTheme.Info_Texts);
-        cmbTheme.setForeground(ColorsTheme.Text_Black);
-        cmbTheme.setBackground(ColorsTheme.Text_White);
-        pnlAppearance.add(cmbTheme);
-        
-        
         lblDarkMode = new JLabel("Dark Mode");
-        lblDarkMode.setBounds(30, 120, 200, 30);
+        lblDarkMode.setBounds(30, 80, 200, 30);
         lblDarkMode.setFont(FontsTheme.Plain_Texts);
         lblDarkMode.setForeground(ColorsTheme.Text_Black);
         pnlAppearance.add(lblDarkMode);
         
-        
         cmbDarkMode = new JComboBox<>(new String[]{
         " ", "Enable", "Disable",
         });
-        cmbDarkMode.setBounds(190, 120, 130, 30);
+        cmbDarkMode.setBounds(190, 80, 130, 30);
         cmbDarkMode.setFont(FontsTheme.Info_Texts);
         cmbDarkMode.setForeground(ColorsTheme.Text_Black);
         cmbDarkMode.setBackground(ColorsTheme.Text_White);
+        cmbDarkMode.setSelectedItem(ColorsTheme.isDarkMode ? "Enable" : "Disable");
         pnlAppearance.add(cmbDarkMode);
         
         
@@ -241,7 +225,7 @@ public class SettingsPanel extends JPanel implements ActionListener{
 
         //System
         pnlSystem = createCard("System");
-        pnlSystem.setBounds(70, 590, 1500, 210);
+        pnlSystem.setBounds(70, 550, 1500, 210);
         add(pnlSystem);
         TopPanel.setBackground(ColorsTheme.Header);
         TopPanel.setBounds(0,0,1500,10);
@@ -360,15 +344,32 @@ public class SettingsPanel extends JPanel implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        //No functions yet
         if (e.getSource() == btnReset) {
-            
+            cmbDarkMode.setSelectedItem("Disable");
         } 
-        
         else if (e.getSource() == btnSave) {
-            
+            String selectedDarkMode = cmbDarkMode.getSelectedItem().toString().trim();
+
+            boolean darkModeEnabled = ColorsTheme.isDarkMode;
+            if (selectedDarkMode.equals("Enable")) {
+                darkModeEnabled = true;
+            } else if (selectedDarkMode.equals("Disable")) {
+                darkModeEnabled = false;
+            }
+
+            ColorsTheme.applyTheme(darkModeEnabled);
+
+            JOptionPane.showMessageDialog(this, "Appearance settings saved successfully! Reloading dashboard...", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            // Reload AdminDashboard
+            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            if (parentFrame instanceof AdminDashboard) {
+                AdminDashboard newDashboard = new AdminDashboard();
+                newDashboard.setVisible(true);
+                parentFrame.dispose();
+            }
         }
-        }
+    }
 }
     
 
