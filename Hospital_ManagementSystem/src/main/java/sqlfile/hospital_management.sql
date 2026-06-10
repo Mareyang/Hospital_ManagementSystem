@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2026 at 07:06 AM
+-- Generation Time: Jun 10, 2026 at 03:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,14 +41,6 @@ CREATE TABLE `appointments` (
   `status` varchar(20) NOT NULL DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `appointments`
---
-
-INSERT INTO `appointments` (`appt_id`, `appointment_date`, `appointment_time`, `patient_id`, `patient_name`, `department`, `doctor`, `visit_type`, `room_number`, `notes`, `status`) VALUES
-(1, '06-20-2026', '10:00 AM', 1, 'Mark Zamora', 'Laboratory', 'Dr. Ricardo Reyes', 'Diagnostic/Lab Test', 'RM-201', 'xray and ct-scan', 'Pending'),
-(2, '06-15-2026', '9:00 AM', 2, 'Bryan Toledo', 'Emergency(ER)', 'Dr. Juan dela Cruz', 'Emergency Visit', 'ER-01', 'heart surgery', 'Pending');
-
 -- --------------------------------------------------------
 
 --
@@ -65,13 +57,6 @@ CREATE TABLE `hospital_reports` (
   `executive_summary` text DEFAULT NULL,
   `status` varchar(50) DEFAULT 'Generated'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `hospital_reports`
---
-
-INSERT INTO `hospital_reports` (`report_id`, `report_name`, `report_type`, `generated_by`, `date_generated`, `reporting_period`, `executive_summary`, `status`) VALUES
-(1, 'asd', 'Billing and Revenue', 'asd', 'asd', 'asd', 'Write reports here...asd', 'Generated');
 
 -- --------------------------------------------------------
 
@@ -99,15 +84,6 @@ CREATE TABLE `hospital_staff` (
   `comments` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `hospital_staff`
---
-
-INSERT INTO `hospital_staff` (`employee_id`, `full_name`, `birthday`, `gender`, `email`, `contact_number`, `marital_status`, `department`, `role`, `hire_date`, `day_off`, `status`, `client_name`, `eval_staff_name`, `eval_role`, `performance_rate`, `comments`) VALUES
-(13, 'John Carlo Nayan', 'N/A', 'Male', 'johncarlonayan@gmail.com', 'N/A', 'Widowed', 'Department of Justice', 'Doctor', 'N/A', 'Monday', 'Active', '', '', '', ' ', ''),
-(14, 'Eiros Raven Agulto', 'N/A', 'Male', 'N/A', 'N/A', 'Married', 'Department of Education', 'Nurse', 'N/A', 'Monday', 'Active', '', '', '', ' ', ''),
-(15, 'Roderick Orfella', 'N/A', 'Male', 'N/A', 'N/A', 'Married', 'Department of Health', 'Admin', 'N/A', 'Monday', 'Active', '', '', '', ' ', '');
-
 -- --------------------------------------------------------
 
 --
@@ -130,13 +106,6 @@ CREATE TABLE `medical_records` (
   `temperature` double NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `medical_records`
---
-
-INSERT INTO `medical_records` (`record_id`, `patient_id`, `patient_name`, `record_type`, `height`, `weight`, `recorded_by`, `record_date`, `record_time`, `doctor`, `blood_pressure`, `heart_rate`, `temperature`) VALUES
-(1, 1, 'Mark Zamora', 'Lab Result', 175, 65, 'NRS-001', '06-15-2026', '9:00 AM', 'Dr. Ricardo Reyes', '180/30', '95', 37.5);
-
 -- --------------------------------------------------------
 
 --
@@ -158,15 +127,6 @@ CREATE TABLE `patients` (
   `room_number` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `patients`
---
-
-INSERT INTO `patients` (`patient_id`, `first_name`, `last_name`, `age`, `birthday`, `gender`, `contact_number`, `address`, `email`, `marital_status`, `status`, `room_number`) VALUES
-(1, 'Mark', 'Zamora', 45, '05-24-1981', 'Male', '0956-587-0487', 'Platero, Biñan', 'maarkzamora@gmail.com', 'Married', 'Admitted', 'RM-201'),
-(14, '123', '123', 123, '123', 'Female', '123', '123', '123', 'Single', 'Admitted', 'ER-01'),
-(15, 'John', 'Nayan', 20, '05-11-2006', 'Male', '09056690039', 'Timbao', 'nayanjohncarlo123@gmail.com', 'Divorced', 'Admitted', 'XRAY-01');
-
 -- --------------------------------------------------------
 
 --
@@ -187,14 +147,6 @@ CREATE TABLE `pharmacy` (
   `expiration_date` varchar(30) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'In Stock'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pharmacy`
---
-
-INSERT INTO `pharmacy` (`medication_id`, `item_code`, `brand_name`, `generic_name`, `category`, `dosage_form`, `strength`, `current_stock`, `reorder_level`, `unit_price`, `expiration_date`, `status`) VALUES
-(1, 'MED-001', 'Generic', 'Mefenamic', 'Antibiotic', 'Capsule', '5', 100, 20, 50.00, '09-10-2028', 'In Stock'),
-(2, '2', 'a', 'Paracetamol', 'Antibiotic', 'Tablet', '2', 2, 2, 2.00, '2', 'Low Stock');
 
 -- --------------------------------------------------------
 
@@ -218,13 +170,6 @@ CREATE TABLE `prescriptions` (
   `doctor` varchar(100) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `prescriptions`
---
-
-INSERT INTO `prescriptions` (`rx_id`, `patient_id`, `patient_name`, `medication_name`, `prescription_date`, `dosage`, `frequency`, `duration`, `quantity`, `diagnosis`, `refill_info`, `special_notes`, `doctor`, `status`) VALUES
-(1, 1, 'Juan Santos', 'Mefenamic', '06-07-2026', '100 mg', 'Twice daily (BID)', '7 weeks', 10, 'Antibiotics', '5', 'take it until it heals', 'Dr. Ricardo Reyes', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -319,7 +264,7 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT for table `hospital_reports`
 --
 ALTER TABLE `hospital_reports`
-  MODIFY `report_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `report_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `hospital_staff`
@@ -337,13 +282,13 @@ ALTER TABLE `medical_records`
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `pharmacy`
 --
 ALTER TABLE `pharmacy`
-  MODIFY `medication_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `medication_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `prescriptions`
