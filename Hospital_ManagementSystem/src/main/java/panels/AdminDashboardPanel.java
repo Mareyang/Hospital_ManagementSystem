@@ -6,6 +6,7 @@ import constants.FontsTheme;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -148,21 +149,18 @@ public class AdminDashboardPanel extends JPanel {
         lblOverviewTitle.setBounds(30, 20, 500, 35);
         pnlOverview.add(lblOverviewTitle);
         
-        // Recents table
+        // Dynamic Recents table setup
         String[] logColumns = {"ID", "Patient", "Department", "Date", "Status"};
-        Object[][] logData = {
-            {"#1024", "Lebron James", "Cardiology", "12-10-2026", "Admitted"},
-            {"#1025", "Wemby Talo", "Orthopedics", "12-10-2026", "Scheduled"},
-            {"#1026", "KAT Bading", "Emergency", "12-10-2026", "Discharged"},
-            {"#1027", "John Carlo Nayan", "Neurology", "12-10-2026", "Admitted"},
-            {"#1028", "Hello Johnson", "Pediatrics", "12-10-2026", "Admitted"},
-            {"#1029", "Sarah Geronimo", "Cardiology", "12-10-2026", "Scheduled"}
+        DefaultTableModel tableModel = new DefaultTableModel(logColumns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Prevent cells from being edited directly
+            }
         };
         
-        JTable tblLogs = new JTable(logData, logColumns);
+        JTable tblLogs = new JTable(tableModel);
         tblLogs.setRowHeight(50);
         tblLogs.setFont(FontsTheme.Info_Texts);
-        tblLogs.setDefaultEditor(Object.class, null);
         tblLogs.getTableHeader().setReorderingAllowed(false);
         tblLogs.getTableHeader().setFont(FontsTheme.Title_Texts);
         tblLogs.getTableHeader().setBackground(ColorsTheme.Header);
@@ -179,12 +177,44 @@ public class AdminDashboardPanel extends JPanel {
         logScrollPane.setBounds(15, 60, 920, 320);
         logScrollPane.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); 
         pnlOverview.add(logScrollPane);
+
+        // Populate table from the database
+        FetchReports(tableModel);
     }
 
     // --- DATABASE EXTRACTION OPERATIONS ---
     
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+    }
+
+    private void FetchReports(DefaultTableModel model) {
+        // Clear existing data before loading new records
+        model.setRowCount(0); 
+        
+        // Query fetching recent appointments. 
+        // We order by appt_id DESC to get the most recent entries and limit it to 50 for performance on the dashboard.
+        String sql = "SELECT appt_id, patient_name, department, appointment_date, status FROM appointments ORDER BY appt_id DESC LIMIT 50";
+        
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                String id = "#" + rs.getInt("appt_id");
+                String patient = rs.getString("patient_name");
+                String department = rs.getString("department");
+                String date = rs.getString("appointment_date");
+                String status = rs.getString("status");
+                
+                // Add the row to our model
+                model.addRow(new Object[]{id, patient, department, date, status});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Fallback empty row if connection fails to let user know something is wrong
+            model.addRow(new Object[]{"ERR", "Database connection failed", "N/A", "N/A", "Error"});
+        }
     }
 
     private int getTableRowCount(String tableName, String queryFilters) {

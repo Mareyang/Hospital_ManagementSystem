@@ -1,6 +1,7 @@
 panels/AppointmentsPanel.class
 dialogs/NewAppointmentDialog.class
 panels/MedicalRecordsPanel.class
+panels/AdminDashboardPanel$1.class
 panels/NurseDashboardPanel$1.class
 controls/NurseDashboard.class
 controls/DoctorDashboard$1.class
