@@ -21,7 +21,6 @@ dialogs\AddPrescriptionDialog.class
 controls\DoctorDashboard.class
 dialogs\ViewAccountDialog.class
 constants\PanelCard2.class
-panels\DoctorDashboardPanel$1.class
 panels\PrescriptionsPanel.class
 com\mycompany\hospitalmanage\HospitalManagementSystem.class
 panels\SettingsPanel.class
