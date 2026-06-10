@@ -23,9 +23,9 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
     private PanelCard pnlPending, pnlDispense, pnlCancel;
     private JLabel lblDetails, lblPrescription;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd;
+    private JButton btnSearch, btnRefresh, btnAdd, btnDispense, btnCancel;
     private TablePanel tblPrescription;
-    private static final String[] columns = {"Rx ID", "Patient Name", "Doctor", "Date", "Medications", "Status", "Actions"};
+    private static final String[] columns = {"Rx ID", "Patient Name", "Doctor", "Date", "Medications", "Status"};
     
     
     
@@ -55,6 +55,22 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
         add(btnAdd);
+        
+        btnDispense = new JButton("Dispense");
+        btnDispense.setBounds(1005, 40, 150, 45); 
+        btnDispense.setFont(FontsTheme.Buttons);
+        btnDispense.setBackground(ColorsTheme.Search);
+        btnDispense.setForeground(ColorsTheme.Text_White);
+        btnDispense.setFocusPainted(false);
+        add(btnDispense);
+
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(1165, 40, 150, 45); 
+        btnCancel.setFont(FontsTheme.Buttons);
+        btnCancel.setBackground(ColorsTheme.Delete_Urgent);
+        btnCancel.setForeground(ColorsTheme.Text_White);
+        btnCancel.setFocusPainted(false);
+        add(btnCancel);
         
         // Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by patient name or patient id...");
@@ -107,6 +123,8 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
         btnAdd.addActionListener(this);
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
+        btnDispense.addActionListener(this);
+        btnCancel.addActionListener(this);
     }
     
     
@@ -161,13 +179,12 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
                 String date = result.getString("prescription_date");
                 String medications = result.getString("medication_name") + " (" + result.getString("dosage") + ")";
                 String status = result.getString("status");
-                String actions = ""; 
 
                 if ("Pending".equalsIgnoreCase(status)) countPending++;
                 if ("Dispensed".equalsIgnoreCase(status)) countDispensed++;
                 if ("Cancelled".equalsIgnoreCase(status)) countCancelled++;
 
-                rowsList.add(new Object[]{displayId, name, doctor, date, medications, status, actions});
+                rowsList.add(new Object[]{displayId, name, doctor, date, medications, status});
             }
             
         } catch (SQLException ex) {
@@ -216,6 +233,40 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
         else if (e.getSource() == btnRefresh) {
             txtSearch.setText("Search by patient name or patient id...");
             updateTable("Recent Prescription", "");
+        }
+        else if (e.getSource() == btnDispense) {
+            updatePrescriptionStatus("Dispensed");
+        }
+        else if (e.getSource() == btnCancel) {
+            updatePrescriptionStatus("Cancelled");
+        }
+    }
+    
+    private void updatePrescriptionStatus(String status) {
+        JTable table = tblPrescription.getTable();
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a prescription first.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String displayId = table.getValueAt(selectedRow, 0).toString();
+        int rawId = Integer.parseInt(displayId.replace("RX-", ""));
+        
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement stmt = conn.prepareStatement("UPDATE prescriptions SET status = ? WHERE rx_id = ?")) {
+            stmt.setString(1, status);
+            stmt.setInt(2, rawId);
+            stmt.executeUpdate();
+            
+            String searchKeyword = txtSearch.getText().trim();
+            if (searchKeyword.equals("Search by patient name or patient id...")) {
+                searchKeyword = "";
+            }
+            updateTable("Recent Prescription", searchKeyword);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to update prescription status.", "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
