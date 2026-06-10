@@ -157,7 +157,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         cmbDoc.setBounds(690, 70, 230, 30);
         cmbDoc.setFont(FontsTheme.Plain_Texts);
         cmbDoc.setForeground(ColorsTheme.Text_Black);
-        cmbDoc.setBackground(ColorsTheme.Text_White);
+        cmbDoc.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbDoc);
         
         lblVisit = new JLabel("Visit Type : ");
@@ -171,7 +171,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         cmbVisit.setBounds(690, 110, 230, 30);
         cmbVisit.setFont(FontsTheme.Plain_Texts);
         cmbVisit.setForeground(ColorsTheme.Text_Black);
-        cmbVisit.setBackground(ColorsTheme.Text_White);
+        cmbVisit.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbVisit);
         
         lblRoom = new JLabel("Room Number : ");
@@ -185,7 +185,7 @@ public class NewAppointmentDialog extends JDialog implements ActionListener {
         cmbRoom.setBounds(690, 150, 230, 30);
         cmbRoom.setFont(FontsTheme.Plain_Texts);
         cmbRoom.setForeground(ColorsTheme.Text_Black);
-        cmbRoom.setBackground(ColorsTheme.Text_White);
+        cmbRoom.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbRoom);
         
         // additional notes for reasons visit

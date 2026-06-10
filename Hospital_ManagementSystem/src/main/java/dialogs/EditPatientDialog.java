@@ -209,7 +209,7 @@ public class EditPatientDialog extends JDialog implements ActionListener{
         cmbMarital.setBounds(690, 160, 230, 30);
         cmbMarital.setFont(FontsTheme.Plain_Texts); 
         cmbMarital.setForeground(ColorsTheme.Text_Black); 
-        cmbMarital.setBackground(ColorsTheme.Text_White);
+        cmbMarital.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbMarital);
         
         lblStatus = new JLabel("Patient Status : "); 
@@ -222,7 +222,7 @@ public class EditPatientDialog extends JDialog implements ActionListener{
         cmbStatus.setBounds(690, 200, 230, 30);
         cmbStatus.setFont(FontsTheme.Plain_Texts); 
         cmbStatus.setForeground(ColorsTheme.Text_Black); 
-        cmbStatus.setBackground(ColorsTheme.Text_White);
+        cmbStatus.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbStatus);
         
         lblRoom = new JLabel("Room Number : "); 
@@ -235,7 +235,7 @@ public class EditPatientDialog extends JDialog implements ActionListener{
         cmbRoom.setBounds(690, 240, 230, 30);
         cmbRoom.setFont(FontsTheme.Plain_Texts); 
         cmbRoom.setForeground(ColorsTheme.Text_Black); 
-        cmbRoom.setBackground(ColorsTheme.Text_White);
+        cmbRoom.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbRoom);
 
         

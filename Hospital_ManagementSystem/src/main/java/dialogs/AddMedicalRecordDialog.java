@@ -218,7 +218,7 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         cmbDoctor.setBounds(690, 110, 230, 30);
         cmbDoctor.setFont(FontsTheme.Plain_Texts);
         cmbDoctor.setForeground(ColorsTheme.Text_Black);
-        cmbDoctor.setBackground(ColorsTheme.Text_White);
+        cmbDoctor.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbDoctor);
         
 
