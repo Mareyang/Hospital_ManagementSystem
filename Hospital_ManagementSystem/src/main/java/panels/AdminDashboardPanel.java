@@ -111,9 +111,9 @@ public class AdminDashboardPanel extends JPanel {
         lblQuickTitle.setBounds(32, 20, 350, 35);
         pnlQuickActions.add(lblQuickTitle);
         
-        // Line 1
+        // Vertical layout for buttons
         btnRegisterStaff = new JButton("Register Staff");
-        btnRegisterStaff.setBounds(40, 80, 200, 70);
+        btnRegisterStaff.setBounds(110, 70, 300, 70);
         btnRegisterStaff.setBackground(ColorsTheme.Green);
         btnRegisterStaff.setForeground(Color.WHITE);
         btnRegisterStaff.setFont(FontsTheme.Info_Texts);
@@ -122,7 +122,7 @@ public class AdminDashboardPanel extends JPanel {
         pnlQuickActions.add(btnRegisterStaff);
         
         btnAddMedication = new JButton("Add Medication");
-        btnAddMedication.setBounds(280, 80, 200, 70);
+        btnAddMedication.setBounds(110, 160, 300, 70);
         btnAddMedication.setBackground(ColorsTheme.Yellow);
         btnAddMedication.setForeground(Color.BLACK);
         btnAddMedication.setFont(FontsTheme.Info_Texts);
@@ -130,9 +130,8 @@ public class AdminDashboardPanel extends JPanel {
         btnAddMedication.addActionListener(e -> new NewPharmacyDialog().setVisible(true));
         pnlQuickActions.add(btnAddMedication);
         
-        // Line 2
         btnGenReports = new JButton("Generate Reports");
-        btnGenReports.setBounds(160, 180, 200, 70);
+        btnGenReports.setBounds(110, 250, 300, 70);
         btnGenReports.setBackground(ColorsTheme.Top_Line);
         btnGenReports.setForeground(Color.WHITE);
         btnGenReports.setFont(FontsTheme.Info_Texts);
