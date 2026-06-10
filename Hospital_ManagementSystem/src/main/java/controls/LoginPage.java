@@ -5,6 +5,7 @@ import constants.FontsTheme;
 import controls.AdminDashboard;
 import controls.DoctorDashboard;
 import controls.NurseDashboard;
+import dialogs.ForgotPasswordDialog;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -139,10 +140,8 @@ public class LoginPage extends JFrame implements ActionListener {
         
         // Handle Forgot Password routing
         if (e.getSource() == btnForgot) {
-            JOptionPane.showMessageDialog(this, 
-                "Please contact your system Administrator to recover or reset your account password.", 
-                "Account Recovery", 
-                JOptionPane.INFORMATION_MESSAGE);
+            ForgotPasswordDialog dialog = new ForgotPasswordDialog(this);
+            dialog.setVisible(true);
             return; 
         }
 

@@ -15,6 +15,7 @@ panels/DoctorDashboardPanel.class
 dialogs/EditPatientDialog.class
 controls/NurseDashboard$1.class
 controls/AdminDashboard$1.class
+dialogs/ForgotPasswordDialog.class
 panels/PharmacyPanel.class
 dialogs/ViewStaffDialog.class
 dialogs/NewStaffDialog.class
