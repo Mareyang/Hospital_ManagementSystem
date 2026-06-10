@@ -52,25 +52,25 @@ public class PatientsPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new patient
-        btnAdd = new JButton("+ Add Patient");
+        btnAdd = new JButton("+ Add");
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
 
-        btnView = new JButton("View Patient");
+        btnView = new JButton("View");
         btnView.setFont(FontsTheme.Buttons);
         btnView.setBackground(ColorsTheme.Header);
         btnView.setForeground(ColorsTheme.Text_White);
         btnView.setFocusPainted(false);
 
-        btnEdit = new JButton("Edit Patient");
+        btnEdit = new JButton("Edit");
         btnEdit.setFont(FontsTheme.Buttons);
         btnEdit.setBackground(ColorsTheme.Update_Pending);
         btnEdit.setForeground(ColorsTheme.Text_Black);
         btnEdit.setFocusPainted(false);
 
-        btnDelete = new JButton("Delete Patient");
+        btnDelete = new JButton("Delete");
         btnDelete.setFont(FontsTheme.Buttons);
         btnDelete.setBackground(ColorsTheme.Delete_Urgent);
         btnDelete.setForeground(ColorsTheme.Text_White);

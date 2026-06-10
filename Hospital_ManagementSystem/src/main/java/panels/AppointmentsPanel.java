@@ -60,52 +60,84 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new appointment
-        btnAdd = new JButton("+ Add Appt");
-        btnAdd.setBounds(830, 40, 150, 45);
+        btnAdd = new JButton("+ Add");
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
 
-        btnCancel = new JButton("Cancel Appt");
-        btnCancel.setBounds(995, 40, 150, 45);
+        btnCancel = new JButton("Cancel");
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setBackground(ColorsTheme.Header);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setFocusPainted(false);
 
-        btnEdit = new JButton("Edit Appt");
-        btnEdit.setBounds(1160, 40, 150, 45);
+        btnEdit = new JButton("Edit");
         btnEdit.setFont(FontsTheme.Buttons);
         btnEdit.setBackground(ColorsTheme.Update_Pending);
         btnEdit.setForeground(ColorsTheme.Text_Black);
         btnEdit.setFocusPainted(false);
 
-        btnDelete = new JButton("Delete Appt");
-        btnDelete.setBounds(1325, 40, 150, 45);
+        btnDelete = new JButton("Delete");
         btnDelete.setFont(FontsTheme.Buttons);
         btnDelete.setBackground(ColorsTheme.Delete_Urgent);
         btnDelete.setForeground(ColorsTheme.Text_White);
         btnDelete.setFocusPainted(false);
 
+        btnUpcoming = createTableHeaderButton("Upcoming", ColorsTheme.Search);
+        btnRecent = createTableHeaderButton("Recents", ColorsTheme.Green);
+        btnCancelled = createTableHeaderButton("Cancelled", ColorsTheme.Text_Gray);
+        btnComplete = createTableHeaderButton("Complete", ColorsTheme.Green);
+
         if (canManageAppointments) {
+            btnAdd.setBounds(830, 40, 150, 45);
+            btnCancel.setBounds(995, 40, 150, 45);
+            btnEdit.setBounds(1160, 40, 150, 45);
+            btnDelete.setBounds(1325, 40, 150, 45);
             add(btnAdd);
             add(btnCancel);
             add(btnEdit);
             add(btnDelete);
+
+            btnUpcoming.setBounds(1000, 10, 130, 40);
+            btnRecent.setBounds(1150, 10, 130, 40);
+            btnCancelled.setBounds(1300, 10, 150, 40);
+        } else {
+            btnUpcoming.setFont(FontsTheme.Buttons);
+            btnUpcoming.setBackground(ColorsTheme.Add_Confirm);
+            btnUpcoming.setForeground(ColorsTheme.Text_White);
+            btnUpcoming.setFocusPainted(false);
+
+            btnRecent.setFont(FontsTheme.Buttons);
+            btnRecent.setBackground(ColorsTheme.Header);
+            btnRecent.setForeground(ColorsTheme.Text_White);
+            btnRecent.setFocusPainted(false);
+
+            btnCancelled.setFont(FontsTheme.Buttons);
+            btnCancelled.setBackground(ColorsTheme.Update_Pending);
+            btnCancelled.setForeground(ColorsTheme.Text_Black);
+            btnCancelled.setFocusPainted(false);
+
+            btnComplete.setFont(FontsTheme.Buttons);
+            btnComplete.setBackground(ColorsTheme.Delete_Urgent);
+            btnComplete.setForeground(ColorsTheme.Text_White);
+            btnComplete.setFocusPainted(false);
+
+            java.util.List<JButton> topButtons = new java.util.ArrayList<>();
+            topButtons.add(btnUpcoming);
+            topButtons.add(btnRecent);
+            topButtons.add(btnCancelled);
+            if (canCompleteAppointments) {
+                topButtons.add(btnComplete);
+            }
+
+            int[] slots = {830, 995, 1160, 1325};
+            int startSlotIndex = slots.length - topButtons.size();
+            for (int i = 0; i < topButtons.size(); i++) {
+                topButtons.get(i).setBounds(slots[startSlotIndex + i], 40, 150, 45);
+                add(topButtons.get(i));
+            }
         }
-
-        btnUpcoming = createTableHeaderButton("Upcoming", ColorsTheme.Search);
-        btnUpcoming.setBounds(300, 10, 130, 40);
-
-        btnRecent = createTableHeaderButton("Recents", ColorsTheme.Green);
-        btnRecent.setBounds(450, 10, 130, 40);
-
-        btnCancelled = createTableHeaderButton("Cancelled", ColorsTheme.Text_Gray);
-        btnCancelled.setBounds(600, 10, 150, 40);
-
-        btnComplete = createTableHeaderButton("Complete", ColorsTheme.Green);
-        btnComplete.setBounds(1250, 10, 230, 40);
 
         // Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search appointments...");
@@ -438,13 +470,10 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         JTable table = tblAppointments.getTable();
         table.setRowHeight(50);
 
-        tblAppointments.add(btnUpcoming);
-        tblAppointments.add(btnRecent);
-        tblAppointments.add(btnCancelled);
-
-
-        if (canCompleteAppointments) {
-            tblAppointments.add(btnComplete);
+        if (canManageAppointments) {
+            tblAppointments.add(btnUpcoming);
+            tblAppointments.add(btnRecent);
+            tblAppointments.add(btnCancelled);
         }
     }
 

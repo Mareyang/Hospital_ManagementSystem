@@ -52,7 +52,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new medication
-        btnAdd = new JButton("+ Add Med");
+        btnAdd = new JButton("+ Add");
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
@@ -81,7 +81,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
  
-        btnUseStock = new JButton("Update Stock");
+        btnUseStock = new JButton("Update");
         btnUseStock.setFont(FontsTheme.Buttons);
         btnUseStock.setFocusPainted(false);
         if (stockButtonsInTable) {
@@ -93,7 +93,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
             btnUseStock.setForeground(ColorsTheme.Text_Black);
         }
         
-        btnRemove = new JButton("Remove Stock");
+        btnRemove = new JButton("Remove");
         btnRemove.setFont(FontsTheme.Buttons);  
         btnRemove.setForeground(ColorsTheme.Text_White);
         btnRemove.setFocusPainted(false);

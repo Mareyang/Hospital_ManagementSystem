@@ -44,7 +44,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         add(pnlSearch);
         
         // Button for adding new record
-        btnAdd = new JButton("+ New Record");
+        btnAdd = new JButton("+ Add");
         btnAdd.setBounds(1325, 40, 150, 45); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
