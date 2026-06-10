@@ -19,13 +19,20 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
     private JPanel pnlMiddle, pnlSearch;
     private JLabel lblMedical, lblDetails;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd;
+    private JButton btnSearch, btnRefresh, btnAdd, btnView;
     private TablePanel tblMedical;
     
     private final String[] columns = {"Record ID", "Patient Name", "Medical Type", "Doctor", "Date", "Time", "Actions"};
     
     
+    private boolean canManageRecords;
+
     public MedicalRecordsPanel() {
+        this(true);
+    }
+
+    public MedicalRecordsPanel(boolean canManageRecords) {
+        this.canManageRecords = canManageRecords;
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
@@ -43,14 +50,32 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
-        // Button for adding new record
+        // Buttons
         btnAdd = new JButton("+ Add");
-        btnAdd.setBounds(1325, 40, 150, 45); 
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
-        add(btnAdd);
+
+        btnView = new JButton("View");
+        btnView.setFont(FontsTheme.Buttons);
+        btnView.setBackground(ColorsTheme.Header);
+        btnView.setForeground(ColorsTheme.Text_White);
+        btnView.setFocusPainted(false);
+
+        // Dynamically align visible outer-panel buttons to the right-hand side
+        java.util.List<JButton> visibleButtons = new java.util.ArrayList<>();
+        if (canManageRecords) {
+            visibleButtons.add(btnAdd);
+        }
+        visibleButtons.add(btnView);
+
+        int[] slots = {830, 995, 1160, 1325};
+        int startSlotIndex = slots.length - visibleButtons.size();
+        for (int i = 0; i < visibleButtons.size(); i++) {
+            visibleButtons.get(i).setBounds(slots[startSlotIndex + i], 40, 150, 45);
+            add(visibleButtons.get(i));
+        }
         
         // Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by patient name or patient id...");
@@ -99,6 +124,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
         
         // ActionListeners
         btnAdd.addActionListener(this);
+        btnView.addActionListener(this);
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
     }
@@ -170,6 +196,17 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
             AddMedicalRecordDialog record = new AddMedicalRecordDialog();
             record.setVisible(true); 
             updateTable("Recent Medical Records", ""); 
+        }
+        else if (e.getSource() == btnView) {
+            int selectedRow = tblMedical.getTable().getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a medical record to view.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String displayId = tblMedical.getTable().getValueAt(selectedRow, 0).toString();
+            int recordId = Integer.parseInt(displayId.replace("MED-", ""));
+            AddMedicalRecordDialog viewDialog = new AddMedicalRecordDialog(recordId, true);
+            viewDialog.setVisible(true);
         }
         else if (e.getSource() == btnSearch) {
             String searchKeyword = txtSearch.getText().trim();

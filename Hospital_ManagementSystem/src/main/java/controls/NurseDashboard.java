@@ -117,7 +117,7 @@ public class NurseDashboard extends JFrame implements ActionListener {
         pnlContainer.add(new NurseDashboardPanel(), "dashboard");
         pnlContainer.add(new PatientsPanel(true), "patients");
         pnlContainer.add(new AppointmentsPanel(true, false), "appointments");
-        pnlContainer.add(new MedicalRecordsPanel(), "medicalRecords");
+        pnlContainer.add(new MedicalRecordsPanel(false), "medicalRecords");
         pnlContainer.add(new PharmacyPanel(true), "pharmacy");
         
         // Add navigation buttons to the side panel

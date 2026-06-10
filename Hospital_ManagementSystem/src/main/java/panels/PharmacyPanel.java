@@ -84,33 +84,20 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         btnUseStock = new JButton("Update");
         btnUseStock.setFont(FontsTheme.Buttons);
         btnUseStock.setFocusPainted(false);
-        if (stockButtonsInTable) {
-            btnUseStock.setBounds(1100, 10, 180, 40);
-            btnUseStock.setBackground(Color.blue); 
-            btnUseStock.setForeground(ColorsTheme.Text_White);
-        } else {
-            btnUseStock.setBackground(ColorsTheme.Update_Pending); 
-            btnUseStock.setForeground(ColorsTheme.Text_Black);
-        }
+        btnUseStock.setBackground(ColorsTheme.Update_Pending); 
+        btnUseStock.setForeground(ColorsTheme.Text_Black);
         
         btnRemove = new JButton("Remove");
         btnRemove.setFont(FontsTheme.Buttons);  
         btnRemove.setForeground(ColorsTheme.Text_White);
         btnRemove.setFocusPainted(false);
-        if (stockButtonsInTable) {
-            btnRemove.setBounds(1290, 10, 190, 40);
-            btnRemove.setBackground(ColorsTheme.Red); 
-        } else {
-            btnRemove.setBackground(ColorsTheme.Delete_Urgent); 
-        }
+        btnRemove.setBackground(ColorsTheme.Delete_Urgent); 
 
         // Dynamically align visible outer-panel buttons to the right-hand side
         java.util.List<JButton> visibleButtons = new java.util.ArrayList<>();
         visibleButtons.add(btnAdd);
-        if (!stockButtonsInTable) {
-            visibleButtons.add(btnUseStock);
-            visibleButtons.add(btnRemove);
-        }
+        visibleButtons.add(btnUseStock);
+        visibleButtons.add(btnRemove);
 
         int[] slots = {830, 995, 1160, 1325};
         int startSlotIndex = slots.length - visibleButtons.size();
@@ -256,10 +243,6 @@ public class PharmacyPanel extends JPanel implements ActionListener {
     private void configurePharmacyTable() {
         JTable table = tblPharmacy.getTable();
         table.setRowHeight(50);
-        if (stockButtonsInTable) {
-            tblPharmacy.add(btnUseStock);
-            tblPharmacy.add(btnRemove);
-        }
     }
         private void updateMedicationStockInDatabase(String itemCode, int newStock) {
   

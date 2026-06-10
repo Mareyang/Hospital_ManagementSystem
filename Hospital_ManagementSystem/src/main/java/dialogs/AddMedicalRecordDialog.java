@@ -34,6 +34,14 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
     
     
     
+    public AddMedicalRecordDialog(int recordId, boolean readOnly) {
+        this();
+        loadRecord(recordId);
+        if (readOnly) {
+            setReadOnly();
+        }
+    }
+
     public AddMedicalRecordDialog() {
         setSize(1050, 550);
         setLayout(null);
@@ -253,6 +261,55 @@ public class AddMedicalRecordDialog extends JDialog implements ActionListener {
         btnAddInfo.addActionListener(this);
         
         
+    }
+
+    private void loadRecord(int recordId) {
+        String sql = "SELECT * FROM medical_records WHERE record_id = ?";
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, recordId);
+            try (java.sql.ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    txtID.setText("PAT-" + rs.getInt("patient_id"));
+                    txtPatient.setText(rs.getString("patient_name"));
+                    cmbType.setSelectedItem(rs.getString("record_type"));
+                    txtHeight.setText(String.valueOf(rs.getDouble("height")));
+                    txtWeight.setText(String.valueOf(rs.getDouble("weight")));
+                    txtRecorded.setText(rs.getString("recorded_by"));
+                    txtDate.setText(rs.getString("record_date"));
+                    txtTime.setText(rs.getString("record_time"));
+                    cmbDoctor.setSelectedItem(rs.getString("doctor"));
+                    txtBloodPressure.setText(rs.getString("blood_pressure"));
+                    txtHeartRate.setText(rs.getString("heart_rate"));
+                    txtTemperature.setText(String.valueOf(rs.getDouble("temperature")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to load medical record:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void setReadOnly() {
+        lblTitle.setText("View Medical Record");
+        lblSubtitle.setText("Viewing details of patient case record.");
+        
+        txtID.setEditable(false);
+        txtPatient.setEditable(false);
+        cmbType.setEnabled(false);
+        txtHeight.setEditable(false);
+        txtWeight.setEditable(false);
+        txtRecorded.setEditable(false);
+        txtDate.setEditable(false);
+        txtTime.setEditable(false);
+        cmbDoctor.setEnabled(false);
+        txtBloodPressure.setEditable(false);
+        txtHeartRate.setEditable(false);
+        txtTemperature.setEditable(false);
+
+        btnAddInfo.setVisible(false); // Hide Save button
+        btnCancel.setText("Close");
+        btnCancel.setBounds(790, 450, 200, 30); // Move Close button to Save button's position
     }
   
     @Override
