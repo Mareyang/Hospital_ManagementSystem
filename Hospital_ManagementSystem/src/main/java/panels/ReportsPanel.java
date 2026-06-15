@@ -7,7 +7,6 @@ import constants.FontsTheme;
 import dialogs.NewReportDialog;
 import dialogs.ViewReportDialog;
 import dialogs.EditReportDialog;
-import dialogs.DeleteReportDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -271,11 +270,6 @@ public class ReportsPanel extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Please select a report to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            String reportId = tblReport.getTable().getValueAt(selectedRow, 0).toString();
-            DeleteReportDialog deleteDialog = new DeleteReportDialog(reportId);
-            deleteDialog.setVisible(true);
-            updateTable("Generated Reports", txtSearch.getText().trim().equals("Search by report name or type...") ? "" : txtSearch.getText().trim());
-        }
         else if (e.getSource() == btnSearch) {
             String searchKeyword = txtSearch.getText().trim();
             updateTable("Search Results", searchKeyword);
@@ -284,5 +278,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
             txtSearch.setText("Search by report name or type...");
             updateTable("Generated Reports", "");
         }
+        }
+        
     }
 }

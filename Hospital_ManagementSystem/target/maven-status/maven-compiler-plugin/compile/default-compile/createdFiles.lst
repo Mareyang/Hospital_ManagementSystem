@@ -1,6 +1,10 @@
+dialogs\NewPrescriptionDialog.class
 dialogs\EditMedicalRecordDialog.class
 dialogs\ViewMedicalRecordDialog.class
+panels\DoctorDashboardPanel$2.class
 dialogs\ViewAppointmentDialog.class
 dialogs\NewPatientDialog.class
+dialogs\EditPharmacyDialog.class
 dialogs\NewMedicalRecordDialog.class
 dialogs\EditAppointmentDialog.class
+dialogs\ViewPrescriptionDialog.class

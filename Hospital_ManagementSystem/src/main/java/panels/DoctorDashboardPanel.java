@@ -5,6 +5,7 @@ import constants.ColorsTheme;
 import constants.FontsTheme;
 import constants.SystemSettings;
 import controls.DoctorDashboard;
+import dialogs.NewPrescriptionDialog; // ADDED: So the doctor can prescribe!
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -15,11 +16,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
-
-
 
 public class DoctorDashboardPanel extends JPanel {
     
@@ -72,11 +72,11 @@ public class DoctorDashboardPanel extends JPanel {
         pnlQuickActions.add(lblQuickTitle);
         
         // --- THE FIXED QUICK ACTION BUTTONS ---
-        pnlQuickActions.add(createQuickActionButton("View Patient Record", () -> {
+        pnlQuickActions.add(createQuickActionButton("Patient Records", () -> {
             Window topWindow = SwingUtilities.getWindowAncestor(this);
             if (topWindow instanceof DoctorDashboard) {
                 DoctorDashboard dashboard = (DoctorDashboard) topWindow;
-                // dashboard.switchView("patients", dashboard.btnPatients); 
+                dashboard.switchView("patients", dashboard.btnPatients); 
             }
         }, 45, 80, ColorsTheme.Blue, ColorsTheme.Text_White));
 
@@ -84,22 +84,22 @@ public class DoctorDashboardPanel extends JPanel {
             Window topWindow = SwingUtilities.getWindowAncestor(this);
             if (topWindow instanceof DoctorDashboard) {
                 DoctorDashboard dashboard = (DoctorDashboard) topWindow;
-                // dashboard.switchView("appointments", dashboard.btnAppointments);
+                dashboard.switchView("appointments", dashboard.btnAppointments);
             }
         }, 45, 155, ColorsTheme.Orange, ColorsTheme.Text_White));
 
-        // VIEW ONLY: Switches the Doctor directly to the Medical Records tab!
         pnlQuickActions.add(createQuickActionButton("Medical Records", () -> {
             Window topWindow = SwingUtilities.getWindowAncestor(this);
             if (topWindow instanceof DoctorDashboard) {
                 DoctorDashboard dashboard = (DoctorDashboard) topWindow;
-                // dashboard.switchView("medicalRecords", dashboard.btnMedicalRecords); 
+                dashboard.switchView("medicalRecords", dashboard.btnMedicalRecords); 
             }
         }, 45, 230, ColorsTheme.Green, ColorsTheme.Text_White));
 
         pnlQuickActions.add(createQuickActionButton("Prescribe Medication", () -> {
-            // dialogs.AddPrescriptionDialog().setVisible(true);
-        }, 45, 305, ColorsTheme.Top_Line, ColorsTheme.Text_White));
+            // THE FIX: Hooked up to the new Dialog we built!
+            new NewPrescriptionDialog().setVisible(true);
+        }, 45, 305, ColorsTheme.Teal, ColorsTheme.Text_White));
         // ----------------------------------------
 
         // Overview Schedule Panel
@@ -157,42 +157,26 @@ public class DoctorDashboardPanel extends JPanel {
         logScrollPane.getViewport().setBackground(ColorsTheme.Main_Card);
         logScrollPane.setBorder(BorderFactory.createLineBorder(ColorsTheme.Gray, 1)); 
         pnlOverview.add(logScrollPane);
+        
+        // --- ADDED: Auto-Refresh Listener ---
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                refreshDashboardData();
+            }
+        });
 
-        // --- 4. DATABASE QUERIES (MOVED TO BOTTOM) ---
-        
-        String totalAppointments = String.valueOf(getTableRowCount("appointments", ""));
-        int remainingCount = getTableRowCount("appointments", "WHERE status_id = 1");
-        String remainingText = remainingCount + " remaining";
-        String pendingDiagnoses = String.valueOf(getTableRowCount("diagnoses", "WHERE LOWER(status) = 'pending'"));
-        String upcomingSurgeries = String.valueOf(getTableRowCount("surgeries", "WHERE LOWER(status) = 'scheduled'"));
-        String totalPatients = String.valueOf(getTableRowCount("patients", ""));
-        
-        // --- 5. INITIALIZE SUMMARY CARDS WITH DB DATA ---
-        
-        pnlAppointments = new PanelCard2("Today's Appointments", totalAppointments, remainingText, ColorsTheme.Yellow);
-        pnlAppointments.setBounds(70, 150, 350, 140);
-        add(pnlAppointments);
-        
-        pnlPending = new PanelCard2("Pending Diagnoses", pendingDiagnoses, "Pending ", ColorsTheme.Orange);
-        pnlPending.setBounds(450, 150, 350, 140);
-        add(pnlPending);
-        
-        pnlSurgery = new PanelCard2("Upcoming Surgeries", upcomingSurgeries, "For Today", ColorsTheme.Blue);
-        pnlSurgery.setBounds(830, 150, 350, 140);
-        add(pnlSurgery);
-        
-        pnlPatients = new PanelCard2("Total Patients", totalPatients, "Active Records", ColorsTheme.Green);
-        pnlPatients.setBounds(1210, 150, 350, 140);
-        add(pnlPatients);
-        
-        // Load the live schedule into the table
-        loadTodaySchedule();
+        refreshDashboardData();
     }
     
-    // --- 6. HELPER METHODS ---
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+    }
+    
+    private void refreshDashboardData() {
+        refreshSummaryCards();
+        loadTodaySchedule();
     }
 
     private int getTableRowCount(String tableName, String queryFilters) {
@@ -212,6 +196,43 @@ public class DoctorDashboardPanel extends JPanel {
         return rowsCount;
     }
     
+    private void refreshSummaryCards() {
+        if (pnlAppointments != null) remove(pnlAppointments);
+        if (pnlPending != null) remove(pnlPending);
+        if (pnlSurgery != null) remove(pnlSurgery);
+        if (pnlPatients != null) remove(pnlPatients);
+        
+        // THE FIX: Strict constraints to only pull relevant, real-time data
+        String totalAppointments = String.valueOf(getTableRowCount("appointments", "WHERE DATE(appointment_date) = CURDATE()"));
+        int remainingCount = getTableRowCount("appointments", "WHERE status_id = 1 AND DATE(appointment_date) = CURDATE()");
+        String remainingText = remainingCount + " remaining";
+        
+        // Safely zeroing out missing tables until they are built
+        String pendingDiagnoses = "0"; 
+        String upcomingSurgeries = "0"; 
+        
+        String totalPatients = String.valueOf(getTableRowCount("patients", "WHERE status_id = 2")); // Only admitted ones need intense oversight
+        
+        pnlAppointments = new PanelCard2("Today's Appointments", totalAppointments, remainingText, ColorsTheme.Yellow);
+        pnlAppointments.setBounds(70, 150, 350, 140);
+        add(pnlAppointments);
+        
+        pnlPending = new PanelCard2("Pending Diagnoses", pendingDiagnoses, "To be reviewed", ColorsTheme.Orange);
+        pnlPending.setBounds(450, 150, 350, 140);
+        add(pnlPending);
+        
+        pnlSurgery = new PanelCard2("Upcoming Surgeries", upcomingSurgeries, "Scheduled today", ColorsTheme.Blue);
+        pnlSurgery.setBounds(830, 150, 350, 140);
+        add(pnlSurgery);
+        
+        pnlPatients = new PanelCard2("Admitted Patients", totalPatients, "Under observation", ColorsTheme.Green);
+        pnlPatients.setBounds(1210, 150, 350, 140);
+        add(pnlPatients);
+        
+        repaint();
+        revalidate();
+    }
+    
     private JButton createQuickActionButton(String text, Runnable action, int x, int y, Color background, Color foreground) {
         JButton button = new JButton(text);
         button.setBounds(x, y, 260, 55);
@@ -228,11 +249,13 @@ public class DoctorDashboardPanel extends JPanel {
     private void loadTodaySchedule() {
         tableModel.setRowCount(0);
     
+        // THE FIX: Restricting the query to ONLY pull today's schedule!
         String sql = "SELECT a.appointment_time, p.first_name, p.last_name, a.visit_type, s.status_name " +
                      "FROM appointments a " +
                      "LEFT JOIN patients p ON a.patient_id = p.patient_id " +
                      "LEFT JOIN appointment_status s ON a.status_id = s.status_id " +
-                     "ORDER BY a.appointment_date ASC, a.appointment_time ASC LIMIT " + SystemSettings.dashboardRecordLimit;
+                     "WHERE DATE(a.appointment_date) = CURDATE() " +
+                     "ORDER BY a.appointment_time ASC LIMIT " + SystemSettings.dashboardRecordLimit;
     
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);

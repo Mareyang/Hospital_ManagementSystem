@@ -66,31 +66,31 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         // --- Initialize Buttons ---
         btnAdd = new JButton("Add");
         btnAdd.setFont(FontsTheme.Buttons);
-        btnAdd.setBackground(ColorsTheme.Add_Confirm);
+        btnAdd.setBackground(ColorsTheme.Add);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
         
         btnView = new JButton("View");
         btnView.setFont(FontsTheme.Buttons);
-        btnView.setBackground(ColorsTheme.Header);
+        btnView.setBackground(ColorsTheme.View);
         btnView.setForeground(ColorsTheme.Text_White);
         btnView.setFocusPainted(false);
 
         btnEdit = new JButton("Edit");
         btnEdit.setFont(FontsTheme.Buttons);
-        btnEdit.setBackground(ColorsTheme.Update_Pending);
-        btnEdit.setForeground(ColorsTheme.Text_Black);
+        btnEdit.setBackground(ColorsTheme.Edit);
+        btnEdit.setForeground(ColorsTheme.Text_White);
         btnEdit.setFocusPainted(false);
 
         btnCancelAppt = new JButton("Cancel");
         btnCancelAppt.setFont(FontsTheme.Buttons);
-        btnCancelAppt.setBackground(ColorsTheme.Delete_Urgent);
+        btnCancelAppt.setBackground(ColorsTheme.Delete);
         btnCancelAppt.setForeground(ColorsTheme.Text_White);
         btnCancelAppt.setFocusPainted(false);
 
         btnCompleteAppt = new JButton("Complete");
         btnCompleteAppt.setFont(FontsTheme.Buttons);
-        btnCompleteAppt.setBackground(ColorsTheme.Green);
+        btnCompleteAppt.setBackground(ColorsTheme.Add);
         btnCompleteAppt.setForeground(ColorsTheme.Text_White);
         btnCompleteAppt.setFocusPainted(false);
 

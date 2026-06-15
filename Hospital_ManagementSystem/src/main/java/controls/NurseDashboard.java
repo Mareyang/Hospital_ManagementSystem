@@ -8,7 +8,7 @@ import panels.NurseDashboardPanel;
 import panels.PatientsPanel;
 import panels.AppointmentsPanel;
 import panels.MedicalRecordsPanel;
-import panels.PharmacyPanel;
+import panels.PrescriptionsPanel;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -17,20 +17,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-
-
 public class NurseDashboard extends JFrame implements ActionListener {
     
     private JPanel pnlSide, pnlTop, pnlContainer, pnlLogo;
     private CardLayout cardLayout;
-    private JButton btnDashboard, btnPatients, btnAppointments, btnMedicalRecords, btnPharmacy, btnLogout;
+    public JButton btnDashboard, btnPatients, btnAppointments, btnMedicalRecords, btnPrescriptions, btnLogout;
     private JLabel lblSystemName, lblLogo;
     private JTextField txtSearchField;
     private ImageIcon logoIcon;
     private JButton activeBtn = null;
-    
-    
-    
     
     public NurseDashboard() {
         setSize(1920, 1080);
@@ -39,7 +34,6 @@ public class NurseDashboard extends JFrame implements ActionListener {
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-       
         pnlSide = new JPanel();
         pnlSide.setLayout(null);
         pnlSide.setBounds(0, 100, 270, 980); 
@@ -58,8 +52,6 @@ public class NurseDashboard extends JFrame implements ActionListener {
         pnlContainer.setBackground(ColorsTheme.Middle_Panel);
         add(pnlContainer);
 
-        
-        // Logo setup
         pnlLogo = new JPanel();
         pnlLogo.setLayout(null);
         pnlLogo.setBounds(-20, 0, 120, 120);
@@ -74,14 +66,12 @@ public class NurseDashboard extends JFrame implements ActionListener {
         pnlLogo.add(lblLogo);
         pnlTop.add(pnlLogo);
         
-        // System title
         lblSystemName = new JLabel("Carelink Management System");
         lblSystemName.setBounds(110, 25, 600, 50);
         lblSystemName.setFont(FontsTheme.Dashboard_Title);
         lblSystemName.setForeground(ColorsTheme.Main_Card);
         pnlTop.add(lblSystemName);
         
-        // Global Search Bar Setup
         String placeholder = "Search patients, records, staff...";
         txtSearchField = new JTextField(placeholder);
         txtSearchField.setBounds(730, 30, 500, 40);
@@ -93,38 +83,30 @@ public class NurseDashboard extends JFrame implements ActionListener {
         txtSearchField.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         pnlTop.add(txtSearchField);
 
-        
-        // Container pages
         pnlContainer.add(new NurseDashboardPanel(), "dashboard");
-        pnlContainer.add(new PatientsPanel(true), "patients"); // <-- FIX APPLIED HERE: Added 'true' so Nurses get full management buttons
+        pnlContainer.add(new PatientsPanel(true), "patients"); 
         pnlContainer.add(new AppointmentsPanel(true, false), "appointments");
         pnlContainer.add(new MedicalRecordsPanel(true), "medicalRecords"); 
-        pnlContainer.add(new PharmacyPanel(true), "pharmacy");
+        pnlContainer.add(new PrescriptionsPanel(false, true), "prescriptions"); 
         
-        
-        // Side Navigation Buttons
         btnDashboard      = ButtonStyles.createButton("Dashboard", "/icons/home.png", 30, pnlSide);        
         btnPatients       = ButtonStyles.createButton("Patients", "/icons/patient.png", 80, pnlSide);
         btnAppointments   = ButtonStyles.createButton("Appointments", "/icons/appointment.png", 130, pnlSide);
         btnMedicalRecords = ButtonStyles.createButton("Records", "/icons/record.png", 180, pnlSide);
-        btnPharmacy       = ButtonStyles.createButton("Pharmacy", "/icons/pharmacy2.png", 230, pnlSide);
+        btnPrescriptions  = ButtonStyles.createButton("Prescriptions", "/icons/prescription.png", 230, pnlSide);
         btnLogout         = ButtonStyles.createButton("Logout", "/icons/logout.png", 850, pnlSide);
 
-        // Set default active visual state on launch
         activeBtn = btnDashboard;
         btnDashboard.setBackground(ColorsTheme.Active_Button);
         btnDashboard.getParent().setBackground(ColorsTheme.Active_Button);
-
         
-        // Action & Focus Listeners
         btnDashboard.addActionListener(this);
         btnPatients.addActionListener(this);
         btnAppointments.addActionListener(this);
         btnMedicalRecords.addActionListener(this);
-        btnPharmacy.addActionListener(this);
+        btnPrescriptions.addActionListener(this);
         btnLogout.addActionListener(this);
 
-        // Make placeholder text disappear when clicked
         txtSearchField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (txtSearchField.getText().equals(placeholder)) {
@@ -140,7 +122,6 @@ public class NurseDashboard extends JFrame implements ActionListener {
             }
         });
 
-        // Stop the search bar from blinking immediately when the app opens
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowOpened(java.awt.event.WindowEvent e) {
@@ -153,28 +134,34 @@ public class NurseDashboard extends JFrame implements ActionListener {
         });
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JButton clicked = (JButton) e.getSource();
+    public void switchView(String cardName, JButton sidebarButtonTarget) {
+        cardLayout.show(pnlContainer, cardName);
 
-        // Change button color when clicked (unless it's the logout button)
-        if (clicked != btnLogout) {
-            
-            // Reset the old button back to the normal color
+        if (sidebarButtonTarget != null && sidebarButtonTarget != btnLogout) {
             if (activeBtn != null) {
                 activeBtn.setBackground(ColorsTheme.Side_Panel);
                 activeBtn.getParent().setBackground(ColorsTheme.Side_Panel);
             }
-            
-            // Color the newly clicked button
+            sidebarButtonTarget.setBackground(ColorsTheme.Active_Button);
+            sidebarButtonTarget.getParent().setBackground(ColorsTheme.Active_Button);
+            activeBtn = sidebarButtonTarget;
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton clicked = (JButton) e.getSource();
+
+        if (clicked != btnLogout) {
+            if (activeBtn != null) {
+                activeBtn.setBackground(ColorsTheme.Side_Panel);
+                activeBtn.getParent().setBackground(ColorsTheme.Side_Panel);
+            }
             clicked.setBackground(ColorsTheme.Active_Button);
             clicked.getParent().setBackground(ColorsTheme.Active_Button);
-            
-            // Remember which button is currently active
             activeBtn = clicked;
         }
         
-        // Switch screens based on which button was clicked
         if (e.getSource() == btnDashboard) {
             cardLayout.show(pnlContainer, "dashboard");
         }
@@ -187,17 +174,16 @@ public class NurseDashboard extends JFrame implements ActionListener {
         else if (e.getSource() == btnMedicalRecords) {
             cardLayout.show(pnlContainer, "medicalRecords");
         }
-        else if (e.getSource() == btnPharmacy) {
-            cardLayout.show(pnlContainer, "pharmacy");
+        else if (e.getSource() == btnPrescriptions) {
+            cardLayout.show(pnlContainer, "prescriptions"); 
         }
         else if (e.getSource() == btnLogout) {
-            dispose(); // Close this window
+            dispose(); 
             LoginPage lp = new LoginPage();
-            lp.setVisible(true); // Open the login screen
+            lp.setVisible(true); 
         }
     }
     
-    // Run the dashboard to test the screen
     public static void main(String[] args) {
         constants.SystemSettings.loadSettings();
         NurseDashboard nurse = new NurseDashboard();

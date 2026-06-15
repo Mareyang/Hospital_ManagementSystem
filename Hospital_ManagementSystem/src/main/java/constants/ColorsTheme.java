@@ -30,6 +30,7 @@ public class ColorsTheme {
     public static Color Red = Color.decode("#FF1700");
     public static Color Blue = Color.decode("#4300FF");
     public static Color Orange = Color.decode("#FF8E00");
+    public static Color Teal = Color.decode("#3B9797");
     public static Color Cancel = Color.decode("#BFC6C4");
     public static Color Delete_Urgent = Color.decode("#A82323");
     public static Color Add_Confirm = Color.decode("#48A111");
@@ -38,6 +39,12 @@ public class ColorsTheme {
     public static Color Search_Button = Color.decode("#406AAF");
     public static Color Gray_Button = Color.decode("#EDE9E6");
     public static Color Update_Pending = Color.decode("#FFC107");
+    public static Color Add = Color.decode("#06D001");
+    public static Color Edit = Color.decode("#FFBE0F");
+    public static Color View = Color.decode("#0118D8");
+    public static Color Delete = Color.decode("#C5172E");
+    
+    
     
     // Dashboard Panel Colors
     public static Color Cardiology_Color = new Color(52, 152, 219);

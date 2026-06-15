@@ -11,36 +11,40 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
 
-public class NewPharmacyDialog extends JDialog implements ActionListener {
+public class EditPharmacyDialog extends JDialog implements ActionListener {
     
     private JPanel pnlContent;
     private JLabel lblCode, lblName, lblGeneric, lblType, lblDosage, lblStrength, lblCurrent, lblReorder, lblPrice, lblExpire, lblTitle, lblSubtitle;
     private JTextField txtCode, txtName, txtGeneric, txtStrength, txtCurrent, txtReorder, txtPrice, txtExpire;
     private JComboBox<String> cmbType, cmbDosage; 
-    private JButton btnMedicationInfo, btnCancel, btnAddInfo;
+    private JButton btnMedicationInfo, btnCancel, btnSaveInfo;
+    
+    private String currentItemCode;
     
     private static final String[] dosages = {"Select Form...", "Tablet", "Capsule", "Syrup", "Injection", "Ointment", "Inhaler", "IV"};
     
-    public NewPharmacyDialog() {
+    public EditPharmacyDialog(String itemCode) {
+        this.currentItemCode = itemCode;
+        
         setSize(1050, 550);
         setLayout(null);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
         setModal(true);
 
-        lblTitle = new JLabel("Medication Inventory");
+        lblTitle = new JLabel("Edit Medication");
         lblTitle.setBounds(30, 10, 400, 35);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         add(lblTitle);
 
-        lblSubtitle = new JLabel("Add a new medication to the inventory.");
+        lblSubtitle = new JLabel("Update metadata for " + itemCode + ".");
         lblSubtitle.setBounds(30, 40, 450, 30);
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
         add(lblSubtitle);
 
-        btnMedicationInfo = new JButton("Medication Form");
+        btnMedicationInfo = new JButton("Update Form");
         btnMedicationInfo.setBounds(40, 100, 250, 40);
         btnMedicationInfo.setFont(FontsTheme.Buttons);
         btnMedicationInfo.setForeground(ColorsTheme.Text_White);
@@ -62,13 +66,13 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         btnCancel.setFocusPainted(false);
         add(btnCancel);
         
-        btnAddInfo = new JButton("Save Medication");
-        btnAddInfo.setBounds(790, 450, 200, 30);
-        btnAddInfo.setFont(FontsTheme.Buttons);
-        btnAddInfo.setForeground(ColorsTheme.Text_White);
-        btnAddInfo.setBackground(ColorsTheme.Green);
-        btnAddInfo.setFocusPainted(false);
-        add(btnAddInfo);
+        btnSaveInfo = new JButton("Save Changes");
+        btnSaveInfo.setBounds(790, 450, 200, 30);
+        btnSaveInfo.setFont(FontsTheme.Buttons);
+        btnSaveInfo.setForeground(ColorsTheme.Text_White);
+        btnSaveInfo.setBackground(ColorsTheme.Green); 
+        btnSaveInfo.setFocusPainted(false);
+        add(btnSaveInfo);
         
         // LEFT SECTION
         lblCode = new JLabel("Medication Code : ");
@@ -77,8 +81,8 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblCode.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblCode);
         
-        // THE FIX: Displays standard text and is locked to prevent edits
-        txtCode = new JTextField("Auto-generated");
+        // Locked Item Code
+        txtCode = new JTextField(itemCode);
         txtCode.setBounds(220, 40, 230, 30);
         txtCode.setFont(FontsTheme.Plain_Texts);
         txtCode.setEditable(false);
@@ -148,9 +152,11 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblCurrent.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblCurrent);
         
-        txtCurrent = new JTextField("0");
+        // Locked Current Stock - Enforces proper inventory workflow!
+        txtCurrent = new JTextField("");
         txtCurrent.setBounds(690, 80, 230, 30);
         txtCurrent.setFont(FontsTheme.Plain_Texts);
+        txtCurrent.setEditable(false);
         pnlContent.add(txtCurrent);
         
         lblReorder = new JLabel("Reorder Level : ");
@@ -159,7 +165,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblReorder.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblReorder);
         
-        txtReorder = new JTextField("20");
+        txtReorder = new JTextField("");
         txtReorder.setBounds(690, 120, 230, 30);
         txtReorder.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtReorder);
@@ -181,15 +187,16 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblExpire.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblExpire);
         
-        txtExpire = new JTextField("(YYYY-MM-DD)");
+        txtExpire = new JTextField("");
         txtExpire.setBounds(690, 200, 230, 30);
         txtExpire.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtExpire);
         
         btnCancel.addActionListener(this);
-        btnAddInfo.addActionListener(this);
+        btnSaveInfo.addActionListener(this);
         
         loadCategories();
+        loadMedicationData();
     }
     
     private void loadCategories() {
@@ -207,68 +214,90 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         }
     }
     
+    private void loadMedicationData() {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "")) {
+            String sql = "SELECT * FROM pharmacy WHERE item_code = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, currentItemCode);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    txtName.setText(rs.getString("brand_name") != null ? rs.getString("brand_name") : "");
+                    txtGeneric.setText(rs.getString("generic_name"));
+                    txtStrength.setText(rs.getString("strength") != null ? rs.getString("strength") : "");
+                    txtCurrent.setText(String.valueOf(rs.getInt("current_stock")));
+                    txtReorder.setText(String.valueOf(rs.getInt("reorder_level")));
+                    txtPrice.setText(String.valueOf(rs.getDouble("unit_price")));
+                    
+                    java.sql.Date expDate = rs.getDate("expiration_date");
+                    txtExpire.setText(expDate != null ? expDate.toString() : "(YYYY-MM-DD)");
+                    
+                    // Match Dosage Dropdown
+                    String dbDosage = rs.getString("dosage_form");
+                    if (dbDosage != null) cmbDosage.setSelectedItem(dbDosage);
+                    
+                    // Match Category Dropdown
+                    int catId = rs.getInt("category_id");
+                    for (int i = 0; i < cmbType.getItemCount(); i++) {
+                        if (cmbType.getItemAt(i).startsWith(catId + " - ")) {
+                            cmbType.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Could not load medication data: " + ex.getMessage());
+        }
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCancel) {
             dispose();
         } 
-        else if (e.getSource() == btnAddInfo) {
-            // Validation no longer needs to check txtCode since we generate it!
+        else if (e.getSource() == btnSaveInfo) {
             if (txtGeneric.getText().trim().isEmpty() || cmbType.getSelectedIndex() == 0) {
                 JOptionPane.showMessageDialog(this, "Generic Name and Category are required.", "Validation Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "")) {
+            // NOTE: We do NOT update current_stock here!
+            String sql = "UPDATE pharmacy SET brand_name = ?, generic_name = ?, category_id = ?, dosage_form = ?, strength = ?, reorder_level = ?, unit_price = ?, expiration_date = ? WHERE item_code = ?";
+
+            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+                 PreparedStatement update = connection.prepareStatement(sql)) {
                 
-                String generatedCode = "MED-001";
-                String codeSql = "SELECT MAX(medication_id) FROM pharmacy";
-                try (PreparedStatement stmtCode = connection.prepareStatement(codeSql); ResultSet rsCode = stmtCode.executeQuery()) {
-                    if (rsCode.next()) {
-                        int nextId = rsCode.getInt(1) + 1;
-                        generatedCode = String.format("MED-%03d", nextId);
-                    }
+                String categoryInput = cmbType.getSelectedItem().toString();
+                int categoryId = Integer.parseInt(categoryInput.split(" - ")[0].trim());
+                
+                update.setString(1, txtName.getText().trim());
+                update.setString(2, txtGeneric.getText().trim());
+                update.setInt(3, categoryId);
+                update.setString(4, cmbDosage.getSelectedItem().toString());
+                update.setString(5, txtStrength.getText().trim());
+                
+                int reorderLevel = txtReorder.getText().trim().isEmpty() ? 0 : Integer.parseInt(txtReorder.getText().trim());
+                double unitPrice = txtPrice.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(txtPrice.getText().trim());
+                
+                update.setInt(6, reorderLevel);
+                update.setDouble(7, unitPrice);
+                
+                String expireDate = txtExpire.getText().trim();
+                if (expireDate.equals("(YYYY-MM-DD)") || expireDate.isEmpty()) {
+                    update.setNull(8, java.sql.Types.DATE);
+                } else {
+                    update.setString(8, expireDate);
                 }
+                
+                update.setString(9, currentItemCode); // The WHERE clause
 
-                // 2. INSERT INTO DATABASE
-                String sql = "INSERT INTO pharmacy (item_code, brand_name, generic_name, category_id, dosage_form, strength, current_stock, reorder_level, unit_price, expiration_date, status_id) "
-                           + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
-
-                try (PreparedStatement insert = connection.prepareStatement(sql)) {
-                    
-                    String categoryInput = cmbType.getSelectedItem().toString();
-                    int categoryId = Integer.parseInt(categoryInput.split(" - ")[0].trim());
-                    
-                    insert.setString(1, generatedCode); // Use the backend-generated code!
-                    insert.setString(2, txtName.getText().trim());
-                    insert.setString(3, txtGeneric.getText().trim());
-                    insert.setInt(4, categoryId);
-                    insert.setString(5, cmbDosage.getSelectedItem().toString());
-                    insert.setString(6, txtStrength.getText().trim());
-                    
-                    int currentStock = txtCurrent.getText().trim().isEmpty() ? 0 : Integer.parseInt(txtCurrent.getText().trim());
-                    int reorderLevel = txtReorder.getText().trim().isEmpty() ? 0 : Integer.parseInt(txtReorder.getText().trim());
-                    double unitPrice = txtPrice.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(txtPrice.getText().trim());
-                    
-                    insert.setInt(7, currentStock);
-                    insert.setInt(8, reorderLevel);
-                    insert.setDouble(9, unitPrice);
-                    
-                    String expireDate = txtExpire.getText().trim();
-                    if (expireDate.equals("(YYYY-MM-DD)") || expireDate.isEmpty()) {
-                        insert.setNull(10, java.sql.Types.DATE);
-                    } else {
-                        insert.setString(10, expireDate);
-                    }
-
-                    int rows = insert.executeUpdate();
-                    if (rows > 0) {
-                        JOptionPane.showMessageDialog(this, "Medication inventory saved successfully!\nCode generated: " + generatedCode, "Pharmacy Success", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
-                    }
+                int rows = update.executeUpdate();
+                if (rows > 0) {
+                    JOptionPane.showMessageDialog(this, "Medication details updated successfully!", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
                 }
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException nfe) {
-                JOptionPane.showMessageDialog(this, "Stock, Reorder Level, Unit Price must be valid numbers, and Category must be selected.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Reorder Level and Unit Price must be valid numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Database write operation failed:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

@@ -7,7 +7,6 @@ import constants.TablePanel;
 import dialogs.NewStaffDialog;
 import dialogs.EditStaffDialog;
 import dialogs.ViewStaffDialog;
-import dialogs.DeleteStaffDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -274,11 +273,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Please select a staff member to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            String empId = tblEmployee.getTable().getValueAt(selectedRow, 0).toString();
-            DeleteStaffDialog deleteDialog = new DeleteStaffDialog(empId);
-            deleteDialog.setVisible(true);
-            updateTable("Employee Records", txtSearch.getText().trim().equals("Search by staff name or ID...") ? "" : txtSearch.getText().trim());
-        }
+            
         else if (e.getSource() == btnSearch) {
             String searchKeyword = txtSearch.getText().trim();
             updateTable("Search Results", searchKeyword);
@@ -288,4 +283,5 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
             updateTable("Employee Records", "");
         }
     }
+}
 }

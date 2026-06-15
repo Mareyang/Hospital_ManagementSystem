@@ -119,7 +119,7 @@ public class DoctorDashboard extends JFrame implements ActionListener {
         pnlContainer.add(new PatientsPanel(false), "patients");
         pnlContainer.add(new AppointmentsPanel(false, true), "appointments");
         pnlContainer.add(new MedicalRecordsPanel(false), "medicalRecords");
-        pnlContainer.add(new PrescriptionsPanel(), "prescriptions");
+        pnlContainer.add(new PrescriptionsPanel(true, false), "prescriptions");
         
         // Add navigation buttons to the side panel
         btnDashboard      = ButtonStyles.createButton("Dashboard", "/icons/home.png", 30, pnlSide);        
