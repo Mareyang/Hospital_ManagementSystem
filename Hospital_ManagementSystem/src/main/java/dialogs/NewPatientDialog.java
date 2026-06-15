@@ -7,37 +7,39 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Period;
 import javax.swing.*;
 
 
 
-public class ViewPatientDialog extends JDialog implements ActionListener{
-    private JPanel pnlContent;
-    private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblAge, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, lblFirst, lblLast;
-    private JTextField txtID, txtAge, txtNumber, txtEmail, txtAddress, txtBirth, txtFirst, txtLast, txtGender, txtStatus;
-    private JButton btnPersonal, btnCancel;
-    private String currentPatientId;
+public class NewPatientDialog extends JDialog implements ActionListener {
     
-    public ViewPatientDialog(String patientId) {
-        this.currentPatientId = patientId.replaceAll("(?i)[A-Z]+-", "");
-        
+    private JPanel pnlContent;
+    private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblAge, lblFirst, lblLast, lblNumber, lblGender, lblStatus, lblEmail, lblAddress;
+    private JTextField txtID, txtAge, txtFirst, txtLast, txtBirth, txtNumber, txtEmail, txtAddress;
+    private JComboBox<String> cmbGender, cmbStatus;
+    private JButton btnPersonal, btnCancel, btnSave;
+    
+    private static final String[] genderList = {"Select Gender...", "Male", "Female", "Other"};
+    private static final String[] statusList = {"Select Status...", "Outpatient", "Admitted"}; 
+    // Note: We only allow Outpatient or Admitted for brand new patients. 
+    // Discharged/Deceased are updated later!
+
+    
+    public NewPatientDialog() {
         setSize(1050, 550);
         setLayout(null);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
         setModal(true);
         
-        lblTitle = new JLabel("Patient Information");
+        lblTitle = new JLabel("New Patient Registration");
         lblTitle.setBounds(30, 10, 500, 40);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         add(lblTitle);
         
-        lblSubtitle = new JLabel("Viewing registered patient record.");
+        lblSubtitle = new JLabel("Complete all required fields to register a new patient.");
         lblSubtitle.setBounds(30, 40, 500, 40);
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
@@ -57,13 +59,21 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
         
-        btnCancel = new JButton("Close");
-        btnCancel.setBounds(790, 450, 200, 30);
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(580, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
-        btnCancel.setBackground(ColorsTheme.Search);
+        btnCancel.setBackground(ColorsTheme.Cancel);
         btnCancel.setFocusPainted(false);
         add(btnCancel);
+        
+        btnSave = new JButton("Save Information");
+        btnSave.setBounds(790, 450, 200, 30);
+        btnSave.setFont(FontsTheme.Buttons);
+        btnSave.setForeground(ColorsTheme.Text_White);
+        btnSave.setBackground(ColorsTheme.Green);
+        btnSave.setFocusPainted(false);
+        add(btnSave);
         
         // --- LEFT COLUMN ---
         lblID = new JLabel("Patient ID : "); 
@@ -71,10 +81,10 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         lblID.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblID);
         
-        txtID = new JTextField(""); 
+        txtID = new JTextField("Auto-generated"); 
         txtID.setBounds(220, 40, 230, 30); 
         txtID.setFont(FontsTheme.Plain_Texts); 
-        txtID.setEditable(false);
+        txtID.setEditable(false); // Locked
         pnlContent.add(txtID);
         
         lblFirst = new JLabel("First Name : "); 
@@ -82,10 +92,9 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         lblFirst.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblFirst);
         
-        txtFirst = new JTextField(""); 
+        txtFirst = new JTextField(); 
         txtFirst.setBounds(220, 90, 230, 30); 
         txtFirst.setFont(FontsTheme.Plain_Texts); 
-        txtFirst.setEditable(false);
         pnlContent.add(txtFirst);
         
         lblLast = new JLabel("Last Name : "); 
@@ -93,21 +102,19 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         lblLast.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblLast);
         
-        txtLast = new JTextField(""); 
+        txtLast = new JTextField(); 
         txtLast.setBounds(220, 140, 230, 30);
         txtLast.setFont(FontsTheme.Plain_Texts); 
-        txtLast.setEditable(false);
         pnlContent.add(txtLast);
         
-        lblBirth = new JLabel("Birthday : "); 
+        lblBirth = new JLabel("Birthday :"); 
         lblBirth.setBounds(40, 190, 200, 30); 
         lblBirth.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblBirth);
         
-        txtBirth = new JTextField(""); 
+        txtBirth = new JTextField("(YYYY-MM-DD)"); 
         txtBirth.setBounds(220, 190, 230, 30);
         txtBirth.setFont(FontsTheme.Plain_Texts); 
-        txtBirth.setEditable(false);
         pnlContent.add(txtBirth);
 
         lblAge = new JLabel("Age : "); 
@@ -115,10 +122,10 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         lblAge.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblAge);
         
-        txtAge = new JTextField(""); 
+        txtAge = new JTextField("Auto-calculated"); 
         txtAge.setBounds(220, 240, 230, 30);
         txtAge.setFont(FontsTheme.Plain_Texts); 
-        txtAge.setEditable(false);
+        txtAge.setEditable(false); // Locked
         pnlContent.add(txtAge);
         
         // --- RIGHT COLUMN ---
@@ -127,10 +134,9 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         lblNumber.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblNumber);
         
-        txtNumber = new JTextField(""); 
+        txtNumber = new JTextField(); 
         txtNumber.setBounds(690, 40, 230, 30);
         txtNumber.setFont(FontsTheme.Plain_Texts); 
-        txtNumber.setEditable(false);
         pnlContent.add(txtNumber);
         
         lblAddress = new JLabel("Home Address : "); 
@@ -138,10 +144,9 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         lblAddress.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(lblAddress);
         
-        txtAddress = new JTextField(""); 
+        txtAddress = new JTextField(); 
         txtAddress.setBounds(690, 90, 230, 30); 
         txtAddress.setFont(FontsTheme.Plain_Texts); 
-        txtAddress.setEditable(false);
         pnlContent.add(txtAddress);
         
         lblEmail = new JLabel("Email Address : "); 
@@ -149,10 +154,9 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         lblEmail.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblEmail);
         
-        txtEmail = new JTextField(""); 
+        txtEmail = new JTextField(); 
         txtEmail.setBounds(690, 140, 230, 30); 
         txtEmail.setFont(FontsTheme.Plain_Texts); 
-        txtEmail.setEditable(false);
         pnlContent.add(txtEmail);
         
         lblGender = new JLabel("Gender : "); 
@@ -160,70 +164,73 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
         lblGender.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblGender);
         
-        txtGender = new JTextField("");
-        txtGender.setBounds(690, 190, 230, 30);
-        txtGender.setFont(FontsTheme.Plain_Texts); 
-        txtGender.setEditable(false);
-        pnlContent.add(txtGender);
+        cmbGender = new JComboBox<>(genderList);
+        cmbGender.setBounds(690, 190, 230, 30);
+        cmbGender.setFont(FontsTheme.Plain_Texts); 
+        cmbGender.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbGender);
 
-        lblStatus = new JLabel("Patient Status : "); 
+        lblStatus = new JLabel("Initial Status : "); 
         lblStatus.setBounds(510, 240, 200, 30); 
         lblStatus.setFont(FontsTheme.Plain_Texts); 
         pnlContent.add(lblStatus);
         
-        txtStatus = new JTextField("");
-        txtStatus.setBounds(690, 240, 230, 30);
-        txtStatus.setFont(FontsTheme.Plain_Texts); 
-        txtStatus.setEditable(false);
-        pnlContent.add(txtStatus);
+        cmbStatus = new JComboBox<>(statusList);
+        cmbStatus.setBounds(690, 240, 230, 30);
+        cmbStatus.setFont(FontsTheme.Plain_Texts); 
+        cmbStatus.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbStatus);
         
+        // ActionListeners
         btnCancel.addActionListener(this);
-        loadPatientData();
+        btnSave.addActionListener(this);
     }
     
-    private void loadPatientData() {
-        if (currentPatientId == null || currentPatientId.trim().isEmpty()) {
-            txtID.setText("PAT-000"); 
-            return; 
-        }
+    private void savePatientToDatabase() {
+        // 1. Grab all the text from the fields
+        String first = txtFirst.getText().trim();
+        String last = txtLast.getText().trim();
+        String birth = txtBirth.getText().trim();
+        String gender = cmbGender.getSelectedItem().toString();
+        String contact = txtNumber.getText().trim();
+        String address = txtAddress.getText().trim();
+        String email = txtEmail.getText().trim();
+        String statusText = cmbStatus.getSelectedItem().toString();
         
-        String sql = "SELECT p.*, s.status_name FROM patients p " +
-                     "LEFT JOIN patient_status s ON p.status_id = s.status_id " +
-                     "WHERE p.patient_id = ?";
-                     
+        // 2. Simple Validation (Make sure they didn't leave blanks)
+        if (first.isEmpty() || last.isEmpty() || birth.isEmpty() || gender.equals("Select Gender...") || statusText.equals("Select Status...")) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields (Name, Birthday, Gender, Status).", "Missing Information", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Map the text status back to the database ID (1 = Outpatient, 2 = Admitted)
+        int statusId = statusText.equals("Outpatient") ? 1 : 2 ;
+
+        // 3. Connect to DB and Insert
+        String sql = "INSERT INTO patients (first_name, last_name, birthday, gender, contact_number, email, address, status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setString(1, currentPatientId);
-            ResultSet rs = stmt.executeQuery();
+            stmt.setString(1, first);
+            stmt.setString(2, last);
+            stmt.setString(3, birth); 
+            stmt.setString(4, gender);
+            stmt.setString(5, contact);
+            stmt.setString(6, email);
+            stmt.setString(7, address);
+            stmt.setInt(8, statusId);
             
-            if (rs.next()) {
-                txtID.setText(String.format("PAT-%03d", rs.getInt("patient_id")));
-                txtFirst.setText(rs.getString("first_name"));
-                txtLast.setText(rs.getString("last_name"));
-                
-                java.sql.Date bday = rs.getDate("birthday");
-                if (bday != null) {
-                    txtBirth.setText(bday.toString());
-                    LocalDate birthLocalDate = bday.toLocalDate();
-                    int calculatedAge = Period.between(birthLocalDate, LocalDate.now()).getYears();
-                    txtAge.setText(String.valueOf(calculatedAge));
-                } else {
-                    txtBirth.setText("N/A");
-                    txtAge.setText("N/A");
-                }
-                
-                txtGender.setText(rs.getString("gender") != null ? rs.getString("gender") : "N/A");
-                txtNumber.setText(rs.getString("contact_number"));
-                txtAddress.setText(rs.getString("address"));
-                txtEmail.setText(rs.getString("email"));
-                
-                String stats = rs.getString("status_name");
-                txtStatus.setText(stats != null ? stats : "Unknown");
+            int rowsInserted = stmt.executeUpdate();
+            
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "Patient successfully registered!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                dispose(); // Close the dialog box
             }
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to load patient data:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Database Error: Please check date format (YYYY-MM-DD) or connection.\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -231,6 +238,8 @@ public class ViewPatientDialog extends JDialog implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCancel) {
             dispose();
+        } else if (e.getSource() == btnSave) {
+            savePatientToDatabase();
         }
     }
 }

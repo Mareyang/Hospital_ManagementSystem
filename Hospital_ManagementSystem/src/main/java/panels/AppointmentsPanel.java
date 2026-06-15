@@ -5,6 +5,8 @@ import constants.PanelCard;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import dialogs.NewAppointmentDialog;
+import dialogs.EditAppointmentDialog;
+import dialogs.ViewAppointmentDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -17,25 +19,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class AppointmentsPanel extends JPanel implements ActionListener {
     
     private JPanel pnlMiddle, pnlSearch;
-    private PanelCard pnlTotal, pnlConfirm, pnlPending, pnlUrgent;
-    private JLabel lblDetails, lblAppointment, lblNoResults;
+    private PanelCard pnlTotal, pnlScheduled, pnlCompleted, pnlCancelled;
+    private JLabel lblDetails, lblAppointment;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd, btnEdit, btnCancel, btnDelete, btnUpcoming, btnRecent, btnCancelled, btnComplete;
+    private JButton btnSearch, btnRefresh, btnAdd, btnView, btnEdit, btnCancelAppt, btnCompleteAppt;
+    private JButton btnFilterUpcoming, btnFilterCompleted, btnFilterCancelled;
     private TablePanel tblAppointments;
+    
     private static final String[] columns = {"Appt ID", "Patient Name", "Doctor", "Department", "Date", "Time", "Status"};
-    private boolean canManageAppointments;
-    private boolean canCompleteAppointments;
-    private String currentTableFilter = "Upcoming";
+    
+    // Role-based booleans
+    private boolean canManageAppointments; 
+    private boolean canCompleteAppointments; 
+    private String currentTableFilter = "Scheduled"; 
+    
+    
     
     public AppointmentsPanel() {
-        this(true);
-    }
-
-    public AppointmentsPanel(boolean canManageAppointments) {
-        this(canManageAppointments, false);
+        this(false, false); 
     }
 
     public AppointmentsPanel(boolean canManageAppointments, boolean canCompleteAppointments) {
@@ -45,32 +51,30 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
-        // Main Panel Container for Table
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
         pnlMiddle.setBounds(70, 380, 1500, 500);
         pnlMiddle.setBackground(ColorsTheme.Main_Card);
         add(pnlMiddle);
 
-        // Search Panel Container 
         pnlSearch = new JPanel();
         pnlSearch.setLayout(null);
         pnlSearch.setBounds(70, 270, 1500, 80);
         pnlSearch.setBackground(ColorsTheme.Main_Card);
         add(pnlSearch);
         
-        // Button for adding new appointment
-        btnAdd = new JButton("+ Add");
+        // --- Initialize Buttons ---
+        btnAdd = new JButton("Add");
         btnAdd.setFont(FontsTheme.Buttons);
         btnAdd.setBackground(ColorsTheme.Add_Confirm);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
-
-        btnCancel = new JButton("Cancel");
-        btnCancel.setFont(FontsTheme.Buttons);
-        btnCancel.setBackground(ColorsTheme.Header);
-        btnCancel.setForeground(ColorsTheme.Text_White);
-        btnCancel.setFocusPainted(false);
+        
+        btnView = new JButton("View");
+        btnView.setFont(FontsTheme.Buttons);
+        btnView.setBackground(ColorsTheme.Header);
+        btnView.setForeground(ColorsTheme.Text_White);
+        btnView.setFocusPainted(false);
 
         btnEdit = new JButton("Edit");
         btnEdit.setFont(FontsTheme.Buttons);
@@ -78,68 +82,51 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         btnEdit.setForeground(ColorsTheme.Text_Black);
         btnEdit.setFocusPainted(false);
 
-        btnDelete = new JButton("Delete");
-        btnDelete.setFont(FontsTheme.Buttons);
-        btnDelete.setBackground(ColorsTheme.Delete_Urgent);
-        btnDelete.setForeground(ColorsTheme.Text_White);
-        btnDelete.setFocusPainted(false);
+        btnCancelAppt = new JButton("Cancel");
+        btnCancelAppt.setFont(FontsTheme.Buttons);
+        btnCancelAppt.setBackground(ColorsTheme.Delete_Urgent);
+        btnCancelAppt.setForeground(ColorsTheme.Text_White);
+        btnCancelAppt.setFocusPainted(false);
 
-        btnUpcoming = createTableHeaderButton("Upcoming", ColorsTheme.Search);
-        btnRecent = createTableHeaderButton("Recents", ColorsTheme.Green);
-        btnCancelled = createTableHeaderButton("Cancelled", ColorsTheme.Text_Gray);
-        btnComplete = createTableHeaderButton("Complete", ColorsTheme.Green);
+        btnCompleteAppt = new JButton("Complete");
+        btnCompleteAppt.setFont(FontsTheme.Buttons);
+        btnCompleteAppt.setBackground(ColorsTheme.Green);
+        btnCompleteAppt.setForeground(ColorsTheme.Text_White);
+        btnCompleteAppt.setFocusPainted(false);
 
+        // --- Role-Based Button Logic ---
+        List<JButton> visibleButtons = new ArrayList<>();
+        
         if (canManageAppointments) {
-            btnAdd.setBounds(830, 40, 150, 45);
-            btnCancel.setBounds(995, 40, 150, 45);
-            btnEdit.setBounds(1160, 40, 150, 45);
-            btnDelete.setBounds(1325, 40, 150, 45);
-            add(btnAdd);
-            add(btnCancel);
-            add(btnEdit);
-            add(btnDelete);
-
-            btnUpcoming.setBounds(1000, 10, 130, 40);
-            btnRecent.setBounds(1150, 10, 130, 40);
-            btnCancelled.setBounds(1300, 10, 150, 40);
-        } else {
-            btnUpcoming.setFont(FontsTheme.Buttons);
-            btnUpcoming.setBackground(ColorsTheme.Add_Confirm);
-            btnUpcoming.setForeground(ColorsTheme.Text_White);
-            btnUpcoming.setFocusPainted(false);
-
-            btnRecent.setFont(FontsTheme.Buttons);
-            btnRecent.setBackground(ColorsTheme.Header);
-            btnRecent.setForeground(ColorsTheme.Text_White);
-            btnRecent.setFocusPainted(false);
-
-            btnCancelled.setFont(FontsTheme.Buttons);
-            btnCancelled.setBackground(ColorsTheme.Update_Pending);
-            btnCancelled.setForeground(ColorsTheme.Text_Black);
-            btnCancelled.setFocusPainted(false);
-
-            btnComplete.setFont(FontsTheme.Buttons);
-            btnComplete.setBackground(ColorsTheme.Delete_Urgent);
-            btnComplete.setForeground(ColorsTheme.Text_White);
-            btnComplete.setFocusPainted(false);
-
-            java.util.List<JButton> topButtons = new java.util.ArrayList<>();
-            topButtons.add(btnUpcoming);
-            topButtons.add(btnRecent);
-            topButtons.add(btnCancelled);
-            if (canCompleteAppointments) {
-                topButtons.add(btnComplete);
-            }
-
-            int[] slots = {830, 995, 1160, 1325};
-            int startSlotIndex = slots.length - topButtons.size();
-            for (int i = 0; i < topButtons.size(); i++) {
-                topButtons.get(i).setBounds(slots[startSlotIndex + i], 40, 150, 45);
-                add(topButtons.get(i));
-            }
+            visibleButtons.add(btnAdd); 
+        }
+        
+        visibleButtons.add(btnView); 
+        
+        if (canManageAppointments) {
+            visibleButtons.add(btnEdit); 
+        }
+        
+        if (canManageAppointments || canCompleteAppointments) {
+            visibleButtons.add(btnCancelAppt); 
+        }
+        
+        if (canCompleteAppointments) {
+            visibleButtons.add(btnCompleteAppt); 
         }
 
-        // Search Bar including search and refresh buttons
+        int[] slots = {830, 995, 1160, 1325};
+        int startSlotIndex = slots.length - visibleButtons.size();
+        for (int i = 0; i < visibleButtons.size(); i++) {
+            visibleButtons.get(i).setBounds(slots[startSlotIndex + i], 40, 150, 45);
+            add(visibleButtons.get(i));
+            visibleButtons.get(i).addActionListener(this);
+        }
+
+        btnFilterUpcoming = createFilterButton("Upcoming", ColorsTheme.Search);
+        btnFilterCompleted = createFilterButton("Completed", ColorsTheme.Green);
+        btnFilterCancelled = createFilterButton("Cancelled", ColorsTheme.Text_Gray);
+
         txtSearch = new JTextField("Search appointments...");
         txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
@@ -162,7 +149,6 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
                 
-        // Title and subtitle label for appointments section
         lblAppointment = new JLabel("Appointments");
         lblAppointment.setBounds(30, 30, 500, 40);
         lblAppointment.setFont(FontsTheme.Bold_Texts);
@@ -175,215 +161,75 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
         
-     
-        // Fetch Data & Build Table  
         Object[][] data = fetchAppointments("");
         tblAppointments = new TablePanel("Upcoming Visits", columns, data, 440);
         tblAppointments.setBounds(0, 0, 1500, 500);
         pnlMiddle.add(tblAppointments);
-        configureAppointmentTable();
+        
+        tblAppointments.add(btnFilterUpcoming);
+        btnFilterUpcoming.setBounds(970, 10, 150, 40);
+        tblAppointments.add(btnFilterCompleted);
+        btnFilterCompleted.setBounds(1130, 10, 150, 40);
+        tblAppointments.add(btnFilterCancelled);
+        btnFilterCancelled.setBounds(1290, 10, 150, 40);
 
-        
-        
-      
-        //ActionListeners
-        btnAdd.addActionListener(this);
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
-        btnUpcoming.addActionListener(this);
-        btnRecent.addActionListener(this);
-        btnCancelled.addActionListener(this);
-        if (canManageAppointments) {
-            btnEdit.addActionListener(this);
-            btnCancel.addActionListener(this);
-            btnDelete.addActionListener(this);
-        }
-        if (canCompleteAppointments) {
-            btnComplete.addActionListener(this);
-        }
-        
+        btnFilterUpcoming.addActionListener(this);
+        btnFilterCompleted.addActionListener(this);
+        btnFilterCancelled.addActionListener(this);
     }
     
-    private int getSelectedAppointmentId() {
-        int row = tblAppointments.getTable().getSelectedRow();
-
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Select an appointment first.");
-            return -1;
-        }
-
-        String displayId = tblAppointments.getTable()
-                .getValueAt(row, 0).toString();
-
-        return Integer.parseInt(displayId.replace("APT-", ""));
+    private JButton createFilterButton(String text, java.awt.Color color) {
+        JButton button = new JButton(text);
+        button.setFont(FontsTheme.Buttons);
+        button.setBackground(color);
+        button.setForeground(ColorsTheme.Text_White);
+        button.setFocusPainted(false);
+        return button;
     }
-
-    private void editAppointment() {
-        int id = getSelectedAppointmentId();
-        if (id == -1) return;
-
-        editAppointment(id);
-    }
-
-    private void editAppointment(int id) {
-        NewAppointmentDialog dialog1 = new NewAppointmentDialog(id);
-        dialog1.setVisible(true);
-
-        updateTable(getCurrentTableTitle(), "");
-    }
-
-    private void cancelAppointment() {
-        int id = getSelectedAppointmentId();
-        if (id == -1) return;
-
-        cancelAppointment(id);
-    }
-
-    private void cancelAppointment(int id) {
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Cancel this appointment?",
-                "Confirm Cancellation",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm != JOptionPane.YES_OPTION) return;
-
-        String sql = "UPDATE appointments SET status = 'Cancelled' WHERE appt_id = ?";
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-             PreparedStatement statement = conn.prepareStatement(sql)) {
-
-            statement.setInt(1, id);
-
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Appointment cancelled successfully.");
-                updateTable(getCurrentTableTitle(), "");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to cancel appointment:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void completeAppointment() {
-        int row = tblAppointments.getTable().getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Select an appointment first.");
-            return;
-        }
-
-        String displayId = tblAppointments.getTable().getValueAt(row, 0).toString();
-        int id = Integer.parseInt(displayId.replace("APT-", ""));
-        String status = tblAppointments.getTable().getValueAt(row, 6).toString();
-        if ("Cancelled".equalsIgnoreCase(status)) {
-            JOptionPane.showMessageDialog(this, "Cancelled appointments cannot be marked complete.", "Invalid Action", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if ("Completed".equalsIgnoreCase(status)) {
-            JOptionPane.showMessageDialog(this, "This appointment is already completed.", "Already Completed", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Mark this appointment as completed?",
-                "Confirm Completion",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm != JOptionPane.YES_OPTION) return;
-
-        String sql = "UPDATE appointments SET status = 'Completed' WHERE appt_id = ?";
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-             PreparedStatement statement = conn.prepareStatement(sql)) {
-
-            statement.setInt(1, id);
-
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Appointment marked as completed.");
-                currentTableFilter = "Recent";
-                updateTable(getCurrentTableTitle(), "");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to complete appointment:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void deleteAppointment() {
-        int id = getSelectedAppointmentId();
-        if (id == -1) return;
-
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Permanently delete this appointment record?",
-                "Confirm Delete",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm != JOptionPane.YES_OPTION) return;
-
-        String sql = "DELETE FROM appointments WHERE appt_id = ?";
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-             PreparedStatement statement = conn.prepareStatement(sql)) {
-
-            statement.setInt(1, id);
-
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Appointment record deleted successfully.");
-                updateTable(getCurrentTableTitle(), "");
-            } else {
-                JOptionPane.showMessageDialog(this, "Appointment record not found.", "Delete Failed", JOptionPane.WARNING_MESSAGE);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to delete appointment:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-        
+    
     private void updateTable (String sectionTitle, String searchKeyword) {
         Object[][] freshData = fetchAppointments(searchKeyword);
         
         pnlMiddle.remove(tblAppointments);
         tblAppointments = new TablePanel(sectionTitle, columns, freshData, 440);
         tblAppointments.setBounds(0, 0, 1500, 500);
+        
+        tblAppointments.add(btnFilterUpcoming);
+        btnFilterUpcoming.setBounds(970, 10, 150, 40);
+        tblAppointments.add(btnFilterCompleted);
+        btnFilterCompleted.setBounds(1130, 10, 150, 40);
+        tblAppointments.add(btnFilterCancelled);
+        btnFilterCancelled.setBounds(1290, 10, 150, 40);
+
         pnlMiddle.add(tblAppointments);
-        configureAppointmentTable();
-        
-        
         pnlMiddle.repaint();
         pnlMiddle.revalidate();
     }
 
     private Object[][] fetchAppointments(String queryTerm) {
         List<Object[]> rowsList = new ArrayList<>();
-        String sql = "SELECT * FROM appointments";
+        
+        String sql = "SELECT a.appt_id, a.appointment_date, a.appointment_time, " +
+                     "p.first_name AS pat_first, p.last_name AS pat_last, " +
+                     "u.firstname AS doc_first, u.lastname AS doc_last, u.department, s.status_name " +
+                     "FROM appointments a " +
+                     "LEFT JOIN patients p ON a.patient_id = p.patient_id " +
+                     "LEFT JOIN users u ON a.doctor_id = u.user_id " +
+                     "LEFT JOIN appointment_status s ON a.status_id = s.status_id ";
+        
         List<String> conditions = new ArrayList<>();
         List<String> parameters = new ArrayList<>();
         
         boolean hasSearchFilter = !queryTerm.isEmpty() && !queryTerm.equals("Search appointments...");
 
-        if ("Upcoming".equals(currentTableFilter)) {
-            conditions.add("status NOT IN (?, ?)");
-            parameters.add("Completed");
-            parameters.add("Cancelled");
-        } else if ("Recent".equals(currentTableFilter)) {
-            conditions.add("status = ?");
-            parameters.add("Completed");
-        } else if ("Cancelled".equals(currentTableFilter)) {
-            conditions.add("status = ?");
-            parameters.add("Cancelled");
-        }
+        // FIX: We removed the Status Filter from the SQL so we can count EVERYTHING first!
         
         if (hasSearchFilter) {
-            conditions.add("(patient_name LIKE ? OR doctor LIKE ? OR appt_id LIKE ?)");
+            conditions.add("(p.first_name LIKE ? OR p.last_name LIKE ? OR u.lastname LIKE ? OR a.appt_id LIKE ?)");
             String cleanSearch = queryTerm.replace("APT-", "").replace("apt-", "");
+            parameters.add("%" + queryTerm + "%");
             parameters.add("%" + queryTerm + "%");
             parameters.add("%" + queryTerm + "%");
             parameters.add("%" + cleanSearch + "%");
@@ -393,13 +239,12 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
             sql += " WHERE " + String.join(" AND ", conditions);
         }
 
-        sql += " ORDER BY appt_id ASC"; 
+        sql += " ORDER BY a.appointment_date ASC, a.appointment_time ASC"; 
 
-        // Variables to hold our dynamic counts
         int countTotal = 0;
-        int countConfirmed = 0;
-        int countPending = 0;
-        int countUrgent = 0;
+        int countScheduled = 0;
+        int countCompleted = 0;
+        int countCancelled = 0;
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
              PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -413,20 +258,41 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
                 int rawId = result.getInt("appt_id");
                 String displayId = String.format("APT-%03d", rawId); 
                 
-                String name = result.getString("patient_name");
-                String doctor = result.getString("doctor");
+                String patName = result.getString("pat_first") + " " + result.getString("pat_last");
+                String docName = "Dr. " + result.getString("doc_last");
                 String dept = result.getString("department");
                 String date = result.getString("appointment_date");
-                String time = result.getString("appointment_time");
-                String status = result.getString("status");
-                String visitType = result.getString("visit_type");
+                String status = result.getString("status_name");
+                
+                // AM/PM CONVERSION
+                String displayTime = "N/A";
+                java.sql.Time dbTime = result.getTime("appointment_time");
+                if (dbTime != null) {
+                    java.time.LocalTime localTime = dbTime.toLocalTime();
+                    java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("hh:mm a");
+                    displayTime = localTime.format(formatter);
+                }
 
+                // 1. COUNT EVERYTHING FOR THE CARDS
                 countTotal++;
-                if ("Confirmed".equalsIgnoreCase(status)) countConfirmed++;
-                if ("Pending".equalsIgnoreCase(status)) countPending++;
-                if ("Emergency Visit".equalsIgnoreCase(visitType)) countUrgent++; 
+                if ("Scheduled".equalsIgnoreCase(status)) countScheduled++;
+                if ("Completed".equalsIgnoreCase(status)) countCompleted++;
+                if ("Cancelled".equalsIgnoreCase(status)) countCancelled++; 
+                if ("No Show".equalsIgnoreCase(status)) countCancelled++; // Usually grouped with cancelled in metrics
 
-                rowsList.add(new Object[]{displayId, name, doctor, dept, date, time, status});
+                // 2. ONLY ADD TO THE TABLE IF IT MATCHES THE CURRENT TAB
+                boolean shouldAddToTable = false;
+                if ("Scheduled".equals(currentTableFilter) && "Scheduled".equalsIgnoreCase(status)) {
+                    shouldAddToTable = true;
+                } else if ("Completed".equals(currentTableFilter) && "Completed".equalsIgnoreCase(status)) {
+                    shouldAddToTable = true;
+                } else if ("Cancelled".equals(currentTableFilter) && ("Cancelled".equalsIgnoreCase(status) || "No Show".equalsIgnoreCase(status))) {
+                    shouldAddToTable = true;
+                }
+
+                if (shouldAddToTable) {
+                    rowsList.add(new Object[]{displayId, patName, docName, dept, date, displayTime, status});
+                }
             }
             
         } catch (SQLException ex) {
@@ -434,65 +300,69 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Failed to load appointments from database.", "Database Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        refreshSummaryCards(countTotal, countConfirmed, countPending, countUrgent);
-
+        refreshSummaryCards(countTotal, countScheduled, countCompleted, countCancelled);
         return rowsList.toArray(new Object[0][]);
     }
 
-    private void refreshSummaryCards(int total, int confirmed, int pending, int urgent) {
-        
+    private void refreshSummaryCards(int total, int scheduled, int completed, int cancelled) {
         if (pnlTotal != null) remove(pnlTotal);
-        if (pnlConfirm != null) remove(pnlConfirm);
-        if (pnlPending != null) remove(pnlPending);
-        if (pnlUrgent != null) remove(pnlUrgent);
+        if (pnlScheduled != null) remove(pnlScheduled);
+        if (pnlCompleted != null) remove(pnlCompleted);
+        if (pnlCancelled != null) remove(pnlCancelled);
 
-        pnlTotal = new PanelCard("Total Found", String.valueOf(total), ColorsTheme.Blue);
+        pnlTotal = new PanelCard("Total in View", String.valueOf(total), ColorsTheme.Blue);
         pnlTotal.setBounds(70, 130, 350, 110);
         add(pnlTotal);
         
-        pnlConfirm = new PanelCard("Confirmed", String.valueOf(confirmed), ColorsTheme.Green);
-        pnlConfirm.setBounds(450, 130, 350, 110);
-        add(pnlConfirm);
+        pnlScheduled = new PanelCard("Scheduled", String.valueOf(scheduled), ColorsTheme.Yellow);
+        pnlScheduled.setBounds(450, 130, 350, 110);
+        add(pnlScheduled);
         
-        pnlPending = new PanelCard("Pending", String.valueOf(pending), ColorsTheme.Yellow);
-        pnlPending.setBounds(830, 130, 350, 110);
-        add(pnlPending);
+        pnlCompleted = new PanelCard("Completed", String.valueOf(completed), ColorsTheme.Green);
+        pnlCompleted.setBounds(830, 130, 350, 110);
+        add(pnlCompleted);
         
-        pnlUrgent = new PanelCard("Urgent (ER)", String.valueOf(urgent), ColorsTheme.Red);
-        pnlUrgent.setBounds(1210, 130, 350, 110);
-        add(pnlUrgent);
+        pnlCancelled = new PanelCard("Cancelled", String.valueOf(cancelled), ColorsTheme.Red);
+        pnlCancelled.setBounds(1210, 130, 350, 110);
+        add(pnlCancelled);
 
         repaint();
         revalidate();
     }
 
-    private void configureAppointmentTable() {
-        JTable table = tblAppointments.getTable();
-        // table.setRowHeight(50); // Inherits from SystemSettings dynamically via TablePanel
-
-        if (canManageAppointments) {
-            tblAppointments.add(btnUpcoming);
-            tblAppointments.add(btnRecent);
-            tblAppointments.add(btnCancelled);
+    private int getSelectedAppointmentId() {
+        int row = tblAppointments.getTable().getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Select an appointment first.");
+            return -1;
         }
+        String displayId = tblAppointments.getTable().getValueAt(row, 0).toString();
+        return Integer.parseInt(displayId.replace("APT-", ""));
     }
 
-    private JButton createTableHeaderButton(String text, java.awt.Color color) {
-        JButton button = new JButton(text);
-        button.setFont(FontsTheme.Buttons);
-        button.setBackground(color);
-        button.setForeground(ColorsTheme.Text_White);
-        button.setFocusPainted(false);
-        return button;
+    private void changeAppointmentStatus(int apptId, int newStatusId, String successMessage) {
+        String sql = "UPDATE appointments SET status_id = ? WHERE appt_id = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            statement.setInt(1, newStatusId);
+            statement.setInt(2, apptId);
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, successMessage);
+                updateTable(getCurrentTableTitle(), txtSearch.getText().trim().equals("Search appointments...") ? "" : txtSearch.getText().trim());
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to update appointment:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private String getCurrentTableTitle() {
-        if ("Recent".equals(currentTableFilter)) {
-            return "Recent Appointments";
-        }
-        if ("Cancelled".equals(currentTableFilter)) {
-            return "Cancelled Appointments";
-        }
+        if ("Completed".equals(currentTableFilter)) return "Completed Appointments";
+        if ("Cancelled".equals(currentTableFilter)) return "Cancelled Appointments";
         return "Upcoming Visits";
     }
 
@@ -501,41 +371,101 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         if (e.getSource() == btnAdd) {
             NewAppointmentDialog appointment = new NewAppointmentDialog();
             appointment.setVisible(true); 
-            currentTableFilter = "Upcoming";
+            currentTableFilter = "Scheduled";
             updateTable(getCurrentTableTitle(), ""); 
         }
+        else if (e.getSource() == btnView) {
+            int id = getSelectedAppointmentId();
+            if (id != -1) {
+                ViewAppointmentDialog dialog = new ViewAppointmentDialog(id);
+                dialog.setVisible(true);
+            }
+        }
+        else if (e.getSource() == btnEdit) {
+            int row = tblAppointments.getTable().getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select an appointment first.");
+                return;
+            }
+            
+            // Check the status (Column 6) before allowing the edit!
+            String status = tblAppointments.getTable().getValueAt(row, 6).toString();
+            if (status.equalsIgnoreCase("Cancelled") || status.equalsIgnoreCase("Completed") || status.equalsIgnoreCase("No Show")) {
+                JOptionPane.showMessageDialog(this, "You cannot edit an appointment that is already " + status + ".\nPlease book a new appointment.", "Edit Restricted", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            int id = getSelectedAppointmentId();
+            if (id != -1) {
+                EditAppointmentDialog dialog = new EditAppointmentDialog(id);
+                dialog.setVisible(true);
+                updateTable(getCurrentTableTitle(), txtSearch.getText().trim().equals("Search appointments...") ? "" : txtSearch.getText().trim());
+            }
+        }
+        else if (e.getSource() == btnCancelAppt) {
+            int row = tblAppointments.getTable().getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select an appointment first.");
+                return;
+            }
+            
+            String status = tblAppointments.getTable().getValueAt(row, 6).toString();
+            if (status.equalsIgnoreCase("Cancelled") || status.equalsIgnoreCase("Completed")) {
+                JOptionPane.showMessageDialog(this, "This appointment is already " + status + ".", "Action Denied", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int id = getSelectedAppointmentId();
+            if (id != -1) {
+                int confirm = JOptionPane.showConfirmDialog(this, "Cancel this appointment?", "Confirm Cancellation", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    changeAppointmentStatus(id, 3, "Appointment cancelled successfully."); 
+                }
+            }
+        }
+        else if (e.getSource() == btnCompleteAppt) {
+            int row = tblAppointments.getTable().getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select an appointment first.");
+                return;
+            }
+            
+            String status = tblAppointments.getTable().getValueAt(row, 6).toString();
+            if (status.equalsIgnoreCase("Completed")) {
+                JOptionPane.showMessageDialog(this, "This appointment is already completed.", "Action Denied", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (status.equalsIgnoreCase("Cancelled") || status.equalsIgnoreCase("No Show")) {
+                JOptionPane.showMessageDialog(this, "You cannot complete a cancelled appointment.", "Action Denied", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int id = getSelectedAppointmentId();
+            if (id != -1) {
+                int confirm = JOptionPane.showConfirmDialog(this, "Mark this appointment as completed?", "Confirm Completion", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    changeAppointmentStatus(id, 2, "Appointment marked as completed."); 
+                }
+            }
+        }
         else if (e.getSource() == btnSearch) {
-            String searchKeyword = txtSearch.getText().trim();
-            updateTable(getCurrentTableTitle(), searchKeyword);
+            updateTable(getCurrentTableTitle(), txtSearch.getText().trim());
         }
         else if (e.getSource() == btnRefresh) {
             txtSearch.setText("Search appointments...");
-            currentTableFilter = "Upcoming";
+            currentTableFilter = "Scheduled";
             updateTable(getCurrentTableTitle(), "");
         }
-        else if (e.getSource() == btnUpcoming) {
-            currentTableFilter = "Upcoming";
-            updateTable(getCurrentTableTitle(), txtSearch.getText().trim());
+        else if (e.getSource() == btnFilterUpcoming) {
+            currentTableFilter = "Scheduled";
+            updateTable(getCurrentTableTitle(), txtSearch.getText().trim().equals("Search appointments...") ? "" : txtSearch.getText().trim());
         }
-        else if (e.getSource() == btnRecent) {
-            currentTableFilter = "Recent";
-            updateTable(getCurrentTableTitle(), txtSearch.getText().trim());
+        else if (e.getSource() == btnFilterCompleted) {
+            currentTableFilter = "Completed";
+            updateTable(getCurrentTableTitle(), txtSearch.getText().trim().equals("Search appointments...") ? "" : txtSearch.getText().trim());
         }
-        else if (e.getSource() == btnCancelled) {
+        else if (e.getSource() == btnFilterCancelled) {
             currentTableFilter = "Cancelled";
-            updateTable(getCurrentTableTitle(), txtSearch.getText().trim());
-        }
-        else if (e.getSource() == btnEdit) {
-            editAppointment();
-        }
-        else if (e.getSource() == btnCancel) {
-            cancelAppointment();
-        }
-        else if (e.getSource() == btnDelete) {
-            deleteAppointment();
-        }
-        else if (e.getSource() == btnComplete) {
-            completeAppointment();
+            updateTable(getCurrentTableTitle(), txtSearch.getText().trim().equals("Search appointments...") ? "" : txtSearch.getText().trim());
         }
     }
-}
+    }

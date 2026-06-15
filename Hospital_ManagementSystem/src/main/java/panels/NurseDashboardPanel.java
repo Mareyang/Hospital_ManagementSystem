@@ -8,9 +8,9 @@ import constants.PanelCard2;
 import constants.ColorsTheme;
 import constants.FontsTheme;
 import constants.SystemSettings;
-import dialogs.AddMedicalRecordDialog;
-import dialogs.AddPatientDialog;
+import dialogs.NewMedicalRecordDialog;
 import dialogs.NewAppointmentDialog;
+import dialogs.NewPatientDialog;
 import dialogs.NewPharmacyDialog;
 import java.awt.Color;
 import javax.swing.*;
@@ -24,7 +24,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 
+
+
+
 public class NurseDashboardPanel extends JPanel {
+    
     // Unified database configuration pointing to your active MySQL server port
     private final String DB_URL = "jdbc:mysql://localhost:3306/hospital_management";
     private final String DB_USER = "root";
@@ -67,9 +71,7 @@ public class NurseDashboardPanel extends JPanel {
         add(lblDescrip);
         
         refreshSummaryCards();
-        
-        
-        
+                
         // Patient Monitoring List table
         pnlPatientMonitoring = new JPanel();
         pnlPatientMonitoring.setLayout(null);
@@ -119,9 +121,9 @@ public class NurseDashboardPanel extends JPanel {
         lblQuickActionsTitle.setBounds(30, 20, 250, 35);
         pnlQuickActions.add(lblQuickActionsTitle);
 
-        pnlQuickActions.add(createQuickActionButton("Add Patient", () -> new AddPatientDialog().setVisible(true), 60, 80, ColorsTheme.Blue, ColorsTheme.Text_White));
+        pnlQuickActions.add(createQuickActionButton("Add Patient", () -> new NewPatientDialog().setVisible(true), 60, 80, ColorsTheme.Blue, ColorsTheme.Text_White));
         pnlQuickActions.add(createQuickActionButton("Appointments", () -> new NewAppointmentDialog().setVisible(true), 60, 155, ColorsTheme.Orange, ColorsTheme.Text_White));
-        pnlQuickActions.add(createQuickActionButton("Medical Records", () -> new AddMedicalRecordDialog().setVisible(true), 60, 230, ColorsTheme.Green, ColorsTheme.Text_White));
+        pnlQuickActions.add(createQuickActionButton("Medical Records", () -> new NewMedicalRecordDialog().setVisible(true), 60, 230, ColorsTheme.Green, ColorsTheme.Text_White));
         pnlQuickActions.add(createQuickActionButton("Medication", () -> new NewPharmacyDialog().setVisible(true), 60, 305, ColorsTheme.Top_Line, ColorsTheme.Text_White));
         
         addComponentListener(new ComponentAdapter() {

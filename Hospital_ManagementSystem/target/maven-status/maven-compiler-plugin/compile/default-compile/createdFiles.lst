@@ -1,0 +1,6 @@
+dialogs\EditMedicalRecordDialog.class
+dialogs\ViewMedicalRecordDialog.class
+dialogs\ViewAppointmentDialog.class
+dialogs\NewPatientDialog.class
+dialogs\NewMedicalRecordDialog.class
+dialogs\EditAppointmentDialog.class

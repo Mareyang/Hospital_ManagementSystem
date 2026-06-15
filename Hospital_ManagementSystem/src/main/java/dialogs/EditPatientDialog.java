@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dialogs;
 
 import constants.ColorsTheme;
@@ -13,29 +9,27 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
 import javax.swing.*;
 
-/**
- *
- * @author Admin
- */
-public class EditPatientDialog extends JDialog implements ActionListener{
-    private JPanel pnlContent;
-    private JLabel lblTitle, lblSubtitle, lblBirth, lblID, lblAge, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, 
-            lblRoom, lblMarital, lblFirst, lblLast;
-    private JTextField txtID, txtAge, txtNumber, txtEmail, txtAddress, txtBirth, txtFirst, txtLast;
-    private JButton btnPersonal, btnSave, btnCancel;
-    private JComboBox<String> cmbStatus, cmbGender, cmbMarital, cmbRoom;
-    
-    private static final String[] gender = {" ", "Male", "Female", "Prefer not to say"};
-    private static final String[] status = {" ", "Admitted", "Discharged", "Observation"};
-    private static final String[] room = {" ", "ER-01", "ER-02", "LAB-01", "LAB-02", "RM-201", "RM-202", "XRAY-01", "ICU-01", "ICU-02", "OR-01"};
-    private static final String[] marital = {" ", "Single", "Married", "Divorced", "Widowed"};
 
+
+public class EditPatientDialog extends JDialog implements ActionListener {
+    
+    private JPanel pnlContent;
+    private JLabel lblTitle, lblSubtitle, lblBirth, lblFirst, lblLast, lblNumber, lblGender, lblStatus, lblEmail, lblAddress, lblID, lblAge;
+    private JTextField txtFirst, txtLast, txtBirth, txtNumber, txtEmail, txtAddress, txtID, txtAge;
+    private JComboBox<String> cmbGender, cmbStatus;
+    private JButton btnPersonal, btnCancel, btnUpdate;
+    
+    private static final String[] genderList = {"Select Gender...", "Male", "Female", "Other"};
+    private static final String[] statusList = {"Select Status...", "Outpatient", "Admitted", "Discharged", "Transferred", "Deceased"}; 
     
     private String currentPatientId;
-   
+
     public EditPatientDialog(String patientId) {
+        // Strip out the "PAT-" prefix for the database search
         this.currentPatientId = patientId.replaceAll("(?i)[A-Z]+-", "");
         
         setSize(1050, 550);
@@ -44,13 +38,13 @@ public class EditPatientDialog extends JDialog implements ActionListener{
         setLocationRelativeTo(null);
         setModal(true);
         
-        lblTitle = new JLabel("Patient Information");
+        lblTitle = new JLabel("Edit Patient Record");
         lblTitle.setBounds(30, 10, 500, 40);
         lblTitle.setFont(FontsTheme.Bold_Texts);
         lblTitle.setForeground(ColorsTheme.Text_Black);
         add(lblTitle);
         
-        lblSubtitle = new JLabel("Complete all the required fields to add a record.");
+        lblSubtitle = new JLabel("Update the patient's information below.");
         lblSubtitle.setBounds(30, 40, 500, 40);
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
         lblSubtitle.setForeground(ColorsTheme.Text_Gray);
@@ -71,185 +65,145 @@ public class EditPatientDialog extends JDialog implements ActionListener{
         add(pnlContent);
         
         btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(580, 450, 200, 30);
+        btnCancel.setBounds(480, 450, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);
         btnCancel.setFocusPainted(false);
         add(btnCancel);
         
-        btnSave = new JButton("Save Information");
-        btnSave.setBounds(790, 450, 200, 30);
-        btnSave.setFont(FontsTheme.Buttons);
-        btnSave.setForeground(ColorsTheme.Text_White);
-        btnSave.setBackground(ColorsTheme.Green);
-        btnSave.setFocusPainted(false);
-        add(btnSave);
+        btnUpdate = new JButton("Update Information");
+        btnUpdate.setBounds(690, 450, 300, 30);
+        btnUpdate.setFont(FontsTheme.Buttons);
+        btnUpdate.setForeground(ColorsTheme.Text_White);
+        btnUpdate.setBackground(ColorsTheme.Green);
+        btnUpdate.setFocusPainted(false);
+        add(btnUpdate);
         
         
-       
-        // Personal Information Form
+        // --- LEFT COLUMN ---
         lblID = new JLabel("Patient ID : "); 
         lblID.setBounds(40, 40, 200, 30); 
         lblID.setFont(FontsTheme.Plain_Texts); 
-        lblID.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblID);
         
         txtID = new JTextField(""); 
         txtID.setBounds(220, 40, 230, 30); 
         txtID.setFont(FontsTheme.Plain_Texts); 
-        txtID.setForeground(ColorsTheme.Text_Black);
-        txtID.setEditable(false);
+        txtID.setEditable(false); // Locked so users can't edit the ID
         pnlContent.add(txtID);
         
         lblFirst = new JLabel("First Name : "); 
-        lblFirst.setBounds(40, 80, 200, 30); 
+        lblFirst.setBounds(40, 90, 200, 30); 
         lblFirst.setFont(FontsTheme.Plain_Texts); 
-        lblFirst.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblFirst);
         
-        txtFirst = new JTextField(""); 
-        txtFirst.setBounds(220, 80, 230, 30); 
+        txtFirst = new JTextField(); 
+        txtFirst.setBounds(220, 90, 230, 30); 
         txtFirst.setFont(FontsTheme.Plain_Texts); 
-        txtFirst.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtFirst);
         
         lblLast = new JLabel("Last Name : "); 
-        lblLast.setBounds(40, 120, 200, 30); 
+        lblLast.setBounds(40, 140, 200, 30); 
         lblLast.setFont(FontsTheme.Plain_Texts); 
-        lblLast.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblLast);
         
-        txtLast = new JTextField(""); 
-        txtLast.setBounds(220, 120, 230, 30);
+        txtLast = new JTextField(); 
+        txtLast.setBounds(220, 140, 230, 30);
         txtLast.setFont(FontsTheme.Plain_Texts); 
-        txtLast.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtLast);
         
+        lblBirth = new JLabel("Birthday :"); 
+        lblBirth.setBounds(40, 190, 200, 30); 
+        lblBirth.setFont(FontsTheme.Plain_Texts); 
+        pnlContent.add(lblBirth);
+        
+        txtBirth = new JTextField(); 
+        txtBirth.setBounds(220, 190, 230, 30);
+        txtBirth.setFont(FontsTheme.Plain_Texts); 
+        pnlContent.add(txtBirth);
+
         lblAge = new JLabel("Age : "); 
-        lblAge.setBounds(40, 160, 200, 30); 
+        lblAge.setBounds(40, 240, 200, 30); 
         lblAge.setFont(FontsTheme.Plain_Texts); 
-        lblAge.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblAge);
         
         txtAge = new JTextField(""); 
-        txtAge.setBounds(220, 160, 230, 30);
+        txtAge.setBounds(220, 240, 230, 30);
         txtAge.setFont(FontsTheme.Plain_Texts); 
-        txtAge.setForeground(ColorsTheme.Text_Black);
+        txtAge.setEditable(false); // Locked (Auto-calculates)
         pnlContent.add(txtAge);
         
-        lblBirth = new JLabel("Birthday : "); 
-        lblBirth.setBounds(40, 200, 200, 30); 
-        lblBirth.setFont(FontsTheme.Plain_Texts); 
-        lblBirth.setForeground(ColorsTheme.Text_Black); 
-        pnlContent.add(lblBirth);
-        
-        txtBirth = new JTextField(""); 
-        txtBirth.setBounds(220, 200, 230, 30);
-        txtBirth.setFont(FontsTheme.Plain_Texts); 
-        txtBirth.setForeground(ColorsTheme.Text_Black);
-        pnlContent.add(txtBirth);
-        
-        lblGender = new JLabel("Gender : "); 
-        lblGender.setBounds(40, 240, 200, 30); 
-        lblGender.setFont(FontsTheme.Plain_Texts); 
-        lblGender.setForeground(ColorsTheme.Text_Black); 
-        pnlContent.add(lblGender);
-        
-        cmbGender = new JComboBox<>(gender);
-        cmbGender.setBounds(220, 240, 230, 30);
-        cmbGender.setFont(FontsTheme.Plain_Texts); 
-        cmbGender.setForeground(ColorsTheme.Text_Black); 
-        cmbGender.setBackground(ColorsTheme.Main_Card);
-        pnlContent.add(cmbGender);
-        
+        // --- RIGHT COLUMN ---
         lblNumber = new JLabel("Contact Number : "); 
         lblNumber.setBounds(510, 40, 200, 30); 
         lblNumber.setFont(FontsTheme.Plain_Texts); 
-        lblNumber.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblNumber);
         
-        txtNumber = new JTextField(""); 
+        txtNumber = new JTextField(); 
         txtNumber.setBounds(690, 40, 230, 30);
         txtNumber.setFont(FontsTheme.Plain_Texts); 
-        txtNumber.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtNumber);
         
         lblAddress = new JLabel("Home Address : "); 
-        lblAddress.setBounds(510, 80, 200, 30); 
+        lblAddress.setBounds(510, 90, 200, 30); 
         lblAddress.setFont(FontsTheme.Plain_Texts);
-        lblAddress.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblAddress);
         
-        txtAddress = new JTextField(""); 
-        txtAddress.setBounds(690, 80, 230, 30); 
+        txtAddress = new JTextField(); 
+        txtAddress.setBounds(690, 90, 230, 30); 
         txtAddress.setFont(FontsTheme.Plain_Texts); 
-        txtAddress.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtAddress);
         
         lblEmail = new JLabel("Email Address : "); 
-        lblEmail.setBounds(510, 120, 200, 30); 
+        lblEmail.setBounds(510, 140, 200, 30); 
         lblEmail.setFont(FontsTheme.Plain_Texts); 
-        lblEmail.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblEmail);
         
-        txtEmail = new JTextField(""); 
-        txtEmail.setBounds(690, 120, 230, 30); 
+        txtEmail = new JTextField(); 
+        txtEmail.setBounds(690, 140, 230, 30); 
         txtEmail.setFont(FontsTheme.Plain_Texts); 
-        txtEmail.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(txtEmail);
         
-        lblMarital = new JLabel("Marital Status : "); 
-        lblMarital.setBounds(510, 160, 200, 30); 
-        lblMarital.setFont(FontsTheme.Plain_Texts); 
-        lblMarital.setForeground(ColorsTheme.Text_Black); 
-        pnlContent.add(lblMarital);
+        lblGender = new JLabel("Gender : "); 
+        lblGender.setBounds(510, 190, 200, 30); 
+        lblGender.setFont(FontsTheme.Plain_Texts); 
+        pnlContent.add(lblGender);
         
-        cmbMarital = new JComboBox<>(marital);
-        cmbMarital.setBounds(690, 160, 230, 30);
-        cmbMarital.setFont(FontsTheme.Plain_Texts); 
-        cmbMarital.setForeground(ColorsTheme.Text_Black); 
-        cmbMarital.setBackground(ColorsTheme.Main_Card);
-        pnlContent.add(cmbMarital);
-        
+        cmbGender = new JComboBox<>(genderList);
+        cmbGender.setBounds(690, 190, 230, 30);
+        cmbGender.setFont(FontsTheme.Plain_Texts); 
+        cmbGender.setBackground(ColorsTheme.Main_Card);
+        pnlContent.add(cmbGender);
+
         lblStatus = new JLabel("Patient Status : "); 
-        lblStatus.setBounds(510, 200, 200, 30); 
+        lblStatus.setBounds(510, 240, 200, 30); 
         lblStatus.setFont(FontsTheme.Plain_Texts); 
-        lblStatus.setForeground(ColorsTheme.Text_Black); 
         pnlContent.add(lblStatus);
         
-        cmbStatus = new JComboBox<>(status);
-        cmbStatus.setBounds(690, 200, 230, 30);
+        cmbStatus = new JComboBox<>(statusList);
+        cmbStatus.setBounds(690, 240, 230, 30);
         cmbStatus.setFont(FontsTheme.Plain_Texts); 
-        cmbStatus.setForeground(ColorsTheme.Text_Black); 
         cmbStatus.setBackground(ColorsTheme.Main_Card);
         pnlContent.add(cmbStatus);
         
-        lblRoom = new JLabel("Room Number : "); 
-        lblRoom.setBounds(510, 240, 200, 30); 
-        lblRoom.setFont(FontsTheme.Plain_Texts); 
-        lblRoom.setForeground(ColorsTheme.Text_Black); 
-        pnlContent.add(lblRoom);
-        
-        cmbRoom = new JComboBox<>(room);
-        cmbRoom.setBounds(690, 240, 230, 30);
-        cmbRoom.setFont(FontsTheme.Plain_Texts); 
-        cmbRoom.setForeground(ColorsTheme.Text_Black); 
-        cmbRoom.setBackground(ColorsTheme.Main_Card);
-        pnlContent.add(cmbRoom);
-
-        
-        // ActionListener
-        btnPersonal.addActionListener(this);
-        btnSave.addActionListener(this);
+        // ActionListeners
         btnCancel.addActionListener(this);
-     //   btnAddInfo.addActionListener(this);
+        btnUpdate.addActionListener(this);
         
-        loadPatientData();
-
+        // Load the existing data immediately when the dialog opens
+        loadExistingData();
     }
-    private void loadPatientData() {
-        String sql = "SELECT * FROM patients WHERE patient_id = ?";
+    
+    private void loadExistingData() {
+        if (currentPatientId == null || currentPatientId.trim().isEmpty()) {
+            return; 
+        }
+
+        String sql = "SELECT p.*, s.status_name FROM patients p " +
+                     "LEFT JOIN patient_status s ON p.status_id = s.status_id " +
+                     "WHERE p.patient_id = ?";
+                     
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
@@ -257,121 +211,93 @@ public class EditPatientDialog extends JDialog implements ActionListener{
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
+                // Set the ID field to show the formatted ID
                 txtID.setText(String.format("PAT-%03d", rs.getInt("patient_id")));
+                
                 txtFirst.setText(rs.getString("first_name"));
                 txtLast.setText(rs.getString("last_name"));
-                txtAge.setText(rs.getString("age"));
-                txtBirth.setText(rs.getString("birthday"));
+                
+                // Birthday & Dynamic Age Calculation
+                java.sql.Date bday = rs.getDate("birthday");
+                if (bday != null) {
+                    txtBirth.setText(bday.toString());
+                    LocalDate birthLocalDate = bday.toLocalDate();
+                    int calculatedAge = Period.between(birthLocalDate, LocalDate.now()).getYears();
+                    txtAge.setText(String.valueOf(calculatedAge));
+                }
                 
                 String gen = rs.getString("gender");
                 if (gen != null) cmbGender.setSelectedItem(gen);
                 
                 txtNumber.setText(rs.getString("contact_number"));
                 txtAddress.setText(rs.getString("address"));
-                 txtEmail.setText(rs.getString("email"));
+                txtEmail.setText(rs.getString("email"));
                 
-                String maritalStats = rs.getString("marital_status");
-                if (maritalStats != null) cmbMarital.setSelectedItem(maritalStats);
-                
-                
-                String stats = rs.getString("status");
+                String stats = rs.getString("status_name");
                 if (stats != null) cmbStatus.setSelectedItem(stats);
-                
-                String rooms = rs.getString("room_number");
-                if (rooms != null) cmbRoom.setSelectedItem(rooms);
-                
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to load patient data:\n" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to load patient data.", "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-}
-        public void showPatientInfo() {
-        pnlContent.removeAll();
-        pnlContent.add(lblID);
-        pnlContent.add(txtID);
-        pnlContent.add(lblFirst);
-        pnlContent.add(txtFirst);
-        pnlContent.add(lblAge);
-        pnlContent.add(txtAge);
-        pnlContent.add(lblBirth);
-        pnlContent.add(txtBirth);
-        pnlContent.add(lblGender);
-        pnlContent.add(cmbGender);
-        pnlContent.add(lblNumber);
-        pnlContent.add(txtNumber);
-        pnlContent.add(lblAddress);
-        pnlContent.add(txtAddress);
-        pnlContent.add(lblEmail);
-        pnlContent.add(txtEmail);
-        pnlContent.add(lblMarital);
-        pnlContent.add(cmbMarital);
-        pnlContent.add(lblStatus);
-        pnlContent.add(cmbStatus);
-        pnlContent.add(lblRoom);
-        pnlContent.add(cmbRoom);
-        pnlContent.repaint();
-        pnlContent.revalidate();
-
     }
-
     
+    private void updatePatientInDatabase() {
+        String first = txtFirst.getText().trim();
+        String last = txtLast.getText().trim();
+        String birth = txtBirth.getText().trim();
+        String gender = cmbGender.getSelectedItem().toString();
+        String contact = txtNumber.getText().trim();
+        String address = txtAddress.getText().trim();
+        String email = txtEmail.getText().trim();
+        String statusText = cmbStatus.getSelectedItem().toString();
+        
+        if (first.isEmpty() || last.isEmpty() || birth.isEmpty() || gender.equals("Select Gender...") || statusText.equals("Select Status...")) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Missing Information", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
+        // Map text status to ID based on your patient_status table
+        int statusId = 1; // Default Outpatient
+        if (statusText.equals("Admitted")) statusId = 2;
+        else if (statusText.equals("Discharged")) statusId = 3;
+        else if (statusText.equals("Transferred")) statusId = 4;
+        else if (statusText.equals("Deceased")) statusId = 5;
+
+        String sql = "UPDATE patients SET first_name=?, last_name=?, birthday=?, gender=?, contact_number=?, email=?, address=?, status_id=? WHERE patient_id=?";
+        
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, first);
+            stmt.setString(2, last);
+            stmt.setString(3, birth); 
+            stmt.setString(4, gender);
+            stmt.setString(5, contact);
+            stmt.setString(6, email);
+            stmt.setString(7, address);
+            stmt.setInt(8, statusId);
+            stmt.setString(9, currentPatientId);
+            
+            int rowsUpdated = stmt.executeUpdate();
+            
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Patient record updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                dispose(); 
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database Error: Please check date format (YYYY-MM-DD).\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-if (e.getSource() == btnPersonal) {
-            showPatientInfo();
-        } else if (e.getSource() == btnCancel) {
+        if (e.getSource() == btnCancel) {
             dispose();
-        } else if (e.getSource() == btnSave) {
-            // Extract core fields
-            String fist_name = txtFirst.getText().trim();
-            String last_name = txtLast.getText().trim();
-             String age = txtAge.getText().trim();
-            String birthday = txtBirth.getText().trim();
-            String gender = cmbGender.getSelectedItem().toString();
-            String contact_number = txtNumber.getText().trim();
-            String address = txtAddress.getText().trim();
-            String email = txtEmail.getText().trim();
-            String marital_status = cmbMarital.getSelectedItem().toString();
-            String status = cmbStatus.getSelectedItem().toString();
-            String room_number = cmbRoom.getSelectedItem().toString();
-
-            // Simple validation structure mimicking template
-//            if (fullName.isEmpty() || role.isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Full Name and Role are required.", "Validation Error", JOptionPane.WARNING_MESSAGE);
-//                return;
-//            }
-
-            // Database Update Implementation
-            String sql = "UPDATE patients SET first_name=?, last_name=?, age=?, birthday=?, gender=?, contact_number=?, address=?, email=?, marital_status=?, status=?, room_number=? WHERE patient_id=?";
-
-            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-                 PreparedStatement update = conn.prepareStatement(sql)) {
-                
-                update.setString(1, fist_name);
-                update.setString(2, last_name);
-                update.setInt(3, Integer.parseInt(age));
-                update.setString(4, birthday);
-                update.setString(5, gender);
-                update.setString(6, contact_number);
-                update.setString(7, address);
-                update.setString(8, email);
-                update.setString(9, marital_status);
-                update.setString(10, status);
-                update.setString(11, room_number);
- 
-                update.setString(12, currentPatientId);
-
-                int rows = update.executeUpdate();
-                if (rows > 0) {
-                    JOptionPane.showMessageDialog(this, "Patient record updated successfully!", "Patient Success", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Database update operation failed:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }    }
-    
+        } else if (e.getSource() == btnUpdate) {
+            updatePatientInDatabase();
+        }
+    }
 }

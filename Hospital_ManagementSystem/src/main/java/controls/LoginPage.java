@@ -26,6 +26,9 @@ public class LoginPage extends JFrame implements ActionListener {
     private JPasswordField pxtPassword;
     private JButton btnLogin, btnForgot;
     
+    
+    
+    
     public LoginPage() {
         setSize(1000, 600);
         setLayout(null);
@@ -151,7 +154,9 @@ public class LoginPage extends JFrame implements ActionListener {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
             
-            PreparedStatement select = connection.prepareStatement("SELECT role, firstname, lastname FROM users WHERE username=? AND password=?");
+            // FIX: Added 'AND status='Active'' so resigned/fired staff cannot log in!
+            // I also added 'user_id' to the SELECT just in case you need to track who logged in later.
+            PreparedStatement select = connection.prepareStatement("SELECT user_id, role, firstname, lastname FROM users WHERE username=? AND password=? AND status='Active'");
             select.setString(1, username);
             select.setString(2, password);
 
@@ -161,9 +166,10 @@ public class LoginPage extends JFrame implements ActionListener {
                 String dbRole = result.getString("role");
                 String firstName = result.getString("firstname");
                 String lastName = result.getString("lastname");
+                // int currentUserId = result.getInt("user_id"); // You can use this later to track who is saving records!
 
                 if (dbRole.equals("Admin")) {
-                    JOptionPane.showMessageDialog(this, "Welcome back, Admin " +lastName + "!");
+                    JOptionPane.showMessageDialog(this, "Welcome back, Admin " + lastName + "!");
                     AdminDashboard admin = new AdminDashboard();
                     admin.setVisible(true);
                 } 
@@ -181,7 +187,9 @@ public class LoginPage extends JFrame implements ActionListener {
                 dispose(); 
 
             } else {
-                JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Login Error", JOptionPane.ERROR_MESSAGE);
+                // Modified error message to be slightly more generic for security, 
+                // but it also covers the "Inactive" account scenario now.
+                JOptionPane.showMessageDialog(this, "Invalid Username/Password, or Account is Inactive.", "Login Error", JOptionPane.ERROR_MESSAGE);
             }
 
             result.close();
