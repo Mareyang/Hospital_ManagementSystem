@@ -63,7 +63,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
         btnDispense.setForeground(ColorsTheme.Text_White);
         btnDispense.setFocusPainted(false);
 
-        btnCancelBtn = new JButton("Cancel Rx");
+        btnCancelBtn = new JButton("Cancel");
         btnCancelBtn.setFont(FontsTheme.Buttons);
         btnCancelBtn.setBackground(ColorsTheme.Delete);
         btnCancelBtn.setForeground(ColorsTheme.Text_White);
@@ -254,7 +254,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
             updateTable("Recent Prescription", "");
         }
         else if (e.getSource() == btnDispense) {
-            dispensePrescription(); // Utilizing the integrated inventory check
+            dispensePrescription(); 
         }
         else if (e.getSource() == btnCancelBtn) {
             updatePrescriptionStatus(3); // 3 = Cancelled
@@ -321,9 +321,11 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "")) {
             conn.setAutoCommit(false); 
             
-            String checkSql = "SELECT pd.medication_id, pd.quantity, ph.current_stock, ph.reorder_level, ph.brand_name, ph.generic_name " +
+            // THE FIX: Modified to also select unit_price and patient_id for billing
+            String checkSql = "SELECT pd.medication_id, pd.quantity, ph.current_stock, ph.reorder_level, ph.brand_name, ph.generic_name, ph.unit_price, pr.patient_id " +
                               "FROM prescription_details pd " +
                               "JOIN pharmacy ph ON pd.medication_id = ph.medication_id " +
+                              "JOIN prescriptions pr ON pd.prescription_id = pr.prescription_id " +
                               "WHERE pd.prescription_id = ?";
                               
             try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
@@ -337,6 +339,9 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
                     int reorderLevel = rs.getInt("reorder_level");
                     String medName = rs.getString("brand_name") + " (" + rs.getString("generic_name") + ")";
                     
+                    double unitPrice = rs.getDouble("unit_price");
+                    int patientId = rs.getInt("patient_id");
+                    
                     if (currentStock < qtyRequired) {
                         JOptionPane.showMessageDialog(this, 
                             "Insufficient Stock!\n\nPrescription requires: " + qtyRequired + 
@@ -346,6 +351,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
                         return; 
                     }
                     
+                    // 1. Deduct Inventory
                     int newStock = currentStock - qtyRequired;
                     String deductSql = "UPDATE pharmacy SET current_stock = ? WHERE medication_id = ?";
                     try (PreparedStatement deductStmt = conn.prepareStatement(deductSql)) {
@@ -354,11 +360,52 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
                         deductStmt.executeUpdate();
                     }
                     
+                    // 2. Update Prescription Status
                     String updateRxSql = "UPDATE prescriptions SET status_id = 2 WHERE prescription_id = ?";
                     try (PreparedStatement updateRxStmt = conn.prepareStatement(updateRxSql)) {
                         updateRxStmt.setInt(1, prescriptionId);
                         updateRxStmt.executeUpdate();
                     }
+                    
+                    // --- 3. SILENT TRIGGER: AUTO-BILLING ---
+                    double lineItemTotal = unitPrice * qtyRequired;
+
+                    int activeBillingId = -1;
+                    String checkBillSql = "SELECT billing_id FROM billing WHERE patient_id = ? AND status_id = 1 LIMIT 1";
+                    try (PreparedStatement checkBillStmt = conn.prepareStatement(checkBillSql)) {
+                        checkBillStmt.setInt(1, patientId);
+                        ResultSet billRs = checkBillStmt.executeQuery();
+                        if (billRs.next()) {
+                            activeBillingId = billRs.getInt("billing_id");
+                        } else {
+                            String createBillSql = "INSERT INTO billing (patient_id, total_amount, net_amount, status_id) VALUES (?, 0, 0, 1)";
+                            try (PreparedStatement createBillStmt = conn.prepareStatement(createBillSql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+                                createBillStmt.setInt(1, patientId);
+                                createBillStmt.executeUpdate();
+                                ResultSet keys = createBillStmt.getGeneratedKeys();
+                                if (keys.next()) activeBillingId = keys.getInt(1);
+                            }
+                        }
+                    }
+
+                    String insertItemSql = "INSERT INTO billing_items (billing_id, description, quantity, unit_price, total_price) VALUES (?, ?, ?, ?, ?)";
+                    try (PreparedStatement itemStmt = conn.prepareStatement(insertItemSql)) {
+                        itemStmt.setInt(1, activeBillingId);
+                        itemStmt.setString(2, "Pharmacy: " + medName);
+                        itemStmt.setInt(3, qtyRequired);
+                        itemStmt.setDouble(4, unitPrice);
+                        itemStmt.setDouble(5, lineItemTotal);
+                        itemStmt.executeUpdate();
+                    }
+
+                    String updateTotalSql = "UPDATE billing SET total_amount = total_amount + ?, net_amount = net_amount + ? WHERE billing_id = ?";
+                    try (PreparedStatement totalStmt = conn.prepareStatement(updateTotalSql)) {
+                        totalStmt.setDouble(1, lineItemTotal);
+                        totalStmt.setDouble(2, lineItemTotal);
+                        totalStmt.setInt(3, activeBillingId);
+                        totalStmt.executeUpdate();
+                    }
+                    // --- END SILENT TRIGGER ---
                     
                     conn.commit(); 
                     

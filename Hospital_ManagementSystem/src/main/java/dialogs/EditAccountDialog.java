@@ -28,7 +28,7 @@ public class EditAccountDialog extends JDialog implements ActionListener {
         this.username = username;
 
         setTitle("Edit Account");
-        setSize(600, 500);
+        setSize(600, 480);
         setLayout(null);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
@@ -48,7 +48,7 @@ public class EditAccountDialog extends JDialog implements ActionListener {
 
         pnlContent = new JPanel();
         pnlContent.setLayout(null);
-        pnlContent.setBounds(30, 90, 540, 280);
+        pnlContent.setBounds(30, 90, 530, 280);
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
 
@@ -116,18 +116,18 @@ public class EditAccountDialog extends JDialog implements ActionListener {
 
         // Action Buttons
         btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(150, 400, 130, 35);
+        btnCancel.setBounds(150, 380, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
-        btnCancel.setBackground(ColorsTheme.Text_Gray);
+        btnCancel.setBackground(ColorsTheme.Cancel);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setFocusPainted(false);
         btnCancel.addActionListener(this);
         add(btnCancel);
 
-        btnSave = new JButton("Save");
-        btnSave.setBounds(320, 400, 130, 35);
+        btnSave = new JButton("Save Changes");
+        btnSave.setBounds(360, 380, 200, 30);
         btnSave.setFont(FontsTheme.Buttons);
-        btnSave.setBackground(ColorsTheme.Add_Confirm);
+        btnSave.setBackground(ColorsTheme.Green);
         btnSave.setForeground(ColorsTheme.Text_White);
         btnSave.setFocusPainted(false);
         btnSave.addActionListener(this);

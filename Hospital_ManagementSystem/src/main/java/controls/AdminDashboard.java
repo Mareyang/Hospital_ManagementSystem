@@ -12,6 +12,7 @@ import panels.PatientsPanel;
 import panels.StaffManagementPanel;
 import panels.SettingsPanel;
 import panels.AccountManagementPanel;
+import panels.BillingPanel; // --- ADDED IMPORT ---
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -22,7 +23,8 @@ public class AdminDashboard extends JFrame implements ActionListener {
         
     private JPanel pnlSide, pnlTop, pnlContainer, pnlLogo;
     private CardLayout cardLayout;
-    private JButton btnDashboard, btnPatients, btnPharmacy, btnStaff, btnReports, btnSettings, btnAccounts, btnLogout;
+    // --- ADDED btnBilling ---
+    private JButton btnDashboard, btnPatients, btnPharmacy, btnBilling, btnStaff, btnReports, btnSettings, btnAccounts, btnLogout;
     private JLabel lblSystemName, lblLogo;
     private JTextField txtSearchField;
     private ImageIcon logoIcon;
@@ -103,25 +105,29 @@ public class AdminDashboard extends JFrame implements ActionListener {
 
         dashboardPanel = new AdminDashboardPanel();
         pnlContainer.add(dashboardPanel, "dashboard");
-        pnlContainer.add(new PatientsPanel(true), "patients"); // Pass true for full access if required
-        pnlContainer.add(new PharmacyPanel(true), "pharmacy"); // Admin handles inventory
+        pnlContainer.add(new PatientsPanel(false), "patients"); 
+        pnlContainer.add(new PharmacyPanel(true), "pharmacy"); 
+        pnlContainer.add(new BillingPanel(), "billing"); 
         pnlContainer.add(new StaffManagementPanel(), "staffManagement");
         pnlContainer.add(new ReportsPanel(), "reports");
         pnlContainer.add(new SettingsPanel(), "settings");
         pnlContainer.add(new AccountManagementPanel(), "accounts");
         
+        // --- ADDED btnBilling & SHIFTED Y-COORDINATES ---
         btnDashboard = ButtonStyles.createButton("Dashboard", "/icons/home.png", 30, pnlSide);        
         btnPatients  = ButtonStyles.createButton("Patients", "/icons/patient.png", 80, pnlSide);
         btnPharmacy  = ButtonStyles.createButton("Pharmacy", "/icons/pharmacy2.png", 130, pnlSide);
-        btnStaff     = ButtonStyles.createButton("Staff", "/icons/staff.png", 180, pnlSide);
-        btnReports   = ButtonStyles.createButton("Reports", "/icons/report.png", 230, pnlSide);
-        btnAccounts  = ButtonStyles.createButton("Accounts", "/icons/staff.png", 280, pnlSide);
-        btnSettings  = ButtonStyles.createButton("Settings", "/icons/setting.png", 330, pnlSide);
+        btnBilling   = ButtonStyles.createButton("Billing", "/icons/report.png", 180, pnlSide); // Adjust icon path if you have a specific billing icon
+        btnStaff     = ButtonStyles.createButton("Staff", "/icons/staff.png", 230, pnlSide);
+        btnReports   = ButtonStyles.createButton("Reports", "/icons/report.png", 280, pnlSide);
+        btnAccounts  = ButtonStyles.createButton("Accounts", "/icons/staff.png", 330, pnlSide);
+        btnSettings  = ButtonStyles.createButton("Settings", "/icons/setting.png", 380, pnlSide);
         btnLogout    = ButtonStyles.createButton("Logout", "/icons/logout.png", 850, pnlSide);
 
         btnDashboard.addActionListener(this);
         btnPatients.addActionListener(this);
         btnPharmacy.addActionListener(this);
+        btnBilling.addActionListener(this); // --- ADDED LISTENER ---
         btnStaff.addActionListener(this);
         btnReports.addActionListener(this);
         btnSettings.addActionListener(this);
@@ -168,6 +174,10 @@ public class AdminDashboard extends JFrame implements ActionListener {
         }
         else if (e.getSource() == btnPharmacy) {
             cardLayout.show(pnlContainer, "pharmacy");
+        }
+        // --- ADDED ROUTING FOR BILLING ---
+        else if (e.getSource() == btnBilling) {
+            cardLayout.show(pnlContainer, "billing");
         }
         else if (e.getSource() == btnStaff) {
             cardLayout.show(pnlContainer, "staffManagement");

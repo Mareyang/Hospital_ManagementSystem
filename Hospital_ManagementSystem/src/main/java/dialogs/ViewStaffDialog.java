@@ -29,7 +29,7 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
     public ViewStaffDialog(String empId) {
         this.currentEmpId = empId;
         
-        setSize(800, 600);
+        setSize(800, 570);
         setLayout(null);
         setLocationRelativeTo(null);
         setModal(true);
@@ -54,7 +54,7 @@ public class ViewStaffDialog extends JDialog implements ActionListener {
         add(pnlForm);
         
         btnClose = new JButton("Close");
-        btnClose.setBounds(250, 490, 300, 30);
+        btnClose.setBounds(540, 470, 200, 30);
         btnClose.setFont(FontsTheme.Buttons);
         btnClose.setForeground(ColorsTheme.Text_White);
         btnClose.setBackground(ColorsTheme.Search);

@@ -26,7 +26,7 @@ public class ViewAccountDialog extends JDialog implements ActionListener {
         this.username = username;
 
         setTitle("View Account");
-        setSize(600, 500);
+        setSize(600, 480);
         setLayout(null);
         getContentPane().setBackground(ColorsTheme.Middle_Panel);
         setLocationRelativeTo(null);
@@ -46,7 +46,7 @@ public class ViewAccountDialog extends JDialog implements ActionListener {
 
         pnlContent = new JPanel();
         pnlContent.setLayout(null);
-        pnlContent.setBounds(30, 90, 540, 280);
+        pnlContent.setBounds(30, 90, 530, 280);
         pnlContent.setBackground(ColorsTheme.Main_Card);
         add(pnlContent);
 
@@ -117,9 +117,9 @@ public class ViewAccountDialog extends JDialog implements ActionListener {
 
         // Action Buttons
         btnClose = new JButton("Close");
-        btnClose.setBounds(230, 400, 140, 35);
+        btnClose.setBounds(360, 380, 200, 30);
         btnClose.setFont(FontsTheme.Buttons);
-        btnClose.setBackground(ColorsTheme.Text_Gray);
+        btnClose.setBackground(ColorsTheme.Search);
         btnClose.setForeground(ColorsTheme.Text_White);
         btnClose.setFocusPainted(false);
         btnClose.addActionListener(this);

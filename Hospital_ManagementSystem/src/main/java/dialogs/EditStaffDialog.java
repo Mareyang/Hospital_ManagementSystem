@@ -29,7 +29,7 @@ public class EditStaffDialog extends JDialog implements ActionListener {
     public EditStaffDialog(String empId) {
         this.currentEmpId = empId;
         
-        setSize(800, 600);
+        setSize(800, 500);
         setLayout(null);
         setLocationRelativeTo(null);
         setModal(true);
@@ -49,12 +49,12 @@ public class EditStaffDialog extends JDialog implements ActionListener {
 
         pnlForm = new JPanel();
         pnlForm.setLayout(null);
-        pnlForm.setBounds(40, 100, 700, 360);
+        pnlForm.setBounds(40, 100, 700, 290);
         pnlForm.setBackground(ColorsTheme.Main_Card);
         add(pnlForm);
         
         btnSave = new JButton("Update Staff Profile");
-        btnSave.setBounds(440, 490, 300, 30);
+        btnSave.setBounds(440, 400, 300, 30);
         btnSave.setFont(FontsTheme.Buttons);
         btnSave.setForeground(ColorsTheme.Text_White);
         btnSave.setBackground(ColorsTheme.Green);
@@ -62,7 +62,7 @@ public class EditStaffDialog extends JDialog implements ActionListener {
         add(btnSave);
 
         btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(230, 490, 200, 30);
+        btnCancel.setBounds(230, 400, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);

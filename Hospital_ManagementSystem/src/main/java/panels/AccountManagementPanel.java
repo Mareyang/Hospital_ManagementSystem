@@ -39,7 +39,7 @@ public class AccountManagementPanel extends JPanel implements ActionListener {
         add(lblTitle);
 
         lblDetails = new JLabel("Register and manage credentials for hospital staff access.");
-        lblDetails.setBounds(30, 70, 500, 40);
+        lblDetails.setBounds(30, 70, 600, 40);
         lblDetails.setFont(FontsTheme.Plain_Texts);
         lblDetails.setForeground(ColorsTheme.Text_Gray);
         add(lblDetails);
@@ -61,18 +61,18 @@ public class AccountManagementPanel extends JPanel implements ActionListener {
         // CRUD Buttons next to the title
 
         btnView = new JButton("View");
-        btnView.setBounds(995, 40, 150, 45);
+        btnView.setBounds(1160, 40, 150, 45);
         btnView.setFont(FontsTheme.Buttons);
-        btnView.setBackground(ColorsTheme.Header);
+        btnView.setBackground(ColorsTheme.View);
         btnView.setForeground(ColorsTheme.Text_White);
         btnView.setFocusPainted(false);
         add(btnView);
 
         btnEdit = new JButton("Edit");
-        btnEdit.setBounds(1160, 40, 150, 45);
+        btnEdit.setBounds(1320, 40, 150, 45);
         btnEdit.setFont(FontsTheme.Buttons);
-        btnEdit.setBackground(ColorsTheme.Update_Pending);
-        btnEdit.setForeground(ColorsTheme.Text_Black);
+        btnEdit.setBackground(ColorsTheme.Edit);
+        btnEdit.setForeground(ColorsTheme.Text_White);
         btnEdit.setFocusPainted(false);
         add(btnEdit);
 

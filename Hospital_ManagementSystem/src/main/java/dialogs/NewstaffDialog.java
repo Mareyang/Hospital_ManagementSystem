@@ -24,7 +24,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
     private static final String[] status = {" ", "Active", "On Leave", "Contract", "Inactive"};
     
     public NewStaffDialog() {
-        setSize(800, 600);
+        setSize(800, 570);
         setLayout(null);
         setLocationRelativeTo(null);
         setModal(true);
@@ -49,7 +49,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         add(pnlForm);
         
         btnSave = new JButton("Save Staff Profile");
-        btnSave.setBounds(440, 490, 300, 30);
+        btnSave.setBounds(440, 470, 300, 30);
         btnSave.setFont(FontsTheme.Buttons);
         btnSave.setForeground(ColorsTheme.Text_White);
         btnSave.setBackground(ColorsTheme.Green);
@@ -57,7 +57,7 @@ public class NewStaffDialog extends JDialog implements ActionListener {
         add(btnSave);
 
         btnCancel = new JButton("Cancel");
-        btnCancel.setBounds(230, 490, 200, 30);
+        btnCancel.setBounds(230, 470, 200, 30);
         btnCancel.setFont(FontsTheme.Buttons);
         btnCancel.setForeground(ColorsTheme.Text_White);
         btnCancel.setBackground(ColorsTheme.Cancel);

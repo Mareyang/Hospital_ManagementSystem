@@ -11,8 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-
 public class EditAppointmentDialog extends JDialog implements ActionListener {
     
     private JPanel pnlContent;
@@ -183,7 +181,6 @@ public class EditAppointmentDialog extends JDialog implements ActionListener {
         btnCancel.addActionListener(this);
         btnUpdate.addActionListener(this);
 
-        // Fetch Doctors list FIRST, then load the appointment data to select the correct one
         loadDropdownData();
         loadAppointmentData();
     }
@@ -252,6 +249,7 @@ public class EditAppointmentDialog extends JDialog implements ActionListener {
         }
     }
 
+    // THE FIX: Added Silent Trigger Billing Logic for dropdown status changes!
     private void updateAppointmentInDatabase() {
         String doctorInput = cmbDoctor.getSelectedItem().toString();
         String date = txtDate.getText().trim();
@@ -288,23 +286,84 @@ public class EditAppointmentDialog extends JDialog implements ActionListener {
             if (statusText.equals("Cancelled")) statusId = 3;
             if (statusText.equals("No Show")) statusId = 4;
             
-            String sql = "UPDATE appointments SET doctor_id=?, appointment_date=?, appointment_time=?, visit_type=?, notes=?, status_id=? WHERE appt_id=?";
-            
-            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "")) {
+                conn.setAutoCommit(false); // Secure transaction for billing sync
                 
-                stmt.setInt(1, doctorId);
-                stmt.setString(2, date);
-                stmt.setString(3, formattedTimeForDB); 
-                stmt.setString(4, visitType);
-                stmt.setString(5, notes);
-                stmt.setInt(6, statusId);
-                stmt.setInt(7, currentApptId);
-                
-                int rowsUpdated = stmt.executeUpdate();
-                if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "Appointment successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                // --- SILENT TRIGGER: AUTO-BILLING ---
+                if (statusId == 2) {
+                    int patientId = Integer.parseInt(txtPatient.getText().split(" - ")[0].trim());
+                    int currentDbStatus = 0;
+                    
+                    // Prevent Double Charging
+                    String getPatSql = "SELECT status_id FROM appointments WHERE appt_id = ?";
+                    try (PreparedStatement patStmt = conn.prepareStatement(getPatSql)) {
+                        patStmt.setInt(1, currentApptId);
+                        ResultSet patRs = patStmt.executeQuery();
+                        if (patRs.next()) {
+                            currentDbStatus = patRs.getInt("status_id");
+                        }
+                    }
+
+                    if (currentDbStatus != 2) {
+                        int activeBillingId = -1;
+                        String checkBillSql = "SELECT billing_id FROM billing WHERE patient_id = ? AND status_id = 1 LIMIT 1";
+                        try (PreparedStatement checkBillStmt = conn.prepareStatement(checkBillSql)) {
+                            checkBillStmt.setInt(1, patientId);
+                            ResultSet billRs = checkBillStmt.executeQuery();
+                            if (billRs.next()) {
+                                activeBillingId = billRs.getInt("billing_id");
+                            } else {
+                                String createBillSql = "INSERT INTO billing (patient_id, total_amount, net_amount, status_id) VALUES (?, 0, 0, 1)";
+                                try (PreparedStatement createBillStmt = conn.prepareStatement(createBillSql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+                                    createBillStmt.setInt(1, patientId);
+                                    createBillStmt.executeUpdate();
+                                    ResultSet keys = createBillStmt.getGeneratedKeys();
+                                    if (keys.next()) activeBillingId = keys.getInt(1);
+                                }
+                            }
+                        }
+                        
+                        double consultationFee = 500.00;
+                        String insertItemSql = "INSERT INTO billing_items (billing_id, description, quantity, unit_price, total_price) VALUES (?, ?, ?, ?, ?)";
+                        try (PreparedStatement itemStmt = conn.prepareStatement(insertItemSql)) {
+                            itemStmt.setInt(1, activeBillingId);
+                            itemStmt.setString(2, "Consultation Fee (APT-" + String.format("%03d", currentApptId) + ")");
+                            itemStmt.setInt(3, 1);
+                            itemStmt.setDouble(4, consultationFee);
+                            itemStmt.setDouble(5, consultationFee);
+                            itemStmt.executeUpdate();
+                        }
+                        
+                        String updateTotalSql = "UPDATE billing SET total_amount = total_amount + ?, net_amount = net_amount + ? WHERE billing_id = ?";
+                        try (PreparedStatement totalStmt = conn.prepareStatement(updateTotalSql)) {
+                            totalStmt.setDouble(1, consultationFee);
+                            totalStmt.setDouble(2, consultationFee);
+                            totalStmt.setInt(3, activeBillingId);
+                            totalStmt.executeUpdate();
+                        }
+                    }
+                }
+                // --- END SILENT TRIGGER ---
+
+                String sql = "UPDATE appointments SET doctor_id=?, appointment_date=?, appointment_time=?, visit_type=?, notes=?, status_id=? WHERE appt_id=?";
+                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                    stmt.setInt(1, doctorId);
+                    stmt.setString(2, date);
+                    stmt.setString(3, formattedTimeForDB); 
+                    stmt.setString(4, visitType);
+                    stmt.setString(5, notes);
+                    stmt.setInt(6, statusId);
+                    stmt.setInt(7, currentApptId);
+                    
+                    int rowsUpdated = stmt.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        conn.commit(); 
+                        JOptionPane.showMessageDialog(this, "Appointment successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                    }
+                } catch (SQLException ex) {
+                    conn.rollback();
+                    throw ex;
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Database Error: Ensure the Doctor ID exists! \n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
