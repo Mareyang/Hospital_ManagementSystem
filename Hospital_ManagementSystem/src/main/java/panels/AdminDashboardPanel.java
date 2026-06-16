@@ -20,15 +20,13 @@ import dialogs.NewReportDialog;
 
 public class AdminDashboardPanel extends JPanel {
     
-    private JPanel pnlPatients, pnlDoctors, pnlNurses, pnlAppointments, pnlSupplies, pnlRevenue, pnlMiddle, 
-            pnlOverview, pnlQuickActions;
+    private JPanel pnlMiddle, pnlOverview, pnlQuickActions;
+    private PanelCard2 pnlPatients, pnlDoctors, pnlNurses, pnlAppointments, pnlSupplies, pnlRevenue;
     private JLabel lblGreet, lblDescrip, lblOverviewTitle, lblQuickTitle;
     private JButton btnRegisterStaff, btnAddMedication, btnGenReports;
     private JTable tblLogs;
     private JScrollPane logScrollPane;
 
-    
-    
     // Unified database configuration pointing to your active MySQL server port
     private final String DB_URL = "jdbc:mysql://localhost:3306/hospital_management";
     private final String DB_USER = "root";
@@ -38,20 +36,6 @@ public class AdminDashboardPanel extends JPanel {
         setLayout(null);
         setBackground(ColorsTheme.Middle_Panel);
         
-        // Fetch real-time live metrics directly using matching database logic
-        String totalPatients = String.valueOf(getTableRowCount("patients", ""));
-        String totalDoctors = String.valueOf(getTableRowCount("hospital_staff", "WHERE LOWER(role) = 'doctor'"));
-        String totalNurses = String.valueOf(getTableRowCount("hospital_staff", "WHERE LOWER(role) = 'nurse'"));
-        String totalAppointments = String.valueOf(getTableRowCount("appointments", "")); 
-        String totalSupplies = String.valueOf(getTableRowCount("pharmacy", ""));
-        
-        // Match the Low Stock criteria present in your pharmacy schema
-        int lowStock = getTableRowCount("pharmacy", "WHERE LOWER(status) = 'low stock'");
-        String lowStockText = lowStock + " Items Low Stock";
-
-        // Calculate cumulative asset revenue cleanly
-        String totalRevenue = getInventoryAssetRevenue();
-
         // Middle Panel Container 
         pnlMiddle = new JPanel();
         pnlMiddle.setLayout(null);
@@ -73,28 +57,28 @@ public class AdminDashboardPanel extends JPanel {
         add(lblDescrip);
         
         // Summary Panel Cards Row 1
-        pnlPatients = new PanelCard2("Total Patients", totalPatients, "Active Records", ColorsTheme.Yellow);
+        pnlPatients = new PanelCard2("Total Patients", "0", "Active Records", ColorsTheme.Yellow);
         pnlPatients.setBounds(200, 140, 350, 140);
         add(pnlPatients);
         
-        pnlDoctors = new PanelCard2("Total Doctors", totalDoctors, "Active Specialists", ColorsTheme.Blue);
+        pnlDoctors = new PanelCard2("Total Doctors", "0", "Active Specialists", ColorsTheme.Blue);
         pnlDoctors.setBounds(630, 140, 350, 140);
         add(pnlDoctors);
         
-        pnlNurses = new PanelCard2("Total Nurses", totalNurses, "Active Staff", ColorsTheme.Orange);
+        pnlNurses = new PanelCard2("Total Nurses", "0", "Active Staff", ColorsTheme.Orange);
         pnlNurses.setBounds(1060, 140, 350, 140);
         add(pnlNurses);
         
         // Summary Panel Cards Row 2
-        pnlAppointments = new PanelCard2("Today's Appointments", totalAppointments, "Scheduled Total", ColorsTheme.Green);
+        pnlAppointments = new PanelCard2("Today's Appointments", "0", "Scheduled Total", ColorsTheme.Green);
         pnlAppointments.setBounds(200, 300, 350, 140);
         add(pnlAppointments);
         
-        pnlSupplies = new PanelCard2("Medical Supplies", totalSupplies, lowStockText, ColorsTheme.Red);
+        pnlSupplies = new PanelCard2("Medical Supplies", "0", "0 Items Low Stock", ColorsTheme.Red);
         pnlSupplies.setBounds(630, 300, 350, 140);
         add(pnlSupplies);
         
-        pnlRevenue = new PanelCard2("Total Stock Value", SystemSettings.getCurrencySymbol() + totalRevenue, "Inventory Valuation", ColorsTheme.Top_Line);
+        pnlRevenue = new PanelCard2("Total Stock Value", "0", "Inventory Valuation", ColorsTheme.Top_Line);
         pnlRevenue.setBounds(1060, 300, 350, 140);
         add(pnlRevenue);
         
@@ -118,7 +102,11 @@ public class AdminDashboardPanel extends JPanel {
         btnRegisterStaff.setForeground(Color.WHITE);
         btnRegisterStaff.setFont(FontsTheme.Info_Texts);
         btnRegisterStaff.setFocusPainted(false);
-        btnRegisterStaff.addActionListener(e -> new NewStaffDialog().setVisible(true));
+        btnRegisterStaff.addActionListener(e -> {
+            NewStaffDialog dialog = new NewStaffDialog();
+            dialog.setVisible(true);
+            refreshData();
+        });
         pnlQuickActions.add(btnRegisterStaff);
         
         btnAddMedication = new JButton("Add Medication");
@@ -127,7 +115,11 @@ public class AdminDashboardPanel extends JPanel {
         btnAddMedication.setForeground(Color.BLACK);
         btnAddMedication.setFont(FontsTheme.Info_Texts);
         btnAddMedication.setFocusPainted(false);
-        btnAddMedication.addActionListener(e -> new NewPharmacyDialog().setVisible(true));
+        btnAddMedication.addActionListener(e -> {
+            NewPharmacyDialog dialog = new NewPharmacyDialog();
+            dialog.setVisible(true);
+            refreshData();
+        });
         pnlQuickActions.add(btnAddMedication);
         
         btnGenReports = new JButton("Generate Reports");
@@ -136,7 +128,11 @@ public class AdminDashboardPanel extends JPanel {
         btnGenReports.setForeground(Color.WHITE);
         btnGenReports.setFont(FontsTheme.Info_Texts);
         btnGenReports.setFocusPainted(false);
-        btnGenReports.addActionListener(e -> new NewReportDialog().setVisible(true));
+        btnGenReports.addActionListener(e -> {
+            NewReportDialog dialog = new NewReportDialog(null);
+            dialog.setVisible(true);
+            refreshData();
+        });
         pnlQuickActions.add(btnGenReports);
         
         pnlOverview = new JPanel();
@@ -197,7 +193,37 @@ public class AdminDashboardPanel extends JPanel {
         pnlOverview.add(logScrollPane);
 
         // Populate table from the database
-        FetchReports(tableModel);
+        refreshData();
+    }
+
+    public void refreshData() {
+        // Fetch real-time live metrics directly using matching database logic
+        String totalPatients = String.valueOf(getTableRowCount("patients", ""));
+        String totalDoctors = String.valueOf(getTableRowCount("users", "WHERE LOWER(role) = 'doctor' AND status_id = 1"));
+        String totalNurses = String.valueOf(getTableRowCount("users", "WHERE LOWER(role) = 'nurse' AND status_id = 1"));
+        String totalAppointments = String.valueOf(getTableRowCount("appointments", "")); 
+        String totalSupplies = String.valueOf(getTableRowCount("pharmacy", ""));
+        
+        // Match the Low Stock criteria present in your pharmacy schema
+        int lowStock = getTableRowCount("pharmacy", "WHERE LOWER(status) = 'low stock'");
+        String lowStockText = lowStock + " Items Low Stock";
+
+        // Calculate cumulative asset revenue cleanly
+        String totalRevenue = getInventoryAssetRevenue();
+
+        if (pnlPatients != null) {
+            pnlPatients.setValue(totalPatients);
+            pnlDoctors.setValue(totalDoctors);
+            pnlNurses.setValue(totalNurses);
+            pnlAppointments.setValue(totalAppointments);
+            pnlSupplies.setValue(totalSupplies);
+            pnlSupplies.setSubtitle(lowStockText);
+            pnlRevenue.setValue(SystemSettings.getCurrencySymbol() + totalRevenue);
+        }
+        
+        if (tblLogs != null) {
+            FetchReports((DefaultTableModel) tblLogs.getModel());
+        }
     }
 
     // --- DATABASE EXTRACTION OPERATIONS ---
@@ -212,7 +238,12 @@ public class AdminDashboardPanel extends JPanel {
         
         // Query fetching recent appointments. 
         // We order by appt_id DESC to get the most recent entries and limit it to 50 for performance on the dashboard.
-        String sql = "SELECT appt_id, patient_name, department, appointment_date, status FROM appointments ORDER BY appt_id DESC LIMIT " + SystemSettings.dashboardRecordLimit;
+        String sql = "SELECT a.appt_id, p.first_name, p.last_name, u.department, a.appointment_date, s.status_name " +
+                     "FROM appointments a " +
+                     "LEFT JOIN patients p ON a.patient_id = p.patient_id " +
+                     "LEFT JOIN users u ON a.doctor_id = u.user_id " +
+                     "LEFT JOIN appointment_status s ON a.status_id = s.status_id " +
+                     "ORDER BY a.appt_id DESC LIMIT " + SystemSettings.dashboardRecordLimit;
         
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -220,10 +251,10 @@ public class AdminDashboardPanel extends JPanel {
             
             while (rs.next()) {
                 String id = "#" + rs.getInt("appt_id");
-                String patient = rs.getString("patient_name");
+                String patient = rs.getString("first_name") + " " + rs.getString("last_name");
                 String department = rs.getString("department");
                 String date = rs.getString("appointment_date");
-                String status = rs.getString("status");
+                String status = rs.getString("status_name");
                 
                 // Add the row to our model
                 model.addRow(new Object[]{id, patient, department, date, status});
@@ -231,7 +262,7 @@ public class AdminDashboardPanel extends JPanel {
         } catch (SQLException e) {
             e.printStackTrace();
             // Fallback empty row if connection fails to let user know something is wrong
-            model.addRow(new Object[]{"ERR", "Database connection failed", "N/A", "N/A", "Error"});
+            model.addRow(new Object[]{"ERR", "Database connection failed", "N/A", "Error"});
         }
     }
 
@@ -247,7 +278,7 @@ public class AdminDashboardPanel extends JPanel {
                 rowsCount = rs.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace(); // Suppressed to avoid log spam if table is empty
         }
         return rowsCount;
     }
@@ -264,7 +295,7 @@ public class AdminDashboardPanel extends JPanel {
                 calculatedAssetWorth = rs.getDouble(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         
         double displayValue = calculatedAssetWorth;

@@ -53,4 +53,12 @@ public class PanelCard2 extends JPanel {
         lblSubtitle.setFont(FontsTheme.Plain_Texts);
         add(lblSubtitle);
     }
+
+    public void setValue(String value) {
+        lblValue.setText(value);
+    }
+
+    public void setSubtitle(String subtitle) {
+        lblSubtitle.setText(subtitle);
+    }
 }

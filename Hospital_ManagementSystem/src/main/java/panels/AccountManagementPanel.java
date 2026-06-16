@@ -22,7 +22,7 @@ public class AccountManagementPanel extends JPanel implements ActionListener {
     private JPanel pnlMiddle, pnlSearch;
     private JLabel lblTitle, lblDetails;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd, btnView, btnEdit, btnDelete;
+    private JButton btnSearch, btnRefresh, btnView, btnEdit;
     private TablePanel tblAccounts;
 
     private static final String[] columns = {"Username", "First Name", "Last Name", "Role"};
@@ -59,13 +59,6 @@ public class AccountManagementPanel extends JPanel implements ActionListener {
         add(pnlMiddle);
 
         // CRUD Buttons next to the title
-        btnAdd = new JButton("+ Add");
-        btnAdd.setBounds(830, 40, 150, 45);
-        btnAdd.setFont(FontsTheme.Buttons);
-        btnAdd.setBackground(ColorsTheme.Add_Confirm);
-        btnAdd.setForeground(ColorsTheme.Text_White);
-        btnAdd.setFocusPainted(false);
-        add(btnAdd);
 
         btnView = new JButton("View");
         btnView.setBounds(995, 40, 150, 45);
@@ -82,14 +75,6 @@ public class AccountManagementPanel extends JPanel implements ActionListener {
         btnEdit.setForeground(ColorsTheme.Text_Black);
         btnEdit.setFocusPainted(false);
         add(btnEdit);
-
-        btnDelete = new JButton("Delete");
-        btnDelete.setBounds(1325, 40, 150, 45);
-        btnDelete.setFont(FontsTheme.Buttons);
-        btnDelete.setBackground(ColorsTheme.Delete_Urgent);
-        btnDelete.setForeground(ColorsTheme.Text_White);
-        btnDelete.setFocusPainted(false);
-        add(btnDelete);
 
         // Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by username or name...");
@@ -121,10 +106,8 @@ public class AccountManagementPanel extends JPanel implements ActionListener {
         pnlMiddle.add(tblAccounts);
 
         // Listeners
-        btnAdd.addActionListener(this);
         btnView.addActionListener(this);
         btnEdit.addActionListener(this);
-        btnDelete.addActionListener(this);
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
     }
@@ -190,13 +173,7 @@ public class AccountManagementPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
-        if (e.getSource() == btnAdd) {
-            NewAccountDialog dialog = new NewAccountDialog();
-            dialog.setVisible(true);
-            if (dialog.isSuccess()) {
-                updateTable("Registered Accounts", "");
-            }
-        } else if (e.getSource() == btnView) {
+        if (e.getSource() == btnView) {
             String user = getSelectedUsername();
             if (user != null) {
                 ViewAccountDialog dialog = new ViewAccountDialog(user);
@@ -211,41 +188,11 @@ public class AccountManagementPanel extends JPanel implements ActionListener {
                     updateTable("Registered Accounts", "");
                 }
             }
-        } else if (e.getSource() == btnDelete) {
-            String user = getSelectedUsername();
-            if (user != null) {
-                int confirm = JOptionPane.showConfirmDialog(
-                        this,
-                        "Permanently delete user account '" + user + "'?",
-                        "Confirm Deletion",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE
-                );
-                if (confirm == JOptionPane.YES_OPTION) {
-                    deleteAccount(user);
-                }
-            }
         } else if (e.getSource() == btnSearch) {
             updateTable("Search Results", txtSearch.getText().trim());
         } else if (e.getSource() == btnRefresh) {
             txtSearch.setText("Search by username or name...");
             updateTable("Registered Accounts", "");
-        }
-    }
-
-    private void deleteAccount(String username) {
-        String sql = "DELETE FROM users WHERE username = ?";
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            int rows = stmt.executeUpdate();
-            if (rows > 0) {
-                JOptionPane.showMessageDialog(this, "Account deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-                updateTable("Registered Accounts", "");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to delete account:\n" + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -154,9 +154,8 @@ public class LoginPage extends JFrame implements ActionListener {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
             
-            // FIX: Added 'AND status='Active'' so resigned/fired staff cannot log in!
-            // I also added 'user_id' to the SELECT just in case you need to track who logged in later.
-            PreparedStatement select = connection.prepareStatement("SELECT user_id, role, firstname, lastname FROM users WHERE username=? AND password=? AND status='Active'");
+            // FIX: Added 'AND status_id=1' so resigned/fired staff cannot log in!
+            PreparedStatement select = connection.prepareStatement("SELECT user_id, role, firstname, lastname FROM users WHERE username=? AND password=? AND status_id=1");
             select.setString(1, username);
             select.setString(2, password);
 

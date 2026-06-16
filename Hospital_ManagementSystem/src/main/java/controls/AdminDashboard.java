@@ -27,6 +27,7 @@ public class AdminDashboard extends JFrame implements ActionListener {
     private JTextField txtSearchField;
     private ImageIcon logoIcon;
     private JButton activeBtn = null;
+    private AdminDashboardPanel dashboardPanel;
     
     public AdminDashboard() {
         setSize(1920, 1080);
@@ -100,7 +101,8 @@ public class AdminDashboard extends JFrame implements ActionListener {
         });
         pnlTop.add(txtSearchField);
 
-        pnlContainer.add(new AdminDashboardPanel(), "dashboard");
+        dashboardPanel = new AdminDashboardPanel();
+        pnlContainer.add(dashboardPanel, "dashboard");
         pnlContainer.add(new PatientsPanel(true), "patients"); // Pass true for full access if required
         pnlContainer.add(new PharmacyPanel(true), "pharmacy"); // Admin handles inventory
         pnlContainer.add(new StaffManagementPanel(), "staffManagement");
@@ -158,6 +160,7 @@ public class AdminDashboard extends JFrame implements ActionListener {
         }
         
         if (e.getSource() == btnDashboard) {
+            dashboardPanel.refreshData();
             cardLayout.show(pnlContainer, "dashboard");
         }
         else if (e.getSource() == btnPatients) {

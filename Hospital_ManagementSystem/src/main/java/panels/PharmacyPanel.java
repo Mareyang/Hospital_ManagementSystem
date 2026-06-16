@@ -23,7 +23,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
     private PanelCard pnlTotal, pnlIn, pnlLow, pnlCrit; 
     private JLabel lblDetails, lblPharmacy;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd, btnEdit, btnUseStock, btnRestock, btnDiscontinue; 
+    private JButton btnSearch, btnRefresh, btnAdd, btnEdit, btnRestock, btnDiscontinue; 
     private TablePanel tblPharmacy;
     
     private static final String[] columns = {"Item Code", "Medication", "Category", "Stock", "Reorder Level", "Inventory Status"};
@@ -86,12 +86,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         btnRefresh.setFocusPainted(false);
         pnlSearch.add(btnRefresh);
  
-        btnUseStock = new JButton("Use Stock");
-        btnUseStock.setFont(FontsTheme.Buttons);
-        btnUseStock.setFocusPainted(false);
-        btnUseStock.setBackground(ColorsTheme.Orange); 
-        btnUseStock.setForeground(ColorsTheme.Text_White);
-        
+
         btnRestock = new JButton("Restock");
         btnRestock.setFont(FontsTheme.Buttons);
         btnRestock.setFocusPainted(false);
@@ -107,7 +102,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         java.util.List<JButton> visibleButtons = new java.util.ArrayList<>();
         visibleButtons.add(btnAdd);
         visibleButtons.add(btnEdit); 
-        visibleButtons.add(btnUseStock);
+
         visibleButtons.add(btnRestock);
         visibleButtons.add(btnDiscontinue);
 
@@ -140,7 +135,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
         btnEdit.addActionListener(this); // Added listener!
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
-        btnUseStock.addActionListener(this);
+
         btnRestock.addActionListener(this);
         btnDiscontinue.addActionListener(this);
     }
@@ -340,62 +335,7 @@ public class PharmacyPanel extends JPanel implements ActionListener {
                 updateTable("Search Results", currentSearch);
             }
         }
-        else if (e.getSource() == btnUseStock) {
-            JTable actualTable = tblPharmacy.getTable(); 
-            int selectedRow = actualTable.getSelectedRow();
 
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(this, "Please select a medication from the table first.", "No Selection", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            String currentStatus = actualTable.getValueAt(selectedRow, 5).toString();
-            if (currentStatus.equals("Discontinued") || currentStatus.equals("Recalled")) {
-                JOptionPane.showMessageDialog(this, "You cannot use stock for a medication that is Discontinued or Recalled.", "Action Blocked", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            String itemCode = actualTable.getValueAt(selectedRow, 0).toString();
-            String medName = actualTable.getValueAt(selectedRow, 1).toString();
-            int currentStock = Integer.parseInt(actualTable.getValueAt(selectedRow, 3).toString());
-
-            String input = JOptionPane.showInputDialog(
-                this, 
-                "Current Stock: " + currentStock + "\nHow many units of " + medName + " did you use?", 
-                "Use Stock Quantity", 
-                JOptionPane.QUESTION_MESSAGE
-            );
-
-            if (input == null || input.trim().isEmpty()) {
-                return; 
-            }
-
-            try {
-                int quantityUsed = Integer.parseInt(input.trim());
-
-                if (quantityUsed <= 0) {
-                    JOptionPane.showMessageDialog(this, "Please enter a valid number greater than 0.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                if (quantityUsed > currentStock) {
-                    JOptionPane.showMessageDialog(this, "Not enough stock available! You only have " + currentStock + " units left.", "Insufficient Stock", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                int newStock = currentStock - quantityUsed;
-                updateMedicationStockInDatabase(itemCode, newStock);
-
-                String currentSearch = txtSearch.getText().trim();
-                if (currentSearch.equals("Search medication name, item code, or category...")) {
-                    updateTable("Medication Inventory", "");
-                } else {
-                    updateTable("Search Results", currentSearch);
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid whole number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
         else if (e.getSource() == btnRestock) {
             JTable actualTable = tblPharmacy.getTable(); 
             int selectedRow = actualTable.getSelectedRow();

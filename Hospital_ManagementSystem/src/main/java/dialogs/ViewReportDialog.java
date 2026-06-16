@@ -16,12 +16,10 @@ public class ViewReportDialog extends JDialog implements ActionListener {
     private JLabel lblTitle, lblSubtitle, lblCateg, lblName, lblNote, lblBy, lblDate, lblID, lblPeriod; 
     private JButton btnReportDetails, btnWrite, btnClose;
     private JPanel pnlContent;
-    private JTextField txtName, txtBy, txtDate, txtID, txtPeriod;
-    private JComboBox<String> cmbCateg;
+    private JTextField txtName, txtBy, txtDate, txtID, txtPeriod, txtCateg;
     private JTextArea txaNote;
     private JScrollPane scrollNote;
     
-    private static final String[] categs = {" ", "Admissions Summary", "Billing and Revenue", "Pharmacy Dispensation", "Emergency Logs"};
     
     private String currentReportId;
 
@@ -141,11 +139,10 @@ public class ViewReportDialog extends JDialog implements ActionListener {
         lblCateg.setFont(FontsTheme.Plain_Texts);
         lblCateg.setForeground(ColorsTheme.Text_Black);
         
-        cmbCateg = new JComboBox<>(categs);
-        cmbCateg.setBounds(690, 200, 230, 30);
-        cmbCateg.setFont(FontsTheme.Plain_Texts);
-        cmbCateg.setBackground(ColorsTheme.Main_Card);
-        cmbCateg.setEnabled(false);
+        txtCateg = new JTextField("");
+        txtCateg.setBounds(690, 200, 230, 30);
+        txtCateg.setFont(FontsTheme.Plain_Texts);
+        txtCateg.setEditable(false);
         
         lblNote = new JLabel("Executive Summary: ");
         lblNote.setBounds(50, 10, 300, 30);
@@ -164,7 +161,11 @@ public class ViewReportDialog extends JDialog implements ActionListener {
     }
     
     private void loadReportData() {
-        String sql = "SELECT * FROM hospital_reports WHERE report_id = ?";
+        String sql = "SELECT r.*, t.type_name as report_type, u.firstname, u.lastname " +
+                     "FROM hospital_reports r " +
+                     "LEFT JOIN report_types t ON r.report_type_id = t.type_id " +
+                     "LEFT JOIN users u ON r.generated_by_id = u.user_id " +
+                     "WHERE r.report_id = ?";
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "");
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
@@ -175,16 +176,24 @@ public class ViewReportDialog extends JDialog implements ActionListener {
             if (rs.next()) {
                 int rawId = rs.getInt("report_id");
                 txtID.setText(String.format("RPT-%03d", rawId));
-                txtName.setText(rs.getString("report_name"));
+                txtName.setText(rs.getString("report_title"));
                 
                 String scope = rs.getString("report_type");
-                if (scope != null) cmbCateg.setSelectedItem(scope);
+                if (scope != null) txtCateg.setText(scope);
                 
-                txtBy.setText(rs.getString("generated_by"));
-                txtDate.setText(rs.getString("date_generated"));
-                txtPeriod.setText(rs.getString("reporting_period"));
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                txtBy.setText((firstName != null && lastName != null) ? firstName + " " + lastName : "System");
                 
-                String summary = rs.getString("executive_summary");
+                txtDate.setText(rs.getString("generated_datetime"));
+                String periodStr = rs.getString("reporting_period");
+                if (periodStr == null || periodStr.trim().isEmpty()) {
+                    txtPeriod.setText("All");
+                } else {
+                    txtPeriod.setText(periodStr);
+                }
+                
+                String summary = rs.getString("report_body");
                 if (summary != null && !summary.isEmpty()) {
                     txaNote.setText(summary);
                 }
@@ -208,7 +217,7 @@ public class ViewReportDialog extends JDialog implements ActionListener {
         pnlContent.add(lblPeriod);
         pnlContent.add(txtPeriod);
         pnlContent.add(lblCateg);
-        pnlContent.add(cmbCateg);
+        pnlContent.add(txtCateg);
         pnlContent.repaint();
         pnlContent.revalidate();
     }

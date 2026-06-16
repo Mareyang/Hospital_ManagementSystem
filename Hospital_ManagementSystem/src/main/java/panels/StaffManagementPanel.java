@@ -26,8 +26,8 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
     private TablePanel tblEmployee;
     private JLabel lblDetails, lblStaff;
     private JTextField txtSearch;
-    private JButton btnSearch, btnRefresh, btnAdd, btnView, btnEdit, btnDelete;
-    private static final String[] columns = {"Staff ID", "Name", "Role", "Department", "Status", "Patient"};
+    private JButton btnSearch, btnRefresh, btnAdd, btnView, btnEdit;
+    private static final String[] columns = {"Staff ID", "First Name", "Last Name", "Role", "Department", "Email", "Status"};
     
     
     
@@ -75,15 +75,6 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         btnEdit.setForeground(ColorsTheme.Text_Black);
         btnEdit.setFocusPainted(false);
         add(btnEdit);
-
-        //Button for deleting staff
-        btnDelete = new JButton("Delete");
-        btnDelete.setBounds(1325, 40, 150, 45); 
-        btnDelete.setFont(FontsTheme.Buttons);
-        btnDelete.setBackground(ColorsTheme.Delete_Urgent);
-        btnDelete.setForeground(ColorsTheme.Text_White);
-        btnDelete.setFocusPainted(false);
-        add(btnDelete);
         
         //Search Bar including search and refresh buttons
         txtSearch = new JTextField("Search by staff name or ID...");
@@ -134,7 +125,6 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         btnAdd.addActionListener(this);
         btnView.addActionListener(this);
         btnEdit.addActionListener(this);
-        btnDelete.addActionListener(this);
         btnSearch.addActionListener(this);
         btnRefresh.addActionListener(this);
     }
@@ -157,14 +147,15 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
 
     private Object[][] fetchStaff(String queryTerm) {
         List<Object[]> rowsList = new ArrayList<>();
-        String sql = "SELECT * FROM hospital_staff";
+        String sql = "SELECT u.*, us.status_name as status FROM users u " +
+                     "LEFT JOIN user_status us ON u.status_id = us.status_id";
 
         boolean hasSearchFilter = !queryTerm.isEmpty() && !queryTerm.equals("Search by staff name or ID...");
 
         if (hasSearchFilter) {
-            sql += " WHERE full_name LIKE ? OR employee_id LIKE ?";
+            sql += " WHERE CONCAT(u.firstname, ' ', u.lastname) LIKE ? OR u.user_id LIKE ? OR u.username LIKE ?";
         }
-        sql += " ORDER BY employee_id ASC"; 
+        sql += " ORDER BY u.user_id ASC"; 
 
         int countTotal = 0;
         int countOnDuty = 0;
@@ -179,11 +170,12 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
                 
                 statement.setString(1, "%" + queryTerm + "%");
                 statement.setString(2, "%" + cleanSearch + "%");
+                statement.setString(3, "%" + queryTerm + "%");
             }
 
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                int rawId = result.getInt("employee_id");
+                int rawId = result.getInt("user_id");
                 String role = result.getString("role");
                 String prefix = "EMP-";
                 if ("Admin".equalsIgnoreCase(role)) prefix = "ADM-";
@@ -191,17 +183,19 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
                 else if ("Nurse".equalsIgnoreCase(role)) prefix = "NUR-";
                 
                 String empID = String.format("%s%03d", prefix, rawId);
-                String name = result.getString("full_name");
-                String dept = result.getString("department");
+                String username = result.getString("username");
+                String firstname = result.getString("firstname");
+                String lastname = result.getString("lastname");
+                String department = result.getString("department");
+                String email = result.getString("email");
                 String status = result.getString("status");
-                String patient = "None"; // Assuming this is linked elsewhere
 
                 countTotal++;
                 if ("Active".equalsIgnoreCase(status)) countOnDuty++;
                 else if ("Off Duty".equalsIgnoreCase(status)) countOffDuty++;
-                else if ("On Leave".equalsIgnoreCase(status)) countOnLeave++;
+                else if ("Inactive".equalsIgnoreCase(status) || "On Leave".equalsIgnoreCase(status)) countOnLeave++;
 
-                rowsList.add(new Object[]{empID, name, role, dept, status, patient});
+                rowsList.add(new Object[]{empID, firstname, lastname, role, department, email, status});
             }
 
         } catch (SQLException ex) {
@@ -231,7 +225,7 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
         pnlOff.setBounds(830, 130, 350, 110);
         add(pnlOff);
         
-        pnlLeave = new PanelCard("On Leave", String.valueOf(leave), ColorsTheme.Red);
+        pnlLeave = new PanelCard("On Leave/Inactive", String.valueOf(leave), ColorsTheme.Red);
         pnlLeave.setBounds(1210, 130, 350, 110);
         add(pnlLeave);
 
@@ -267,13 +261,6 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
             editDialog.setVisible(true);
             updateTable("Employee Records", txtSearch.getText().trim().equals("Search by staff name or ID...") ? "" : txtSearch.getText().trim());
         }
-        else if (e.getSource() == btnDelete) {
-            int selectedRow = tblEmployee.getTable().getSelectedRow();
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(this, "Please select a staff member to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
         else if (e.getSource() == btnSearch) {
             String searchKeyword = txtSearch.getText().trim();
             updateTable("Search Results", searchKeyword);
@@ -283,5 +270,4 @@ public class StaffManagementPanel extends JPanel implements ActionListener {
             updateTable("Employee Records", "");
         }
     }
-}
 }
