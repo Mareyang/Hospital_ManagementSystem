@@ -331,7 +331,7 @@ public class NewPrescriptionDialog extends JDialog implements ActionListener {
                 String rawRefill = txtRefill.getText().trim();
                 int refill = rawRefill.isEmpty() ? 0 : Integer.parseInt(rawRefill);
 
-                // 1. INSERT INTO PRESCRIPTIONS (HEADER)
+                // 1. INSERT INTO PRESCRIPTIONS
                 String sql1 = "INSERT INTO prescriptions (patient_id, doctor_id, diagnosis, special_notes, prescription_date, status_id) VALUES (?, ?, ?, ?, ?, 1)";
                 try (PreparedStatement insert1 = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS)) {
                     insert1.setInt(1, patientId);

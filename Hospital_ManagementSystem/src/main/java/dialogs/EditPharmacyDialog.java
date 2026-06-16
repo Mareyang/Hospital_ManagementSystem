@@ -238,7 +238,7 @@ public class EditPharmacyDialog extends JDialog implements ActionListener {
                     txtName.setText(rs.getString("brand_name") != null ? rs.getString("brand_name") : "");
                     txtGeneric.setText(rs.getString("generic_name"));
                     
-                    // THE FIX: Set placeholder if DB strength is empty
+                    // Set placeholder if DB strength is empty
                     String dbStrength = rs.getString("strength");
                     txtStrength.setText((dbStrength != null && !dbStrength.trim().isEmpty()) ? dbStrength : "(e.g., 500mg)");
                     

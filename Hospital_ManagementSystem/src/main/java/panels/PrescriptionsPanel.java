@@ -321,7 +321,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "")) {
             conn.setAutoCommit(false); 
             
-            // THE FIX: Modified to also select unit_price and patient_id for billing
+            // select unit_price and patient_id for billing
             String checkSql = "SELECT pd.medication_id, pd.quantity, ph.current_stock, ph.reorder_level, ph.brand_name, ph.generic_name, ph.unit_price, pr.patient_id " +
                               "FROM prescription_details pd " +
                               "JOIN pharmacy ph ON pd.medication_id = ph.medication_id " +
@@ -367,7 +367,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
                         updateRxStmt.executeUpdate();
                     }
                     
-                    // --- 3. SILENT TRIGGER: AUTO-BILLING ---
+                    // --- 3. AUTO-BILLING ---
                     double lineItemTotal = unitPrice * qtyRequired;
 
                     int activeBillingId = -1;
@@ -405,7 +405,7 @@ public class PrescriptionsPanel extends JPanel implements ActionListener {
                         totalStmt.setInt(3, activeBillingId);
                         totalStmt.executeUpdate();
                     }
-                    // --- END SILENT TRIGGER ---
+                   
                     
                     conn.commit(); 
                     

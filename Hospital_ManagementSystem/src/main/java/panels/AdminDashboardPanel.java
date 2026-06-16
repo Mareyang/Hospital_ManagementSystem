@@ -152,7 +152,7 @@ public class AdminDashboardPanel extends JPanel {
         DefaultTableModel tableModel = new DefaultTableModel(logColumns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Prevent cells from being edited directly
+                return false; 
             }
         };
         
@@ -192,12 +192,12 @@ public class AdminDashboardPanel extends JPanel {
         logScrollPane.setBorder(BorderFactory.createLineBorder(ColorsTheme.isDarkMode ? Color.decode("#334155") : Color.LIGHT_GRAY, 1)); 
         pnlOverview.add(logScrollPane);
 
-        // Populate table from the database
+        
         refreshData();
     }
 
     public void refreshData() {
-        // Fetch real-time live metrics directly using matching database logic
+        // get status data directly using matching database logic
         String totalPatients = String.valueOf(getTableRowCount("patients", ""));
         String totalDoctors = String.valueOf(getTableRowCount("users", "WHERE LOWER(role) = 'doctor' AND status_id = 1"));
         String totalNurses = String.valueOf(getTableRowCount("users", "WHERE LOWER(role) = 'nurse' AND status_id = 1"));
@@ -208,7 +208,7 @@ public class AdminDashboardPanel extends JPanel {
         int lowStock = getTableRowCount("pharmacy", "WHERE LOWER(status) = 'low stock'");
         String lowStockText = lowStock + " Items Low Stock";
 
-        // Calculate cumulative asset revenue cleanly
+        // Calculate total revenue
         String totalRevenue = getInventoryAssetRevenue();
 
         if (pnlPatients != null) {
@@ -233,10 +233,9 @@ public class AdminDashboardPanel extends JPanel {
     }
 
     private void FetchReports(DefaultTableModel model) {
-        // Clear existing data before loading new records
+        
         model.setRowCount(0); 
         
-        // Query fetching recent appointments. 
         // We order by appt_id DESC to get the most recent entries and limit it to 50 for performance on the dashboard.
         String sql = "SELECT a.appt_id, p.first_name, p.last_name, u.department, a.appointment_date, s.status_name " +
                      "FROM appointments a " +
@@ -256,12 +255,12 @@ public class AdminDashboardPanel extends JPanel {
                 String date = rs.getString("appointment_date");
                 String status = rs.getString("status_name");
                 
-                // Add the row to our model
+               
                 model.addRow(new Object[]{id, patient, department, date, status});
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Fallback empty row if connection fails to let user know something is wrong
+            
             model.addRow(new Object[]{"ERR", "Database connection failed", "N/A", "Error"});
         }
     }
@@ -278,7 +277,7 @@ public class AdminDashboardPanel extends JPanel {
                 rowsCount = rs.getInt(1);
             }
         } catch (SQLException e) {
-            // e.printStackTrace(); // Suppressed to avoid log spam if table is empty
+           
         }
         return rowsCount;
     }
@@ -295,7 +294,7 @@ public class AdminDashboardPanel extends JPanel {
                 calculatedAssetWorth = rs.getDouble(1);
             }
         } catch (SQLException e) {
-            // e.printStackTrace();
+           
         }
         
         double displayValue = calculatedAssetWorth;
