@@ -135,13 +135,13 @@ public class EditPharmacyDialog extends JDialog implements ActionListener {
         pnlContent.add(cmbDosage);
         
         // RIGHT SECTION
-        lblStrength = new JLabel("Strength : ");
+        lblStrength = new JLabel("Dosage Size : ");
         lblStrength.setBounds(510, 40, 200, 30);
         lblStrength.setFont(FontsTheme.Plain_Texts);
         lblStrength.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblStrength);
         
-        txtStrength = new JTextField("");
+        txtStrength = new JTextField(" ");
         txtStrength.setBounds(690, 40, 230, 30);
         txtStrength.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtStrength);
@@ -191,6 +191,20 @@ public class EditPharmacyDialog extends JDialog implements ActionListener {
         txtExpire.setBounds(690, 200, 230, 30);
         txtExpire.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtExpire);
+
+        // Add listeners for the placeholder behavior
+        txtStrength.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtStrength.getText().equals("(e.g., 500mg)")) {
+                    txtStrength.setText("");
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (txtStrength.getText().isEmpty()) {
+                    txtStrength.setText("(e.g., 500mg)");
+                }
+            }
+        });
         
         btnCancel.addActionListener(this);
         btnSaveInfo.addActionListener(this);
@@ -223,7 +237,11 @@ public class EditPharmacyDialog extends JDialog implements ActionListener {
                 if (rs.next()) {
                     txtName.setText(rs.getString("brand_name") != null ? rs.getString("brand_name") : "");
                     txtGeneric.setText(rs.getString("generic_name"));
-                    txtStrength.setText(rs.getString("strength") != null ? rs.getString("strength") : "");
+                    
+                    // THE FIX: Set placeholder if DB strength is empty
+                    String dbStrength = rs.getString("strength");
+                    txtStrength.setText((dbStrength != null && !dbStrength.trim().isEmpty()) ? dbStrength : "(e.g., 500mg)");
+                    
                     txtCurrent.setText(String.valueOf(rs.getInt("current_stock")));
                     txtReorder.setText(String.valueOf(rs.getInt("reorder_level")));
                     txtPrice.setText(String.valueOf(rs.getDouble("unit_price")));
@@ -261,6 +279,12 @@ public class EditPharmacyDialog extends JDialog implements ActionListener {
                 return;
             }
 
+            // Clean the strength value if the user left the placeholder
+            String finalStrength = txtStrength.getText().trim();
+            if (finalStrength.equals("(e.g., 500mg)")) {
+                finalStrength = "";
+            }
+
             // NOTE: We do NOT update current_stock here!
             String sql = "UPDATE pharmacy SET brand_name = ?, generic_name = ?, category_id = ?, dosage_form = ?, strength = ?, reorder_level = ?, unit_price = ?, expiration_date = ? WHERE item_code = ?";
 
@@ -274,7 +298,7 @@ public class EditPharmacyDialog extends JDialog implements ActionListener {
                 update.setString(2, txtGeneric.getText().trim());
                 update.setInt(3, categoryId);
                 update.setString(4, cmbDosage.getSelectedItem().toString());
-                update.setString(5, txtStrength.getText().trim());
+                update.setString(5, finalStrength);
                 
                 int reorderLevel = txtReorder.getText().trim().isEmpty() ? 0 : Integer.parseInt(txtReorder.getText().trim());
                 double unitPrice = txtPrice.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(txtPrice.getText().trim());

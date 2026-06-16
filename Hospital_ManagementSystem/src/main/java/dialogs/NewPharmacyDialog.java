@@ -77,7 +77,6 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         lblCode.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblCode);
         
-        // THE FIX: Displays standard text and is locked to prevent edits
         txtCode = new JTextField("Auto-generated");
         txtCode.setBounds(220, 40, 230, 30);
         txtCode.setFont(FontsTheme.Plain_Texts);
@@ -131,13 +130,13 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         pnlContent.add(cmbDosage);
         
         // RIGHT SECTION
-        lblStrength = new JLabel("Strength : ");
+        lblStrength = new JLabel("Dosage Size : ");
         lblStrength.setBounds(510, 40, 200, 30);
         lblStrength.setFont(FontsTheme.Plain_Texts);
         lblStrength.setForeground(ColorsTheme.Text_Black);
         pnlContent.add(lblStrength);
         
-        txtStrength = new JTextField("");
+        txtStrength = new JTextField("(e.g., 500mg/ml)");
         txtStrength.setBounds(690, 40, 230, 30);
         txtStrength.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtStrength);
@@ -186,6 +185,20 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
         txtExpire.setFont(FontsTheme.Plain_Texts);
         pnlContent.add(txtExpire);
         
+        // Add listeners
+        txtStrength.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtStrength.getText().equals("(e.g., 500mg)")) {
+                    txtStrength.setText("");
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (txtStrength.getText().isEmpty()) {
+                    txtStrength.setText("(e.g., 500mg)");
+                }
+            }
+        });
+        
         btnCancel.addActionListener(this);
         btnAddInfo.addActionListener(this);
         
@@ -213,14 +226,56 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
             dispose();
         } 
         else if (e.getSource() == btnAddInfo) {
-            // Validation no longer needs to check txtCode since we generate it!
-            if (txtGeneric.getText().trim().isEmpty() || cmbType.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(this, "Generic Name and Category are required.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            String genericName = txtGeneric.getText().trim();
+            String brandName = txtName.getText().trim();
+            String dosageForm = cmbDosage.getSelectedItem().toString();
+            String strength = txtStrength.getText().trim();
+            
+            if (strength.equals("(e.g., 500mg)")) strength = ""; // Clear placeholder if ignored
+            
+            if (genericName.isEmpty() || cmbType.getSelectedIndex() == 0 || dosageForm.equals("Select Form...")) {
+                JOptionPane.showMessageDialog(this, "Generic Name, Category, and Dosage Form are required.", "Validation Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "")) {
                 
+                int stockToAdd = txtCurrent.getText().trim().isEmpty() ? 0 : Integer.parseInt(txtCurrent.getText().trim());
+                
+                String checkSql = "SELECT medication_id, item_code, current_stock FROM pharmacy WHERE LOWER(generic_name) = LOWER(?) AND LOWER(brand_name) = LOWER(?) AND dosage_form = ? AND LOWER(strength) = LOWER(?)";
+                
+                try (PreparedStatement checkStmt = connection.prepareStatement(checkSql)) {
+                    checkStmt.setString(1, genericName);
+                    checkStmt.setString(2, brandName);
+                    checkStmt.setString(3, dosageForm);
+                    checkStmt.setString(4, strength);
+                    
+                    ResultSet rs = checkStmt.executeQuery();
+                    
+                    if (rs.next()) {
+                        int existingId = rs.getInt("medication_id");
+                        String existingCode = rs.getString("item_code");
+                        int existingStock = rs.getInt("current_stock");
+                        
+                        int newTotalStock = existingStock + stockToAdd;
+                        
+                        String updateSql = "UPDATE pharmacy SET current_stock = ?, status_id = 1 WHERE medication_id = ?";
+                        try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+                            updateStmt.setInt(1, newTotalStock);
+                            updateStmt.setInt(2, existingId);
+                            updateStmt.executeUpdate();
+                        }
+                        
+                        JOptionPane.showMessageDialog(this, 
+                            "Medication already exists (" + existingCode + ").\n" +
+                            "Stock automatically incremented by " + stockToAdd + ".\n" +
+                            "New Total Stock: " + newTotalStock, 
+                            "Inventory Updated", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                        return; 
+                    }
+                }
+
                 String generatedCode = "MED-001";
                 String codeSql = "SELECT MAX(medication_id) FROM pharmacy";
                 try (PreparedStatement stmtCode = connection.prepareStatement(codeSql); ResultSet rsCode = stmtCode.executeQuery()) {
@@ -230,7 +285,6 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
                     }
                 }
 
-                // 2. INSERT INTO DATABASE
                 String sql = "INSERT INTO pharmacy (item_code, brand_name, generic_name, category_id, dosage_form, strength, current_stock, reorder_level, unit_price, expiration_date, status_id) "
                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
 
@@ -239,18 +293,17 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
                     String categoryInput = cmbType.getSelectedItem().toString();
                     int categoryId = Integer.parseInt(categoryInput.split(" - ")[0].trim());
                     
-                    insert.setString(1, generatedCode); // Use the backend-generated code!
-                    insert.setString(2, txtName.getText().trim());
-                    insert.setString(3, txtGeneric.getText().trim());
+                    insert.setString(1, generatedCode); 
+                    insert.setString(2, brandName);
+                    insert.setString(3, genericName);
                     insert.setInt(4, categoryId);
-                    insert.setString(5, cmbDosage.getSelectedItem().toString());
-                    insert.setString(6, txtStrength.getText().trim());
+                    insert.setString(5, dosageForm);
+                    insert.setString(6, strength);
                     
-                    int currentStock = txtCurrent.getText().trim().isEmpty() ? 0 : Integer.parseInt(txtCurrent.getText().trim());
                     int reorderLevel = txtReorder.getText().trim().isEmpty() ? 0 : Integer.parseInt(txtReorder.getText().trim());
                     double unitPrice = txtPrice.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(txtPrice.getText().trim());
                     
-                    insert.setInt(7, currentStock);
+                    insert.setInt(7, stockToAdd);
                     insert.setInt(8, reorderLevel);
                     insert.setDouble(9, unitPrice);
                     
@@ -263,7 +316,7 @@ public class NewPharmacyDialog extends JDialog implements ActionListener {
 
                     int rows = insert.executeUpdate();
                     if (rows > 0) {
-                        JOptionPane.showMessageDialog(this, "Medication inventory saved successfully!\nCode generated: " + generatedCode, "Pharmacy Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "New medication saved successfully!\nCode generated: " + generatedCode, "Pharmacy Success", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     }
                 }

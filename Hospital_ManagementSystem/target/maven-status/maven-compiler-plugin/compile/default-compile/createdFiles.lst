@@ -5,6 +5,8 @@ dialogs\ViewAppointmentDialog.class
 dialogs\NewMedicalRecordDialog.class
 dialogs\EditAppointmentDialog.class
 dialogs\NewPrescriptionDialog.class
+dialogs\EditPharmacyDialog$1.class
+dialogs\NewPharmacyDialog$1.class
 panels\DoctorDashboardPanel$2.class
 dialogs\ProcessPaymentDialog.class
 dialogs\NewPatientDialog.class

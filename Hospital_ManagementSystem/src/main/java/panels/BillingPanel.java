@@ -70,13 +70,13 @@ public class BillingPanel extends JPanel implements ActionListener {
         add(btnPay);
         
         txtSearch = new JTextField("Search by patient name or invoice id...");
-        txtSearch.setBounds(80, 20, 900, 40);
+        txtSearch.setBounds(80, 20, 1100, 40);
         txtSearch.setFont(FontsTheme.Info_Texts);
         txtSearch.setForeground(ColorsTheme.Text_Gray);
         pnlSearch.add(txtSearch);
       
         btnSearch = new JButton("Search");
-        btnSearch.setBounds(1000, 20, 130, 40); 
+        btnSearch.setBounds(1200, 20, 130, 40); 
         btnSearch.setFont(FontsTheme.Buttons);
         btnSearch.setBackground(ColorsTheme.Search);
         btnSearch.setForeground(ColorsTheme.Text_White);
@@ -84,7 +84,7 @@ public class BillingPanel extends JPanel implements ActionListener {
         pnlSearch.add(btnSearch);
         
         btnRefresh = new JButton("Refresh");
-        btnRefresh.setBounds(1150, 20, 130, 40); 
+        btnRefresh.setBounds(1350, 20, 130, 40); 
         btnRefresh.setFont(FontsTheme.Buttons);
         btnRefresh.setBackground(ColorsTheme.Text_Gray);
         btnRefresh.setForeground(ColorsTheme.Text_White);
