@@ -191,7 +191,7 @@ public class EditAppointmentDialog extends JDialog implements ActionListener {
             String docSql = "SELECT user_id, firstname, lastname FROM users WHERE role = 'Doctor' ORDER BY user_id ASC";
             try (PreparedStatement stmt = conn.prepareStatement(docSql); ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    String docName = rs.getInt("user_id") + " - Dr. " + rs.getString("firstname") + " " + rs.getString("lastname");
+                    String docName = rs.getInt("user_id") + " - Dr. " + rs.getString("firstname") + " " + rs.getString("last_name");
                     cmbDoctor.addItem(docName);
                 }
             }
@@ -249,7 +249,6 @@ public class EditAppointmentDialog extends JDialog implements ActionListener {
         }
     }
 
-    // THE FIX: Added Silent Trigger Billing Logic for dropdown status changes!
     private void updateAppointmentInDatabase() {
         String doctorInput = cmbDoctor.getSelectedItem().toString();
         String date = txtDate.getText().trim();
@@ -323,11 +322,28 @@ public class EditAppointmentDialog extends JDialog implements ActionListener {
                             }
                         }
                         
-                        double consultationFee = 500.00;
+                        // --- DYNAMIC PRICING LOGIC ---
+                        double consultationFee = 500.00; // Base rate
+                        switch (visitType) {
+                            case "Follow-up":
+                                consultationFee = 300.00;
+                                break;
+                            case "New Consultation":
+                                consultationFee = 800.00;
+                                break;
+                            case "Emergency Visit":
+                                consultationFee = 1500.00;
+                                break;
+                            case "Routine Checkup":
+                            default:
+                                consultationFee = 500.00;
+                                break;
+                        }
+                        
                         String insertItemSql = "INSERT INTO billing_items (billing_id, description, quantity, unit_price, total_price) VALUES (?, ?, ?, ?, ?)";
                         try (PreparedStatement itemStmt = conn.prepareStatement(insertItemSql)) {
                             itemStmt.setInt(1, activeBillingId);
-                            itemStmt.setString(2, "Consultation Fee (APT-" + String.format("%03d", currentApptId) + ")");
+                            itemStmt.setString(2, visitType + " (APT-" + String.format("%03d", currentApptId) + ")");
                             itemStmt.setInt(3, 1);
                             itemStmt.setDouble(4, consultationFee);
                             itemStmt.setDouble(5, consultationFee);

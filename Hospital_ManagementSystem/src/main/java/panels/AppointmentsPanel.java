@@ -334,30 +334,29 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
         return Integer.parseInt(displayId.replace("APT-", ""));
     }
 
-    // THE FIX: Added the Silent Trigger Billing Logic inside this method!
     private void changeAppointmentStatus(int apptId, int newStatusId, String successMessage) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "")) {
-            conn.setAutoCommit(false); // Secure the transaction
+            conn.setAutoCommit(false); 
             
-            // --- SILENT TRIGGER: AUTO-BILLING FOR CONSULTATION ---
-            // If the appointment is marked as "Completed" (Status ID 2)
+            // --- SILENT TRIGGER: DYNAMIC AUTO-BILLING FOR CONSULTATION ---
             if (newStatusId == 2) {
                 int patientId = 0;
                 int currentDbStatus = 0;
+                String visitType = "Routine Checkup"; // Fallback
                 
-                // 1. Check if it was already completed (prevents double charging)
-                String getPatSql = "SELECT patient_id, status_id FROM appointments WHERE appt_id = ?";
+                // Grab Patient ID, Status, AND Visit Type
+                String getPatSql = "SELECT patient_id, status_id, visit_type FROM appointments WHERE appt_id = ?";
                 try (PreparedStatement patStmt = conn.prepareStatement(getPatSql)) {
                     patStmt.setInt(1, apptId);
                     ResultSet patRs = patStmt.executeQuery();
                     if (patRs.next()) {
                         patientId = patRs.getInt("patient_id");
                         currentDbStatus = patRs.getInt("status_id");
+                        visitType = patRs.getString("visit_type");
                     }
                 }
 
                 if (currentDbStatus != 2) {
-                    // 2. Find or create an active bill for the patient
                     int activeBillingId = -1;
                     String checkBillSql = "SELECT billing_id FROM billing WHERE patient_id = ? AND status_id = 1 LIMIT 1";
                     try (PreparedStatement checkBillStmt = conn.prepareStatement(checkBillSql)) {
@@ -376,19 +375,36 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
                         }
                     }
                     
-                    // 3. Add the Consultation Fee line item (Standard ₱500.00)
-                    double consultationFee = 500.00;
+                    // --- DYNAMIC PRICING ---
+                    double consultationFee = 500.00; 
+                    if (visitType != null) {
+                        switch (visitType) {
+                            case "Follow-up":
+                                consultationFee = 300.00;
+                                break;
+                            case "New Consultation":
+                                consultationFee = 800.00;
+                                break;
+                            case "Emergency Visit":
+                                consultationFee = 1500.00;
+                                break;
+                            case "Routine Checkup":
+                            default:
+                                consultationFee = 500.00;
+                                break;
+                        }
+                    }
+                    
                     String insertItemSql = "INSERT INTO billing_items (billing_id, description, quantity, unit_price, total_price) VALUES (?, ?, ?, ?, ?)";
                     try (PreparedStatement itemStmt = conn.prepareStatement(insertItemSql)) {
                         itemStmt.setInt(1, activeBillingId);
-                        itemStmt.setString(2, "Consultation Fee (APT-" + String.format("%03d", apptId) + ")");
+                        itemStmt.setString(2, visitType + " (APT-" + String.format("%03d", apptId) + ")");
                         itemStmt.setInt(3, 1);
                         itemStmt.setDouble(4, consultationFee);
                         itemStmt.setDouble(5, consultationFee);
                         itemStmt.executeUpdate();
                     }
                     
-                    // 4. Update the Master Bill Total
                     String updateTotalSql = "UPDATE billing SET total_amount = total_amount + ?, net_amount = net_amount + ? WHERE billing_id = ?";
                     try (PreparedStatement totalStmt = conn.prepareStatement(updateTotalSql)) {
                         totalStmt.setDouble(1, consultationFee);
@@ -400,7 +416,6 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
             }
             // --- END SILENT TRIGGER ---
 
-            // Now update the actual appointment status
             String sql = "UPDATE appointments SET status_id = ? WHERE appt_id = ?";
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setInt(1, newStatusId);
@@ -408,7 +423,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
 
                 int rowsAffected = statement.executeUpdate();
                 if (rowsAffected > 0) {
-                    conn.commit(); // Save both the status AND the billing!
+                    conn.commit(); 
                     JOptionPane.showMessageDialog(this, successMessage);
                     updateTable(getCurrentTableTitle(), txtSearch.getText().trim().equals("Search appointments...") ? "" : txtSearch.getText().trim());
                 }
