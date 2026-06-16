@@ -52,7 +52,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
         btnAdd = new JButton("Generate");
         btnAdd.setBounds(1160, 40, 150, 45); 
         btnAdd.setFont(FontsTheme.Buttons);
-        btnAdd.setBackground(ColorsTheme.Add_Confirm);
+        btnAdd.setBackground(ColorsTheme.Add);
         btnAdd.setForeground(ColorsTheme.Text_White);
         btnAdd.setFocusPainted(false);
         add(btnAdd);
@@ -61,7 +61,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
         btnView = new JButton("View");
         btnView.setBounds(1325, 40, 150, 45); 
         btnView.setFont(FontsTheme.Buttons);
-        btnView.setBackground(ColorsTheme.Header);
+        btnView.setBackground(ColorsTheme.View);
         btnView.setForeground(ColorsTheme.Text_White);
         btnView.setFocusPainted(false);
         add(btnView);
@@ -564,7 +564,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
                     }
                 }
                 
-                // Appointments per Doctor
+                // Appointments per Doctor (Overall)
                 String sqlDocs = "SELECT u.lastname, COUNT(a.appt_id) as total_appts FROM appointments a " +
                                  "JOIN users u ON a.doctor_id = u.user_id ";
                 if (period != null && !period.trim().isEmpty()) sqlDocs += "WHERE DATE_FORMAT(a.appointment_date, '%M %Y') = ? ";
@@ -572,26 +572,42 @@ public class ReportsPanel extends JPanel implements ActionListener {
                 try (PreparedStatement stmt = conn.prepareStatement(sqlDocs)) {
                     if (period != null && !period.trim().isEmpty()) stmt.setString(1, period.trim());
                     java.sql.ResultSet rs = stmt.executeQuery();
-                    sb.append("[ Top Doctors by Appointments ]\n");
+                    sb.append("[ Top Doctors (Overall Appointments) ]\n");
+                    while (rs.next()) {
+                        sb.append("Dr. ").append(rs.getString("lastname")).append(": ").append(rs.getInt("total_appts")).append(" appts\n");
+                    }
+                    sb.append("\n");
+                }
+                
+                // Appointments per Doctor (Upcoming)
+                String sqlDocsUp = "SELECT u.lastname, COUNT(a.appt_id) as total_appts FROM appointments a " +
+                                   "JOIN users u ON a.doctor_id = u.user_id " +
+                                   "WHERE a.status_id = 1 ";
+                if (period != null && !period.trim().isEmpty()) sqlDocsUp += "AND DATE_FORMAT(a.appointment_date, '%M %Y') = ? ";
+                sqlDocsUp += "GROUP BY a.doctor_id ORDER BY total_appts DESC LIMIT 3";
+                try (PreparedStatement stmt = conn.prepareStatement(sqlDocsUp)) {
+                    if (period != null && !period.trim().isEmpty()) stmt.setString(1, period.trim());
+                    java.sql.ResultSet rs = stmt.executeQuery();
+                    sb.append("[ Top Doctors (Upcoming Appointments) ]\n");
                     while (rs.next()) {
                         sb.append("Dr. ").append(rs.getString("lastname")).append(": ").append(rs.getInt("total_appts")).append(" appts\n");
                     }
                     sb.append("\n");
                 }
 
-                // Busiest day of the week
-                String sqlBusyDay = "SELECT DAYNAME(appointment_date) as day_name, COUNT(*) as cnt FROM appointments ";
+                // Busiest date
+                String sqlBusyDay = "SELECT DATE_FORMAT(appointment_date, '%M %d, %Y') as busy_date, COUNT(*) as cnt FROM appointments ";
                 if (period != null && !period.trim().isEmpty()) sqlBusyDay += "WHERE DATE_FORMAT(appointment_date, '%M %Y') = ? ";
-                sqlBusyDay += "GROUP BY day_name ORDER BY cnt DESC LIMIT 1";
+                sqlBusyDay += "GROUP BY DATE(appointment_date) ORDER BY cnt DESC LIMIT 1";
                 try (PreparedStatement stmt = conn.prepareStatement(sqlBusyDay)) {
                     if (period != null && !period.trim().isEmpty()) stmt.setString(1, period.trim());
                     java.sql.ResultSet rs = stmt.executeQuery();
                     if (rs.next()) {
-                        String day = rs.getString("day_name");
+                        String day = rs.getString("busy_date");
                         if (day != null) {
-                            sb.append("Busiest Day of the Week: ").append(day).append(" (").append(rs.getInt("cnt")).append(" appts)\n");
+                            sb.append("Busiest Date: ").append(day).append(" (").append(rs.getInt("cnt")).append(" appts)\n");
                         } else {
-                            sb.append("Busiest Day of the Week: No appointments booked yet.\n");
+                            sb.append("Busiest Date: No appointments booked yet.\n");
                         }
                     }
                 }
