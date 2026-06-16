@@ -276,7 +276,7 @@ public class ReportsPanel extends JPanel implements ActionListener {
         JPanel panel = new JPanel(new java.awt.GridLayout(0, 1));
         panel.add(new JLabel("Select Report Type:"));
         panel.add(cmbType);
-        panel.add(new JLabel("Reporting Period (Optional, e.g., 2026-06):"));
+        panel.add(new JLabel("Reporting Period (Optional, e.g., June 2026):"));
         panel.add(txtPeriod);
 
         int result = JOptionPane.showConfirmDialog(null, panel, "Generate Auto-Report",
@@ -326,16 +326,67 @@ public class ReportsPanel extends JPanel implements ActionListener {
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_management", "root", "")) {
             if (scope.contains("Financial") || scope.contains("Billing") || scope.contains("Revenue")) {
-                String sql = "SELECT COUNT(*) as cnt, SUM(net_amount) as total FROM billing";
-                if (!period.isEmpty()) sql += " WHERE billing_date LIKE ?";
+                String sql = "SELECT COUNT(*) as cnt, " +
+                             "SUM(CASE WHEN status_id = 1 THEN net_amount ELSE 0 END) as pending_rev, " +
+                             "SUM(CASE WHEN status_id = 2 THEN net_amount ELSE 0 END) as paid_rev, " +
+                             "SUM(CASE WHEN status_id = 3 THEN net_amount ELSE 0 END) as cancelled_rev " +
+                             "FROM billing";
+                if (period != null && !period.trim().isEmpty()) {
+                    sql += " WHERE DATE_FORMAT(billing_date, '%M %Y') = ?";
+                }
                 try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                    if (!period.isEmpty()) stmt.setString(1, "%" + period + "%");
+                    if (period != null && !period.trim().isEmpty()) {
+                        stmt.setString(1, period.trim());
+                    }
                     java.sql.ResultSet rs = stmt.executeQuery();
                     if (rs.next()) {
-                        double rev = rs.getDouble("total");
-                        if ("USD".equals(SystemSettings.currency)) rev /= 58.0;
-                        sb.append("Total Billing Invoices: ").append(rs.getInt("cnt")).append("\n");
-                        sb.append("Total Net Revenue: ").append(SystemSettings.getCurrencySymbol()).append(String.format("%.2f", rev)).append("\n");
+                        double pending = rs.getDouble("pending_rev");
+                        double paid = rs.getDouble("paid_rev");
+                        double cancelled = rs.getDouble("cancelled_rev");
+                        if ("USD".equals(SystemSettings.currency)) {
+                            pending /= 58.0;
+                            paid /= 58.0;
+                            cancelled /= 58.0;
+                        }
+                        sb.append("Total Billing Invoices: ").append(rs.getInt("cnt")).append("\n\n");
+                        sb.append("[ Revenue by Status ]\n");
+                        sb.append("Outstanding Unpaid Balances: ").append(SystemSettings.getCurrencySymbol()).append(String.format("%.2f", pending)).append("\n");
+                        sb.append("Paid (Collected): ").append(SystemSettings.getCurrencySymbol()).append(String.format("%.2f", paid)).append("\n");
+                        sb.append("Cancelled: ").append(SystemSettings.getCurrencySymbol()).append(String.format("%.2f", cancelled)).append("\n\n");
+                    }
+                }
+                
+                // Average & Max Daily Revenue
+                String sqlDaily = "SELECT AVG(daily_total) as avg_rev, MAX(daily_total) as max_rev " +
+                                  "FROM (SELECT SUM(net_amount) as daily_total FROM billing WHERE status_id = 2 ";
+                if (period != null && !period.trim().isEmpty()) sqlDaily += "AND DATE_FORMAT(billing_date, '%M %Y') = ? ";
+                sqlDaily += "GROUP BY DATE(billing_date)) as daily_subquery";
+                try (PreparedStatement stmt = conn.prepareStatement(sqlDaily)) {
+                    if (period != null && !period.trim().isEmpty()) stmt.setString(1, period.trim());
+                    java.sql.ResultSet rs = stmt.executeQuery();
+                    if (rs.next()) {
+                        double avg = rs.getDouble("avg_rev");
+                        double max = rs.getDouble("max_rev");
+                        if ("USD".equals(SystemSettings.currency)) { avg /= 58.0; max /= 58.0; }
+                        sb.append("[ Daily Revenue Metrics ]\n");
+                        sb.append("Average Daily Revenue: ").append(SystemSettings.getCurrencySymbol()).append(String.format("%.2f", avg)).append("\n");
+                        sb.append("Highest Earning Day Revenue: ").append(SystemSettings.getCurrencySymbol()).append(String.format("%.2f", max)).append("\n\n");
+                    }
+                }
+
+                // Recent Payment History
+                String sqlHist = "SELECT billing_date, net_amount FROM billing WHERE status_id = 2 ";
+                if (period != null && !period.trim().isEmpty()) sqlHist += "AND DATE_FORMAT(billing_date, '%M %Y') = ? ";
+                sqlHist += "ORDER BY billing_date DESC LIMIT 3";
+                try (PreparedStatement stmt = conn.prepareStatement(sqlHist)) {
+                    if (period != null && !period.trim().isEmpty()) stmt.setString(1, period.trim());
+                    java.sql.ResultSet rs = stmt.executeQuery();
+                    sb.append("[ Recent Payment History ]\n");
+                    while (rs.next()) {
+                        double amt = rs.getDouble("net_amount");
+                        if ("USD".equals(SystemSettings.currency)) amt /= 58.0;
+                        sb.append(" - ").append(rs.getString("billing_date")).append(" : ")
+                          .append(SystemSettings.getCurrencySymbol()).append(String.format("%.2f", amt)).append("\n");
                     }
                 }
             } else if (scope.contains("Patient") || scope.contains("Demographics") || scope.contains("Admissions")) {
@@ -363,7 +414,12 @@ public class ReportsPanel extends JPanel implements ActionListener {
                         sb.append("[ Current Status ]\n");
                         sb.append("Admitted: ").append(rs.getInt("admitted")).append("\n");
                         sb.append("Outpatient: ").append(rs.getInt("outpatient")).append("\n");
-                        sb.append("Discharged: ").append(rs.getInt("discharged")).append("\n");
+                        sb.append("Discharged: ").append(rs.getInt("discharged")).append("\n\n");
+                        
+                        int total = rs.getInt("cnt");
+                        int admitted = rs.getInt("admitted");
+                        double admissionRate = total > 0 ? ((double) admitted / total) * 100 : 0.0;
+                        sb.append("Patient Admission Rate: ").append(String.format("%.1f", admissionRate)).append("%\n");
                     }
                 }
             } else if (scope.contains("Clinical") || scope.contains("Prescription") || scope.contains("Pharmacy Dispensation")) {
@@ -371,7 +427,9 @@ public class ReportsPanel extends JPanel implements ActionListener {
                              "FROM prescriptions p " +
                              "LEFT JOIN prescription_details pd ON p.prescription_id = pd.prescription_id " +
                              "LEFT JOIN pharmacy ph ON pd.medication_id = ph.medication_id ";
-                if (!period.isEmpty()) sql += "WHERE p.prescription_date LIKE ? ";
+                if (period != null && !period.trim().isEmpty()) {
+                    sql += "WHERE DATE_FORMAT(p.prescription_date, '%M %Y') = ? ";
+                }
                 sql += "GROUP BY p.status_id";
                 
                 int totalRx = 0;
@@ -381,7 +439,9 @@ public class ReportsPanel extends JPanel implements ActionListener {
                 double dispensedCost = 0.0;
 
                 try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                    if (!period.isEmpty()) stmt.setString(1, "%" + period + "%");
+                    if (period != null && !period.trim().isEmpty()) {
+                        stmt.setString(1, period.trim());
+                    }
                     java.sql.ResultSet rs = stmt.executeQuery();
                     while (rs.next()) {
                         int status = rs.getInt("status_id");
@@ -414,9 +474,10 @@ public class ReportsPanel extends JPanel implements ActionListener {
                 int inStock = 0;
                 int lowStock = 0;
                 int discontinued = 0;
+                double totalCost = 0.0;
                 StringBuilder lowStockNames = new StringBuilder();
 
-                String sql = "SELECT brand_name, generic_name, current_stock, reorder_level, status_id FROM pharmacy";
+                String sql = "SELECT brand_name, generic_name, current_stock, reorder_level, status_id, unit_price FROM pharmacy";
                 try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                     java.sql.ResultSet rs = stmt.executeQuery();
                     while (rs.next()) {
@@ -424,26 +485,59 @@ public class ReportsPanel extends JPanel implements ActionListener {
                         int stock = rs.getInt("current_stock");
                         int reorder = rs.getInt("reorder_level");
                         int status = rs.getInt("status_id");
+                        double price = rs.getDouble("unit_price");
                         String name = rs.getString("brand_name");
                         if (name == null || name.isEmpty()) name = rs.getString("generic_name");
+                        
+                        if (stock > 0 && status != 2) {
+                            totalCost += (stock * price);
+                        }
 
                         if (status == 2) {
                             discontinued++;
                         } else if (stock <= reorder) {
                             lowStock++;
-                            lowStockNames.append(" - ").append(name).append(" (Stock: ").append(stock).append(")\n");
+                            lowStockNames.append(" - ").append(name).append(" (Stock: ").append(stock).append(" / Reorder: ").append(reorder).append(")\n");
                         } else {
                             inStock++;
                         }
                     }
                 }
+                
+                if ("USD".equals(SystemSettings.currency)) totalCost /= 58.0;
+
                 sb.append("Total Unique Medicines: ").append(totalMeds).append("\n");
-                sb.append("Medicines In Stock (Healthy Level): ").append(inStock).append("\n");
-                sb.append("Medicines Discontinued: ").append(discontinued).append("\n");
-                sb.append("Medicines Low Stock: ").append(lowStock).append("\n");
+                sb.append("Overall Pharmacy Inventory Cost: ").append(SystemSettings.getCurrencySymbol()).append(String.format("%.2f", totalCost)).append("\n\n");
+                sb.append("[ Inventory Status ]\n");
+                sb.append("In Stock (Healthy): ").append(inStock).append("\n");
+                sb.append("Low Stock (Needs Restocking): ").append(lowStock).append("\n");
+                sb.append("Discontinued: ").append(discontinued).append("\n");
                 if (lowStock > 0) {
-                    sb.append("\nItems currently Low Stock:\n");
+                    sb.append("\n[ Action Required: Restocking List ]\n");
                     sb.append(lowStockNames.toString());
+                }
+
+                // Most dispensed drugs
+                String sqlDispensed = "SELECT ph.brand_name, ph.generic_name, SUM(pd.quantity) as total_qty " +
+                                      "FROM prescription_details pd " +
+                                      "JOIN pharmacy ph ON pd.medication_id = ph.medication_id " +
+                                      "JOIN prescriptions rx ON pd.prescription_id = rx.prescription_id " +
+                                      "WHERE rx.status_id = 2 "; // 2 is dispensed
+                if (period != null && !period.trim().isEmpty()) sqlDispensed += "AND DATE_FORMAT(rx.prescription_date, '%M %Y') = ? ";
+                sqlDispensed += "GROUP BY pd.medication_id ORDER BY total_qty DESC LIMIT 3";
+                
+                try (PreparedStatement stmt = conn.prepareStatement(sqlDispensed)) {
+                    if (period != null && !period.trim().isEmpty()) stmt.setString(1, period.trim());
+                    java.sql.ResultSet rs = stmt.executeQuery();
+                    sb.append("\n[ Top Dispensed Medications ]\n");
+                    boolean hasDispensed = false;
+                    while (rs.next()) {
+                        hasDispensed = true;
+                        String name = rs.getString("brand_name");
+                        if (name == null || name.isEmpty()) name = rs.getString("generic_name");
+                        sb.append(" - ").append(name).append(": ").append(rs.getInt("total_qty")).append(" units\n");
+                    }
+                    if (!hasDispensed) sb.append(" No dispensing data available.\n");
                 }
             } else if (scope.contains("Appointments")) {
                 String sql = "SELECT COUNT(*) as cnt, " +
@@ -466,7 +560,39 @@ public class ReportsPanel extends JPanel implements ActionListener {
                         sb.append("Scheduled: ").append(rs.getInt("scheduled")).append("\n");
                         sb.append("Completed: ").append(rs.getInt("completed")).append("\n");
                         sb.append("Cancelled: ").append(rs.getInt("cancelled")).append("\n");
-                        sb.append("No-Show: ").append(rs.getInt("noshow")).append("\n");
+                        sb.append("No-Show: ").append(rs.getInt("noshow")).append("\n\n");
+                    }
+                }
+                
+                // Appointments per Doctor
+                String sqlDocs = "SELECT u.lastname, COUNT(a.appt_id) as total_appts FROM appointments a " +
+                                 "JOIN users u ON a.doctor_id = u.user_id ";
+                if (period != null && !period.trim().isEmpty()) sqlDocs += "WHERE DATE_FORMAT(a.appointment_date, '%M %Y') = ? ";
+                sqlDocs += "GROUP BY a.doctor_id ORDER BY total_appts DESC LIMIT 3";
+                try (PreparedStatement stmt = conn.prepareStatement(sqlDocs)) {
+                    if (period != null && !period.trim().isEmpty()) stmt.setString(1, period.trim());
+                    java.sql.ResultSet rs = stmt.executeQuery();
+                    sb.append("[ Top Doctors by Appointments ]\n");
+                    while (rs.next()) {
+                        sb.append("Dr. ").append(rs.getString("lastname")).append(": ").append(rs.getInt("total_appts")).append(" appts\n");
+                    }
+                    sb.append("\n");
+                }
+
+                // Busiest day of the week
+                String sqlBusyDay = "SELECT DAYNAME(appointment_date) as day_name, COUNT(*) as cnt FROM appointments ";
+                if (period != null && !period.trim().isEmpty()) sqlBusyDay += "WHERE DATE_FORMAT(appointment_date, '%M %Y') = ? ";
+                sqlBusyDay += "GROUP BY day_name ORDER BY cnt DESC LIMIT 1";
+                try (PreparedStatement stmt = conn.prepareStatement(sqlBusyDay)) {
+                    if (period != null && !period.trim().isEmpty()) stmt.setString(1, period.trim());
+                    java.sql.ResultSet rs = stmt.executeQuery();
+                    if (rs.next()) {
+                        String day = rs.getString("day_name");
+                        if (day != null) {
+                            sb.append("Busiest Day of the Week: ").append(day).append(" (").append(rs.getInt("cnt")).append(" appts)\n");
+                        } else {
+                            sb.append("Busiest Day of the Week: No appointments booked yet.\n");
+                        }
                     }
                 }
             } else if (scope.contains("Staff") || scope.contains("HR")) {

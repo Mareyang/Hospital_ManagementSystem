@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2026 at 06:26 AM
+-- Generation Time: Jun 16, 2026 at 08:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,7 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`appt_id`, `patient_id`, `doctor_id`, `appointment_date`, `appointment_time`, `visit_type`, `notes`, `status_id`) VALUES
-(1, 1, 2, '2026-06-15', '09:00:00', 'Routine Checkup', 'Patient complains of mild headaches.', 1),
+(1, 1, 2, '2026-06-15', '09:00:00', 'Routine Checkup', 'Patient complains of mild headaches.', 2),
 (2, 2, 2, '2026-06-14', '10:30:00', 'Follow-up', 'Checking recovery post-surgery.', 2),
 (3, 2, 1, '2026-06-20', '08:00:00', 'Follow-up', 'follow-up heart check-up', 3),
 (4, 5, 2, '2026-06-25', '08:00:00', 'New Consultation', 'check up for 1 week fever', 2),
@@ -92,7 +92,32 @@ CREATE TABLE `billing` (
 --
 
 INSERT INTO `billing` (`billing_id`, `patient_id`, `appointment_id`, `total_amount`, `discount_amount`, `net_amount`, `billing_date`, `status_id`) VALUES
-(1, 2, 2, 150.00, 0.00, 150.00, '2026-06-14 19:23:02', 2);
+(1, 2, 2, 150.00, 0.00, 150.00, '2026-06-14 19:23:02', 2),
+(2, 1, NULL, 500.00, 0.00, 500.00, '2026-06-16 14:22:07', 1),
+(3, 3, NULL, 100.00, 0.00, 100.00, '2026-06-16 14:25:26', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `billing_items`
+--
+
+CREATE TABLE `billing_items` (
+  `item_id` int(11) NOT NULL,
+  `billing_id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `unit_price` decimal(10,2) NOT NULL,
+  `total_price` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `billing_items`
+--
+
+INSERT INTO `billing_items` (`item_id`, `billing_id`, `description`, `quantity`, `unit_price`, `total_price`) VALUES
+(1, 2, 'Consultation Fee (APT-001)', 1, 500.00, 500.00),
+(2, 3, 'Pharmacy: Biogesic (Paracetamol)', 10, 10.00, 100.00);
 
 -- --------------------------------------------------------
 
@@ -253,7 +278,8 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`payment_id`, `billing_id`, `payment_method`, `amount_paid`, `payment_date`, `processed_by_id`) VALUES
-(1, 1, 'Credit Card', 75.00, '2026-06-14 19:23:32', 1);
+(1, 1, 'Credit Card', 75.00, '2026-06-14 19:23:32', 1),
+(2, 3, 'Cash', 100.00, '2026-06-16 14:25:58', 1);
 
 -- --------------------------------------------------------
 
@@ -284,7 +310,7 @@ INSERT INTO `pharmacy` (`medication_id`, `item_code`, `brand_name`, `generic_nam
 (1, 'MED-001', 'Tylenol', 'Paracetamol', 1, 'Tablet', '500mg', 1000, 100, 0.25, NULL, 1),
 (2, 'MED-002', 'Amoxil', 'Amoxicillin', 2, 'Capsule', '250mg', 9, 50, 1.50, NULL, 1),
 (3, 'MED-003', 'Claritin', 'Loratadine', 3, 'Syrup', '10mg/5ml', 0, 20, 5.00, NULL, 2),
-(4, 'MED-0004', 'Biogesic', 'Paracetamol', 1, 'Tablet', '10ml', 5, 20, 10.00, '2028-05-05', 1),
+(4, 'MED-0004', 'Biogesic', 'Paracetamol', 1, 'Tablet', '10ml', 95, 20, 10.00, '2028-05-05', 1),
 (5, 'MED-005', 'Neozep', 'Cetirizine', 3, 'Capsule', '20mg', 50, 10, 12.00, '2028-04-15', 1);
 
 -- --------------------------------------------------------
@@ -329,7 +355,8 @@ CREATE TABLE `prescriptions` (
 
 INSERT INTO `prescriptions` (`prescription_id`, `patient_id`, `doctor_id`, `diagnosis`, `special_notes`, `prescription_date`, `status_id`) VALUES
 (1, 1, 2, 'Tension Headaches', 'Drink plenty of water.', '2026-06-14 19:21:31', 3),
-(2, 5, 2, 'fever', 'take it after eating.', '2026-06-17 10:00:00', 2);
+(2, 5, 2, 'fever', 'take it after eating.', '2026-06-17 10:00:00', 2),
+(3, 3, 2, 'headache', 'drink plenty of water', '2026-06-21 11:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -353,7 +380,8 @@ CREATE TABLE `prescription_details` (
 
 INSERT INTO `prescription_details` (`prescription_id`, `medication_id`, `dosage`, `frequency`, `duration`, `quantity`, `refill_info`) VALUES
 (1, 1, '500mg', 'Every 6 hours as needed', '5 Days', 20, 0),
-(2, 4, '5 mg', 'Twice daily (BID)', '3 days', 10, 5);
+(2, 4, '5 mg', 'Twice daily (BID)', '3 days', 10, 5),
+(3, 4, '10 mg', 'Three times daily (TID)', '5 Days', 10, 5);
 
 -- --------------------------------------------------------
 
@@ -498,6 +526,13 @@ ALTER TABLE `billing`
   ADD KEY `status_id` (`status_id`);
 
 --
+-- Indexes for table `billing_items`
+--
+ALTER TABLE `billing_items`
+  ADD PRIMARY KEY (`item_id`),
+  ADD KEY `billing_id` (`billing_id`);
+
+--
 -- Indexes for table `billing_status`
 --
 ALTER TABLE `billing_status`
@@ -639,7 +674,13 @@ ALTER TABLE `appointment_status`
 -- AUTO_INCREMENT for table `billing`
 --
 ALTER TABLE `billing`
-  MODIFY `billing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `billing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `billing_items`
+--
+ALTER TABLE `billing_items`
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `billing_status`
@@ -681,7 +722,7 @@ ALTER TABLE `patient_status`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pharmacy`
@@ -699,7 +740,7 @@ ALTER TABLE `pharmacy_status`
 -- AUTO_INCREMENT for table `prescriptions`
 --
 ALTER TABLE `prescriptions`
-  MODIFY `prescription_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `prescription_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `prescription_status`
@@ -750,6 +791,12 @@ ALTER TABLE `billing`
   ADD CONSTRAINT `billing_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`),
   ADD CONSTRAINT `billing_ibfk_2` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`appt_id`),
   ADD CONSTRAINT `billing_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `billing_status` (`status_id`);
+
+--
+-- Constraints for table `billing_items`
+--
+ALTER TABLE `billing_items`
+  ADD CONSTRAINT `billing_items_ibfk_1` FOREIGN KEY (`billing_id`) REFERENCES `billing` (`billing_id`);
 
 --
 -- Constraints for table `hospital_reports`
