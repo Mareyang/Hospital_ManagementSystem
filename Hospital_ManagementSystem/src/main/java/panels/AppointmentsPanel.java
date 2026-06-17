@@ -375,7 +375,7 @@ public class AppointmentsPanel extends JPanel implements ActionListener {
                         }
                     }
                     
-                    // --- DYNAMIC PRICING ---
+                    // --- DYNAMIC PRICING FOR FEES ---
                     double consultationFee = 500.00; 
                     if (visitType != null) {
                         switch (visitType) {

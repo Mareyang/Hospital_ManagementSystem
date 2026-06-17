@@ -197,7 +197,7 @@ public class NewPatientDialog extends JDialog implements ActionListener {
         String email = txtEmail.getText().trim();
         String statusText = cmbStatus.getSelectedItem().toString();
         
-        // 2. Simple Validation (Make sure they didn't leave blanks)
+        // 2. Simple Validation 
         if (first.isEmpty() || last.isEmpty() || birth.isEmpty() || gender.equals("Select Gender...") || statusText.equals("Select Status...")) {
             JOptionPane.showMessageDialog(this, "Please fill in all required fields (Name, Birthday, Gender, Status).", "Missing Information", JOptionPane.WARNING_MESSAGE);
             return;

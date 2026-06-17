@@ -158,7 +158,7 @@ public class DoctorDashboardPanel extends JPanel {
         logScrollPane.setBorder(BorderFactory.createLineBorder(ColorsTheme.Gray, 1)); 
         pnlOverview.add(logScrollPane);
         
-        // --- ADDED: Auto-Refresh Listener ---
+        
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
@@ -211,7 +211,7 @@ public class DoctorDashboardPanel extends JPanel {
         String pendingDiagnoses = "0"; 
         String upcomingSurgeries = "0"; 
         
-        String totalPatients = String.valueOf(getTableRowCount("patients", "WHERE status_id = 2")); // Only admitted ones need intense oversight
+        String totalPatients = String.valueOf(getTableRowCount("patients", "WHERE status_id = 2")); 
         
         pnlAppointments = new PanelCard2("Today's Appointments", totalAppointments, remainingText, ColorsTheme.Yellow);
         pnlAppointments.setBounds(70, 150, 350, 140);

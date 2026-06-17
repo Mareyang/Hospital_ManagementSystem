@@ -210,7 +210,7 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
             updateTable("Recent Medical Records", ""); 
         }
         else if (e.getSource() == btnView) {
-            // WIRED UP THE VIEW BUTTON
+           
             int id = getSelectedRecordId();
             if (id != -1) {
                 ViewMedicalRecordDialog dialog = new ViewMedicalRecordDialog(id);
@@ -218,12 +218,12 @@ public class MedicalRecordsPanel extends JPanel implements ActionListener {
             }
         }
         else if (e.getSource() == btnEdit) {
-            // WIRED UP THE EDIT BUTTON
+          
             int id = getSelectedRecordId();
             if (id != -1) {
                 EditMedicalRecordDialog dialog = new EditMedicalRecordDialog(id);
                 dialog.setVisible(true);
-                updateTable("Recent Medical Records", ""); // Refreshes table just in case they changed the Doctor!
+                updateTable("Recent Medical Records", ""); 
             }
         }
         else if (e.getSource() == btnSearch) {
